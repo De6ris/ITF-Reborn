@@ -2,6 +2,7 @@ package net.oilcake.mitelros.mixins.block;
 
 import net.minecraft.BlockTallGrass;
 import net.minecraft.IBlockAccess;
+import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.util.SeasonColorizer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -17,6 +18,10 @@ public class BlockLongGrassMixin {
     int MixedColor = SeasonColorizer.getSeasonColorizerModifierRed(par1IBlockAccess.getWorld(), OriColor >> 16);
     int FinalColor = 0xFFFF & OriColor;
     FinalColor += MixedColor << 16;
-    return FinalColor;
+    if (Config.SeasonColor.get()) {
+      return FinalColor;
+    } else {
+      return OriColor;
+    }
   }
 }

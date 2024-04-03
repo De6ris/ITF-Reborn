@@ -1,29 +1,10 @@
 package net.oilcake.mitelros.mixins.entity;
 
-import net.minecraft.Damage;
-import net.minecraft.DamageSource;
-import net.minecraft.EnchantmentDamage;
-import net.minecraft.EnchantmentHelper;
-import net.minecraft.EnchantmentThorns;
-import net.minecraft.Entity;
-import net.minecraft.EntityCreature;
-import net.minecraft.EntityDamageResult;
-import net.minecraft.EntityLiving;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.EntityMob;
-import net.minecraft.EnumEntityFX;
-import net.minecraft.ItemStack;
-import net.minecraft.MathHelper;
-import net.minecraft.Minecraft;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.Potion;
-import net.minecraft.PotionEffect;
-import net.minecraft.SharedMonsterAttributes;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.enchantment.Enchantments;
+import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.util.Constant;
-import net.oilcake.mitelros.util.ExperimentalConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -97,7 +78,7 @@ public class EntityMonsterMixin extends EntityCreature {
     @Overwrite
     public void onUpdate() {
         super.onUpdate();
-        if (!this.worldObj.isRemote && !this.modified_attribute && getHealth() > 0.0F && ExperimentalConfig.TagConfig.FinalChallenge.ConfigValue.booleanValue()) {
+        if (!this.worldObj.isRemote && !this.modified_attribute && getHealth() > 0.0F && Config.FinalChallenge.get()) {
             setEntityAttribute(SharedMonsterAttributes.maxHealth, (getMaxHealth() * (1.0F + Constant.CalculateCurrentDiff() / 16.0F)));
             double attack_damage = getEntityAttributeValue(SharedMonsterAttributes.attackDamage);
             if (getHeldItemStack() != null && getHeldItemStack().getItem() instanceof net.minecraft.ItemTool) {

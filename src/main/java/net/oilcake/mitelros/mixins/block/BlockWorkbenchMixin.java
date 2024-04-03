@@ -1,29 +1,14 @@
 package net.oilcake.mitelros.mixins.block;
 
-import java.util.Random;
-import net.minecraft.Block;
-import net.minecraft.BlockBreakInfo;
-import net.minecraft.BlockConstants;
-import net.minecraft.BlockWorkbench;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.Icon;
-import net.minecraft.IconRegister;
-import net.minecraft.Item;
-import net.minecraft.ItemIngot;
-import net.minecraft.ItemNugget;
-import net.minecraft.ItemStack;
-import net.minecraft.Material;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.item.Materials;
-import net.oilcake.mitelros.util.ExperimentalConfig;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
+import net.oilcake.mitelros.util.Config;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Random;
 
 @Mixin({BlockWorkbench.class})
 public class BlockWorkbenchMixin extends Block {
@@ -62,7 +47,7 @@ public class BlockWorkbenchMixin extends Block {
   }
   
   public int dropBlockAsEntityItem(BlockBreakInfo info) {
-    if (((Boolean)ExperimentalConfig.TagConfig.TagBenchingV2.ConfigValue).booleanValue() || info.wasExploded()) {
+    if (((Boolean) Config.TagBenchingV2.get()) || info.wasExploded()) {
       if (info.wasExploded()) {
         int quantity_drops = 2 + (int)(this.random.nextFloat() * 4.0F);
         if (info.getMetadata() < 4) {

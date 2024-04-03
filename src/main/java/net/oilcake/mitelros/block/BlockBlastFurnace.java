@@ -1,13 +1,7 @@
 package net.oilcake.mitelros.block;
 
-import net.minecraft.Block;
-import net.minecraft.BlockBreakInfo;
-import net.minecraft.BlockFurnace;
-import net.minecraft.IconRegister;
-import net.minecraft.Item;
-import net.minecraft.Material;
-import net.minecraft.World;
-import net.oilcake.mitelros.util.ExperimentalConfig;
+import net.minecraft.*;
+import net.oilcake.mitelros.util.Config;
 
 public class BlockBlastFurnace extends BlockFurnace {
     private Material material;
@@ -40,7 +34,7 @@ public class BlockBlastFurnace extends BlockFurnace {
 
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
         Block furnace_block = Block.getBlock(getIdleBlockID());
-        if (((Boolean) ExperimentalConfig.TagConfig.TagBenchingV2.ConfigValue).booleanValue()) {
+        if (((Boolean) Config.TagBenchingV2.get())) {
             if (!info.wasExploded()) {
                 if (furnace_block == Blocks.blastFurnaceNetherrackIdle) {
                     dropBlockAsEntityItem(info, Block.netherrack.blockID, 0, 8, 1.0F);

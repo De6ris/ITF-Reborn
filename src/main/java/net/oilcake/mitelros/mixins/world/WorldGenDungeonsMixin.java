@@ -1,16 +1,13 @@
 package net.oilcake.mitelros.mixins.world;
 
-import java.util.Random;
-import net.minecraft.Item;
-import net.minecraft.WeightedRandomChestContent;
-import net.minecraft.World;
-import net.minecraft.WorldGenDungeons;
-import net.minecraft.WorldGenerator;
+import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
-import net.oilcake.mitelros.util.StuckTagConfig;
+import net.oilcake.mitelros.util.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.Random;
 
 @Mixin({WorldGenDungeons.class})
 public class WorldGenDungeonsMixin extends WorldGenerator {
@@ -36,7 +33,7 @@ public class WorldGenDungeonsMixin extends WorldGenerator {
     int danger;
     if (world.isUnderworld())
       return (par1Random.nextInt(6) == 0) ? "LongdeadGuardian" : "Longdead"; 
-    if (((Boolean)StuckTagConfig.TagConfig.TagMiracleDisaster.ConfigValue).booleanValue()) {
+    if (((Boolean) Config.TagMiracleDisaster.get())) {
       danger = par1Random.nextInt(7);
     } else {
       if (par1Random.nextInt(2) == 0) {

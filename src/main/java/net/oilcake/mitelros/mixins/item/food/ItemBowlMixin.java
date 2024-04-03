@@ -1,26 +1,12 @@
 package net.oilcake.mitelros.mixins.item.food;
 
-import net.minecraft.BiomeGenBase;
-import net.minecraft.Block;
-import net.minecraft.BlockFarmland;
-import net.minecraft.Entity;
-import net.minecraft.EntityPlayer;
-import net.minecraft.EnumFace;
-import net.minecraft.Item;
-import net.minecraft.ItemBowl;
-import net.minecraft.ItemStack;
-import net.minecraft.ItemVessel;
-import net.minecraft.Material;
-import net.minecraft.Potion;
-import net.minecraft.PotionEffect;
-import net.minecraft.RaycastCollision;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.util.ExperimentalConfig;
+import net.oilcake.mitelros.util.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -60,7 +46,7 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
     @Overwrite
     public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
         if (player.onServer()) {
-            if (((Boolean) ExperimentalConfig.TagConfig.Realistic.ConfigValue).booleanValue()) {
+            if (((Boolean) Config.Realistic.get())) {
                 if (contains(Materials.dangerous_water)) {
                     double rand = Math.random();
                     player.addPotionEffect(new PotionEffect(Potion.poison.id, (int) (450.0D * (1.0D + rand)), 0));

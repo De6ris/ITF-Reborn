@@ -1,24 +1,14 @@
 package net.oilcake.mitelros.mixins.item;
 
-import java.util.List;
-
-import net.minecraft.EntityLivingBase;
-import net.minecraft.EntityPlayer;
-import net.minecraft.EnumChatFormatting;
-import net.minecraft.IDamageableItem;
-import net.minecraft.Item;
-import net.minecraft.ItemArmor;
-import net.minecraft.ItemStack;
-import net.minecraft.Material;
-import net.minecraft.Slot;
-import net.minecraft.StringHelper;
-import net.minecraft.Translator;
+import net.minecraft.*;
 import net.oilcake.mitelros.item.Materials;
-import net.oilcake.mitelros.util.StuckTagConfig;
+import net.oilcake.mitelros.util.Config;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.List;
 
 @Mixin({ItemArmor.class})
 public abstract class ItemArmorMixin extends Item implements IDamageableItem {
@@ -112,10 +102,10 @@ public abstract class ItemArmorMixin extends Item implements IDamageableItem {
     @Overwrite
     public final float getDamageFactor(ItemStack item_stack, EntityLivingBase owner) {
         if (owner != null && !owner.isEntityPlayer())
-            return StuckTagConfig.TagConfig.TagInstinctSurvival.ConfigValue.booleanValue() ? 0.75F : 0.5F;
+            return Config.TagInstinctSurvival.get() ? 0.75F : 0.5F;
         if (owner instanceof EntityPlayer && item_stack.getMaxDamage() > 1 && item_stack.getItemDamage() >= item_stack.getMaxDamage() - 1)
             return 0.0F;
-        float armor_damage_factor = StuckTagConfig.TagConfig.TagArmament.ConfigValue.booleanValue() ? (4.0F - item_stack.getItemDamage() / item_stack.getItem().getMaxDamage(item_stack) * 4.0F) : (2.0F - item_stack.getItemDamage() / item_stack.getItem().getMaxDamage(item_stack) * 2.0F);
+        float armor_damage_factor = Config.TagArmament.get() ? (4.0F - item_stack.getItemDamage() / item_stack.getItem().getMaxDamage(item_stack) * 4.0F) : (2.0F - item_stack.getItemDamage() / item_stack.getItem().getMaxDamage(item_stack) * 2.0F);
         if (armor_damage_factor > 1.0F)
             armor_damage_factor = 1.0F;
         return armor_damage_factor;

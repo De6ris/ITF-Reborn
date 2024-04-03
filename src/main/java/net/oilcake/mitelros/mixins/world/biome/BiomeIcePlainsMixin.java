@@ -1,20 +1,14 @@
 package net.oilcake.mitelros.mixins.world.biome;
 
-import java.util.Random;
-import net.minecraft.BiomeGenBase;
-import net.minecraft.BiomeGenSnow;
-import net.minecraft.Block;
-import net.minecraft.EntityDireWolf;
-import net.minecraft.EntitySkeleton;
-import net.minecraft.EntityWolf;
-import net.minecraft.SpawnListEntry;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.entity.EntityStray;
-import net.oilcake.mitelros.util.ExperimentalConfig;
+import net.oilcake.mitelros.util.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Random;
 
 @Mixin({BiomeGenSnow.class})
 public class BiomeIcePlainsMixin extends BiomeGenBase {
@@ -26,7 +20,7 @@ public class BiomeIcePlainsMixin extends BiomeGenBase {
   public void injectCtor(CallbackInfo callbackInfo) {
     removeEntityFromSpawnableLists(EntitySkeleton.class);
     this.spawnableMonsterList.add(new SpawnListEntry(EntityStray.class, 100, 1, 4));
-    if (((Boolean)ExperimentalConfig.TagConfig.TagCreaturesV2.ConfigValue).booleanValue())
+    if (((Boolean) Config.TagCreaturesV2.get()))
       RegenHostileAnimals(); 
   }
   

@@ -11,7 +11,10 @@ import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.status.*;
-import net.oilcake.mitelros.util.*;
+import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.Constant;
+import net.oilcake.mitelros.util.CurseExtend;
+import net.oilcake.mitelros.util.DamageSourceExtend;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -76,7 +79,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Inject(method = "jump", at = @At("HEAD"), cancellable = true)
     private void cancel(CallbackInfo ci) {
-        if ((getHealth() > 5.0F && this.capabilities.getWalkSpeed() >= 0.05F && hasFoodEnergy()) || !ExperimentalConfig.TagConfig.Realistic.ConfigValue.booleanValue()) {
+        if ((getHealth() > 5.0F && this.capabilities.getWalkSpeed() >= 0.05F && hasFoodEnergy()) || !Config.Realistic.get()) {
             return;
         }
         ci.cancel();
@@ -84,7 +87,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Override
     public boolean isOnLadder() {
-        if (ExperimentalConfig.TagConfig.Realistic.ConfigValue.booleanValue() && (getHealth() <= 5.0F || this.capabilities.getWalkSpeed() < 0.05F || !hasFoodEnergy())) {
+        if (Config.Realistic.get() && (getHealth() <= 5.0F || this.capabilities.getWalkSpeed() < 0.05F || !hasFoodEnergy())) {
             int x = MathHelper.floor_double(this.posX);
             int y = MathHelper.floor_double(this.boundingBox.minY);
             int z = MathHelper.floor_double(this.posZ);
@@ -292,7 +295,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         ItemStack wearingItemStack = getCuirass();
         if (EnchantmentHelper.hasEnchantment(wearingItemStack, Enchantments.enchantmentCallofNether))
             return false;
-        if (biome.temperature <= ((((ITFWorld) this.worldObj).getWorldSeason() == 3) ? 1.0F : 0.16F) && (isOutdoors() || (this.worldObj.provider.dimensionId == -2 && StuckTagConfig.TagConfig.TagDeadgeothermy.ConfigValue.booleanValue()))) {
+        if (biome.temperature <= ((((ITFWorld) this.worldObj).getWorldSeason() == 3) ? 1.0F : 0.16F) && (isOutdoors() || (this.worldObj.provider.dimensionId == -2 && Config.TagDeadGeothermy.get()))) {
             return getHelmet() == null || (getHelmet()).itemID != Items.WolfHelmet.itemID ||
                     getCuirass() == null || (getCuirass()).itemID != Items.WolfChestplate.itemID ||
                     getLeggings() == null || (getLeggings()).itemID != Items.WolfLeggings.itemID ||
@@ -307,7 +310,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     public boolean InHeat() {
         BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(getBlockPosX(), getBlockPosZ());
-        return (biome.temperature >= 1.5F && StuckTagConfig.TagConfig.TagHeatStorm.ConfigValue.booleanValue());
+        return (biome.temperature >= 1.5F && Config.TagHeatStorm.get());
     }
 
     private void activeNegativeUndying() {
@@ -402,7 +405,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
                     addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, 160, 0));
                 }
             }
-            this.dry_resist += (StuckTagConfig.TagConfig.TagHeatStroke.ConfigValue.booleanValue() ? 2.0D : 1.0D) + biome.getFloatTemperature();
+            this.dry_resist += (Config.TagHeatStroke.get() ? 2.0D : 1.0D) + biome.getFloatTemperature();
             if (isPotionActive(PotionExtend.dehydration))
                 this.dry_resist += Math.min(80.0D, (getActivePotionEffect(PotionExtend.dehydration).getAmplifier() + 1) * 20.0D);
             if (isPotionActive(PotionExtend.thirsty))
@@ -434,13 +437,13 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
             if (InHeat())
                 this.HeatResistance++;
             if (InFreeze() || this.drunkManager.isDrunk()) {
-                this.FreezingCooldown += StuckTagConfig.TagConfig.TagLegendFreeze.ConfigValue.booleanValue() ? 3 : 1;
-                this.FreezingCooldown += (this.drunkManager.isDrunk()) ? (StuckTagConfig.TagConfig.TagLegendFreeze.ConfigValue.booleanValue() ? 3 : 1) : 0;
+                this.FreezingCooldown += Config.TagLegendFreeze.get() ? 3 : 1;
+                this.FreezingCooldown += (this.drunkManager.isDrunk()) ? (Config.TagLegendFreeze.get() ? 3 : 1) : 0;
             } else if (this.FreezingCooldown > 0) {
                 this.FreezingCooldown--;
             }
             this.drunkManager.decrease();
-            if (getHealth() < 5.0F && ExperimentalConfig.TagConfig.Realistic.ConfigValue.booleanValue())
+            if (getHealth() < 5.0F && Config.Realistic.get())
                 this.vision_dimming = Math.max(this.vision_dimming, 1.0F - getHealthFraction());
         }
         if (this.feastManager.achievementCheck()) {
@@ -682,7 +685,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
                 return null;
             damage.scaleAmount(1.5F);
         }
-        if (ExperimentalConfig.TagConfig.FinalChallenge.ConfigValue.booleanValue())
+        if (Config.FinalChallenge.get())
             damage.scaleAmount(1.0F + Constant.CalculateCurrentDiff() / 50.0F);
         EntityDamageResult result = super.attackEntityFrom(damage);
         return result;
@@ -701,13 +704,9 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         } else {
             HealthLMTwithTag = Math.max(Math.min(14 + level / 10 * 2, 40), 20);
         }
-        return StuckTagConfig.TagConfig.TagDistortion.ConfigValue.booleanValue() ? HealthLMTwithTag : HealthLMTwithoutTag;
+        return Config.TagDistortion.get() ? HealthLMTwithTag : HealthLMTwithoutTag;
     }
 
-    /**
-     * @author
-     * @reason
-     */
     @Overwrite
     public float getCurrentPlayerStrVsBlock(int x, int y, int z, boolean apply_held_item) {
         float str_vs_block;
@@ -757,9 +756,9 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         if (!hasFoodEnergy())
             str_vs_block /= 5.0F;
         str_vs_block *= 1.0F + getLevelModifier(EnumLevelBonus.HARVESTING);
-        if (ExperimentalConfig.TagConfig.FinalChallenge.ConfigValue.booleanValue())
+        if (Config.FinalChallenge.get())
             str_vs_block *= 1.0F - Constant.CalculateCurrentDiff() / 100.0F;
-        if (ExperimentalConfig.TagConfig.Realistic.ConfigValue.booleanValue())
+        if (Config.Realistic.get())
             str_vs_block *= Math.min((float) Math.pow(getHealth(), 2.0D) / 25.0F, 1.0F);
         return Math.max(str_vs_block, min_str_vs_block);
     }
@@ -783,7 +782,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
                 addStat(StatList.distanceFallenStat, (int) Math.round(par1 * 100.0D));
             super.fall(par1);
         }
-        if (ExperimentalConfig.TagConfig.TagMovingV2.ConfigValue.booleanValue())
+        if (Config.TagMovingV2.get())
             setSprinting(false);
     }
 

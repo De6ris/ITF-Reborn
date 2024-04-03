@@ -3,7 +3,7 @@ package net.oilcake.mitelros.mixins.world.biome;
 import net.minecraft.BiomeGenBase;
 import net.minecraft.BiomeGenPlains;
 import net.minecraft.EntityHorse;
-import net.oilcake.mitelros.util.StuckTagConfig;
+import net.oilcake.mitelros.util.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,7 +17,7 @@ public class BiomePlainsMixin extends BiomeGenBase {
   
   @Inject(method = {"<init>(I)V"}, at = {@At("RETURN")})
   public void injectCtor(CallbackInfo callbackInfo) {
-    if (((Boolean)StuckTagConfig.TagConfig.TagApocalypse.ConfigValue).booleanValue())
+    if (((Boolean) Config.TagApocalypse.get()).booleanValue())
       removeEntityFromSpawnableLists(EntityHorse.class); 
   }
 }

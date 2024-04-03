@@ -1,18 +1,11 @@
 package net.oilcake.mitelros.block;
 
-import net.minecraft.Block;
-import net.minecraft.BlockBreakInfo;
-import net.minecraft.BlockFurnace;
-import net.minecraft.CreativeTabs;
-import net.minecraft.IconRegister;
-import net.minecraft.Item;
-import net.minecraft.Material;
-import net.oilcake.mitelros.util.ExperimentalConfig;
+import net.minecraft.*;
+import net.oilcake.mitelros.util.Config;
 
 public class BlockSmoker extends BlockFurnace {
   protected BlockSmoker(int par1, boolean par2) {
     super(par1, Material.stone, par2);
-    setCreativeTab(CreativeTabs.tabDecorations);
   }
   
   public void registerIcons(IconRegister mt) {
@@ -34,7 +27,7 @@ public class BlockSmoker extends BlockFurnace {
   }
   
   public int dropBlockAsEntityItem(BlockBreakInfo info) {
-    if (((Boolean)ExperimentalConfig.TagConfig.TagBenchingV2.ConfigValue).booleanValue()) {
+    if (((Boolean) Config.TagBenchingV2.get())) {
       if (info.wasExploded()) {
         dropBlockAsEntityItem(info, Block.cobblestone.blockID);
         dropBlockAsEntityItem(info, Item.stick.itemID, 0, 1, 1.3F);

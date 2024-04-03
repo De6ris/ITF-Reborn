@@ -1,17 +1,7 @@
 package net.oilcake.mitelros.mixins.block;
 
-import net.minecraft.BlockAnvil;
-import net.minecraft.BlockBreakInfo;
-import net.minecraft.BlockConstants;
-import net.minecraft.BlockFalling;
-import net.minecraft.BlockOreStorage;
-import net.minecraft.Item;
-import net.minecraft.ItemIngot;
-import net.minecraft.ItemNugget;
-import net.minecraft.Material;
-import net.minecraft.TileEntityAnvil;
-import net.minecraft.World;
-import net.oilcake.mitelros.util.ExperimentalConfig;
+import net.minecraft.*;
+import net.oilcake.mitelros.util.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -38,7 +28,7 @@ public class BlockAnvilMixin extends BlockFalling {
     @Overwrite
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
         TileEntityAnvil tile_entity_anvil = (TileEntityAnvil) info.tile_entity;
-        if (((Boolean) ExperimentalConfig.TagConfig.TagBenchingV2.ConfigValue).booleanValue() || info.wasExploded()) {
+        if (((Boolean) Config.TagBenchingV2.get()) || info.wasExploded()) {
             float centesimal = getAnvilDurabilityByCentesimal(tile_entity_anvil.damage);
             if (centesimal <= 0.5D) {
                 int expecting_nuggets = (int) (279.0F * centesimal);

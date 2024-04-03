@@ -1,15 +1,8 @@
 package net.oilcake.mitelros.mixins.entity;
 
-import net.minecraft.EntityAIBase;
-import net.minecraft.EntityAISeekLitTorch;
-import net.minecraft.EntityAnimalWatcher;
-import net.minecraft.EntityLiving;
-import net.minecraft.EntityLivingData;
-import net.minecraft.EntityZombie;
-import net.minecraft.Item;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
-import net.oilcake.mitelros.util.StuckTagConfig;
+import net.oilcake.mitelros.util.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -37,13 +30,13 @@ public class EntityZombieMixin extends EntityAnimalWatcher {
   
   @Inject(method = {"onUpdate()V"}, at = {@At("RETURN")})
   public void ModifyAIInjector(CallbackInfo callbackInfo) {
-    if (((Boolean)StuckTagConfig.TagConfig.TagWorshipDark.ConfigValue).booleanValue())
+    if (((Boolean) Config.TagWorshipDark.get()).booleanValue())
       tryDisableNearbyLightSource(); 
   }
   
   @Inject(method = {"onSpawnWithEgg(Lnet/minecraft/EntityLivingData;)Lnet/minecraft/EntityLivingData;"}, at = {@At("RETURN")}, cancellable = true)
   public void ModifyAIInjector(EntityLivingData par1EntityLivingData, CallbackInfoReturnable<EntityLivingData> callbackInfo) {
-    if (((Boolean)StuckTagConfig.TagConfig.TagWorshipDark.ConfigValue).booleanValue())
+    if (((Boolean) Config.TagWorshipDark.get()).booleanValue())
       this.tasks.addTask(4, (EntityAIBase)new EntityAISeekLitTorch((EntityLiving)this, 1.0F)); 
   }
 }

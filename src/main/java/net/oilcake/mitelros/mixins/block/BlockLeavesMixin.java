@@ -1,25 +1,15 @@
 package net.oilcake.mitelros.mixins.block;
 
-import java.util.Random;
-
-import net.minecraft.BitHelper;
-import net.minecraft.Block;
-import net.minecraft.BlockBreakInfo;
-import net.minecraft.BlockLeaves;
-import net.minecraft.BlockLeavesBase;
-import net.minecraft.ColorizerFoliage;
-import net.minecraft.IBlockAccess;
-import net.minecraft.Item;
-import net.minecraft.ItemFood;
-import net.minecraft.Material;
-import net.minecraft.RNG;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.item.Items;
+import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.util.SeasonColorizer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.Random;
 
 @Mixin({BlockLeaves.class})
 public class BlockLeavesMixin extends BlockLeavesBase {
@@ -182,12 +172,24 @@ public class BlockLeavesMixin extends BlockLeavesBase {
         int var6 = 0;
         int var7 = 0;
         int var8 = 0;
-        for (int var9 = -1; var9 <= 1; var9++) {
-            for (int var10 = -1; var10 <= 1; var10++) {
-                int var11 = par1IBlockAccess.getBiomeGenForCoords(par2 + var10, par4 + var9).getBiomeFoliageColor();
-                var6 += SeasonColorizer.getSeasonColorizerModifierRed(par1IBlockAccess.getWorld(), (var11 & 0xFF0000) >> 16);
-                var7 += (var11 & 0xFF00) >> 8;
-                var8 += var11 & 0xFF;
+
+        if (Config.SeasonColor.get()) {
+            for (int var9 = -1; var9 <= 1; ++var9) {
+                for (int var10 = -1; var10 <= 1; ++var10) {
+                    int var11 = par1IBlockAccess.getBiomeGenForCoords(par2 + var10, par4 + var9).getBiomeFoliageColor();
+                    var6 += SeasonColorizer.getSeasonColorizerModifierRed(par1IBlockAccess.getWorld(), (var11 & 16711680) >> 16);
+                    var7 += (var11 & '\uff00') >> 8;
+                    var8 += var11 & 255;
+                }
+            }
+        } else {
+            for (int var9 = -1; var9 <= 1; ++var9) {
+                for (int var10 = -1; var10 <= 1; ++var10) {
+                    int var11 = par1IBlockAccess.getBiomeGenForCoords(par2 + var10, par4 + var9).getBiomeFoliageColor();
+                    var6 += (var11 & 16711680) >> 16;
+                    var7 += (var11 & 65280) >> 8;
+                    var8 += var11 & 255;
+                }
             }
         }
         return (var6 / 9 & 0xFF) << 16 | (var7 / 9 & 0xFF) << 8 | var8 / 9 & 0xFF;

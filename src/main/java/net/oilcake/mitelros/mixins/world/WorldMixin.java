@@ -1,22 +1,14 @@
 package net.oilcake.mitelros.mixins.world;
 
+import net.minecraft.Debug;
+import net.minecraft.*;
+import net.oilcake.mitelros.api.ITFWorld;
+import net.oilcake.mitelros.util.Config;
+import org.spongepowered.asm.mixin.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import net.minecraft.BiomeGenBase;
-import net.minecraft.Block;
-import net.minecraft.Debug;
-import net.minecraft.Entity;
-import net.minecraft.EnumSkyBlock;
-import net.minecraft.Explosion;
-import net.minecraft.WeatherEvent;
-import net.minecraft.World;
-import net.minecraft.WorldProvider;
-import net.oilcake.mitelros.api.ITFWorld;
-import net.oilcake.mitelros.util.StuckTagConfig;
-import net.xiaoyu233.fml.util.ReflectHelper;
-import org.spongepowered.asm.mixin.*;
 
 @Mixin({World.class})
 public abstract class WorldMixin implements ITFWorld {
@@ -65,8 +57,8 @@ public abstract class WorldMixin implements ITFWorld {
         Random random = new Random(getWorldCreationTime() + (getDimensionId() * 938473) + day);
         random.nextInt();
         for (int i = 0; i < 3 && random.nextInt(4) <= 0; i++) {
-            int duration_static = 6000 * (((Boolean) StuckTagConfig.TagConfig.TagEternalRaining.ConfigValue).booleanValue() ? 6 : 1);
-            int duration_random = random.nextInt(12000) * (((Boolean) StuckTagConfig.TagConfig.TagEternalRaining.ConfigValue).booleanValue() ? 2 : 1);
+            int duration_static = 6000 * (((Boolean) Config.TagEternalRaining.get()) ? 6 : 1);
+            int duration_random = random.nextInt(12000) * (((Boolean) Config.TagEternalRaining.get()) ? 2 : 1);
             int duration = duration_random + duration_static;
             duration = (int) (duration * getRainDurationModify(getWorldSeason()));
             WeatherEvent event = new WeatherEvent(first_tick_of_day + random.nextInt(24000), duration);

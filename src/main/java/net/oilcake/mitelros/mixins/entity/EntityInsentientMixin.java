@@ -4,7 +4,7 @@ import net.minecraft.EntityLiving;
 import net.minecraft.EntityLivingBase;
 import net.minecraft.Minecraft;
 import net.minecraft.World;
-import net.oilcake.mitelros.util.ExperimentalConfig;
+import net.oilcake.mitelros.util.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -26,7 +26,7 @@ public abstract class EntityInsentientMixin extends EntityLivingBase {
         var2 += getHeldItemStack().getItem().getReachBonus(); 
       return (getDistanceSq(target.posX, target.boundingBox.minY, target.posZ) <= var2);
     } 
-    if (((Boolean)ExperimentalConfig.TagConfig.Realistic.ConfigValue).booleanValue()) {
+    if (((Boolean) Config.Realistic.get())) {
       boolean condition1 = (getDistance(target.posX, target.boundingBox.minY - (this.boundingBox.maxY - this.boundingBox.minY) * 2.0D / 3.0D, target.posZ) <= getReach());
       boolean condition2 = (getDistance(target.posX, target.boundingBox.maxY + (this.boundingBox.maxY - this.boundingBox.minY) * 2.0D / 3.0D, target.posZ) <= getReach());
       return (condition1 || condition2);
@@ -40,7 +40,7 @@ public abstract class EntityInsentientMixin extends EntityLivingBase {
       Minecraft.setErrorMessage("getReach: doesn't handle old AI mobs yet");
       return 0.0F;
     } 
-    if (((Boolean)ExperimentalConfig.TagConfig.Realistic.ConfigValue).booleanValue())
+    if (((Boolean)Config.Realistic.get()))
       return 1.5F + getHeldItemReachBonus(); 
     return 1.5F + getHeldItemReachBonus() * 0.6F;
   }

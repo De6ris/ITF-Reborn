@@ -1,18 +1,10 @@
 package net.oilcake.mitelros.mixins.world.biome;
 
-import java.util.List;
-import net.minecraft.BiomeGenBase;
-import net.minecraft.EntityChicken;
-import net.minecraft.EntityCow;
-import net.minecraft.EntityHorse;
-import net.minecraft.EntityPig;
-import net.minecraft.EntitySheep;
-import net.minecraft.SpawnListEntry;
+import net.minecraft.*;
 import net.oilcake.mitelros.entity.EntityBoneBodyguard;
 import net.oilcake.mitelros.entity.EntityRetinueZombie;
 import net.oilcake.mitelros.entity.EntityUnknown;
-import net.oilcake.mitelros.util.ExperimentalConfig;
-import net.oilcake.mitelros.util.StuckTagConfig;
+import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.world.BiomeBases;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,6 +13,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.List;
 
 @Mixin({BiomeGenBase.class})
 public class BiomeBaseMixin {
@@ -65,11 +59,11 @@ public class BiomeBaseMixin {
   
   @Inject(method = {"<init>(I)V"}, at = {@At("RETURN")})
   public void injectCtor(CallbackInfo callbackInfo) {
-    this.spawnableMonsterList.add(new SpawnListEntry(EntityRetinueZombie.class, (StuckTagConfig.TagConfig.TagFallenInMineLVL2.ConfigValue.booleanValue() || StuckTagConfig.TagConfig.TagFallenInMineLVL1.ConfigValue.booleanValue()) ? 35 : 10, 4, 4));
-    this.spawnableMonsterList.add(new SpawnListEntry(EntityBoneBodyguard.class, (StuckTagConfig.TagConfig.TagBattleSufferLVL2.ConfigValue.booleanValue() || StuckTagConfig.TagConfig.TagBattleSufferLVL1.ConfigValue.booleanValue()) ? 35 : 10, 4, 4));
-    if (ExperimentalConfig.TagConfig.TagCreaturesV2.ConfigValue.booleanValue())
+    this.spawnableMonsterList.add(new SpawnListEntry(EntityRetinueZombie.class, (Config.TagFallenInMineLVL2.get() || Config.TagFallenInMineLVL1.get()) ? 35 : 10, 4, 4));
+    this.spawnableMonsterList.add(new SpawnListEntry(EntityBoneBodyguard.class, (Config.TagBattleSufferLVL2.get() || Config.TagBattleSufferLVL1.get()) ? 35 : 10, 4, 4));
+    if (Config.TagCreaturesV2.get())
       RegenAnimals(); 
-    if (StuckTagConfig.TagConfig.TagApocalypse.ConfigValue.booleanValue())
+    if (Config.TagApocalypse.get())
       DisgenAnimals(); 
   }
   

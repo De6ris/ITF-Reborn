@@ -10,6 +10,8 @@ public class Constant {
 
     public static final ResourceLocation icons_itf = new ResourceLocation("textures/gui/icons_mitf.png");
 
+    public static final int CONFIG_VERSION = 1;
+
     public static int nextPotionID = 24;
 
     public static int nextEnchantmentID = 96;
@@ -20,6 +22,7 @@ public class Constant {
 
     public static int nextPacketID = 109;
     public static int nextEntityID = 114;
+    public static int nextCurseID = 16;
 
     public static int getNextEntityID() {
         return nextEntityID++;
@@ -40,6 +43,11 @@ public class Constant {
     public static int getNextAchievementID() {
         return nextAchievementID++;
     }
+
+    public static int getNextCurseID() {
+        return nextCurseID++;
+    }
+
 
 
     public static ItemArmor[] HELMETS = null;
@@ -77,54 +85,56 @@ public class Constant {
 
     public static int CalculateCurrentDiff() {
         int Diff = 0;
-        if (StuckTagConfig.TagConfig.TagFallenInMineLVL1.ConfigValue.booleanValue() && !StuckTagConfig.TagConfig.TagFallenInMineLVL2.ConfigValue.booleanValue())
+        if (Config.TagFallenInMineLVL1.get() && !Config.TagFallenInMineLVL2.get())
             Diff++;
-        if (StuckTagConfig.TagConfig.TagBattleSufferLVL1.ConfigValue.booleanValue() && !StuckTagConfig.TagConfig.TagBattleSufferLVL2.ConfigValue.booleanValue())
+        if (Config.TagBattleSufferLVL1.get() && !Config.TagBattleSufferLVL2.get())
             Diff++;
-        if (StuckTagConfig.TagConfig.TagFallenInMineLVL2.ConfigValue.booleanValue())
+        if (Config.TagFallenInMineLVL2.get())
             Diff += 2;
-        if (StuckTagConfig.TagConfig.TagBattleSufferLVL2.ConfigValue.booleanValue())
+        if (Config.TagBattleSufferLVL2.get())
             Diff += 2;
-        if (StuckTagConfig.TagConfig.TagHeatStroke.ConfigValue.booleanValue())
+        if (Config.TagHeatStroke.get())
             Diff++;
-        if (StuckTagConfig.TagConfig.TagNoWeatherPredict.ConfigValue.booleanValue())
+        if (Config.TagNoWeatherPredict.get())
             Diff++;
-        if (StuckTagConfig.TagConfig.TagInstinctSurvival.ConfigValue.booleanValue())
+        if (Config.TagInstinctSurvival.get())
             Diff++;
-        if (StuckTagConfig.TagConfig.TagInvisibleFollower.ConfigValue.booleanValue())
+        if (Config.TagInvisibleFollower.get())
             Diff++;
-        if (StuckTagConfig.TagConfig.TagLegendFreeze.ConfigValue.booleanValue())
+        if (Config.TagLegendFreeze.get())
             Diff++;
-        if (StuckTagConfig.TagConfig.TagEternalRaining.ConfigValue.booleanValue())
+        if (Config.TagEternalRaining.get())
             Diff += 2;
-        if (StuckTagConfig.TagConfig.TagUnstableConvection.ConfigValue.booleanValue())
+        if (Config.TagUnstableConvection.get())
             Diff++;
-        if (StuckTagConfig.TagConfig.TagDryDilemma.ConfigValue.booleanValue())
+        if (Config.TagDryDilemma.get())
             Diff++;
-        if (StuckTagConfig.TagConfig.TagDeadgeothermy.ConfigValue.booleanValue())
+        if (Config.TagDeadGeothermy.get())
             Diff += 2;
-        if (StuckTagConfig.TagConfig.TagHeatStorm.ConfigValue.booleanValue())
+        if (Config.TagHeatStorm.get())
             Diff++;
-        if (StuckTagConfig.TagConfig.TagApocalypse.ConfigValue.booleanValue())
+        if (Config.TagApocalypse.get())
             Diff += 3;
-        if (StuckTagConfig.TagConfig.TagWorshipDark.ConfigValue.booleanValue())
+        if (Config.TagWorshipDark.get())
             Diff += 2;
-        if (StuckTagConfig.TagConfig.TagMiracleDisaster.ConfigValue.booleanValue())
+        if (Config.TagMiracleDisaster.get())
             Diff++;
-        if (StuckTagConfig.TagConfig.TagAcousma.ConfigValue.booleanValue())
+        if (Config.TagAcousma.get())
             Diff++;
-        if (StuckTagConfig.TagConfig.TagPseudovision.ConfigValue.booleanValue())
+        if (Config.TagPseudoVision.get())
             Diff++;
-        if (StuckTagConfig.TagConfig.TagRejection.ConfigValue.booleanValue())
+        if (Config.TagRejection.get())
             Diff += 2;
-        if (StuckTagConfig.TagConfig.TagUnderAlliance.ConfigValue.booleanValue())
+        if (Config.TagUnderAlliance.get())
             Diff++;
-        if (StuckTagConfig.TagConfig.TagArmament.ConfigValue.booleanValue())
+
+        if (Config.TagArmament.get())
             Diff -= 2;
-        if (StuckTagConfig.TagConfig.TagDistortion.ConfigValue.booleanValue())
+        if (Config.TagDistortion.get())
             Diff -= 2;
-        if (StuckTagConfig.TagConfig.TagDigest.ConfigValue.booleanValue())
+        if (Config.TagDigest.get())
             Diff -= 2;
+
         return Diff;
     }
 }

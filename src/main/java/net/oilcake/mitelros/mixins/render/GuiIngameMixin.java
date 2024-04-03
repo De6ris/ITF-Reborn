@@ -1,29 +1,12 @@
 package net.oilcake.mitelros.mixins.render;
 
-import java.util.Random;
-
-import net.minecraft.AttributeInstance;
-import net.minecraft.DamageSource;
-import net.minecraft.Entity;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.EntityPlayer;
-import net.minecraft.FoodStats;
-import net.minecraft.Gui;
-import net.minecraft.GuiIngame;
-import net.minecraft.Item;
-import net.minecraft.Material;
-import net.minecraft.MathHelper;
-import net.minecraft.Minecraft;
-import net.minecraft.Potion;
-import net.minecraft.ScaledResolution;
-import net.minecraft.SharedMonsterAttributes;
-import net.minecraft.WeatherEvent;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.item.potion.PotionExtend;
+import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.util.Constant;
-import net.oilcake.mitelros.util.ExperimentalConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
@@ -36,148 +19,19 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.Random;
+
 @Mixin({GuiIngame.class})
 public class GuiIngameMixin extends Gui {
     @Shadow
     @Final
     private Minecraft mc;
 
-    @Shadow
-    @Final
-    private Random rand;
-
-    @Shadow
-    private int updateCounter;
-
-    @Overwrite
-    private void func_110327_a(int par1, int par2) {
-        boolean var3 = (this.mc.thePlayer.hurtResistantTime / 3 % 2 == 1);
-        if (this.mc.thePlayer.hurtResistantTime < 10)
-            var3 = false;
-        int var4 = MathHelper.ceiling_float_int(this.mc.thePlayer.getHealth());
-        int var5 = MathHelper.ceiling_float_int(this.mc.thePlayer.prevHealth);
-        this.rand.setSeed(this.updateCounter * 312871L);
-        FoodStats foodStats = this.mc.thePlayer.getFoodStats();
-        int var8 = foodStats.getNutrition();
-        AttributeInstance var10 = this.mc.thePlayer.getEntityAttribute(SharedMonsterAttributes.maxHealth);
-        int var11 = par1 / 2 - 91;
+    @Inject(method = "func_110327_a",at = @At("HEAD"))
+    private void injectITFWater(int par1, int par2, CallbackInfo ci) {
         int var12 = par1 / 2 + 91;
         int var13 = par2 - 39;
-        float var14 = (float) var10.getAttributeValue();
-        float var15 = this.mc.thePlayer.getAbsorptionAmount();
-        int var16 = MathHelper.ceiling_float_int((var14 + var15) / 2.0F / 10.0F);
-        int var17 = Math.max(10 - var16 - 2, 3);
-        int var18 = var13 - (var16 - 1) * var17 - 10;
-        float var19 = var15;
-        float total_protection = this.mc.thePlayer.getTotalProtection((DamageSource) null);
-        int var20 = MathHelper.ceiling_float_int(total_protection);
-        int var21 = -1;
-        if (this.mc.thePlayer.isPotionActive(Potion.regeneration))
-            var21 = this.updateCounter % MathHelper.ceiling_float_int(var14 + 5.0F);
-        this.mc.mcProfiler.startSection("armor");
-        int var22;
-        for (var22 = 0; var22 < 10; var22++) {
-            if (total_protection > 0.0F || this.mc.thePlayer.isWearingArmor()) {
-                int var23 = var11 + var22 * 8;
-                if (var22 * 2 + 1 < var20)
-                    drawTexturedModalRect(var23, var18, 34, 9, 9, 9);
-                if (var22 * 2 + 1 == var20)
-                    drawTexturedModalRect(var23, var18, 25, 9, 9, 9);
-                if (var22 * 2 + 1 > var20)
-                    drawTexturedModalRect(var23, var18, 16, 9, 9, 9);
-            }
-        }
-        this.mc.mcProfiler.endStartSection("health");
-        for (var22 = MathHelper.ceiling_float_int((var14 + var15) / 2.0F) - 1; var22 >= 0; var22--) {
-            int var23 = 16;
-            if (this.mc.thePlayer.isPotionActive(Potion.poison)) {
-                var23 += 36;
-            } else if (this.mc.thePlayer.isPotionActive(Potion.wither)) {
-                var23 += 72;
-            }
-            byte var24 = 0;
-            if (var3)
-                var24 = 1;
-            int var25 = MathHelper.ceiling_float_int((var22 + 1) / 10.0F) - 1;
-            int var26 = var11 + var22 % 10 * 8;
-            int var27 = var13 - var25 * var17;
-            if (var4 <= 4)
-                var27 += this.rand.nextInt(2);
-            if (var22 == var21)
-                var27 -= 2;
-            int var28 = 0;
-            if (this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled())
-                var28 = 5;
-            if (var22 < this.mc.thePlayer.getMaxHealth() / 2.0F)
-                drawTexturedModalRect(var26, var27, 16 + var24 * 9, 9 * var28, 9, 9);
-            if (var3) {
-                if (var22 * 2 + 1 < var5)
-                    drawTexturedModalRect(var26, var27, var23 + 54, 9 * var28, 9, 9);
-                if (var22 * 2 + 1 == var5)
-                    drawTexturedModalRect(var26, var27, var23 + 63, 9 * var28, 9, 9);
-            }
-            if (var19 > 0.0F) {
-                if (var19 == var15 && var15 % 2.0F == 1.0F) {
-                    drawTexturedModalRect(var26, var27, var23 + 153, 9 * var28, 9, 9);
-                } else {
-                    drawTexturedModalRect(var26, var27, var23 + 144, 9 * var28, 9, 9);
-                }
-                var19 -= 2.0F;
-            } else {
-                if (var22 * 2 + 1 < var4)
-                    drawTexturedModalRect(var26, var27, var23 + 36, 9 * var28, 9, 9);
-                if (var22 * 2 + 1 == var4)
-                    drawTexturedModalRect(var26, var27, var23 + 45, 9 * var28, 9, 9);
-            }
-        }
-        Entity var34 = this.mc.thePlayer.ridingEntity;
-        if (var34 != null && !(var34 instanceof net.minecraft.EntityBoat)) {
-            if (var34 instanceof EntityLivingBase) {
-                this.mc.mcProfiler.endStartSection("mountHealth");
-                EntityLivingBase var38 = (EntityLivingBase) var34;
-                int var28 = (int) Math.ceil(var38.getHealth());
-                float var37 = var38.getMaxHealth();
-                int var26 = (int) (var37 + 0.5F) / 2;
-                if (var26 > 30)
-                    var26 = 30;
-                int var27 = var13;
-                for (int var39 = 0; var26 > 0; var39 += 20) {
-                    int var29 = Math.min(var26, 10);
-                    var26 -= var29;
-                    for (int var30 = 0; var30 < var29; var30++) {
-                        byte var31 = 52;
-                        byte var32 = 0;
-                        int var33 = var12 - var30 * 8 - 9;
-                        drawTexturedModalRect(var33, var27, var31 + var32 * 9, 9, 9, 9);
-                        if (var30 * 2 + 1 + var39 < var28)
-                            drawTexturedModalRect(var33, var27, var31 + 36, 9, 9, 9);
-                        if (var30 * 2 + 1 + var39 == var28)
-                            drawTexturedModalRect(var33, var27, var31 + 45, 9, 9, 9);
-                    }
-                    var27 -= 10;
-                }
-            }
-        } else {
-            this.mc.mcProfiler.endStartSection("food");
-            for (int var23 = 0; var23 < 10; var23++) {
-                int var28 = var13;
-                int var25 = 16;
-                byte var36 = 0;
-                if (this.mc.thePlayer.isPotionActive(Potion.hunger) || this.mc.thePlayer.isPotionActive(PotionExtend.dehydration)) {
-                    var25 += 36;
-                    var36 = 13;
-                }
-                if (this.mc.thePlayer.isHungry() && this.updateCounter % (var8 * 3 + 1) == 0)
-                    var28 = var13 + this.rand.nextInt(3) - 1;
-                int var27 = var12 - var23 * 8 - 9;
-                if (var23 < this.mc.thePlayer.getFoodStats().getNutritionLimit() / 2)
-                    drawTexturedModalRect(var27, var28, 16 + var36 * 9, 27, 9, 9);
-                if (var23 * 2 + 1 < var8)
-                    drawTexturedModalRect(var27, var28, var25 + 36, 27, 9, 9);
-                if (var23 * 2 + 1 == var8)
-                    drawTexturedModalRect(var27, var28, var25 + 45, 27, 9, 9);
-            }
-        }
+        FoodStats foodStats = this.mc.thePlayer.getFoodStats();
         this.mc.getTextureManager().bindTexture(Constant.icons_itf);
         this.mc.mcProfiler.endStartSection("water");
         int water = ((ITFFoodStats) foodStats).getWater();
@@ -186,6 +40,10 @@ public class GuiIngameMixin extends Gui {
             int var25 = 16;
             int var36 = 0;
             int var27 = var12 - temp * 8 - 9;
+//            if (this.mc.thePlayer.isPotionActive(PotionExtend.dehydration)) {
+//                var36 += 27;
+//                var25 = 9;
+//            }
             if (temp < ((ITFFoodStats) this.mc.thePlayer.getFoodStats()).getWaterLimit() / 2)
                 drawTexturedModalRect(var27, var28, 16 + var36 * 9, 54, 9, 9);
             if (temp * 2 + 1 < water)
@@ -193,20 +51,40 @@ public class GuiIngameMixin extends Gui {
             if (temp * 2 + 1 == water)
                 drawTexturedModalRect(var27, var28, var25 + 18, 54, 9, 9);
         }
+    }
+    @Inject(method = "func_110327_a",at = @At("HEAD"))
+    private void injectITFAir(int par1, int par2, CallbackInfo ci) {
+        AttributeInstance var10 = this.mc.thePlayer.getEntityAttribute(SharedMonsterAttributes.maxHealth);
+        int var12 = par1 / 2 + 91;
+        int var13 = par2 - 39;
+        float var14 = (float)var10.getAttributeValue();
+        float var15 = this.mc.thePlayer.getAbsorptionAmount();
+        int var16 = MathHelper.ceiling_float_int((var14 + var15) / 2.0F / 10.0F);
+        int var17 = Math.max(10 - (var16 - 2), 3);
+        int displayY = var13 - (var16 - 1) * var17 - 20;
+        int var23;
+        int var25;
+        int var26;
+        int var28;
         this.mc.mcProfiler.endStartSection("air");
         if (this.mc.thePlayer.isInsideOfMaterial(Material.water)) {
-            int var23 = this.mc.thePlayer.getAir();
-            int var28 = MathHelper.ceiling_double_int((var23 - 2) * 10.0D / 300.0D);
-            int var25 = MathHelper.ceiling_double_int(var23 * 10.0D / 300.0D) - var28;
-            for (int var26 = 0; var26 < var28 + var25; var26++) {
+            var23 = this.mc.thePlayer.getAir();
+            var28 = MathHelper.ceiling_double_int((double)(var23 - 2) * 10.0 / 300.0);
+            var25 = (byte) (MathHelper.ceiling_double_int((double)var23 * 10.0 / 300.0) - var28);
+
+            for(var26 = 0; var26 < var28 + var25; ++var26) {
                 if (var26 < var28) {
-                    drawTexturedModalRect(var12 - var26 * 8 - 9, var18 - 9, 16, 18, 9, 9);
+                    this.drawTexturedModalRect(var12 - var26 * 8 - 9, displayY, 16, 18, 9, 9);
                 } else {
-                    drawTexturedModalRect(var12 - var26 * 8 - 9, var18 - 9, 25, 18, 9, 9);
+                    this.drawTexturedModalRect(var12 - var26 * 8 - 9, displayY, 25, 18, 9, 9);
                 }
             }
         }
-        this.mc.mcProfiler.endSection();
+    }
+    @Inject(method = "func_110327_a", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityClientPlayerMP;isInsideOfMaterial(Lnet/minecraft/Material;)Z"), cancellable = true)
+    private void injectITFCancelAir(int par1, int par2, CallbackInfo ci) {
+        this.mc.mcProfiler.endStartSection("air");
+        ci.cancel();
     }
 
     @Inject(method = {"renderGameOverlay(FZII)V"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z", shift = At.Shift.BEFORE)})
@@ -280,7 +158,7 @@ public class GuiIngameMixin extends Gui {
             }
             String t = " §c挑战难度: " + Constant.CalculateCurrentDiff() + "§r ";
             StringBuilder var68 = (new StringBuilder()).append("MITE-ITF ");
-            if (((Boolean) ExperimentalConfig.TagConfig.FinalChallenge.ConfigValue).booleanValue() && Constant.CalculateCurrentDiff() == 25)
+            if (((Boolean) Config.FinalChallenge.get()) && Constant.CalculateCurrentDiff() == 25)
                 t = " §4终极难度§r ";
             if (Constant.CalculateCurrentDiff() < 0)
                 t = " §a休闲难度§r ";

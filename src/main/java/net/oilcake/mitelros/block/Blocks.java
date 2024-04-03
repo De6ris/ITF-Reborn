@@ -50,6 +50,7 @@ public class Blocks {
     public static final Block blockSmokerIdle = (new BlockSmoker(getNextBlockID(), false))
             .setHardness(2.0F).
             setResistance(20.0F).
+            setCreativeTab(CreativeTabs.tabDecorations).
             setStepSound(Block.soundStoneFootstep);
 
     public static final Block blockSmokerBurning = (new BlockSmoker(getNextBlockID(), true))

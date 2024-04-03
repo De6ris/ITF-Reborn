@@ -7,7 +7,7 @@ public class CurseExtend extends Curse {
     super(id, key);
   }
   
-  public static final Curse fear_of_darkness = new Curse(17, "fearOfDarkness");
+  public static final Curse fear_of_darkness = new Curse(Constant.getNextCurseID(), "fearOfDarkness");
   
-  public static final Curse fear_of_light = new Curse(18, "fearOfLight");
+  public static final Curse fear_of_light = new Curse(Constant.getNextCurseID(), "fearOfLight");
 }

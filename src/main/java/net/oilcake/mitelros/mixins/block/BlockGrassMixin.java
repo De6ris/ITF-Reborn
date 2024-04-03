@@ -1,20 +1,14 @@
 package net.oilcake.mitelros.mixins.block;
 
-import java.util.Random;
-import net.minecraft.Block;
-import net.minecraft.BlockConstants;
-import net.minecraft.BlockGrass;
-import net.minecraft.IBlockAccess;
-import net.minecraft.Item;
-import net.minecraft.ItemDye;
-import net.minecraft.ItemStack;
-import net.minecraft.Material;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.block.Blocks;
+import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.util.SeasonColorizer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.Random;
 
 @Mixin({BlockGrass.class})
 public class BlockGrassMixin extends Block {
@@ -27,18 +21,33 @@ public class BlockGrassMixin extends Block {
     int var5 = 0;
     int var6 = 0;
     int var7 = 0;
+
     int r;
-    for (r = -1; r <= 1; r++) {
-      for (int i = -1; i <= 1; i++) {
-        int j = par1IBlockAccess.getBiomeGenForCoords(par2 + i, par4 + r).getBiomeGrassColor();
-        var5 += SeasonColorizer.getSeasonColorizerModifierRed(par1IBlockAccess.getWorld(), (j & 0xFF0000) >> 16);
-        var6 += (j & 0xFF00) >> 8;
-        var7 += j & 0xFF;
-      } 
-    } 
-    r = var5 / 9 & 0xFF;
-    int g = var6 / 9 & 0xFF;
-    int b = var7 / 9 & 0xFF;
+    int g;
+    int b;
+    if (Config.SeasonColor.get()) {
+      for (r = -1; r <= 1; ++r) {
+        for (g = -1; g <= 1; ++g) {
+          b = par1IBlockAccess.getBiomeGenForCoords(par2 + g, par4 + r).getBiomeGrassColor();
+          var5 += SeasonColorizer.getSeasonColorizerModifierRed(par1IBlockAccess.getWorld(), (b & 16711680) >> 16);
+          var6 += (b & '\uff00') >> 8;
+          var7 += b & 255;
+        }
+      }
+    } else {
+      for (r = -1; r <= 1; ++r) {
+        for (g = -1; g <= 1; ++g) {
+          b = par1IBlockAccess.getBiomeGenForCoords(par2 + g, par4 + r).getBiomeGrassColor();
+          var5 += (b & 16711680) >> 16;
+          var6 += (b & 65280) >> 8;
+          var7 += b & 255;
+        }
+      }
+    }
+
+    r = var5 / 9 & 255;
+    g = var6 / 9 & 255;
+    b = var7 / 9 & 255;
     float trampling_effect = getTramplingEffect(getTramplings(par1IBlockAccess.getBlockMetadata(par2, par3, par4)));
     if (trampling_effect > 0.0F) {
       float weight_grass = 1.0F - trampling_effect;

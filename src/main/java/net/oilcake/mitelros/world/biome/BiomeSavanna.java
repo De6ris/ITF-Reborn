@@ -1,14 +1,10 @@
 package net.oilcake.mitelros.world.biome;
 
-import java.util.Random;
-
-import net.minecraft.BiomeGenBase;
-import net.minecraft.Block;
-import net.minecraft.EntityHorse;
-import net.minecraft.SpawnListEntry;
-import net.minecraft.WorldGenerator;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFBiomeDecorator;
-import net.oilcake.mitelros.util.StuckTagConfig;
+import net.oilcake.mitelros.util.Config;
+
+import java.util.Random;
 
 public class BiomeSavanna extends BiomeGenBase {
     private boolean enableRain;
@@ -27,7 +23,7 @@ public class BiomeSavanna extends BiomeGenBase {
         setMinMaxHeight(0.1F, 0.4F);
         setTemperatureRainfall(1.6F, 0.0F);
         setDisableRain();
-        if (((Boolean) StuckTagConfig.TagConfig.TagApocalypse.ConfigValue).booleanValue())
+        if (((Boolean) Config.TagApocalypse.get()))
             removeEntityFromSpawnableLists(EntityHorse.class);
     }
 

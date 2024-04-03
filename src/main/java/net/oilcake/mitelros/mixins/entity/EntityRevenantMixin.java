@@ -1,16 +1,12 @@
 package net.oilcake.mitelros.mixins.entity;
 
-import net.minecraft.Entity;
-import net.minecraft.EntityRevenant;
-import net.minecraft.EntityZombie;
-import net.minecraft.EnumEntityFX;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.SharedMonsterAttributes;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.entity.EntityRetinueZombie;
-import net.oilcake.mitelros.util.StuckTagConfig;
+import net.oilcake.mitelros.util.Config;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({EntityRevenant.class})
 public class EntityRevenantMixin extends EntityZombie {
@@ -23,15 +19,15 @@ public class EntityRevenantMixin extends EntityZombie {
   public EntityRevenantMixin(World world) {
     super(world);
   }
-  
-  @Overwrite
-  protected void applyEntityAttributes() {
+
+  @Inject(method = "applyEntityAttributes", at = @At("RETURN"))
+  protected void applyEntityAttributes(CallbackInfo ci) {
     super.applyEntityAttributes();
     setEntityAttribute(SharedMonsterAttributes.followRange, 40.0D);
     setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.25999999046325684D);
-    setEntityAttribute(SharedMonsterAttributes.attackDamage, ((Boolean)StuckTagConfig.TagConfig.TagFallenInMineLVL2.ConfigValue).booleanValue() ? 8.75D : 7.0D);
+    setEntityAttribute(SharedMonsterAttributes.attackDamage, ((Boolean) Config.TagFallenInMineLVL2.get()).booleanValue() ? 8.75D : 7.0D);
     setEntityAttribute(field_110186_bp, this.rand.nextDouble() * 0.10000000149011612D);
-    setEntityAttribute(SharedMonsterAttributes.maxHealth, ((Boolean)StuckTagConfig.TagConfig.TagFallenInMineLVL2.ConfigValue).booleanValue() ? 45.0D : 30.0D);
+    setEntityAttribute(SharedMonsterAttributes.maxHealth, ((Boolean) Config.TagFallenInMineLVL2.get()).booleanValue() ? 45.0D : 30.0D);
   }
   
   public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
@@ -55,7 +51,7 @@ public class EntityRevenantMixin extends EntityZombie {
       } 
       if (this.spawnSums <= 8 && this.gathering_troops)
         if (this.spawnCounter < 20) {
-          if (((Boolean)StuckTagConfig.TagConfig.TagFallenInMineLVL2.ConfigValue).booleanValue())
+          if (((Boolean) Config.TagFallenInMineLVL2.get()).booleanValue())
             this.spawnCounter++; 
         } else {
           EntityRetinueZombie Belongings = new EntityRetinueZombie(this.worldObj);

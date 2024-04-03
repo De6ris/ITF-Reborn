@@ -1,13 +1,7 @@
 package net.oilcake.mitelros.mixins.block;
 
-import net.minecraft.Block;
-import net.minecraft.BlockBreakInfo;
-import net.minecraft.BlockConstants;
-import net.minecraft.BlockDirectionalWithTileEntity;
-import net.minecraft.BlockFurnace;
-import net.minecraft.Item;
-import net.minecraft.Material;
-import net.oilcake.mitelros.util.ExperimentalConfig;
+import net.minecraft.*;
+import net.oilcake.mitelros.util.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,7 +14,7 @@ public abstract class BlockFurnaceMixin extends BlockDirectionalWithTileEntity {
   
   @Overwrite
   public int dropBlockAsEntityItem(BlockBreakInfo info) {
-    if (((Boolean)ExperimentalConfig.TagConfig.TagBenchingV2.ConfigValue).booleanValue()) {
+    if (((Boolean) Config.TagBenchingV2.get())) {
       Block model_block, furnace_block = Block.getBlock(getIdleBlockID());
       if (furnace_block == Block.furnaceClayIdle) {
         if (!info.wasExploded())

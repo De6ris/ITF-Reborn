@@ -1,63 +1,16 @@
 package net.oilcake.mitelros.mixins.world;
 
+import net.minecraft.*;
+import net.oilcake.mitelros.entity.*;
+import net.oilcake.mitelros.util.Config;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
-
-import net.minecraft.BiomeGenBase;
-import net.minecraft.Block;
-import net.minecraft.Chunk;
-import net.minecraft.ChunkCoordIntPair;
-import net.minecraft.Entity;
-import net.minecraft.EntityBlackWidowSpider;
-import net.minecraft.EntityBlob;
-import net.minecraft.EntityBoneLord;
-import net.minecraft.EntityCreeper;
-import net.minecraft.EntityDemonSpider;
-import net.minecraft.EntityEarthElemental;
-import net.minecraft.EntityGhast;
-import net.minecraft.EntityGhoul;
-import net.minecraft.EntityHellhound;
-import net.minecraft.EntityInfernalCreeper;
-import net.minecraft.EntityInvisibleStalker;
-import net.minecraft.EntityJelly;
-import net.minecraft.EntityLightningBolt;
-import net.minecraft.EntityNightwing;
-import net.minecraft.EntityOoze;
-import net.minecraft.EntityPhaseSpider;
-import net.minecraft.EntityPudding;
-import net.minecraft.EntityRevenant;
-import net.minecraft.EntityShadow;
-import net.minecraft.EntitySkeleton;
-import net.minecraft.EntitySlime;
-import net.minecraft.EntitySpider;
-import net.minecraft.EntityVampireBat;
-import net.minecraft.EntityWight;
-import net.minecraft.EntityWoodSpider;
-import net.minecraft.EntityZombie;
-import net.minecraft.EnumCreatureType;
-import net.minecraft.ExtendedBlockStorage;
-import net.minecraft.IChunkProvider;
-import net.minecraft.ILogAgent;
-import net.minecraft.ISaveHandler;
-import net.minecraft.Profiler;
-import net.minecraft.SpawnListEntry;
-import net.minecraft.WeightedRandom;
-import net.minecraft.World;
-import net.minecraft.WorldProvider;
-import net.minecraft.WorldServer;
-import net.minecraft.WorldSettings;
-import net.oilcake.mitelros.entity.EntityBoneBodyguard;
-import net.oilcake.mitelros.entity.EntityClusterSpider;
-import net.oilcake.mitelros.entity.EntityGhost;
-import net.oilcake.mitelros.entity.EntityRetinueZombie;
-import net.oilcake.mitelros.entity.EntityStalkerCreeper;
-import net.oilcake.mitelros.entity.EntityZombieLord;
-import net.oilcake.mitelros.util.StuckTagConfig;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin({WorldServer.class})
 public class WorldServerMixin extends World {
@@ -93,7 +46,7 @@ public class WorldServerMixin extends World {
                     if (this.rand.nextInt(40) >= y && this.rand.nextFloat() < 0.5F)
                         return EntityInfernalCreeper.class;
                     if (y <= 40)
-                        return ((Boolean) StuckTagConfig.TagConfig.TagInvisibleFollower.ConfigValue).booleanValue() ? EntityStalkerCreeper.class : entity_class;
+                        return ((Boolean) Config.TagInvisibleFollower.get()) ? EntityStalkerCreeper.class : entity_class;
                     return entity_class;
                 }
             } else if (entity_class == EntitySlime.class) {
@@ -210,7 +163,7 @@ public class WorldServerMixin extends World {
         Iterator<ChunkCoordIntPair> var3 = this.activeChunkSet.iterator();
         boolean perform_random_block_ticks = shouldRandomBlockTicksBePerformed();
         boolean is_blood_moon = isBloodMoon24HourPeriod();
-        for (int rarity_of_lightning = is_blood_moon ? (((Boolean) StuckTagConfig.TagConfig.TagUnstableConvection.ConfigValue).booleanValue() ? 5000 : 20000) : (((Boolean) StuckTagConfig.TagConfig.TagUnstableConvection.ConfigValue).booleanValue() ? 25000 : 100000); var3.hasNext(); this.theProfiler.endSection()) {
+        for (int rarity_of_lightning = is_blood_moon ? (((Boolean) Config.TagUnstableConvection.get()) ? 5000 : 20000) : (((Boolean) Config.TagUnstableConvection.get()) ? 25000 : 100000); var3.hasNext(); this.theProfiler.endSection()) {
             ChunkCoordIntPair var4 = var3.next();
             int var5 = var4.chunkXPos * 16;
             int var6 = var4.chunkZPos * 16;

@@ -1,28 +1,14 @@
 package net.oilcake.mitelros.mixins.world;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Random;
-import net.minecraft.Block;
-import net.minecraft.ChunkCoordIntPair;
-import net.minecraft.ChunkCoordinates;
-import net.minecraft.ChunkPosition;
-import net.minecraft.Entity;
-import net.minecraft.EntityBat;
-import net.minecraft.EntityGhast;
-import net.minecraft.EntityLiving;
-import net.minecraft.EntityLivingData;
-import net.minecraft.EntityPhaseSpider;
-import net.minecraft.EnumCreatureType;
-import net.minecraft.EnumSkyBlock;
-import net.minecraft.MathHelper;
-import net.minecraft.SpawnerAnimals;
-import net.minecraft.World;
-import net.minecraft.WorldServer;
-import net.oilcake.mitelros.util.ExperimentalConfig;
+import net.minecraft.*;
+import net.oilcake.mitelros.util.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Random;
 
 @Mixin({SpawnerAnimals.class})
 public class SpawnerCreatureMixin {
@@ -226,7 +212,7 @@ public class SpawnerCreatureMixin {
     float hostile_mob_spawning_rate_modifier;
     if (world.provider.dimensionId != 0)
       return 0.25F; 
-    if (((Boolean)ExperimentalConfig.TagConfig.TagSpawningV2.ConfigValue).booleanValue()) {
+    if (((Boolean) Config.TagSpawningV2.get())) {
       hostile_mob_spawning_rate_modifier = Math.abs(world.getTimeOfDay() - 12000.0F) / 6000.0F;
       if (hostile_mob_spawning_rate_modifier < 1.0F && (world.isBloodMoon(false) || world.isThundering(true)))
         hostile_mob_spawning_rate_modifier = 1.0F; 

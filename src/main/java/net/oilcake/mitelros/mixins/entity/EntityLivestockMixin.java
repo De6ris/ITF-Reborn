@@ -1,8 +1,8 @@
 package net.oilcake.mitelros.mixins.entity;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.util.DamageSourceExtend;
-import net.oilcake.mitelros.util.ExperimentalConfig;
 import net.xiaoyu233.fml.reload.transform.util.EntityLivestockAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,7 +25,7 @@ public abstract class EntityLivestockMixin extends EntityAnimal implements Entit
 
     @Inject(method = {"onLivingUpdate()V"}, at = @At(value = "HEAD", shift = At.Shift.AFTER))
     private void injectIllnessToDeath(CallbackInfo c) {
-        if (!ExperimentalConfig.TagConfig.Realistic.ConfigValue.booleanValue()) return;
+        if (!Config.Realistic.get()) return;
         if (!this.worldObj.isRemote) {
             if (!isWell()) {
                 this.illnessToDeathCounter++;

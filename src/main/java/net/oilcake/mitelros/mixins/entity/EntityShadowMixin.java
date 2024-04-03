@@ -1,13 +1,7 @@
 package net.oilcake.mitelros.mixins.entity;
 
-import net.minecraft.Damage;
-import net.minecraft.DamageSource;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.EntityLivingData;
-import net.minecraft.EntityMob;
-import net.minecraft.EntityShadow;
-import net.minecraft.World;
-import net.oilcake.mitelros.util.StuckTagConfig;
+import net.minecraft.*;
+import net.oilcake.mitelros.util.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -37,7 +31,7 @@ public class EntityShadowMixin extends EntityMob {
         if (amount_to_heal > 0)
           heal(amount_to_heal); 
       } 
-      if (getTarget() != null && !this.cursed_player && ((Boolean)StuckTagConfig.TagConfig.TagPseudovision.ConfigValue).booleanValue()) {
+      if (getTarget() != null && !this.cursed_player && ((Boolean) Config.TagPseudoVision.get()).booleanValue()) {
         EntityLivingBase entityLivingBase = getTarget();
         if (entityLivingBase instanceof net.minecraft.EntityPlayer) {
           this.cursed_player = true;

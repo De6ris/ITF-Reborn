@@ -6,23 +6,23 @@ import java.io.IOException;
 
 public class SpecializedTPAConfig {
   public static String G = File.separator;
-  
+
   public static String MODs = "configs";
-  
+
   public static String TPA = MODs + G + "TPA";
-  
+
   public static String TPALIST = MODs + G + "TPA" + G + "tpaList.ini";
-  
+
   public static String TPACONGFIG = MODs + G + "TPA" + G + "tpaConfig.ini";
-  
+
   public static String TPAYorN = MODs + G + "TPA" + G + "tpaYorN.ga";
-  
+
   public static String TPAHOME = MODs + G + "TPA" + G + "tpaHome.ga";
-  
+
   public static String TPABACK = MODs + G + "TPA" + G + "tpaBack.ga";
-  
+
   public static String TPATIME = MODs + G + "TPA" + G + "tpaTime.ga";
-  
+
   public static void FileInit() {
     System.out.println("SPECIALIZED TPA CONFIG LOADED");
     File file_Config = new File(MODs);
@@ -31,7 +31,7 @@ public class SpecializedTPAConfig {
     File file = new File(TPA);
     file.setWritable(false, false);
     if (!file.exists() || !file.isDirectory())
-      file.mkdir(); 
+      file.mkdir();
     File file_tpaList = new File(TPALIST);
     file_tpaList.setWritable(false, false);
     if (!file_tpaList.exists())
@@ -44,7 +44,7 @@ public class SpecializedTPAConfig {
         fw.close();
       } catch (IOException var15) {
         var15.printStackTrace();
-      }  
+      }
     File file_tpaConfig = new File(TPACONGFIG);
     file_tpaConfig.setWritable(false, false);
     if (!file_tpaConfig.exists())
@@ -61,7 +61,7 @@ public class SpecializedTPAConfig {
         fw.close();
       } catch (IOException var14) {
         var14.printStackTrace();
-      }  
+      }
     File file_tpaYorN = new File(TPAYorN);
     file_tpaYorN.setWritable(false, false);
     if (!file_tpaYorN.exists())
@@ -69,7 +69,7 @@ public class SpecializedTPAConfig {
         file_tpaYorN.createNewFile();
       } catch (IOException var13) {
         var13.printStackTrace();
-      }  
+      }
     File file_tpaHome = new File(TPAHOME);
     file_tpaHome.setWritable(false, false);
     if (!file_tpaHome.exists())
@@ -77,7 +77,7 @@ public class SpecializedTPAConfig {
         file_tpaHome.createNewFile();
       } catch (IOException var12) {
         var12.printStackTrace();
-      }  
+      }
     File file_tpaBack = new File(TPABACK);
     file_tpaBack.setWritable(false, false);
     if (!file_tpaBack.exists())
@@ -85,7 +85,7 @@ public class SpecializedTPAConfig {
         file_tpaBack.createNewFile();
       } catch (IOException var11) {
         var11.printStackTrace();
-      }  
+      }
     File file_tpaTime = new File(TPATIME);
     file_tpaTime.setWritable(false, false);
     if (!file_tpaTime.exists())
@@ -93,6 +93,6 @@ public class SpecializedTPAConfig {
         file_tpaTime.createNewFile();
       } catch (IOException var10) {
         var10.printStackTrace();
-      }  
+      }
   }
 }

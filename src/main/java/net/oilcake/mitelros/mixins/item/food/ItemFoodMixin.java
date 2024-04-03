@@ -1,25 +1,17 @@
 package net.oilcake.mitelros.mixins.item.food;
 
-import java.util.Random;
-
-import net.minecraft.Entity;
-import net.minecraft.EntityPlayer;
-import net.minecraft.Item;
-import net.minecraft.ItemFood;
-import net.minecraft.ItemStack;
-import net.minecraft.Material;
-import net.minecraft.Potion;
-import net.minecraft.PotionEffect;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.util.StuckTagConfig;
+import net.oilcake.mitelros.util.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Random;
 
 @Mixin({ItemFood.class})
 public class ItemFoodMixin extends Item {
@@ -35,9 +27,9 @@ public class ItemFoodMixin extends Item {
 
     public int resetWaterVal(int id, Material material) {
         if (material == Material.fruit)
-            return ((Boolean) StuckTagConfig.TagConfig.TagDryDilemma.ConfigValue).booleanValue() ? 1 : 2;
+            return ((Boolean) Config.TagDryDilemma.get()) ? 1 : 2;
         if (id == 135)
-            return ((Boolean) StuckTagConfig.TagConfig.TagDryDilemma.ConfigValue).booleanValue() ? 1 : 2;
+            return ((Boolean) Config.TagDryDilemma.get()) ? 1 : 2;
         if (material == Materials.glowberries)
             return 1;
         if (material == Material.cheese || id == 88)
@@ -61,17 +53,17 @@ public class ItemFoodMixin extends Item {
                 player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
             if (hasMaterial(Materials.glowberries)) {
                 Random rand = new Random();
-                if (rand.nextDouble() > (((Boolean) StuckTagConfig.TagConfig.TagDryDilemma.ConfigValue).booleanValue() ? 0.5D : 1.0D))
+                if (rand.nextDouble() > (((Boolean) Config.TagDryDilemma.get()) ? 0.5D : 1.0D))
                     player.addWater(-1);
             }
             if (hasMaterial(Materials.agave)) {
                 Random rand = new Random();
-                if (rand.nextDouble() > (((Boolean) StuckTagConfig.TagConfig.TagDryDilemma.ConfigValue).booleanValue() ? 0.2D : 0.4D))
+                if (rand.nextDouble() > (((Boolean) Config.TagDryDilemma.get()) ? 0.2D : 0.4D))
                     player.addWater(-1);
             }
             if (this.itemID == Item.egg.itemID) {
                 Random rand = new Random();
-                if (rand.nextDouble() > (((Boolean) StuckTagConfig.TagConfig.TagDryDilemma.ConfigValue).booleanValue() ? 0.5D : 0.25D))
+                if (rand.nextDouble() > (((Boolean) Config.TagDryDilemma.get()).booleanValue() ? 0.5D : 0.25D))
                     player.addWater(1);
             }
             player.addFoodValue(this);
