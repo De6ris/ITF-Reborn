@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "itf-reborn",
+  "version": "${version}",
+  "depends": {
+    "fishmodloader": ">=3.2.1"
+  },
+  "environment": "*",
+  "name": "ITF-Reborn",
+  "description": "",
+  "authors": [
+    "Huix",
+    "Rizur",
+    "Debris"
+  ],
+  "entrypoints": {
+    "preLaunch": [
+      "net.oilcake.mitelros.EarlyRiser"
+    ],
+    "main": [
+      "net.oilcake.mitelros.ITFStart"
+    ]
+  },
+  "mixins": [
+    "MITEIsTooFalse.mixins.json"
+  ],
+  "accessWidener": "MITEIsTooFalse.accesswidener",
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/EntityPlayer": [
+        "net/oilcake/mitelros/api/ITFPlayer"
+      ]
+    }
+  }
+}

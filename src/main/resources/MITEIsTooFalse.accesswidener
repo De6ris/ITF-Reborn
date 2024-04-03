@@ -1,0 +1,34 @@
+accessWidener v2 named
+accessible method net/minecraft/Block setHardness (F)Lnet/minecraft/Block;
+accessible method net/minecraft/Block setLightValue (F)Lnet/minecraft/Block;
+accessible method net/minecraft/Block setResistance (F)Lnet/minecraft/Block;
+accessible method net/minecraft/Block setTextureName (Ljava/lang/String;)Lnet/minecraft/Block;
+accessible method net/minecraft/Block setStepSound (Lnet/minecraft/StepSound;)Lnet/minecraft/Block;
+
+accessible method net/minecraft/Damage getResponsibleEntity ()Lnet/minecraft/Entity;
+
+accessible method net/minecraft/EntityLivingBase tryDamageArmor (Lnet/minecraft/DamageSource;FLnet/minecraft/EntityDamageResult;)V
+
+accessible field net/minecraft/Entity rand Ljava/util/Random;
+
+accessible field net/minecraft/Material durability F
+
+accessible method net/minecraft/EnumInsulinResistanceLevel getColor ()Lnet/minecraft/EnumChatFormatting;
+
+accessible method net/minecraft/SlotCrafting getNumCraftingResults (Lnet/minecraft/EntityPlayer;)I
+
+accessible method net/minecraft/CraftingManager addRecipe (Lnet/minecraft/ItemStack;Z[Ljava/lang/Object;)Lnet/minecraft/ShapedRecipes;
+accessible method net/minecraft/CraftingManager addShapelessRecipe (Lnet/minecraft/ItemStack;Z[Ljava/lang/Object;)Lnet/minecraft/ShapelessRecipes;
+
+accessible field net/minecraft/Material name Ljava/lang/String;
+accessible field net/minecraft/Material min_harvest_level I
+
+accessible method net/minecraft/ItemStack isItemStackEqual (Lnet/minecraft/ItemStack;ZZZZ)Z
+
+accessible method net/minecraft/DamageSource setFireAspect (Z)Lnet/minecraft/DamageSource;
+
+accessible method net/minecraft/World chunkExistsAndIsNotEmptyFromBlockCoords (II)Z
+
+extendable class net/minecraft/BlockDoor
+
+accessible field net/minecraft/EntitySkeleton frenzied_by_bone_lord_countdown I
