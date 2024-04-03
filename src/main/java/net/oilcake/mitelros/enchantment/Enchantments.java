@@ -24,7 +24,7 @@ public class Enchantments {
 
     public static final Enchantment enchantmentSweeping = new EnchantmentSweeping(Constant.getNextEnchantmentID(), EnumRarity.rare, 10);
 
-    public static final Enchantment enchantmentMending = new EnchantmentMending(Constant.getNextEnchantmentID(), EnumRarity.epic, 20);// TODO rewrite EnchantmentLevel.ultimate
+    public static final Enchantment enchantmentMending = new EnchantmentMending(Constant.getNextEnchantmentID(), EnumRarity.epic, 20);// TODO deal with ultimate
 
     public static void registerEnchantments(EnchantmentRegistryEvent event) {
         event.registerEnchantment(enchantmentMelting, enchantmentAbsorb, enchantmentVanishing, enchantmentDestroying, enchantmentCallofNether, enchantmentInfinity, enchantmentArrogance, enchantmentThresher, enchantmentSweeping, enchantmentMending);

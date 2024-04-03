@@ -68,7 +68,6 @@
     "entity.slime.EntityOozeMixin",
     "entity.slime.EntityPuddingMixin",
     "entity.villager.ContainerMerchantMixin",
-    "fml.FishModLoaderTrans",
     "item.ItemArmorMixin",
     "item.ItemArrowMixin",
     "item.ItemBlockMixin",
