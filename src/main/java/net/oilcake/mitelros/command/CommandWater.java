@@ -26,11 +26,11 @@ public class CommandWater extends CommandBase {
         EntityPlayer serverPlayer = getCommandSenderAsPlayer(iCommandListener);
         switch (strings[0]) {
             case "get":
-                iCommandListener.sendChatToPlayer(ChatMessageComponent.createFromText("水数值为" + ((ITFPlayer) serverPlayer).getWater()).setColor(EnumChatFormatting.WHITE));
+                iCommandListener.sendChatToPlayer(ChatMessageComponent.createFromText("水分值为" + ((ITFPlayer) serverPlayer).getWater()).setColor(EnumChatFormatting.WHITE));
                 return;
             case "add":
                 ((ITFPlayer) serverPlayer).addWater(Integer.parseInt(strings[1]));
-                iCommandListener.sendChatToPlayer(ChatMessageComponent.createFromText("水数值现在为" + ((ITFPlayer) serverPlayer).getWater()).setColor(EnumChatFormatting.WHITE));
+                iCommandListener.sendChatToPlayer(ChatMessageComponent.createFromText("水分值现在为" + ((ITFPlayer) serverPlayer).getWater()).setColor(EnumChatFormatting.WHITE));
                 return;
         }
         iCommandListener.sendChatToPlayer(ChatMessageComponent.createFromText("用法:/water <get|add>").setColor(EnumChatFormatting.RED));

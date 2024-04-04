@@ -6,5 +6,5 @@ import net.minecraft.Explosion;
 public interface ITFWorld {
     int getWorldSeason();
     float getSeasonGrowthModifier();
-    Explosion newExplosionC(Entity exploder, double posX, double posY, double posZ, float explosion_size_vs_blocks, float explosion_size_vs_living_entities);
+    Explosion newExplosionC(Entity exploder, double posX, double posY, double posZ, float explosion_size_vs_blocks, float explosion_size_vs_living_entities, boolean b);
 }

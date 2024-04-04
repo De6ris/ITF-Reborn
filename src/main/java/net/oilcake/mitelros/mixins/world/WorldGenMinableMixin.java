@@ -47,7 +47,9 @@ public class WorldGenMinableMixin {
     if (block == Block.oreIron)
       return 0; 
     if (block == Blocks.oreNickel)
-      return 0; 
+      return 0;
+    if (block == Blocks.blockAzurite)
+      return 32;
     if (block == Blocks.oreTungsten)
       return 0; 
     if (block == Block.oreMithril)
@@ -156,6 +158,10 @@ public class WorldGenMinableMixin {
       do {
         relative_height = rand.nextFloat();
       } while (relative_height >= rand.nextFloat());
+    } else if (block == Blocks.blockAzurite) {
+      do {
+        relative_height = rand.nextFloat();
+      } while(!(relative_height < rand.nextFloat()));
     } else if (block == Block.oreMithril) {
       do {
         relative_height = rand.nextFloat();

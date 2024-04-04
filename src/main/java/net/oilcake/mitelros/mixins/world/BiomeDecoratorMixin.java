@@ -22,6 +22,8 @@ public class BiomeDecoratorMixin implements ITFBiomeDecorator {
 
     private WorldGenMinable tungstenGen;
 
+    private WorldGenMinable azuriteGen;
+
     protected WorldGenFlowersExtend flowerExtendGen;
 
     protected int flowersExtendPerChunk;
@@ -93,6 +95,7 @@ public class BiomeDecoratorMixin implements ITFBiomeDecorator {
     public void BiomeDecorator(CallbackInfo callbackInfo) {
         this.nickelGen = new WorldGenMinable(Blocks.oreNickel.blockID, 6);
         this.tungstenGen = new WorldGenMinable(Blocks.oreTungsten.blockID, 3);
+        this.azuriteGen = new WorldGenMinable(Blocks.blockAzurite.blockID, 4);
         this.flowerExtendGen = new WorldGenFlowersExtend(Blocks.flowerextend.blockID);
         this.flowersExtendPerChunk = 2;
     }
@@ -103,6 +106,7 @@ public class BiomeDecoratorMixin implements ITFBiomeDecorator {
             genMinable(200, this.gravelGen);
             genMinable(50, this.coalGen);
             genMinable(40, this.copperGen, true);
+            this.genMinable(10, this.azuriteGen, true);
             genMinable(10, this.silverGen, true);
             genMinable(20, this.goldGen, true);
             genMinable(60, this.ironGen, true);

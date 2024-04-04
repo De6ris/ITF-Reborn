@@ -10,7 +10,8 @@ import net.xiaoyu233.fml.reload.event.ItemRegistryEvent;
 import net.xiaoyu233.fml.reload.event.RecipeRegistryEvent;
 import net.xiaoyu233.fml.util.IdUtil;
 
-import static net.xiaoyu233.fml.util.ReflectHelper.createInstance;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 public class Blocks {
     public static int getNextBlockID() {
@@ -107,6 +108,28 @@ public class Blocks {
     public static final Block flowerPotExtend = (new BlockFlowerPotExtend(getNextBlockID()))
             .setHardness(0.0F).setStepSound(Block.soundPowderFootstep).setUnlocalizedName("flowerPot");
 
+    public static final Block blockAzurite = new BlockGrowableOre(getNextBlockID(), Materials.crystal, 2)
+            .setStepSound(Block.soundGlassFootstep).
+            setHardness(1.2F).
+            setResistance(12.0f).setLightValue(0.75F);
+
+    public static final Block azuriteCluster = new BlockCaveMisc(getNextBlockID(), Materials.crystal)
+            .setLightValue(0.5F).
+            setHardness(0.6F).
+            setMinHarvestLevel(1).
+            setResistance(6.0f).setStepSound(Block.soundGlassFootstep);
+
+    public static final Block torchWoodIdle = (new BlockTorchIdle(getNextBlockID()))
+            .setHardness(0.0F).
+            setLightValue(0.5F).
+            setStepSound(Block.soundWoodFootstep).
+            setUnlocalizedName("torch");
+
+    public static final Block torchWoodDistinguished = (new BlockTorchIdle(getNextBlockID()))
+            .setHardness(0.0F).
+            setLightValue(0.0F).
+            setStepSound(Block.soundWoodFootstep).
+            setUnlocalizedName("torch");
 
     public static void registerBlocks(ItemRegistryEvent registryEvent) {
         registryEvent.registerAnvil(anvilNickel, "nickel_anvil");
@@ -136,6 +159,10 @@ public class Blocks {
         registryEvent.registerItemBlock(beetroots, "beetroot");
         registryEvent.registerItemBlock(beetrootsDead, "beetroot");
         registryEvent.registerItemBlock(flowerPotExtend, "flower_pot");
+        registryEvent.registerItemBlock(blockAzurite, "azurite_block");
+        registryEvent.registerItemBlock(azuriteCluster, "azurite_cluster");
+        registryEvent.registerItemBlock(torchWoodIdle, "torch_idle");
+        registryEvent.registerItemBlock(torchWoodDistinguished, "torch_off");
     }
 
     public static void registerRecipes(RecipeRegistryEvent register) {
@@ -143,7 +170,7 @@ public class Blocks {
 
                 Character.valueOf('A'), Block.wood,
                 Character.valueOf('B'), Block.furnaceIdle);
-        register.registerShapedRecipe(new ItemStack(fenceNickel, 16), true, "   ", "AAA", "AAA",
+        register.registerShapedRecipe(new ItemStack(fenceNickel, 16), true, "AAA", "AAA",
 
                 Character.valueOf('A'), Items.nickelIngot);
         register.registerShapelessRecipe(new ItemStack(blockNickel), true, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot);
@@ -174,9 +201,15 @@ public class Blocks {
         register.registerShapedRecipe(new ItemStack(blockTungsten), true, "XXX", "XXX", "XXX",
 
                 Character.valueOf('X'), Items.tungstenIngot);
-        register.registerShapedRecipe(new ItemStack(fenceTungsten, 16), true, "XXX", "XXX", "   ",
+        register.registerShapedRecipe(new ItemStack(fenceTungsten, 16), true, "XXX", "XXX",
 
                 Character.valueOf('X'), Items.tungstenIngot);
+        register.registerShapedRecipe(new ItemStack(azuriteCluster), true, "EE",
+
+                Character.valueOf('E'), Items.shardAzurite);
+        register.registerShapedRecipe(new ItemStack(blockAzurite),true, "XXX", "XXX", "XXX",
+
+                Character.valueOf('X'), Items.shardAzurite);
         register.registerShapelessRecipe(new ItemStack(Items.glowberries, 1), true, new ItemStack(flowerextend, 1, 0));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 7), true, new ItemStack(flowerextend, 1, 1));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 4), true, new ItemStack(flowerextend, 1, 2));
@@ -190,4 +223,23 @@ public class Blocks {
         FurnaceRecipes.smelting().addSmelting(oreUru.blockID, new ItemStack(Items.UruIngot));
     }
 
+    static {
+        try {
+            Field field = Block.class.getDeclaredField("is_normal_cube_lookup");
+            field.setAccessible(true);
+            Field modifiers = field.getClass().getDeclaredField("modifiers");
+            modifiers.setAccessible(true);
+            modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+            field.set(null,new boolean[4096]);
+            boolean[] is_normal_block = (boolean[]) field.get(null);
+            for (Block block : Block.blocksList) {
+                if (block !=null) {
+                    is_normal_block[block.blockID] = block.is_normal_cube;
+                }
+            }
+            modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+    }
 }

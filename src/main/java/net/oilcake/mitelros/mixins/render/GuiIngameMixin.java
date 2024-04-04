@@ -89,7 +89,7 @@ public class GuiIngameMixin extends Gui {
 
     @Inject(method = {"renderGameOverlay(FZII)V"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z", shift = At.Shift.BEFORE)})
     private void injectRenderPos(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
-        if (!Minecraft.inDevMode() && (!this.mc.gameSettings.showDebugInfo || this.mc.gameSettings.gui_mode != 0) && Minecraft.getErrorMessage() == null) {
+        if (!Minecraft.inDevMode() && (!this.mc.gameSettings.showDebugInfo || this.mc.gameSettings.gui_mode != 0) && Minecraft.getErrorMessage() == null && Config.DisplayHud.get()) {
             String Weather, s, RainSnow, pos = "平面坐标: (" + MathHelper.floor_double(this.mc.thePlayer.posX) + ", " + MathHelper.floor_double(this.mc.thePlayer.posZ) + ") ";
             String time = "时间: (" + this.mc.thePlayer.getWorld().getHourOfDay() + ":" + (this.mc.thePlayer.getWorld().getTotalWorldTime() % 1000L * 60L / 1000L) + ") ";
             EntityPlayer player = this.mc.thePlayer.getAsPlayer();
@@ -169,8 +169,7 @@ public class GuiIngameMixin extends Gui {
             if (Constant.CalculateCurrentDiff() != 0)
                 var68.append(t);
             var68.append(Weather);
-            var68.append("   FPS=").append(Minecraft.last_fps).append(" (");
-            drawString(this.mc.fontRenderer, var68.append(Minecraft.last_fp10s).append(")").toString(), 2, 2, 14737632);
+            drawString(this.mc.fontRenderer, var68.toString(), 2, 2, 14737632);
         }
     }
 

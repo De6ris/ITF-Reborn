@@ -4,6 +4,7 @@ import java.util.Random;
 import net.minecraft.Block;
 import net.minecraft.World;
 import net.minecraft.WorldGenerator;
+import net.oilcake.mitelros.block.Blocks;
 
 public class WorldGenStoneCone extends WorldGenerator {
   private boolean isSuperLarge = false;
@@ -17,6 +18,16 @@ public class WorldGenStoneCone extends WorldGenerator {
     posz *= posz;
     rad *= rad;
     return (posx + posz <= rad);
+  }
+
+  public int getFlitteredBlockID(Random random){
+    if(random.nextInt(4) == 0){
+      return Block.stone.blockID;
+    }else if(random.nextInt(4) == 0){
+      return Blocks.blockAzurite.blockID;
+    }else {
+      return Block.cobblestone.blockID;
+    }
   }
   
   public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5) {
@@ -34,12 +45,12 @@ public class WorldGenStoneCone extends WorldGenerator {
         for (int j = -radius; j <= radius; j++) {
           if (CalRadius(radius, i, j) && par1World.getBlock(par3 + i, par4 - 3 + layer, par5 + j) != Block.bedrock) {
             if (temp.nextInt(3) == 0 && radius >= 1) {
-              par1World.setBlock(par3 + i - 1, par4 - 3 + layer, par5 + j, (temp.nextInt(4) == 0) ? Block.stone.blockID : Block.cobblestone.blockID, 0, 2);
-              par1World.setBlock(par3 + i + 1, par4 - 3 + layer, par5 + j, (temp.nextInt(4) == 0) ? Block.stone.blockID : Block.cobblestone.blockID, 0, 2);
-              par1World.setBlock(par3 + i, par4 - 3 + layer, par5 + j - 1, (temp.nextInt(4) == 0) ? Block.stone.blockID : Block.cobblestone.blockID, 0, 2);
-              par1World.setBlock(par3 + i, par4 - 3 + layer, par5 + j + 1, (temp.nextInt(4) == 0) ? Block.stone.blockID : Block.cobblestone.blockID, 0, 2);
-            } 
-            par1World.setBlock(par3 + i, par4 - 3 + layer, par5 + j, (temp.nextInt(4) == 0) ? Block.stone.blockID : Block.cobblestone.blockID, 0, 2);
+              par1World.setBlock(par3 + i - 1, par4 - 3 + layer, par5 + j, getFlitteredBlockID(temp), 0, 2);
+              par1World.setBlock(par3 + i + 1, par4 - 3 + layer, par5 + j, getFlitteredBlockID(temp), 0, 2);
+              par1World.setBlock(par3 + i, par4 - 3 + layer, par5 + j - 1, getFlitteredBlockID(temp), 0, 2);
+              par1World.setBlock(par3 + i, par4 - 3 + layer, par5 + j + 1, getFlitteredBlockID(temp), 0, 2);
+            }
+            par1World.setBlock(par3 + i, par4 - 3 + layer, par5 + j, getFlitteredBlockID(temp), 0, 2);
           } 
         } 
       } 

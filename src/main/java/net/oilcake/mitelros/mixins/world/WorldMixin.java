@@ -34,7 +34,7 @@ public abstract class WorldMixin implements ITFWorld {
         this.provider = provider;
     }
 
-    public Explosion newExplosionC(Entity exploder, double posX, double posY, double posZ, float explosion_size_vs_blocks, float explosion_size_vs_living_entities) {
+    public Explosion newExplosionC(Entity exploder, double posX, double posY, double posZ, float explosion_size_vs_blocks, float explosion_size_vs_living_entities, boolean b) {
         Explosion explosion = new Explosion(this.getWorld(), exploder, posX, posY, posZ, explosion_size_vs_blocks, explosion_size_vs_living_entities);
         explosion.doExplosionA();
         explosion.affectedBlockPositions.clear();
