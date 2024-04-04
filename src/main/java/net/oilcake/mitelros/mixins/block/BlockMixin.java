@@ -24,7 +24,7 @@ public abstract class BlockMixin {
         mySetLightValue(Blocks.blockAzurite, 0.75f);
         mySetLightValue(Blocks.azuriteCluster, 0.5f);
         mySetLightValue(Blocks.torchWoodIdle, 0.5f);
-        mySetLightValue(Blocks.torchWoodDistinguished, 0.0f);
+        mySetLightValue(Blocks.torchWoodExtinguished, 0.0f);
     }
 
     private static void mySetLightValue(Block block, float par1) {// TODO for temporary use
