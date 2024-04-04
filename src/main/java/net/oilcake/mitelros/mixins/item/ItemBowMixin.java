@@ -61,6 +61,8 @@ public class ItemBowMixin extends Item {
         Material material = item_stack.getMaterialForRepairs();
         if (material == Materials.tungsten) {
             TicksPull = 30;
+        } else if (material == Materials.uru) {
+            TicksPull = 33;
         } else if (material == Material.mithril) {
             TicksPull = 27;
         } else if (material == Material.ancient_metal) {
@@ -99,6 +101,8 @@ public class ItemBowMixin extends Item {
         Material material = item_stack.getMaterialForRepairs();
         if (material == Materials.tungsten) {
             entity_arrow.setDamage(entity_arrow.getDamage() * 1.149999976158142D);
+        } else if (material == Materials.uru) {
+            entity_arrow.setDamage(entity_arrow.getDamage() * 1.199999966878156D);
         } else if (material == Material.mithril) {
             entity_arrow.setDamage(entity_arrow.getDamage() * 1.100000023841858D);
         } else if (material == Material.ancient_metal) {
@@ -113,7 +117,7 @@ public class ItemBowMixin extends Item {
 
     @Inject(method = {"<init>(ILnet/minecraft/Material;)V"}, at = {@At("RETURN")})
     private void injectInit(CallbackInfo callbackInfo) {
-        this.setMaxDamage((this.reinforcement_material == Materials.tungsten) ? 256 : ((this.reinforcement_material == Material.mithril) ? 128 : ((this.reinforcement_material == Material.ancient_metal) ? 64 : 32)));
+        this.setMaxDamage((this.reinforcement_material == Materials.tungsten) ? 256 : ((this.reinforcement_material == Materials.uru) ? 512 : ((this.reinforcement_material == Material.mithril) ? 128 : ((this.reinforcement_material == Material.ancient_metal) ? 64 : 32))));
     }
 
     /**
@@ -123,7 +127,7 @@ public class ItemBowMixin extends Item {
     @Overwrite
     public void addInformation(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot) {
         if (extended_info && this.reinforcement_material.isMetal()) {
-            int bonus = (this.reinforcement_material == Material.mithril) ? 25 : ((this.reinforcement_material == Materials.tungsten) ? 35 : 10);
+            int bonus = (this.reinforcement_material == Material.mithril) ? 25 : ((this.reinforcement_material == Materials.tungsten) ? 35 : ((this.reinforcement_material == Materials.uru) ? 45 : 10));
             info.add("");
             info.add(EnumChatFormatting.BLUE + Translator.getFormatted("item.tooltip.velocityBonus", new Object[]{Integer.valueOf(bonus)}));
         }
@@ -134,6 +138,8 @@ public class ItemBowMixin extends Item {
     private Item redirectSetMaxDamage(ItemBow instance, int i) {
         if (this.reinforcement_material == Materials.tungsten) {
             setMaxDamage(256);
+        } else if (this.reinforcement_material == Materials.uru) {
+            setMaxDamage(512);
         } else if (this.reinforcement_material == Material.mithril) {
             setMaxDamage(128);
         } else if (this.reinforcement_material == Material.ancient_metal) {

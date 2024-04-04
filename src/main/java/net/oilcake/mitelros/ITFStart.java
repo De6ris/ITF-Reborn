@@ -15,7 +15,7 @@ import java.util.Optional;
 public class ITFStart implements ModInitializer {
     private transient final ConfigRegistry configRegistry = new ConfigRegistry(Config.StuckTags, Config.CONFIG_FILE);
 
-    public static final String Version = "H15";
+    public static final String Version = "H15s";
 
     @Override
     public void onInitialize() {

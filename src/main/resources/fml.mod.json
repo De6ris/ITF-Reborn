@@ -1,17 +1,18 @@
 {
   "schemaVersion": 1,
-  "id": "itf-reborn",
+  "id": "mite-itf-reborn",
   "version": "${version}",
   "depends": {
     "fishmodloader": ">=3.2.1"
   },
   "environment": "*",
-  "name": "ITF-Reborn",
+  "name": "MITE-ITF-Reborn",
   "description": "",
   "authors": [
     "Huix",
     "Rizur",
-    "Debris"
+    "Debris",
+    "Xy_Lose"
   ],
   "entrypoints": {
     "preLaunch": [

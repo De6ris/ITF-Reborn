@@ -452,6 +452,8 @@ public class Items extends Item {
 
     public static final Item sulphur = new ItemStandard(Constant.getNextItemID(), Materials.sulphur, "sulphur_sphere").setMaxStackSize(16);
 
+    public static final ItemBow bowUru = new ItemBow(Constant.getNextItemID(), Materials.uru);
+
     public static void registerItems(ItemRegistryEvent event) {
         event.register("armor/nickel_helmet", nickelHelmet);
         event.register("armor/nickel_chestplate", nickelChestplate);
@@ -670,6 +672,7 @@ public class Items extends Item {
         event.register("tools/detector", detectorDiamond);
         event.register("tools/detector_emerald", detectorEmerald);
         event.register("sulphur_sphere", sulphur);
+        event.register("bows/uru/", bowUru).setUnlocalizedName("uru_bow");
         Constant.initItemArray();
     }
 
@@ -849,6 +852,7 @@ public class Items extends Item {
         register.registerShapelessRecipe(new ItemStack(UruWarHammer, 1), true, forgingnote, UruIngot, Item.warHammerMithril, Item.ingotMithril);
         register.registerShapelessRecipe(new ItemStack(UruMattock, 1), true, forgingnote, UruIngot, Item.mattockMithril, Item.ingotMithril);
         register.registerShapelessRecipe(new ItemStack(UruMorningStar, 1), true, forgingnote, UruIngot, morningStarMithril, Item.ingotMithril);
+        register.registerShapelessRecipe(new ItemStack(bowUru, 1), true, forgingnote, UruIngot, Item.bowMithril, Item.ingotMithril);
         register.registerShapelessRecipe(new ItemStack(UruPickaxe, 1), true, forgingnote, UruIngot, Item.pickaxeMithril, Item.ingotMithril);
         register.registerShapelessRecipe(new ItemStack(UruNugget, 9), true, UruIngot);
         register.registerShapelessRecipe(new ItemStack(HelmetAncientmetalsacred, 1), true, forgingnote, Item.ingotGold, Item.helmetAncientMetal);

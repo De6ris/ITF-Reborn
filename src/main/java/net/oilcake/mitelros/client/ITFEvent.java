@@ -76,6 +76,16 @@ public class ITFEvent {
             world.spawnEntityInWorld(new EntityFireworkRocket(world, player.posX, player.posY + 5.0D, player.posZ, itemStack2));
             event.setExecuteSuccess(true);
         }
+        if (par2Str.startsWith("difficulty")) {
+            player.sendChatToPlayer(ChatMessageComponent.createFromText("当前难度: " + Constant.CalculateCurrentDiff())
+                    .setColor(Constant.CalculateCurrentDiff() >= 16 ? EnumChatFormatting.DARK_RED :
+                            Constant.CalculateCurrentDiff() >= 12 ? EnumChatFormatting.RED :
+                                    Constant.CalculateCurrentDiff() >= 8 ? EnumChatFormatting.YELLOW :
+                                            Constant.CalculateCurrentDiff() >= 4 ? EnumChatFormatting.GREEN :
+                                                    Constant.CalculateCurrentDiff() > 0 ? EnumChatFormatting.AQUA :
+                                                            EnumChatFormatting.BLUE));
+            event.setExecuteSuccess(true);
+        }
     }
 
     @Subscribe
