@@ -207,7 +207,7 @@ public class Blocks {
         register.registerShapedRecipe(new ItemStack(azuriteCluster), true, "EE",
 
                 Character.valueOf('E'), Items.shardAzurite);
-        register.registerShapedRecipe(new ItemStack(blockAzurite),true, "XXX", "XXX", "XXX",
+        register.registerShapedRecipe(new ItemStack(blockAzurite), true, "XXX", "XXX", "XXX",
 
                 Character.valueOf('X'), Items.shardAzurite);
         register.registerShapelessRecipe(new ItemStack(Items.glowberries, 1), true, new ItemStack(flowerextend, 1, 0));
@@ -230,10 +230,10 @@ public class Blocks {
             Field modifiers = field.getClass().getDeclaredField("modifiers");
             modifiers.setAccessible(true);
             modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-            field.set(null,new boolean[4096]);
+            field.set(null, new boolean[4096]);
             boolean[] is_normal_block = (boolean[]) field.get(null);
             for (Block block : Block.blocksList) {
-                if (block !=null) {
+                if (block != null) {
                     is_normal_block[block.blockID] = block.is_normal_cube;
                 }
             }
