@@ -104,18 +104,21 @@ public class ITFEvent {
     public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
         ServerPlayer player = event.getPlayer();
         player.setHealth(player.getHealth());
-        player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("[Server]")
+        player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("[Client]")
                 .appendComponent(ChatMessageComponent.createFromTranslationKey("MITE-ITF挂载成功,当前版本:").setColor(EnumChatFormatting.BLUE))
-                .appendComponent(ChatMessageComponent.createFromText(ITFStart.Version).setColor(EnumChatFormatting.YELLOW)));
-        player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("[Server]")
-                .appendComponent(ChatMessageComponent.createFromTranslationKey("作者:Lee074,Huix,Kalsey").setColor(EnumChatFormatting.BLUE)));
-        player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("[Server]")
-                .appendComponent(ChatMessageComponent.createFromTranslationKey("由Debris移植至FML3.2.1").setColor(EnumChatFormatting.BLUE)));
-        player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("[Server]")
-                .appendComponent(ChatMessageComponent.createFromTranslationKey("感谢所有在更新历程中贡献思路/测试bug的玩家").setColor(EnumChatFormatting.BLUE)));
-        player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("[Server]")
-                .appendComponent(ChatMessageComponent.createFromTranslationKey("当前难度：" + Constant.CalculateCurrentDiff()).setColor((Constant.CalculateCurrentDiff() >= 16) ? EnumChatFormatting.DARK_RED : ((Constant.CalculateCurrentDiff() >= 12) ? EnumChatFormatting.RED : ((Constant.CalculateCurrentDiff() >= 8) ? EnumChatFormatting.YELLOW : ((Constant.CalculateCurrentDiff() >= 4) ? EnumChatFormatting.GREEN : ((Constant.CalculateCurrentDiff() > 0) ? EnumChatFormatting.AQUA : EnumChatFormatting.BLUE)))))));
-        if (!Minecraft.inDevMode())
+                .appendComponent(ChatMessageComponent.createFromText(ITFStart.Version).setColor(EnumChatFormatting.YELLOW))
+                .appendComponent(ChatMessageComponent.createFromTranslationKey(",作者:Lee074,Huix,Kalsey,并由Debris移植到FML3.2.1")));
+        if (Constant.CalculateCurrentDiff() != 0) {
+            player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("[MITE-ITF]")
+                    .appendComponent(ChatMessageComponent.createFromTranslationKey("当前难度：" + Constant.CalculateCurrentDiff())
+                            .setColor((Constant.CalculateCurrentDiff() >= 16) ? EnumChatFormatting.DARK_RED :
+                                    ((Constant.CalculateCurrentDiff() >= 12) ? EnumChatFormatting.RED :
+                                            ((Constant.CalculateCurrentDiff() >= 8) ? EnumChatFormatting.YELLOW :
+                                                    ((Constant.CalculateCurrentDiff() >= 4) ? EnumChatFormatting.GREEN :
+                                                            ((Constant.CalculateCurrentDiff() > 0) ? EnumChatFormatting.AQUA :
+                                                                    EnumChatFormatting.BLUE)))))));
+        }
+    if (!Minecraft.inDevMode())
             player.vision_dimming = 1.25F;
         if (((ITFPlayer) player).getNewPlayerManager().getNew()) {
             ItemStack guide = new ItemStack(Items.guide);

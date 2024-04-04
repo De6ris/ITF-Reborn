@@ -20,7 +20,7 @@ public class ItemPickaxeMixin extends ItemTool {
   
   @Inject(method = {"<init>(ILnet/minecraft/Material;)V"}, at = {@At("RETURN")})
   public void injectCtor(CallbackInfo callbackInfo) {
-    addMaterialsEffectiveAgainst(new Material[] { (Material)Materials.uru, (Material)Materials.tungsten, (Material)Materials.nickel });
+    addMaterialsEffectiveAgainst(new Material[] { (Material)Materials.uru, (Material)Materials.tungsten, (Material)Materials.nickel, (Material)Materials.crystal });
   }
   
   @Shadow

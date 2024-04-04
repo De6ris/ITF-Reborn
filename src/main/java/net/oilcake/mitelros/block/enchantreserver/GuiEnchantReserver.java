@@ -58,8 +58,26 @@ public class GuiEnchantReserver extends GuiContainer implements ICrafting {
         drawTexturedModalRect(var4, var5, 0, 0, this.xSize, this.ySize);
         int exp = Math.max(0, this.tileEntityEnchantReserver.getEXP() - 2000);
         int maxExp = this.tileEntityEnchantReserver.getMAXEXP() - 2000;
+        int r;
+        int g;
+        int b;
+        if(tileEntityEnchantReserver.getEXP() < 2000){
+            r = 160 + (int)(24.0F * ((float) tileEntityEnchantReserver.getEXP() / 2000.0F));
+            g = 30 + (int)(196.0F * ((float) tileEntityEnchantReserver.getEXP() / 2000.0F));
+            b = 30 - (int)(27.0F * ((float) tileEntityEnchantReserver.getEXP() / 2000.0F));
+        } else {
+            r = 184 - (int)(120.0F * ((float) exp / (float)maxExp));
+            g = 226 - (int)(66.0F * ((float) exp / (float)maxExp));
+            b = 3 + (int)(29.0F * ((float) exp / (float)maxExp));
+        }
+        int color = (r << 16) + (g << 8) + b;
         drawTexturedModalRect(var6 + 99, var7 + 21, 176, 0, 16, (int) (43.0F * exp / maxExp));
-        this.fontRenderer.drawString(exp + "/" + maxExp, this.width / 2 + 8, this.height / 2 - 70, 7048739);
+        if(tileEntityEnchantReserver.getEXP() < 2000) {
+            this.fontRenderer.drawString(tileEntityEnchantReserver.getEXP() + "/" + 2000 , this.width / 2 + 8, this.height / 2 - 70, color);
+        } else {
+            this.fontRenderer.drawString(exp + "/" + maxExp , this.width / 2 + 8, this.height / 2 - 70, color);
+        }
+
     }
 
     public void sendContainerAndContentsToPlayer(Container container, List list) {

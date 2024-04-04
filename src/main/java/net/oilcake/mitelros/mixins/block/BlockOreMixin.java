@@ -49,6 +49,9 @@ public class BlockOreMixin extends Block {
         id_dropped = -1;
       } else if (this == Block.oreRedstone) {
         id_dropped = -1;
+      } else if (this == Blocks.blockAzurite) {
+        id_dropped = Items.shardAzurite.itemID;
+        quantity_dropped = 1 + info.world.rand.nextInt(2);
       } else if (this == Block.oreCopper) {
         id_dropped = Items.pieceCopper.itemID;
         quantity_dropped = 1 + info.world.rand.nextInt(2);
@@ -100,6 +103,9 @@ public class BlockOreMixin extends Block {
       } else if (this == Block.oreRedstone) {
         id_dropped = Item.redstone.itemID;
         quantity_dropped = 3 + info.world.rand.nextInt(2);
+      } else if (this == Blocks.blockAzurite) {
+        id_dropped = Items.shardAzurite.itemID;
+        quantity_dropped = 3 + info.world.rand.nextInt(5);
       } else if (this == Block.oreCopper) {
         id_dropped = Items.pieceCopper.itemID;
         quantity_dropped = 3 + info.world.rand.nextInt(5);
@@ -140,6 +146,8 @@ public class BlockOreMixin extends Block {
         dropXpOnBlockBreak(info.world, info.x, info.y, info.z, (int)(530.0F * chance));
       } else if (this == Block.oreEmerald) {
         dropXpOnBlockBreak(info.world, info.x, info.y, info.z, (int)(270.0F * chance));
+      } else if (this == Blocks.blockAzurite) {
+        this.dropXpOnBlockBreak(info.world, info.x, info.y, info.z, (int)(((3 + info.world.rand.nextInt(5)) * 5)*chance));
       } else if (this == Block.oreNetherQuartz) {
         dropXpOnBlockBreak(info.world, info.x, info.y, info.z, (int)(60.0F * chance));
       } else if (this == Block.oreLapis) {

@@ -116,7 +116,7 @@
     "util.CraftingResultMixin",
     "util.CurseMixin",
     "util.DamageMixin",
-    "util.DedicatedServerMixin",
+    "server.DedicatedServerMixin",
     "util.EnchantmentManagerMixin",
     "util.EnchantmentNamePartsMixin",
     "util.EntityDamageResultMixin",

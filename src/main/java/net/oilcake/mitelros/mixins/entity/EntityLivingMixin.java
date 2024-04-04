@@ -49,12 +49,14 @@ public abstract class EntityLivingMixin extends Entity {
         PotionEffect slowdown_effect = getActivePotionEffect(Potion.moveSlowdown);
         PotionEffect haste_effect = getActivePotionEffect(Potion.moveSpeed);
         PotionEffect freeze_effect = getActivePotionEffect(PotionExtend.freeze);
+        PotionEffect stunning_effect = this.getActivePotionEffect(PotionExtend.stunning);
         float slow_amount = (slowdown_effect == null) ? 0.0F : ((slowdown_effect.getAmplifier() + 1) * -0.2F);
         float haste_amount = (haste_effect == null) ? 0.0F : ((haste_effect.getAmplifier() + 1) * 0.2F);
         float freeze_amount = (freeze_effect == null) ? 0.0F : ((freeze_effect.getAmplifier() + 1) * -0.24F);
+        float stunning_amount = stunning_effect == null? 0.0F : (float)(stunning_effect.getAmplifier() + 99) * -0.5F;
         if (this.isInWeb)
             slow_amount -= 0.75F;
-        double overall_speed_modifier = (slow_amount + haste_amount + freeze_amount);
+        double overall_speed_modifier = (double)(slow_amount + haste_amount + freeze_amount + stunning_amount);
         if (overall_speed_modifier < 0.0D)
             overall_speed_modifier *= (1.0F - getResistanceToParalysis());
         cir.setReturnValue((float) overall_speed_modifier);
