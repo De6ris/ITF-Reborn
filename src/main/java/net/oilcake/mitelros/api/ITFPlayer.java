@@ -6,14 +6,12 @@ import net.oilcake.mitelros.status.*;
 public interface ITFPlayer {
     void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots);
 
-    boolean InFreeze();
-
     float getBodyTemperature();
 
     NewPlayerManager getNewPlayerManager();
+    MiscManager getMiscManager();
 
-    DiarrheaManager getDiarrheaManager();
-
+    TemperatureManager getTemperatureManager();
     int getFreezingCooldown();
 
     int getWater();

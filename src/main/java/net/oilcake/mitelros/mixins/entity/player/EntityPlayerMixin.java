@@ -132,12 +132,8 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
                 target.canAttackWithItem()) {
             boolean critical = willDeliverCriticalStrike();
             float damage = calcRawMeleeDamageVs(target, critical, isSuspendedInLiquid());
-            if (damage <= 0.0F) {
+            if (damage <= 0.0F)
                 return;
-            }
-            if (this.isPotionActive(PotionExtend.stunning)) {
-                return;
-            }
             ItemStack heldItemStack = getHeldItemStack();
             if (EnchantmentHelper.hasEnchantment(heldItemStack, Enchantments.enchantmentDestroying)) {
                 int destorying = EnchantmentHelper.getEnchantmentLevel(Enchantments.enchantmentDestroying, heldItemStack);
@@ -177,8 +173,8 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
             if (target_was_harmed) {
                 if (target instanceof EntityLivingBase) {
                     int stunning = EnchantmentHelper.getStunModifier(this, (EntityLivingBase) target);
-                    if (stunning > Math.random() * 5.0D)
-                        ((EntityLivingBase) target).addPotionEffect(new PotionEffect(PotionExtend.stunning.id, stunning * 60, 0));
+                    if (stunning > Math.random() * 10.0D)
+                        ((EntityLivingBase) target).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, stunning * 50, stunning * 5));
                     heal(EnchantmentHelper.getVampiricTransfer(this, (EntityLivingBase) target, damage), EnumEntityFX.vampiric_gain);
                     if (EnchantmentHelper.hasEnchantment(heldItemStack, Enchantments.enchantmentSweeping)) {
                         List<Entity> targets = getNearbyEntities(5.0F, 5.0F);

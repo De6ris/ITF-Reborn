@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Random;
 
-@Mixin({GuiIngame.class})
+@Mixin(GuiIngame.class)
 public class GuiIngameMixin extends Gui {
     @Shadow
     @Final
@@ -83,7 +83,7 @@ public class GuiIngameMixin extends Gui {
     }
     @Inject(method = "func_110327_a", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityClientPlayerMP;isInsideOfMaterial(Lnet/minecraft/Material;)Z"), cancellable = true)
     private void injectITFCancelAir(int par1, int par2, CallbackInfo ci) {
-        this.mc.mcProfiler.endStartSection("air");
+        this.mc.mcProfiler.endSection();
         ci.cancel();
     }
 
