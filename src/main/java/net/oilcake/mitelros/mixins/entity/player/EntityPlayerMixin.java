@@ -1,5 +1,7 @@
 package net.oilcake.mitelros.mixins.entity.player;
 
+import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
 import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
 import net.oilcake.mitelros.achivements.AchievementExtend;
@@ -14,23 +16,23 @@ import net.oilcake.mitelros.status.*;
 import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.CurseExtend;
-import net.oilcake.mitelros.util.DamageSourceExtend;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
 
 @Mixin(EntityPlayer.class)
 public abstract class EntityPlayerMixin extends EntityLivingBase implements ICommandSender, ITFPlayer {
 
-    @Shadow public abstract void triggerAchievement(StatBase par1StatBase);
+    @Shadow
+    public abstract void triggerAchievement(StatBase par1StatBase);
 
     public NewPlayerManager newPlayerManager = new NewPlayerManager();
 
@@ -122,106 +124,45 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         return super.isOnLadder();
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public void attackTargetEntityWithCurrentItem(Entity target) {
-        if (!isImmuneByGrace() &&
-                target.canAttackWithItem()) {
-            boolean critical = willDeliverCriticalStrike();
-            float damage = calcRawMeleeDamageVs(target, critical, isSuspendedInLiquid());
-            if (damage <= 0.0F)
-                return;
-            ItemStack heldItemStack = getHeldItemStack();
-            if (EnchantmentHelper.hasEnchantment(heldItemStack, Enchantments.enchantmentDestroying)) {
-                int destorying = EnchantmentHelper.getEnchantmentLevel(Enchantments.enchantmentDestroying, heldItemStack);
-                target.worldObj.createExplosion(this, target.posX, target.posY, target.posZ, 0.0F, destorying * 0.5F, true);
-            }
-            int knockback = 0;
-            if (target instanceof EntityLivingBase)
-                knockback += EnchantmentHelper.getKnockbackModifier(this, (EntityLivingBase) target);
-            if (isSprinting())
-                knockback++;
-            boolean was_set_on_fire = false;
-            int fire_aspect = EnchantmentHelper.getFireAspectModifier(this);
-            if (target instanceof EntityLivingBase && fire_aspect > 0 && !target.isBurning()) {
-                was_set_on_fire = true;
-                target.setFire(1);
-            }
-            if (onServer() && target instanceof EntityLivingBase entity_living_base) {
-                ItemStack item_stack_to_drop = entity_living_base.getHeldItemStack();
-                if (item_stack_to_drop != null && this.rand.nextFloat() < EnchantmentHelper.getEnchantmentLevelFraction(Enchantment.disarming, getHeldItemStack()) && entity_living_base instanceof EntityLiving entity_living) {
-                    entity_living.dropItemStack(item_stack_to_drop, entity_living.height / 2.0F);
-                    entity_living.clearMatchingEquipmentSlot(item_stack_to_drop);
-                    entity_living.ticks_disarmed = 40;
-                }
-            }
-            if (onServer() && target instanceof EntityLivingBase entity_living_base) {
-                ItemStack[] item_stack_to_drop = entity_living_base.getWornItems();
-                int rand = this.rand.nextInt(item_stack_to_drop.length);
-                if (item_stack_to_drop[rand] != null && this.rand.nextFloat() < EnchantmentHelper.getEnchantmentLevelFraction(Enchantments.enchantmentThresher, getHeldItemStack()) && entity_living_base instanceof EntityLiving entity_living) {
-                    entity_living.dropItemStack(item_stack_to_drop[rand], entity_living.height / 2.0F);
-                    entity_living.clearMatchingEquipmentSlot(item_stack_to_drop[rand]);
-                    entity_living.ticks_disarmed = 40;
-                }
-            }
-            EntityDamageResult result = target.attackEntityFrom(new Damage(DamageSource.causePlayerDamage(ReflectHelper.dyCast(this)).setFireAspect((fire_aspect > 0)), damage));
-            boolean target_was_harmed = (result != null && result.entityWasNegativelyAffected());
-            target.onMeleeAttacked(this, result);
-            if (target_was_harmed) {
-                if (target instanceof EntityLivingBase) {
-                    int stunning = EnchantmentHelper.getStunModifier(this, (EntityLivingBase) target);
-                    if (stunning > Math.random() * 10.0D)
-                        ((EntityLivingBase) target).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, stunning * 50, stunning * 5));
-                    heal(EnchantmentHelper.getVampiricTransfer(this, (EntityLivingBase) target, damage), EnumEntityFX.vampiric_gain);
-                    if (EnchantmentHelper.hasEnchantment(heldItemStack, Enchantments.enchantmentSweeping)) {
-                        List<Entity> targets = getNearbyEntities(5.0F, 5.0F);
-                        attackMonsters(targets, damage * EnchantmentHelper.getEnchantmentLevelFraction(Enchantments.enchantmentSweeping, heldItemStack));
-                    }
-                }
-                if (knockback > 0) {
-                    target.addVelocity((-MathHelper.sin(this.rotationYaw * 3.1415927F / 180.0F) * knockback * 0.5F), 0.1D, (MathHelper.cos(this.rotationYaw * 3.1415927F / 180.0F) * knockback * 0.5F));
-                    this.motionX *= 0.6D;
-                    this.motionZ *= 0.6D;
-                    setSprinting(false);
-                }
-                if (critical)
-                    onCriticalHit(target);
-                if (target instanceof EntityLivingBase && EnchantmentDamage.getDamageModifiers(getHeldItemStack(), (EntityLivingBase) target) > 0.0F)
-                    onEnchantmentCritical(target);
-                if (damage >= 40.0F)
-                    triggerAchievement(AchievementList.overkill);
-                setLastAttackTarget(target);
-                if (target instanceof EntityLivingBase) {
-                    if (this.worldObj.isRemote) {
-                        System.out.println("EntityPlayer.attackTargetEntityWithCurrentItem() is calling EnchantmentThorns.func_92096_a() on client");
-                        Minecraft.temp_debug = "player";
-                    }
-                    EnchantmentThorns.func_92096_a(this, (EntityLivingBase) target, this.rand);
-                }
-            }
-            ItemStack held_item_stack = getHeldItemStack();
-            Object var10 = target;
-            if (target instanceof EntityDragonPart) {
-                IEntityMultiPart var11 = ((EntityDragonPart) target).entityDragonObj;
-                if (var11 != null && var11 instanceof EntityLivingBase)
-                    var10 = var11;
-            }
-            if (target_was_harmed && held_item_stack != null && var10 instanceof EntityLivingBase)
-                held_item_stack.hitEntity((EntityLivingBase) var10, ReflectHelper.dyCast(this));
-            if (target instanceof EntityLivingBase) {
-                addStat(StatList.damageDealtStat, Math.round(damage * 10.0F));
-                if (fire_aspect > 0 && target_was_harmed) {
-                    target.setFire(fire_aspect * 4);
-                } else if (was_set_on_fire) {
-                    target.extinguish();
-                }
-            }
-            if (onServer())
-                addHungerServerSide(0.3F * EnchantmentHelper.getEnduranceModifier(this));
+    @Inject(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;willDeliverCriticalStrike()Z"), cancellable = true)
+    private void explosion(Entity target, CallbackInfo ci) {
+        float damage = calcRawMeleeDamageVs(target, willDeliverCriticalStrike(), isSuspendedInLiquid());
+        if (damage <= 0.0F) {
+            ci.cancel();
+            return;
         }
+        ItemStack heldItemStack = getHeldItemStack();
+        if (EnchantmentHelper.hasEnchantment(heldItemStack, Enchantments.enchantmentDestroying)) {
+            int destorying = EnchantmentHelper.getEnchantmentLevel(Enchantments.enchantmentDestroying, heldItemStack);
+            target.worldObj.createExplosion(this, target.posX, target.posY, target.posZ, 0.0F, destorying * 0.5F, true);
+        }
+    }
+
+    @Inject(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/Entity;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
+    private void thresher(Entity target, CallbackInfo ci) {
+        if (onServer() && target instanceof EntityLivingBase entity_living_base) {
+            ItemStack[] item_stack_to_drop = entity_living_base.getWornItems();
+            int rand = this.rand.nextInt(item_stack_to_drop.length);
+            if (item_stack_to_drop[rand] != null && this.rand.nextFloat() < EnchantmentHelper.getEnchantmentLevelFraction(Enchantments.enchantmentThresher, getHeldItemStack()) && entity_living_base instanceof EntityLiving entity_living) {
+                entity_living.dropItemStack(item_stack_to_drop[rand], entity_living.height / 2.0F);
+                entity_living.clearMatchingEquipmentSlot(item_stack_to_drop[rand]);
+                entity_living.ticks_disarmed = 40;
+            }
+        }
+    }
+
+    @Inject(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;heal(FLnet/minecraft/EnumEntityFX;)V", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILSOFT)
+    private void sweep(Entity target, CallbackInfo ci, boolean critical, float damage, int knockback, boolean was_set_on_fire, int fire_aspect, EntityDamageResult result, boolean target_was_harmed, int stunning) {
+        ItemStack heldItemStack = getHeldItemStack();
+        if (EnchantmentHelper.hasEnchantment(heldItemStack, Enchantments.enchantmentSweeping)) {
+            List<Entity> targets = getNearbyEntities(5.0F, 5.0F);
+            attackMonsters(targets, damage * EnchantmentHelper.getEnchantmentLevelFraction(Enchantments.enchantmentSweeping, heldItemStack));
+        }
+    }
+
+    @ModifyConstant(method = "attackTargetEntityWithCurrentItem", constant = @org.spongepowered.asm.mixin.injection.Constant(floatValue = 18.0F))
+    private float achievement(float constant) {
+        return 40.0F;
     }
 
     @Inject(method = {"onDeath(Lnet/minecraft/DamageSource;)V"}, at = @At("TAIL"))
@@ -265,52 +206,9 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         return (getSatiation() + getNutrition() != 0 && getWater() != 0);
     }
 
-    public boolean UnderArrogance() {
-        boolean Hel_Arro = false;
-        boolean Cst_Arro = false;
-        boolean Lgs_Arro = false;
-        boolean Bts_Arro = false;
-        boolean Hnd_Arro = false;
-        ItemStack Helmet = getHelmet();
-        ItemStack Cuirass = getCuirass();
-        ItemStack Leggings = getLeggings();
-        ItemStack Boots = getBoots();
-        ItemStack Holding = getHeldItemStack();
-        if (Helmet != null)
-            Hel_Arro = EnchantmentHelper.hasEnchantment(Helmet, Enchantments.enchantmentArrogance);
-        if (Cuirass != null)
-            Cst_Arro = EnchantmentHelper.hasEnchantment(Cuirass, Enchantments.enchantmentArrogance);
-        if (Leggings != null)
-            Lgs_Arro = EnchantmentHelper.hasEnchantment(Leggings, Enchantments.enchantmentArrogance);
-        if (Boots != null)
-            Bts_Arro = EnchantmentHelper.hasEnchantment(Boots, Enchantments.enchantmentArrogance);
-        if (Holding != null)
-            Hnd_Arro = EnchantmentHelper.hasEnchantment(Holding, Enchantments.enchantmentArrogance);
-        boolean Arro = (Hel_Arro || Cst_Arro || Lgs_Arro || Bts_Arro || Hnd_Arro);
-        return (this.experience < 2300 && Arro);
-    }
-
-    public boolean InFreeze() {
-        BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(getBlockPosX(), getBlockPosZ());
-        ItemStack wearingItemStack = getCuirass();
-        if (EnchantmentHelper.hasEnchantment(wearingItemStack, Enchantments.enchantmentCallofNether))
-            return false;
-        if (biome.temperature <= ((((ITFWorld) this.worldObj).getWorldSeason() == 3) ? 1.0F : 0.16F) && (isOutdoors() || (this.worldObj.provider.dimensionId == -2 && Config.TagDeadGeothermy.get()))) {
-            return getHelmet() == null || (getHelmet()).itemID != Items.WolfHelmet.itemID ||
-                    getCuirass() == null || (getCuirass()).itemID != Items.WolfChestplate.itemID ||
-                    getLeggings() == null || (getLeggings()).itemID != Items.WolfLeggings.itemID ||
-                    getBoots() == null || (getBoots()).itemID != Items.WolfBoots.itemID;
-        }
-        return false;
-    }
 
     public boolean willRepair(ItemStack holding) {
         return EnchantmentHelper.hasEnchantment(holding, Enchantments.enchantmentMending);
-    }
-
-    public boolean InHeat() {
-        BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(getBlockPosX(), getBlockPosZ());
-        return (biome.temperature >= 1.5F && Config.TagHeatStorm.get());
     }
 
     private void activeNegativeUndying() {
@@ -353,8 +251,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     public float BodyTemperature = 37.2F;
 
-    private double dry_resist;
-
     @Shadow
     protected FoodStats foodStats;
 
@@ -367,9 +263,19 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @Shadow
     public float vision_dimming;
 
-    private int water_duration = 0;
+    private MiscManager weightManager = new MiscManager(ReflectHelper.dyCast(this));
 
-    private WeightManager weightManager = new WeightManager();
+    public MiscManager getMiscManager() {
+        return weightManager;
+    }
+
+    private WaterManager waterManager = new WaterManager();
+
+    private TemperatureManager temperatureManager = new TemperatureManager(ReflectHelper.dyCast(this));
+
+    public TemperatureManager getTemperatureManager() {
+        return temperatureManager;
+    }
 
     @Inject(method = {"onLivingUpdate()V"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;onLivingUpdate()V", shift = At.Shift.AFTER)})
     private void injectTick(CallbackInfo ci) {
@@ -387,73 +293,18 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
             this.huntManager.update(ReflectHelper.dyCast(this));
             if (Minecraft.inDevMode() && this.vision_dimming > 0.1F && isPlayerInCreative())
                 this.vision_dimming = 0.05F;
-            BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(getBlockPosX(), getBlockPosZ());
-            if (getBlockAtFeet() != null && (getBlockAtFeet()).blockMaterial == Material.water && isSneaking()) {
-                this.water_duration++;
-            } else {
-                this.water_duration = 0;
-            }
-            if (this.water_duration > 160) {
-                this.water_duration = 0;
-                if (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland) {
-                    ((ITFFoodStats) getFoodStats()).addWater(1);
-                    addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
-                } else if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) {
-                    ((ITFFoodStats) getFoodStats()).addWater(2);
-                } else {
-                    ((ITFFoodStats) getFoodStats()).addWater(1);
-                    addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, 160, 0));
-                }
-            }
-            this.dry_resist += (Config.TagHeatStroke.get() ? 2.0D : 1.0D) + biome.getFloatTemperature();
-            if (isPotionActive(PotionExtend.dehydration))
-                this.dry_resist += Math.min(80.0D, (getActivePotionEffect(PotionExtend.dehydration).getAmplifier() + 1) * 20.0D);
-            if (isPotionActive(PotionExtend.thirsty))
-                this.dry_resist += Math.min(80.0D, (getActivePotionEffect(PotionExtend.thirsty).getAmplifier() + 1) * 10.0D);
-            if (this.dry_resist > 12800.0D) {
-                ((ITFFoodStats) getFoodStats()).addWater(-1);
-                this.dry_resist = 0.0D;
-            }
-            this.drunkManager.update();
-            int freezeunit = Math.max(this.FreezingCooldown - 1500 * weightManager.getWeight(ReflectHelper.dyCast(this)), 0);
-            this.BodyTemperature = 37.2F - 1.25E-4F * freezeunit;
-            int freezelevel = Math.max(freezeunit / 12000, 0);
-            if (freezeunit > 12000 && InFreeze() &&
-                    freezelevel >= 1) {
-                if (freezelevel >= 4) {
-                    this.FreezingWarning++;
-                    triggerAchievement(AchievementExtend.hypothermia);
-                }
-                if (this.FreezingWarning > 500) {
-                    attackEntityFrom(new Damage(DamageSourceExtend.freeze, 4.0F));
-                    this.FreezingWarning = 0;
-                }
-                addPotionEffect(new PotionEffect(PotionExtend.freeze.id, freezeunit, isInRain() ? freezelevel : (freezelevel - 1)));
-            }
-            if (this.HeatResistance > 3200 - weightManager.getWeight(ReflectHelper.dyCast(this)) * 50) {
-                addPotionEffect(new PotionEffect(Potion.confusion.id, 1600, 1));
-                this.HeatResistance = 0;
-            }
-            if (InHeat())
-                this.HeatResistance++;
-            if (InFreeze() || this.drunkManager.isDrunk()) {
-                this.FreezingCooldown += Config.TagLegendFreeze.get() ? 3 : 1;
-                this.FreezingCooldown += (this.drunkManager.isDrunk()) ? (Config.TagLegendFreeze.get() ? 3 : 1) : 0;
-            } else if (this.FreezingCooldown > 0) {
-                this.FreezingCooldown--;
-            }
-            this.drunkManager.decrease();
+
+            this.waterManager.update(ReflectHelper.dyCast(this));
+            this.drunkManager.update1();
+            this.temperatureManager.update();
+            this.drunkManager.update2();
+
             if (getHealth() < 5.0F && Config.Realistic.get())
                 this.vision_dimming = Math.max(this.vision_dimming, 1.0F - getHealthFraction());
         }
-        if (this.feastManager.achievementCheck()) {
-            triggerAchievement(AchievementExtend.feast);
-            addExperience(2500);
-            this.feastManager.rewarded_disc_damnation = true;
-            EntityItem RewardingRecord = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, new ItemStack(Items.recordDamnation.itemID, 1));
-            this.worldObj.spawnEntityInWorld(RewardingRecord);
-            RewardingRecord.entityFX(EnumEntityFX.summoned);
-        }
+
+        this.feastManager.achievementCheck(ReflectHelper.dyCast(this));
+
         if (isPotionActive(Potion.moveSpeed) && isPotionActive(Potion.regeneration) && isPotionActive(Potion.fireResistance) && isPotionActive(Potion.nightVision) && isPotionActive(Potion.damageBoost) && isPotionActive(Potion.resistance) && isPotionActive(Potion.invisibility) && !this.feastManager.rewarded_disc_connected) {
             triggerAchievement(AchievementExtend.invincible);
             addExperience(2500);
@@ -462,8 +313,9 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
             this.worldObj.spawnEntityInWorld(RewardingRecord);
             RewardingRecord.entityFX(EnumEntityFX.summoned);
         }
-        if (UnderArrogance())
+        if (this.getMiscManager().UnderArrogance()) {
             addPotionEffect(new PotionEffect(Potion.wither.id, 100, 1));
+        }
         ItemStack holding = getHeldItemStack();
         if (holding != null && willRepair(holding) &&
                 holding.getRemainingDurability() / holding.getMaxDamage() < 0.5F && getExperienceLevel() >= 10 + 15 * holding.getItem().getHardestMetalMaterial().min_harvest_level) {
@@ -478,23 +330,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
                 item_stack_to_repair[n].setItemDamage(item_stack_to_repair[n].getItemDamage() - 1);
             }
         }
-    }
-
-    public int getFreezingCooldown() {
-        return this.FreezingCooldown;
-    }
-
-    public void addFreezingCooldown(int dummy) {
-        if (this.FreezingCooldown + dummy < 0) {
-            this.FreezingCooldown = 0;
-        } else {
-            this.FreezingCooldown += dummy;
-        }
-    }
-
-    public float getCurrentBiomeTemperature() {
-        BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(getBlockPosX(), getBlockPosZ());
-        return biome.getFloatTemperature();
     }
 
     /**
@@ -555,7 +390,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     }
 
     @Unique
-    private DrunkManager drunkManager = new DrunkManager();
+    private DrunkManager drunkManager = new DrunkManager(ReflectHelper.dyCast(this));
 
     @Override
     public DrunkManager getDrunkManager() {
@@ -707,61 +542,24 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         return Config.TagDistortion.get() ? HealthLMTwithTag : HealthLMTwithoutTag;
     }
 
-    @Overwrite
-    public float getCurrentPlayerStrVsBlock(int x, int y, int z, boolean apply_held_item) {
-        float str_vs_block;
-        Block block = Block.blocksList[this.worldObj.getBlockId(x, y, z)];
-        if (block == null)
-            return 0.0F;
-        float block_hardness = this.worldObj.getBlockHardness(x, y, z);
-        if (block_hardness == 0.0F)
-            return 1.0F;
-        float min_str_vs_block = -3.4028235E38F;
-        Item held_item = getHeldItem();
-        if (block.isPortable(this.worldObj, this, x, y, z)) {
-            str_vs_block = min_str_vs_block = 4.0F * block_hardness;
-        } else if (apply_held_item && held_item != null) {
-            int metadata = this.worldObj.getBlockMetadata(x, y, z);
-            str_vs_block = held_item.getStrVsBlock(block, metadata);
-            if (str_vs_block < 1.0F)
-                return getCurrentPlayerStrVsBlock(x, y, z, false);
-            int var4 = EnchantmentHelper.getEfficiencyModifier(this);
-            if (var4 > 0) {
-                float var6 = (var4 * var4 + 1);
-                str_vs_block += var6;
-            }
-        } else {
-            int metadata = this.worldObj.getBlockMetadata(x, y, z);
-            if (block.blockMaterial.requiresTool(block, metadata)) {
-                str_vs_block = 0.0F;
-            } else {
-                str_vs_block = 1.0F;
-            }
+
+    @Inject(method = "getCurrentPlayerStrVsBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;isInsideOfMaterial(Lnet/minecraft/Material;)Z"))
+    private void inject(int x, int y, int z, boolean apply_held_item, CallbackInfoReturnable<Float> cir, @Local(ordinal = 0) LocalFloatRef str_vs_block) {// TODO unstable
+        if (isPotionActive(PotionExtend.freeze)) {
+            float newStr = str_vs_block.get() * (1.0F - (getActivePotionEffect(PotionExtend.freeze).getAmplifier() + 1) * 0.5F);
+            str_vs_block.set(newStr);
         }
-        if (block == Block.web) {
-            boolean decrease_strength = !apply_held_item || held_item == null || !held_item.isTool() || !held_item.getAsTool().isEffectiveAgainstBlock(block, 0);
-            if (decrease_strength)
-                str_vs_block *= 0.2F;
-        }
-        if (isPotionActive(Potion.digSpeed))
-            str_vs_block *= 1.0F + (getActivePotionEffect(Potion.digSpeed).getAmplifier() + 1) * 0.2F;
-        if (isPotionActive(Potion.digSlowdown))
-            str_vs_block *= 1.0F - (getActivePotionEffect(Potion.digSlowdown).getAmplifier() + 1) * 0.2F;
-        if (isPotionActive(PotionExtend.freeze))
-            str_vs_block *= 1.0F - (getActivePotionEffect(PotionExtend.freeze).getAmplifier() + 1) * 0.5F;
-        if (isInsideOfMaterial(Material.water) && !EnchantmentHelper.getAquaAffinityModifier(this))
-            str_vs_block /= 5.0F;
-        if (!this.onGround)
-            str_vs_block /= 5.0F;
-        if (!hasFoodEnergy())
-            str_vs_block /= 5.0F;
-        str_vs_block *= 1.0F + getLevelModifier(EnumLevelBonus.HARVESTING);
+    }
+
+    @ModifyArg(method = "getCurrentPlayerStrVsBlock", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F"), index = 0)
+    private float inject(float str_vs_block) {
         if (Config.FinalChallenge.get())
             str_vs_block *= 1.0F - Constant.CalculateCurrentDiff() / 100.0F;
         if (Config.Realistic.get())
             str_vs_block *= Math.min((float) Math.pow(getHealth(), 2.0D) / 25.0F, 1.0F);
-        return Math.max(str_vs_block, min_str_vs_block);
+        return str_vs_block;
     }
+
 
     public void attackMonsters(List<Entity> targets, float damage) {
         for (int i = 0; i < targets.size(); i++) {
@@ -771,24 +569,10 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         }
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    protected void fall(float par1) {
-        if (!this.capabilities.allowFlying) {
-            if (par1 >= 2.0F)
-                addStat(StatList.distanceFallenStat, (int) Math.round(par1 * 100.0D));
-            super.fall(par1);
-        }
+    @Inject(method = "fall", at = @At("TAIL"))
+    private void TagMovingV2(float par1, CallbackInfo ci) {
         if (Config.TagMovingV2.get())
-            setSprinting(false);
-    }
-
-    @Shadow
-    public float getLevelModifier(EnumLevelBonus kind) {
-        return 0.0F;
+            this.setSprinting(false);
     }
 
     @Shadow
@@ -807,39 +591,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     }
 
     @Shadow
-    public void setHeldItemStack(ItemStack itemStack) {
-    }
-
-    @Shadow
-    public ItemStack getHeldItemStack() {
-        return null;
-    }
-
-    @Shadow
-    public ItemStack getCurrentItemOrArmor(int i) {
-        return null;
-    }
-
-    @Shadow
-    public void setCurrentItemOrArmor(int i, ItemStack itemStack) {
-    }
-
-    @Shadow
-    public ItemStack[] getLastActiveItems() {
-        return new ItemStack[0];
-    }
-
-    @Shadow
     public void wakeUpPlayer(boolean get_out_of_bed, Entity entity_to_look_at) {
-    }
-
-    @Shadow
-    public void addStat(StatBase par1StatBase, int par2) {
-    }
-
-    @Shadow
-    public boolean isImmuneByGrace() {
-        return false;
     }
 
     @Shadow
@@ -853,22 +605,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     }
 
     @Shadow
-    public void onCriticalHit(Entity par1Entity) {
-    }
-
-    @Shadow
-    public void onEnchantmentCritical(Entity par1Entity) {
-    }
-
-    @Shadow
-    public void addHungerServerSide(float hunger) {
-    }
-
-    @Shadow
     public abstract void addExperience(int paramInt);
-
-    @Shadow
-    protected abstract void entityInit();
 
     @Shadow
     public abstract float getReach(EnumEntityReachContext paramEnumEntityReachContext, Entity paramEntity);

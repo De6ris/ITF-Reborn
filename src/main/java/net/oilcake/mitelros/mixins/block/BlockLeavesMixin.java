@@ -8,10 +8,12 @@ import net.oilcake.mitelros.util.SeasonColorizer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 import java.util.Random;
 
-@Mixin({BlockLeaves.class})
+@Mixin(BlockLeaves.class)
 public class BlockLeavesMixin extends BlockLeavesBase {
     @Shadow
     int[] adjacentTreeBlocks;
@@ -143,6 +145,10 @@ public class BlockLeavesMixin extends BlockLeavesBase {
         }
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
         if (BitHelper.isBitSet(info.getMetadata(), 4))
@@ -162,6 +168,10 @@ public class BlockLeavesMixin extends BlockLeavesBase {
         return (leaf_kind == 4) ? dropBlockAsEntityItem(info, Item.banana.itemID, 0, 1, 0.005F) : 0;
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
         int var5 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);

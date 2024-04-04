@@ -1,11 +1,15 @@
 package net.oilcake.mitelros.mixins.util;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.util.CurseExtend;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin({PlayerCapabilities.class})
 public class PlayerAbilitiesMixin {
@@ -13,23 +17,25 @@ public class PlayerAbilitiesMixin {
     private float flySpeed = 0.05F;
 
     @Shadow
-    private float walkSpeed = 0.1F;
-
-    @Shadow
     public EntityPlayer player;
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     public float getFlySpeed() {
         return (this.player.isSprinting() || (this.player.getPlayerController() != null && this.player.getPlayerController().isRunToggledOn(this.player) && this.player.inCreativeMode())) ? (this.flySpeed * 2.5F) : this.flySpeed;
     }
 
-    @Overwrite
-    public float getWalkSpeed() {
-        float speed_boost_or_slow_down_factor = this.player.getSpeedBoostOrSlowDownFactor();
-        float speed = this.player.hasFoodEnergy() ? this.walkSpeed : (this.walkSpeed * 0.25F);
-        speed *= EnchantmentHelper.getSpeedModifier((EntityLivingBase) this.player);
-        speed *= speed_boost_or_slow_down_factor;
-        if (((Boolean) Config.Realistic.get())) {
+    @ModifyConstant(method = "getWalkSpeed", constant = @Constant(floatValue = 0.75F))
+    private float inject(float constant) {
+        return 0.25F;
+    }
+
+    @ModifyReturnValue(method = "getWalkSpeed", at = @At("RETURN"))
+    private float inject_1(float speed) {
+        if (Config.Realistic.get()) {
             speed *= Math.min((float) Math.pow(this.player.getHealth(), 2.0D) / 25.0F, 1.0F);
             if (!this.player.isPotionActive(Potion.nightVision)) {
                 float light_modifier = (this.player.worldObj.getBlockLightValue(MathHelper.floor_double(this.player.posX), MathHelper.floor_double(this.player.posY + this.player.yOffset), MathHelper.floor_double(this.player.posZ)) + 3) / 15.0F;

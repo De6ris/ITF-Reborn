@@ -41,7 +41,7 @@ public class ITFEvent {
         }
         if (par2Str.startsWith("tpt") && !Minecraft.inDevMode()) {
             BiomeGenBase biome = player.worldObj.getBiomeGenForCoords(player.getBlockPosX(), player.getBlockPosZ());
-            if (player.InFreeze()) {
+            if (player.getTemperatureManager().InFreeze()) {
                 player.sendChatToPlayer(ChatMessageComponent.createFromText("玩家当前体温为" + player.getBodyTemperature() + "℃，玩家受到寒冷影响").setColor(EnumChatFormatting.WHITE));
             } else {
                 player.sendChatToPlayer(ChatMessageComponent.createFromText("玩家当前体温为" + player.getBodyTemperature() + "℃，玩家未受到寒冷影响").setColor(EnumChatFormatting.WHITE));

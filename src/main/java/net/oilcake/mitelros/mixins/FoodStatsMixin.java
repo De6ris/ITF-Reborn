@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin({FoodStats.class})
+@Mixin(FoodStats.class)
 public class FoodStatsMixin implements ITFFoodStats {
     private float water_for_nutrition_only;
 
@@ -52,19 +52,9 @@ public class FoodStatsMixin implements ITFFoodStats {
         return this.water;
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public void addFoodValue(Item item) {
-        addSatiation(item.getSatiation(this.player));
-        addNutrition(item.getNutrition());
-        addWater(((ITFItem) item).getWater());
-        if (this.player instanceof ServerPlayer) {
-            this.player.getAsEntityPlayerMP().addInsulinResistance(item.getInsulinResponse());
-            this.player.getAsEntityPlayerMP().addNutrients(item);
-        }
+    @Inject(method = "addFoodValue", at = @At("HEAD"))
+    private void inject(Item item, CallbackInfo ci) {
+        this.addWater(((ITFItem) item).getWater());
     }
 
     public void setSatiationWater(int water, boolean check_limit) {
@@ -84,10 +74,6 @@ public class FoodStatsMixin implements ITFFoodStats {
 
     private static float getWaterPerTick() {
         return 0.002F;
-    }
-
-    private static float getWaterPerFoodUnit() {
-        return 4.0F;
     }
 
     public void decreaseWater(float water) {
@@ -125,95 +111,67 @@ public class FoodStatsMixin implements ITFFoodStats {
         return Math.max(Math.min(6 + this.player.getExperienceLevel() / 5 * 2, 20), 6);
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public void onUpdate(ServerPlayer par1EntityPlayer) {
-        if (!par1EntityPlayer.isGhost() && !par1EntityPlayer.isZevimrgvInTournament() &&
-                !par1EntityPlayer.isDead && par1EntityPlayer.getHealth() > 0.0F) {
-            par1EntityPlayer.decrementNutrients();
-            par1EntityPlayer.decrementInsulinResistance();
-            decreaseWaterServerSide(getWaterPerTick());
-            if (!par1EntityPlayer.inCreativeMode())
-                this.water_for_nutrition_only += getWaterPerTick() * 0.3F;
-            float hunger_factor = par1EntityPlayer.getWetnessAndMalnourishmentHungerMultiplier();
-            addHungerServerSide(getHungerPerTick() * hunger_factor);
-            if (!par1EntityPlayer.inCreativeMode())
-                this.hunger_for_nutrition_only += getHungerPerTick() * 0.25F;
-            if (this.hunger >= getHungerPerFoodUnit()) {
-                this.hunger -= getHungerPerFoodUnit();
-                if (this.satiation > 0 || this.nutrition > 0)
-                    if (this.satiation < 1 || (this.hunger_for_nutrition_only + 0.001F >= getHungerPerFoodUnit() && this.nutrition > 0)) {
-                        this.nutrition--;
-                        this.hunger_for_nutrition_only = 0.0F;
-                    } else {
-                        this.satiation--;
-                    }
+    @Inject(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/ServerPlayer;decrementInsulinResistance()V"))
+    private void inject(ServerPlayer par1EntityPlayer, CallbackInfo ci) {
+        this.decreaseWaterServerSide(getWaterPerTick());
+        if (!par1EntityPlayer.inCreativeMode())
+            this.water_for_nutrition_only += getWaterPerTick() * 0.3F;
+        if (this.water < 0)
+            this.water = 0;
+    }
+
+    @Inject(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/ServerPlayer;heal(F)V"))
+    private void inject_1(ServerPlayer par1EntityPlayer, CallbackInfo ci) {
+        this.decreaseWaterServerSide(1.0F);
+    }
+
+    @Inject(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;isStarving()Z"), cancellable = true)
+    private void newJudge(ServerPlayer par1EntityPlayer, CallbackInfo ci) {
+        if (this.player.isStarving()) {
+            this.heal_progress = 0.0F;
+            this.starve_progress += 0.002F;
+            if (this.starve_progress >= 1.0F) {
+                if (par1EntityPlayer.getHealth() > 10.0F || this.player.worldObj.difficultySetting >= 3 || (par1EntityPlayer.getHealth() > 1.0F && this.player.worldObj.difficultySetting >= 2))
+                    par1EntityPlayer.attackEntityFrom(new Damage(DamageSource.starve, 1.0F));
+                this.starve_progress--;
+                this.hunger_for_nutrition_only = 0.0F;
             }
-            if (this.satiation < 0)
-                this.satiation = 0;
-            if (this.water < 0)
-                this.water = 0;
-            if (par1EntityPlayer.inBed() && par1EntityPlayer.isOnHitList()) {
-                par1EntityPlayer.addHungerServerSide(getHungerPerTick() * 20.0F);
-                par1EntityPlayer.getAsPlayer().decreaseWaterServerSide(getWaterPerTick() * 20.0F);
+        } else if (this.player.DuringDehydration()) {
+            this.heal_progress = 0.0F;
+            this.dehydration_progress += 0.002F;
+            if (this.dehydration_progress >= 1.0F) {
+                par1EntityPlayer.attackEntityFrom(new Damage(DamageSourceExtend.thirsty, 1.0F));
+                this.dehydration_progress--;
+                this.water_for_nutrition_only = 0.0F;
             }
-            if (this.player.isStarving()) {
-                this.heal_progress = 0.0F;
-                this.starve_progress += 0.002F;
-                if (this.starve_progress >= 1.0F) {
-                    if (par1EntityPlayer.getHealth() > 10.0F || this.player.worldObj.difficultySetting >= 3 || (par1EntityPlayer.getHealth() > 1.0F && this.player.worldObj.difficultySetting >= 2))
-                        par1EntityPlayer.attackEntityFrom(new Damage(DamageSource.starve, 1.0F));
-                    this.starve_progress--;
-                    this.hunger_for_nutrition_only = 0.0F;
-                }
-            } else if (this.player.DuringDehydration()) {
-                this.heal_progress = 0.0F;
-                this.dehydration_progress += 0.002F;
-                if (this.dehydration_progress >= 1.0F) {
-                    par1EntityPlayer.attackEntityFrom(new Damage(DamageSourceExtend.thirsty, 1.0F));
-                    this.dehydration_progress--;
-                    this.water_for_nutrition_only = 0.0F;
-                }
-            } else if (((ITFPlayer) par1EntityPlayer).isMalnourishedFin()) {
-                this.heal_progress = 0.0F;
-                this.malnourished_progress += 0.002F;
-                if (this.malnourished_progress >= 1.0F) {
-                    par1EntityPlayer.attackEntityFrom(new Damage(DamageSourceExtend.malnourished, 1.0F));
-                    this.malnourished_progress--;
+        } else if (((ITFPlayer) par1EntityPlayer).isMalnourishedFin()) {
+            this.heal_progress = 0.0F;
+            this.malnourished_progress += 0.002F;
+            if (this.malnourished_progress >= 1.0F) {
+                par1EntityPlayer.attackEntityFrom(new Damage(DamageSourceExtend.malnourished, 1.0F));
+                this.malnourished_progress--;
+            }
+        } else {
+            this.heal_progress += (4.0E-4F + this.nutrition * 2.0E-5F)
+                    * (((ITFPlayer) par1EntityPlayer).isMalnourishedLv1() ? 0.25F : ((((ITFPlayer) par1EntityPlayer).isMalnourishedLv2() ? 0.0F : (((ITFPlayer) par1EntityPlayer).isMalnourishedLv3() ? 0.0F : 1.0F))))
+                    * (par1EntityPlayer.inBed() ? 8.0F : 1.0F) * EnchantmentHelper.getRegenerationModifier(this.player);
+            this.starve_progress = 0.0F;
+            if (par1EntityPlayer.worldObj.getGameRules().getGameRuleBooleanValue("naturalRegeneration") && par1EntityPlayer.shouldHeal()) {
+                if (this.heal_progress >= 1.0F) {
+                    par1EntityPlayer.heal(1.0F);
+                    addHungerServerSide(1.0F);
+                    decreaseWaterServerSide(1.0F);
+                    this.heal_progress--;
                 }
             } else {
-                this.heal_progress += (4.0E-4F + this.nutrition * 2.0E-5F)
-                        * (((ITFPlayer) par1EntityPlayer).isMalnourishedLv1() ? 0.25F : ((((ITFPlayer) par1EntityPlayer).isMalnourishedLv2() ? 0.0F : (((ITFPlayer) par1EntityPlayer).isMalnourishedLv3() ? 0.0F : 1.0F))))
-                        * (par1EntityPlayer.inBed() ? 8.0F : 1.0F) * EnchantmentHelper.getRegenerationModifier(this.player);
-                this.starve_progress = 0.0F;
-                if (par1EntityPlayer.worldObj.getGameRules().getGameRuleBooleanValue("naturalRegeneration") && par1EntityPlayer.shouldHeal()) {
-                    if (this.heal_progress >= 1.0F) {
-                        par1EntityPlayer.heal(1.0F);
-                        addHungerServerSide(1.0F);
-                        decreaseWaterServerSide(1.0F);
-                        this.heal_progress--;
-                    }
-                } else {
-                    this.heal_progress = 0.0F;
-                }
+                this.heal_progress = 0.0F;
             }
         }
+        ci.cancel();
     }
 
     @Shadow
-    private float global_hunger_rate = 1.0F;
-
-    @Shadow
-    private int satiation;
-
-    @Shadow
     private int nutrition;
-
-    @Shadow
-    private float hunger;
 
     @Shadow
     private float hunger_for_nutrition_only;
@@ -232,31 +190,7 @@ public class FoodStatsMixin implements ITFFoodStats {
     private EntityPlayer player;
 
     @Shadow
-    public int addNutrition(int nutrition) {
-        return this.nutrition;
-    }
-
-    @Shadow
-    public int addSatiation(int satiation) {
-        return this.satiation;
-    }
-
-    @Shadow
-    public static float getHungerPerFoodUnit() {
-        return 0.0F;
-    }
-
-    @Shadow
     public void addHungerServerSide(float hunger) {
     }
 
-    @Shadow
-    public static float getHungerPerTick() {
-        return 0.0F;
-    }
-
-    @Shadow
-    public int getNutritionLimit() {
-        return 1;
-    }
 }

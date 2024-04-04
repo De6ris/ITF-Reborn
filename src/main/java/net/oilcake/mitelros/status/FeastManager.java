@@ -1,8 +1,8 @@
 package net.oilcake.mitelros.status;
 
-import net.minecraft.ItemBowl;
-import net.minecraft.ItemVessel;
-import net.minecraft.Material;
+import net.minecraft.*;
+import net.oilcake.mitelros.achivements.AchievementExtend;
+import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 
 public class FeastManager {
@@ -69,8 +69,17 @@ public class FeastManager {
         this.rewarded_disc_connected = false;
     }
 
-    public boolean achievementCheck() {
-        return (this.Feast_trigger_sorbet && this.Feast_trigger_cereal && this.Feast_trigger_chestnut_soup && this.Feast_trigger_chicken_soup && this.Feast_trigger_beef_stew && this.Feast_trigger_cream_mushroom_soup && this.Feast_trigger_cream_vegetable_soup && this.Feast_trigger_ice_cream && this.Feast_trigger_lemonade && this.Feast_trigger_mashed_potatoes && this.Feast_trigger_porkchop_stew && this.Feast_trigger_salad && this.Feast_trigger_pumpkin_soup && this.Feast_trigger_porridge && this.Feast_trigger_mushroom_soup && this.Feast_trigger_vegetable_soup && this.Feast_trigger_salmon_soup && this.Feast_trigger_beetroot_soup && !this.rewarded_disc_damnation);
+    public void achievementCheck(EntityPlayer player) {
+        boolean success = (this.Feast_trigger_sorbet && this.Feast_trigger_cereal && this.Feast_trigger_chestnut_soup && this.Feast_trigger_chicken_soup && this.Feast_trigger_beef_stew && this.Feast_trigger_cream_mushroom_soup && this.Feast_trigger_cream_vegetable_soup && this.Feast_trigger_ice_cream && this.Feast_trigger_lemonade && this.Feast_trigger_mashed_potatoes && this.Feast_trigger_porkchop_stew && this.Feast_trigger_salad && this.Feast_trigger_pumpkin_soup && this.Feast_trigger_porridge && this.Feast_trigger_mushroom_soup && this.Feast_trigger_vegetable_soup && this.Feast_trigger_salmon_soup && this.Feast_trigger_beetroot_soup && !this.rewarded_disc_damnation);
+        if (!success) {
+            return;
+        }
+        player.triggerAchievement(AchievementExtend.feast);
+        player.addExperience(2500);
+        this.rewarded_disc_damnation = true;
+        EntityItem RewardingRecord = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, new ItemStack(Items.recordDamnation.itemID, 1));
+        player.worldObj.spawnEntityInWorld(RewardingRecord);
+        RewardingRecord.entityFX(EnumEntityFX.summoned);
     }
 
     public void update(ItemVessel itemVessel) {
