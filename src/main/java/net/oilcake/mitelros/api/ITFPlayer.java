@@ -4,14 +4,19 @@ import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.status.*;
 
 public interface ITFPlayer {
+
+    void broadcast();
+
     void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots);
 
     float getBodyTemperature();
 
     NewPlayerManager getNewPlayerManager();
+
     MiscManager getMiscManager();
 
     TemperatureManager getTemperatureManager();
+
     int getFreezingCooldown();
 
     int getWater();
