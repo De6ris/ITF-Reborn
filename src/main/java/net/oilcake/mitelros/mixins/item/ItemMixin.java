@@ -25,31 +25,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({Item.class})
+@Mixin(Item.class)
 public abstract class ItemMixin implements ITFItem {
     @Shadow
     private float reach_bonus;
     private int water;
 
     public Item item;
-
-    @Shadow
-    private int satiation;
-
-    @Shadow
-    private int nutrition;
-
-    @Shadow
-    private int sugar_content;
-
-    @Shadow
-    private boolean has_protein;
-
-    @Shadow
-    private boolean has_essential_fats;
-
-    @Shadow
-    private boolean has_phytonutrients;
 
     @Redirect(method = {"<init>(ILjava/lang/String;I)V"}, at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
     public void removePrint(PrintStream printStream, String messsage) {
@@ -130,16 +112,5 @@ public abstract class ItemMixin implements ITFItem {
     @Shadow
     public Item setMaxStackSize(int maxStackSize) {
         return null;
-    }
-
-    @Shadow
-    @Final
-    public int getSatiation(EntityPlayer player) {
-        return 1;
-    }
-
-    @Shadow
-    public int getNutrition() {
-        return 1;
     }
 }

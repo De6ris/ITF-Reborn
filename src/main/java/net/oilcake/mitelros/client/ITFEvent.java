@@ -107,7 +107,7 @@ public class ITFEvent {
     public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
         ServerPlayer player = event.getPlayer();
         player.setHealth(player.getHealth());
-        player.broadcast();
+        ((ITFPlayer)player).broadcast();
         if (!Minecraft.inDevMode())
             player.vision_dimming = 1.25F;
         if (((ITFPlayer) player).getNewPlayerManager().getNew()) {
