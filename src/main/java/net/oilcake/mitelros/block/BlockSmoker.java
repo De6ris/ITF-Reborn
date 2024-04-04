@@ -9,9 +9,9 @@ public class BlockSmoker extends BlockFurnace {
     }
 
     public void registerIcons(IconRegister mt) {
-        this.furnaceIconFront = mt.registerIcon(this.isActive ? "smoker/smoker_front_on" : "smoker/smoker_front_off");
-        this.furnaceIconTop = mt.registerIcon("smoker/smoker_top");
-        this.blockIcon = mt.registerIcon("smoker/smoker_side");
+        this.furnaceIconFront = mt.registerIcon(this.isActive ? "smoker/front_on" : "smoker/front_off");
+        this.furnaceIconTop = mt.registerIcon("smoker/top");
+        this.blockIcon = mt.registerIcon("smoker/side");
     }
 
     public int getMaxHeatLevel() {

@@ -4,14 +4,16 @@
 
 ---
 
-## H15a
+## H15
 ### 物品
 * 加入了乌鲁金属弓[WIP]
+### 独有特性
+* 现在拥有距离加成的物品, 其加成总是生效
 ### Gui
 * 重写了水分值的显示,使MITE-ITF能兼容Bread Skin(有bug)
 * 移除了游戏内左上角的FPS显示,但是你仍然可以按F3显示FPS
 ### 指令
-* 移除了Curse,FullyAir,StoneAir,Teleport,Xsummon指令,如需使用,请安装MITE DEV Kit以及Vanilla Commands
+* 移除了Curse, FullyAir, StoneAir,Teleport,Xsummon指令,如需使用,请安装MITE DEV Kit以及Vanilla Commands
 * 移除了TPA指令的Tab补全功能,因为地精传送已自带
 ### 配置文件
 * 合并了2个配置文件,并使用FishModLoader Config API重写,支持游戏内快速编辑
@@ -19,14 +21,18 @@
 * 新增"其他配置项",内有"季节植被颜色"与"信息显示"
 * 为ExperimentalConfig的配置项增加注释[WIP]
 ### 其他
-* 移植了MITE-ITF R15a-R15c除了方块ID突破之外的更新内容[WIP]
-* 移除了部分@Overwrite
+* 移植了MITE-ITF R15a-R15c除了方块ID突破之外的更新内容
 * 精简了进入游戏的提示
+* 重构了烟熏炉的材质路径(麻瓜Rizur改了附魔回流底座和附魔增幅底座没给这个也改了)
+* 修改了除了钨弓，钨打火石，钨碎块与钨钉头锤之外所有钨物品，方块的材质
 ### 漏洞修复
 * 修复了部分材质"丢失"的问题
 * 修复了烧制中的烟熏炉在创造模式物品栏中出现的问题
-### 独有特性
-* 现在拥有距离加成的物品, 其加成总是生效
+### 已知漏洞
+* Mod中会发光的方块光照渲染不正确
+* 可能会因为末影人导致崩溃
+* 水分值与营养值显示会异常闪烁
+
 
 ---
 

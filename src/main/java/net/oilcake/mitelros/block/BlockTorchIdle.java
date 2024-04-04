@@ -13,7 +13,7 @@ public class BlockTorchIdle extends BlockTorch {
     }
 
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
-        return 0;
+        return info.wasExploded() ? 0 : super.dropBlockAsEntityItem(info);
     }
 
     @Override
@@ -23,14 +23,14 @@ public class BlockTorchIdle extends BlockTorch {
         } else {
             int ran = random.nextInt(512);
             if(ran == 0 && world.getBlockId(x,y,z) == Blocks.torchWoodIdle.blockID){
-                world.setBlock(x, y, z, Blocks.torchWoodDistinguished.blockID, world.getBlockMetadata(x,y,z), 2);
+                world.setBlock(x, y, z, Blocks.torchWoodExtinguished.blockID, world.getBlockMetadata(x,y,z), 2);
             }
             return false;
         }
     }
 
     public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-        if(par1World.getBlockId(par2, par3, par4) == Blocks.torchWoodDistinguished.blockID) {
+        if(par1World.getBlockId(par2, par3, par4) == Blocks.torchWoodExtinguished.blockID) {
             return;
         }
         int var6 = par1World.getBlockMetadata(par2, par3, par4);

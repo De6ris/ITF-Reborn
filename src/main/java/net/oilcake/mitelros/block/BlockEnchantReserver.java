@@ -20,7 +20,7 @@ import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;
 public class BlockEnchantReserver extends Block implements ITileEntityProvider {
   private Icon TEXTURE_TOP;
   
-  private Icon TEXTURE_BOTOTM;
+  private Icon TEXTURE_BOTTOM;
   
   private Icon TEXTURE_SIDE;
   
@@ -37,7 +37,7 @@ public class BlockEnchantReserver extends Block implements ITileEntityProvider {
       case 1:
         return this.TEXTURE_TOP;
       case 0:
-        return this.TEXTURE_BOTOTM;
+        return this.TEXTURE_BOTTOM;
       case 2:
       case 3:
       case 4:
@@ -48,9 +48,9 @@ public class BlockEnchantReserver extends Block implements ITileEntityProvider {
   }
   
   public void registerIcons(IconRegister mt) {
-    this.TEXTURE_TOP = mt.registerIcon("enchant_reserver/enchant_reserver_top");
-    this.TEXTURE_BOTOTM = mt.registerIcon("enchant_reserver/enchant_reserver_bottom");
-    this.TEXTURE_SIDE = mt.registerIcon("enchant_reserver/enchant_reserver_side");
+    this.TEXTURE_TOP = mt.registerIcon("enchant_reserver/top");
+    this.TEXTURE_BOTTOM = mt.registerIcon("enchant_reserver/bottom");
+    this.TEXTURE_SIDE = mt.registerIcon("enchant_reserver/side");
   }
   
   public void getItemStacks(int id, CreativeTabs creative_tabs, List list) {

@@ -44,10 +44,12 @@ public class BiomeGenUnderworldMixin extends BiomeGenBase {
       int i = par3 + par2Random.nextInt(16) + 8;
       int j = par4 + par2Random.nextInt(16) + 8;
       WorldGenUnderworldCastle var7 = new WorldGenUnderworldCastle();
-      if (Minecraft.inDevMode())
-        System.out.println("Generate Castle at " + i + " " + j + "."); 
-      var7.generate(par1World, par2Random, i, par1World.getHeightValue(i, j) + 1, j);
-    } 
+      if(var7.generate(par1World, par2Random, i, par1World.getHeightValue(i, j) + 1, j)) {
+        if(Minecraft.inDevMode()) {
+          System.out.println("Generate Castle at " + i + " " + j + ".");
+        }
+      }
+    }
     int var5 = 8 + par2Random.nextInt(24);
     for (int var6 = 0; var6 < var5; var6++) {
       int var7 = par3 + par2Random.nextInt(16);

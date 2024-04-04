@@ -3,6 +3,9 @@ package net.oilcake.mitelros.block;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFDoor;
 import net.oilcake.mitelros.api.ITFPane;
+import net.oilcake.mitelros.block.*;
+import net.oilcake.mitelros.block.observer.BlockObserver;
+import net.oilcake.mitelros.block.receiver.BlockReceiver;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.xiaoyu233.fml.api.block.AnvilBlock;
@@ -125,11 +128,25 @@ public class Blocks {
             setStepSound(Block.soundWoodFootstep).
             setUnlocalizedName("torch");
 
-    public static final Block torchWoodDistinguished = (new BlockTorchIdle(getNextBlockID()))
+    public static final Block torchWoodExtinguished = (new BlockTorchIdle(getNextBlockID()))
             .setHardness(0.0F).
             setLightValue(0.0F).
             setStepSound(Block.soundWoodFootstep).
             setUnlocalizedName("torch");
+
+    public static final Block blockObserver = new BlockObserver(getNextBlockID(), Material.stone)
+            .setHardness(2.5F).
+            setResistance(20.0f).
+            setStepSound(Block.soundStoneFootstep);
+    public static final Block blockReceiver = new BlockReceiver(getNextBlockID())
+            .setHardness(2.5F).
+            setResistance(20.0f).
+            setStepSound(Block.soundStoneFootstep);
+
+    public static final Block blockSulphur = new BlockOre(getNextBlockID(),Materials.sulphur,1)
+            .setHardness(1.2F).
+            setResistance(10.0F).
+            setStepSound(Block.soundStoneFootstep);
 
     public static void registerBlocks(ItemRegistryEvent registryEvent) {
         registryEvent.registerAnvil(anvilNickel, "nickel_anvil");
@@ -162,7 +179,10 @@ public class Blocks {
         registryEvent.registerItemBlock(blockAzurite, "azurite_block");
         registryEvent.registerItemBlock(azuriteCluster, "azurite_cluster");
         registryEvent.registerItemBlock(torchWoodIdle, "torch_idle");
-        registryEvent.registerItemBlock(torchWoodDistinguished, "torch_off");
+        registryEvent.registerItemBlock(torchWoodExtinguished, "torch_off");
+        registryEvent.registerItemBlock(blockSulphur, "sulphur");
+        registryEvent.registerItemBlock(blockObserver, "block_observer");
+        registryEvent.registerItemBlock(blockReceiver, "block_receiver");
     }
 
     public static void registerRecipes(RecipeRegistryEvent register) {
@@ -210,6 +230,15 @@ public class Blocks {
         register.registerShapedRecipe(new ItemStack(blockAzurite), true, "XXX", "XXX", "XXX",
 
                 Character.valueOf('X'), Items.shardAzurite);
+        register.registerShapedRecipe(new ItemStack(blockObserver),true, "XXX", "ABS", "XXX",
+
+                Character.valueOf('X'), Block.cobblestone, Character.valueOf('A'), Item.netherQuartz,
+                Character.valueOf('B'), Item.redstone, Character.valueOf('S'), Items.shardAzurite);
+
+        register.registerShapedRecipe(new ItemStack(blockReceiver),true, "XSX", "SBS", "XSX",
+                Character.valueOf('X'), Block.cobblestone, Character.valueOf('S'), Items.shardAzurite,
+                Character.valueOf('B'), Item.redstone);
+
         register.registerShapelessRecipe(new ItemStack(Items.glowberries, 1), true, new ItemStack(flowerextend, 1, 0));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 7), true, new ItemStack(flowerextend, 1, 1));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 4), true, new ItemStack(flowerextend, 1, 2));
@@ -218,6 +247,10 @@ public class Blocks {
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 7), true, new ItemStack(flowerextend, 1, 5));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 1), true, new ItemStack(flowerextend, 1, 6));
         register.registerShapelessRecipe(new ItemStack(Items.Agave, 1, 1), true, new ItemStack(flowerextend, 1, 7));
+        for(int i = 0; i <= 4; i++){
+            register.registerShapelessRecipe(new ItemStack(Item.stick,1),true,
+                    new ItemStack(Blocks.torchWoodIdle,i),new ItemStack(Blocks.torchWoodExtinguished, 4 - i));
+        }
         FurnaceRecipes.smelting().addSmelting(oreTungsten.blockID, new ItemStack(Items.tungstenIngot));
         FurnaceRecipes.smelting().addSmelting(oreNickel.blockID, new ItemStack(Items.nickelIngot));
         FurnaceRecipes.smelting().addSmelting(oreUru.blockID, new ItemStack(Items.UruIngot));

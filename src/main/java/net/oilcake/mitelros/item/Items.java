@@ -444,7 +444,14 @@ public class Items extends Item {
 
     public static final ItemPickaxe UruPickaxe = ReflectHelper.createInstance(ItemPickaxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.uru);
 
-    public static final ItemRockExtend shardAzurite = (ItemRockExtend) (new ItemRockExtend(Constant.getNextItemID(), Materials.crystal, "azurite")).setXPReward(2);
+    public static final ItemRockExtend shardAzurite = (ItemRockExtend) (new ItemRockExtend(Constant.getNextItemID(), Materials.crystal, "azurite")).setXPReward(1);
+
+    public static final Item detectorEmerald = new ItemDetector(Constant.getNextItemID(), Material.emerald, "emerald").setUnlocalizedName("detector");
+
+    public static final Item detectorDiamond = new ItemDetector(Constant.getNextItemID(), Material.diamond, "diamond").setUnlocalizedName("detector");
+
+    public static final Item sulphur = new ItemStandard(Constant.getNextItemID(), Materials.sulphur, "sulphur_sphere").setMaxStackSize(16);
+
     public static void registerItems(ItemRegistryEvent event) {
         event.register("armor/nickel_helmet", nickelHelmet);
         event.register("armor/nickel_chestplate", nickelChestplate);
@@ -660,6 +667,9 @@ public class Items extends Item {
         event.register("ignition/tungsten", ignitionTungsten);
         event.register("ignition/adamantium", ignitionAdamantium);
         event.register("wither_branch", wither_branch);
+        event.register("tools/detector", detectorDiamond);
+        event.register("tools/detector_emerald", detectorEmerald);
+        event.register("sulphur_sphere", sulphur);
         Constant.initItemArray();
     }
 
@@ -815,6 +825,19 @@ public class Items extends Item {
 
                 Character.valueOf('S'), sinew,
                 Character.valueOf('W'), stick);
+        register.registerShapedRecipe(new ItemStack(detectorEmerald, 1),true, "FAF", "ANA", "FAF",
+
+                Character.valueOf('A'), Item.goldNugget,
+                Character.valueOf('F'), Item.ancientMetalNugget,
+                Character.valueOf('N'), Item.emerald);
+        register.registerShapedRecipe(new ItemStack(detectorDiamond, 1),true, "FAF", "ANA", "FAF",
+
+                Character.valueOf('A'),Item.goldNugget,
+                Character.valueOf('F'),Item.ancientMetalNugget,
+                Character.valueOf('N'),Item.diamond);
+
+        register.registerShapelessRecipe(new ItemStack(sulphur,9),true, new ItemStack(Blocks.blockSulphur,1));
+        register.registerShapelessRecipe(new ItemStack(Item.gunpowder,8),true, new ItemStack(Items.sulphur, 8),new ItemStack(Item.coal, 1, 1));
         register.registerShapelessRecipe(new ItemStack(forgingnote, 2), false, forgingnote, Item.writableBook);
         register.registerShapelessRecipe(new ItemStack(UruHelmet, 1), true, forgingnote, UruIngot, Item.helmetMithril, Item.ingotMithril);
         register.registerShapelessRecipe(new ItemStack(UruChestplate, 1), true, forgingnote, UruIngot, Item.plateMithril, Item.ingotMithril);

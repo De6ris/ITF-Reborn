@@ -75,6 +75,8 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     private int FreezingWarning;
 
+    private int detectorDelay = 0;
+
     public void broadcast() {
         this.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("[Client]")
                 .appendComponent(ChatMessageComponent.createFromTranslationKey("ITF-Reborn挂载成功,当前版本:").setColor(EnumChatFormatting.BLUE))
@@ -312,6 +314,36 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @Inject(method = {"onLivingUpdate()V"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;onLivingUpdate()V", shift = At.Shift.AFTER)})
     private void injectTick(CallbackInfo ci) {
         if (!this.worldObj.isRemote) {
+            //探测器：绿宝石
+            if(this.inventory.getHotbarSlotContainItem(Items.detectorEmerald) > 0){
+                if(detectorDelay < 80){
+                    detectorDelay ++;
+                }else {
+                    detectorDelay = 0;
+                    List <Entity>targets  = this.getNearbyEntities(16.0F, 8.0F);
+                    float range_div = Math.min(2.0F,20.0F / this.detectNearestMonstersDistance(targets));
+//                    System.out.println(range_div);
+                    if(range_div > 0.0F){
+                        this.makeSound("imported.random.warning", 0.3F, 1.0F + range_div);
+                        detectorDelay += (int) (38.0F * range_div);
+                    }
+                }
+            }
+            //探测器：钻石
+            if(this.inventory.getHotbarSlotContainItem(Items.detectorDiamond) > 0){
+                if(detectorDelay < 80){
+                    detectorDelay ++;
+                }else {
+                    detectorDelay = 0;
+                    List <Entity>targets  = this.getNearbyEntities(28.0F, 12.0F);
+                    float range_div = Math.min(2.0F,40.0F / this.detectNearestMonstersDistance(targets));
+//                    System.out.println(range_div);
+                    if(range_div > 0.0F){
+                        this.makeSound("imported.random.warning", 0.3F, 1.0F + range_div);
+                        detectorDelay += (int) (38.0F * range_div);
+                    }
+                }
+            }
             this.diarrheaManager.update(ReflectHelper.dyCast(this));
 
             if (hasCurse(CurseExtend.fear_of_light)) {
@@ -599,6 +631,21 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
             if (entityMonster != null && entityMonster.getDistanceSqToEntity(this) <= getReach(EnumEntityReachContext.FOR_MELEE_ATTACK, entityMonster) && entityMonster.canEntityBeSeenFrom(this.posX, getEyePosY(), this.posZ, 5.0D))
                 entityMonster.attackEntityFrom(new Damage(DamageSource.causePlayerDamage(getAsPlayer()), damage));
         }
+    }
+
+    public float detectNearestMonstersDistance(List <Entity>targets) {
+        float distance = -1.0F;
+        for(int i = 0; i< targets.size(); i++) {
+            EntityMob entityMonster = targets.get(i) instanceof EntityMob ? (EntityMob) targets.get(i) : null;
+            if (entityMonster != null) {
+                if(distance < 0.0F) {
+                    distance = (float) entityMonster.getDistanceSqToEntity(this);
+                } else {
+                    distance = Math.min(distance, (float) entityMonster.getDistanceSqToEntity(this));
+                }
+            }
+        }
+        return distance;
     }
 
     @Inject(method = "fall", at = @At("TAIL"))

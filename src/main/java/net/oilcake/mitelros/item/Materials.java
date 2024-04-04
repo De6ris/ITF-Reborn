@@ -50,6 +50,8 @@ public class Materials extends Material {
 
     public static final Material crystal;
 
+    public static final Material sulphur;
+
 
     static {
         Class<EnumEquipmentMaterial> enumEquipmentMaterialClass = EnumEquipmentMaterial.class;
@@ -73,7 +75,8 @@ public class Materials extends Material {
         ancient_metal_sacred = (Materials) (new Materials(EnumEquipmentMaterials.ANCIENT_METAL_SACRED)).setRequiresTool().setMetal(true).setMinHarvestLevel(3);
         agave = new MaterialFood("agave");
         beetroot = new MaterialFood("beetroot");
-        crystal = new Material("crystal");
+        crystal = new Material("crystal").setDurability(4.0F);
+        sulphur = new Material("sulphur").setDurability(2.0F);
     }
 
 

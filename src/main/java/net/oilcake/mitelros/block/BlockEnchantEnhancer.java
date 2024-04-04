@@ -41,9 +41,9 @@ public class BlockEnchantEnhancer extends Block {
   }
   
   public void registerIcons(IconRegister mt) {
-    this.TEXTURE_TOP = mt.registerIcon("enchant_enhancer/enchant_enhancer_top");
-    this.TEXTURE_BOTOTM = mt.registerIcon("enchant_enhancer/enchant_enhancer_bottom");
-    this.TEXTURE_SIDE = mt.registerIcon("enchant_enhancer/enchant_enhancer_side");
+    this.TEXTURE_TOP = mt.registerIcon("enchant_enhancer/top");
+    this.TEXTURE_BOTOTM = mt.registerIcon("enchant_enhancer/bottom");
+    this.TEXTURE_SIDE = mt.registerIcon("enchant_enhancer/side");
   }
   
   public void getItemStacks(int id, CreativeTabs creative_tabs, List list) {

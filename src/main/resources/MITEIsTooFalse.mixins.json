@@ -61,7 +61,7 @@
     "entity.EntityWitchMixin",
     "entity.EntityWolfMixin",
     "entity.EntityZombieMixin",
-    "entity.TileEntityMixin",
+    "block.tileentity.TileEntityMixin",
     "entity.player.ClientPlayerMixin",
     "entity.player.EntityPlayerMixin",
     "entity.player.InventoryPlayerMixin",

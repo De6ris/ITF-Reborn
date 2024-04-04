@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Random;
 
@@ -40,10 +41,15 @@ public class BlockWorkbenchMixin extends Block {
   private void injectInit(int par1, CallbackInfo callbackInfo) {
     setMinHarvestLevel(1);
   }
-  
+
   @Overwrite
   public boolean isPortable(World world, EntityLivingBase entity_living_base, int x, int y, int z) {
-    return (world.getBlockMetadata(x, y, z) > 3 && world.getBlockMetadata(x, y, z) < 13);
+    if(world == null) {
+      return true;
+    } else {
+      return world.getBlockMetadata(x, y, z) > 3 && world.getBlockMetadata(x, y, z) < 13;
+    }
+
   }
   
   public int dropBlockAsEntityItem(BlockBreakInfo info) {

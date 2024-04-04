@@ -9,6 +9,9 @@ import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.achivements.AchievementExtend;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.Blocks;
+import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;
+import net.oilcake.mitelros.block.observer.TileEntityObserver;
+import net.oilcake.mitelros.block.receiver.TileEntityReceiver;
 import net.oilcake.mitelros.client.render.*;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.entity.*;
@@ -104,14 +107,27 @@ public class ITFEvent {
     public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
         ServerPlayer player = event.getPlayer();
         player.setHealth(player.getHealth());
-        ((ITFPlayer)player).broadcast();
+        player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("[Client]")
+                .appendComponent(ChatMessageComponent.createFromTranslationKey("MITE-ITF挂载成功,当前版本:").setColor(EnumChatFormatting.BLUE))
+                .appendComponent(ChatMessageComponent.createFromText(ITFStart.Version).setColor(EnumChatFormatting.YELLOW))
+                .appendComponent(ChatMessageComponent.createFromTranslationKey(",作者:Lee074,Huix,Kalsey,并由Debris移植到FML3.2.1")));
+        if (Constant.CalculateCurrentDiff() != 0) {
+            player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("[MITE-ITF]")
+                    .appendComponent(ChatMessageComponent.createFromTranslationKey("当前难度：" + Constant.CalculateCurrentDiff())
+                            .setColor((Constant.CalculateCurrentDiff() >= 16) ? EnumChatFormatting.DARK_RED :
+                                    ((Constant.CalculateCurrentDiff() >= 12) ? EnumChatFormatting.RED :
+                                            ((Constant.CalculateCurrentDiff() >= 8) ? EnumChatFormatting.YELLOW :
+                                                    ((Constant.CalculateCurrentDiff() >= 4) ? EnumChatFormatting.GREEN :
+                                                            ((Constant.CalculateCurrentDiff() > 0) ? EnumChatFormatting.AQUA :
+                                                                    EnumChatFormatting.BLUE)))))));
+        }
     if (!Minecraft.inDevMode())
             player.vision_dimming = 1.25F;
-        if (((ITFPlayer)player).getNewPlayerManager().getNew()) {
+        if (((ITFPlayer) player).getNewPlayerManager().getNew()) {
             ItemStack guide = new ItemStack(Items.guide);
             guide.setTagCompound(ItemGuideBook.generateBookContents());
             player.inventory.addItemStackToInventoryOrDropIt(guide);
-            ((ITFPlayer)player).getNewPlayerManager().setNew(false);
+            ((ITFPlayer) player).getNewPlayerManager().setNew(false);
         }
     }
 
@@ -161,4 +177,11 @@ public class ITFEvent {
         event.register(EntityWandShockWave.class, new RenderSnowball(Item.eyeOfEnder));
         event.register(EntityUnknown.class, new RenderUnknown());
     }
+
+//    @Subscribe
+//    public void onTileEntityRegister(TileEntityRegistry event) {
+//        event.register(TileEntityEnchantReserver.class, "EnchantReserver");
+//        event.register(TileEntityObserver.class, "Observer");
+//        event.register(TileEntityReceiver.class, "Receiver");
+//    }
 }

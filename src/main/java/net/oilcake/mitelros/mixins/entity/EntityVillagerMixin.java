@@ -174,7 +174,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
         if (this.rand.nextFloat() < adjustProbability(0.2F))
           var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 4), new ItemStack((Item)Items.bowlPorkchopStew, 1, 0))); 
         if (this.rand.nextFloat() < adjustProbability(0.2F))
-          var2.add(new MerchantRecipe(new ItemStack((Item)Item.bowlEmpty, 16), new ItemStack(Item.shardEmerald, 1, 0))); 
+          var2.add(new MerchantRecipe(new ItemStack((Item)Item.bowlEmpty, 4), new ItemStack(Item.shardEmerald, 1, 0)));
         break;
       case 6:
         if (this.rand.nextFloat() < adjustProbability(0.3F))

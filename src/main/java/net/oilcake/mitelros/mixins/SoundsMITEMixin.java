@@ -36,6 +36,7 @@ public abstract class SoundsMITEMixin {// TODO
         add("sound/imported/mob/spiderking/say2.ogg");
         add("sound/imported/mob/spiderking/say3.ogg");
         add("sound/imported/random/melting.ogg");
+        add("sound/imported/random/warning.ogg");
     }
 
     @Shadow

@@ -13,7 +13,7 @@ public class ItemRockMixin {
   @Overwrite
   public static int getExperienceValueWhenSacrificed(ItemStack item_stack) {
     Item item = item_stack.getItem();
-    return item == Items.shardAzurite ? 3 : (item == Items.lapis ? 25 : (item == Item.netherQuartz ? 50 : (item == Item.emerald ? 250 : (item == Item.diamond ? 500 : 0))));
+    return item == Items.shardAzurite ? 5 : (item == Items.lapis ? 25 : (item == Item.netherQuartz ? 50 : (item == Item.emerald ? 250 : (item == Item.diamond ? 500 : 0))));
   }
   
   @Overwrite
