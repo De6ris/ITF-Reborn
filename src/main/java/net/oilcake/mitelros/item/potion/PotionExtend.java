@@ -6,30 +6,38 @@ import net.minecraft.Potion;
 import net.oilcake.mitelros.util.Constant;
 
 public class PotionExtend extends Potion {
-  public static final Potion dehydration = (new PotionExtend(getNextPotionID(), true, 4251856)).setIconIndex(3, 2).setPotionName("potion.extend.dehydration");
-  
-  public static final Potion thirsty = (new PotionExtend(getNextPotionID(), true, 16761125)).setIconIndex(3, 2).setPotionName("potion.extend.thirsty");
-  
-  public static final Potion freeze = (new PotionExtend(getNextPotionID(), true, 65535)).setIconIndex(4, 2).setPotionName("potion.extend.freeze");
-  
-  public PotionExtend(int par1, boolean par2, int par3) {
-    super(par1, par2, par3);
-  }
-  
-  public void performEffect(EntityLivingBase par1EntityLivingBase, int par2) {
-    if (!par1EntityLivingBase.onClient() && 
-      this.id == dehydration.id && par1EntityLivingBase instanceof EntityPlayer && 
-      !par1EntityLivingBase.worldObj.isRemote)
-      ((EntityPlayer)par1EntityLivingBase).getFoodStats().addHungerServerSide(0.05F * (par2 + 1)); 
-  }
-  
-  public int getEffectInterval(int amplifier) {
-    if (this.id == dehydration.id)
-      return 1; 
-    return -1;
-  }
-  
-  public static int getNextPotionID() {
-    return Constant.nextPotionID++;
-  }
+    public static final Potion dehydration = (new PotionExtend(getNextPotionID(), true, 4251856)).setIconIndex(3, 2).setPotionName("potion.extend.dehydration");
+
+    public static final Potion thirsty = (new PotionExtend(getNextPotionID(), true, 16761125)).setIconIndex(3, 2).setPotionName("potion.extend.thirsty");
+
+    public static final Potion freeze = (new PotionExtend(getNextPotionID(), true, 65535)).setIconIndex(4, 2).setPotionName("potion.extend.freeze");
+
+    public static final Potion stretch = (new PotionExtend(getNextPotionID(), true, 65535)).setIconIndex(4, 2).setPotionName("potion.extend.stretch");
+
+    public PotionExtend(int par1, boolean par2, int par3) {
+        super(par1, par2, par3);
+    }
+
+    public void performEffect(EntityLivingBase par1EntityLivingBase, int par2) {
+        if (par1EntityLivingBase.onClient()) {
+            return;
+        }
+        if (this.id == dehydration.id && par1EntityLivingBase instanceof EntityPlayer &&
+                        !par1EntityLivingBase.worldObj.isRemote)
+            ((EntityPlayer) par1EntityLivingBase).getFoodStats().addHungerServerSide(0.05F * (par2 + 1));
+    }
+
+    public int getEffectInterval(int amplifier) {
+        if (this.id == stretch.id) {
+            return 1;// TODO
+        } else {
+            if (this.id == dehydration.id)
+                return 1;
+            return -1;
+        }
+    }
+
+    public static int getNextPotionID() {
+        return Constant.nextPotionID++;
+    }
 }
