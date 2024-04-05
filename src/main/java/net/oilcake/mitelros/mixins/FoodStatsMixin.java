@@ -1,21 +1,12 @@
 package net.oilcake.mitelros.mixins;
 
-import net.minecraft.Damage;
-import net.minecraft.DamageSource;
-import net.minecraft.EnchantmentHelper;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.EntityPlayer;
-import net.minecraft.FoodStats;
-import net.minecraft.Item;
-import net.minecraft.Minecraft;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.Packet;
-import net.minecraft.ServerPlayer;
-import net.oilcake.mitelros.api.*;
+import net.minecraft.*;
+import net.oilcake.mitelros.api.ITFFoodStats;
+import net.oilcake.mitelros.api.ITFItem;
+import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.network.PacketDecreaseWater;
 import net.oilcake.mitelros.util.DamageSourceExtend;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -87,14 +78,6 @@ public class FoodStatsMixin implements ITFFoodStats {
         }
     }
 
-    public void decreaseWaterClientSide(float water) {
-        if (!this.player.worldObj.isRemote) {
-            Minecraft.setErrorMessage("addHungerClientSide: cannot decrease Water to client if not remote");
-        } else {
-            decreaseWater(water);
-        }
-    }
-
     public void decreaseWaterServerSide(float hungerWater) {
         if (this.player.worldObj.isRemote) {
             Minecraft.setErrorMessage("addHungerServerSide: cannot decrease Water to server if remote");
@@ -116,8 +99,9 @@ public class FoodStatsMixin implements ITFFoodStats {
         this.decreaseWaterServerSide(getWaterPerTick());
         if (!par1EntityPlayer.inCreativeMode())
             this.water_for_nutrition_only += getWaterPerTick() * 0.3F;
-        if (this.water < 0)
+        if (this.water < 0) {
             this.water = 0;
+        }
     }
 
     @Inject(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/ServerPlayer;heal(F)V"))

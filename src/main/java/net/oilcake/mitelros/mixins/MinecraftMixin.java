@@ -3,8 +3,10 @@ package net.oilcake.mitelros.mixins;
 import net.minecraft.EnumChatFormatting;
 import net.minecraft.ILogAgent;
 import net.minecraft.Minecraft;
+import net.minecraft.PlayerControllerMP;
 import net.minecraft.client.main.Main;
 import net.oilcake.mitelros.network.NoConsoleLogManager;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({Minecraft.class})
+@Mixin(Minecraft.class)
 public class MinecraftMixin {
     @Shadow
     public static ILogAgent MITE_log;

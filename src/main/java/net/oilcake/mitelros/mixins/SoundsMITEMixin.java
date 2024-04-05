@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SoundsMITE.class)
-public abstract class SoundsMITEMixin {// TODO
+public abstract class SoundsMITEMixin {// TODO register in another way
     @Shadow
     private List<String> sounds = new ArrayList<>();
 

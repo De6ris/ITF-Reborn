@@ -10,82 +10,36 @@ import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({ItemFishingRod.class})
-public class ItemFishingRodMixin extends Item implements IDamageableItem {
-  private Icon[] uncastIcons = new Icon[11];
-  
-  private Icon castIcon;
-  
-  private Material hook_material;
-  
-  @Shadow
-  public int getNumComponentsForDurability() {
-    return 0;
-  }
-  
-  @Overwrite
-  private int getMaterialOrdinal() {
-    if (this.hook_material == Material.flint)
-      return 0; 
-    if (this.hook_material == Material.obsidian)
-      return 1; 
-    if (this.hook_material == Material.copper)
-      return 2; 
-    if (this.hook_material == Material.silver)
-      return 3; 
-    if (this.hook_material == Material.gold)
-      return 4; 
-    if (this.hook_material == Material.iron)
-      return 5; 
-    if (this.hook_material == Material.mithril)
-      return 6; 
-    if (this.hook_material == Material.adamantium)
-      return 7; 
-    if (this.hook_material == Material.ancient_metal)
-      return 8; 
-    if (this.hook_material == Materials.nickel)
-      return 9; 
-    if (this.hook_material == Materials.tungsten)
-      return 10; 
-    return -1;
-  }
-  
-  @Overwrite
-  private Material getMaterialByOrdinal(int ordinal) {
-    switch (ordinal) {
-      case 0:
-        return Material.flint;
-      case 1:
-        return Material.obsidian;
-      case 2:
-        return Material.copper;
-      case 3:
-        return Material.silver;
-      case 4:
-        return Material.gold;
-      case 5:
-        return Material.iron;
-      case 6:
-        return Material.mithril;
-      case 7:
-        return Material.adamantium;
-      case 8:
-        return Material.ancient_metal;
-      case 9:
-        return (Material)Materials.nickel;
-      case 10:
-        return (Material)Materials.tungsten;
-    } 
-    return null;
-  }
-  
-  @Overwrite
-  public void registerIcons(IconRegister par1IconRegister) {
-    this.castIcon = par1IconRegister.registerIcon(getIconString() + "_cast");
-    for (int i = 0; i < this.uncastIcons.length; i++) {
-      if (getMaterialByOrdinal(i) != null)
-        this.uncastIcons[i] = par1IconRegister.registerIcon("fishing_rods/" + getMaterialByOrdinal(i).name + "_uncast");
-    } 
-  }
+@Mixin(ItemFishingRod.class)
+public abstract class ItemFishingRodMixin extends Item implements IDamageableItem {
+    private Icon[] uncastIcons = new Icon[11];
+
+    private Material hook_material;
+
+    @Shadow
+    public int getNumComponentsForDurability() {
+        return 0;
+    }
+
+    @Inject(method = "getMaterialOrdinal", at = @At("HEAD"), cancellable = true)
+    private void getMaterialOrdinal(CallbackInfoReturnable<Integer> cir) {
+        if (this.hook_material == Materials.nickel)
+            cir.setReturnValue(9);
+        if (this.hook_material == Materials.tungsten)
+            cir.setReturnValue(10);
+    }
+
+    @Inject(method = "getMaterialByOrdinal", at = @At("HEAD"), cancellable = true)
+    private void getMaterialByOrdinal(int ordinal, CallbackInfoReturnable<Material> cir) {
+        switch (ordinal) {
+            case 9:
+                cir.setReturnValue(Materials.nickel);
+            case 10:
+                cir.setReturnValue(Materials.tungsten);
+        }
+    }
 }

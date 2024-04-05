@@ -126,7 +126,7 @@ public class Blocks {
 
     public static final Block torchWoodExtinguished = (new BlockTorchIdle(getNextBlockID()))
             .setHardness(0.0F).
-            setLightValue(0.0F).
+            setLightValue(0.1F).
             setStepSound(Block.soundWoodFootstep).
             setUnlocalizedName("torch");
 

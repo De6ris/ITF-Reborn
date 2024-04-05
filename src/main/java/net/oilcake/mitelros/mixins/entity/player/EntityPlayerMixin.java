@@ -1,13 +1,16 @@
 package net.oilcake.mitelros.mixins.entity.player;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
 import net.minecraft.*;
-import net.minecraft.server.MinecraftServer;
 import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.achivements.AchievementExtend;
-import net.oilcake.mitelros.api.*;
+import net.oilcake.mitelros.api.ITFDamageResult;
+import net.oilcake.mitelros.api.ITFFoodStats;
+import net.oilcake.mitelros.api.ITFInventory;
+import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.item.ItemTotem;
@@ -20,7 +23,6 @@ import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.CurseExtend;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
@@ -32,6 +34,12 @@ import java.util.List;
 
 @Mixin(EntityPlayer.class)
 public abstract class EntityPlayerMixin extends EntityLivingBase implements ICommandSender, ITFPlayer {
+
+    @Shadow
+    public abstract void addExperience(int amount, boolean suppress_healing, boolean suppress_sound);
+
+    @Shadow
+    public abstract boolean hasFoodEnergy();
 
     @Shadow
     public abstract void triggerAchievement(StatBase par1StatBase);
@@ -78,8 +86,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     private int detectorDelay = 0;
 
     public void broadcast() {
-        this.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("[Client]")
-                .appendComponent(ChatMessageComponent.createFromTranslationKey("ITF-Reborn挂载成功,当前版本:").setColor(EnumChatFormatting.BLUE))
+        this.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("ITF-Reborn挂载成功,当前版本:").setColor(EnumChatFormatting.BLUE)
                 .appendComponent(ChatMessageComponent.createFromText(ITFStart.Version).setColor(EnumChatFormatting.YELLOW))
                 .appendComponent(ChatMessageComponent.createFromTranslationKey(",作者:Lee074,Huix,Kalsey,由Debris移植到FML3.2.1,现由Debris和Xy_Lose共同维护")));
         if (Constant.CalculateCurrentDiff() != 0) {
@@ -218,26 +225,13 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
             ((ITFFoodStats) getFoodStats()).decreaseWaterServerSide(hungerWater);
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public boolean isStarving() {
-        return (getNutrition() == 0);
-    }
-
     public boolean DuringDehydration() {
         return (getWater() == 0);
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public boolean hasFoodEnergy() {
-        return (getSatiation() + getNutrition() != 0 && getWater() != 0);
+    @ModifyReturnValue(method = "hasFoodEnergy", at = @At("RETURN"))
+    private boolean needWater(boolean original) {
+        return original && this.getWater() != 0;
     }
 
 
@@ -289,9 +283,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     protected FoodStats foodStats;
 
     @Shadow
-    public int experience;
-
-    @Shadow
     public InventoryPlayer inventory;
 
     @Shadow
@@ -315,30 +306,28 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     private void injectTick(CallbackInfo ci) {
         if (!this.worldObj.isRemote) {
             //探测器：绿宝石
-            if(this.inventory.getHotbarSlotContainItem(Items.detectorEmerald) > 0){
-                if(detectorDelay < 80){
-                    detectorDelay ++;
-                }else {
+            if (this.inventory.getHotbarSlotContainItem(Items.detectorEmerald) > 0) {
+                if (detectorDelay < 80) {
+                    detectorDelay++;
+                } else {
                     detectorDelay = 0;
-                    List <Entity>targets  = this.getNearbyEntities(16.0F, 8.0F);
-                    float range_div = Math.min(2.0F,20.0F / this.detectNearestMonstersDistance(targets));
-//                    System.out.println(range_div);
-                    if(range_div > 0.0F){
+                    List<Entity> targets = this.getNearbyEntities(16.0F, 8.0F);
+                    float range_div = Math.min(2.0F, 20.0F / this.detectNearestMonstersDistance(targets));
+                    if (range_div > 0.0F) {
                         this.makeSound("imported.random.warning", 0.3F, 1.0F + range_div);
                         detectorDelay += (int) (38.0F * range_div);
                     }
                 }
             }
             //探测器：钻石
-            if(this.inventory.getHotbarSlotContainItem(Items.detectorDiamond) > 0){
-                if(detectorDelay < 80){
-                    detectorDelay ++;
-                }else {
+            if (this.inventory.getHotbarSlotContainItem(Items.detectorDiamond) > 0) {
+                if (detectorDelay < 80) {
+                    detectorDelay++;
+                } else {
                     detectorDelay = 0;
-                    List <Entity>targets  = this.getNearbyEntities(28.0F, 12.0F);
-                    float range_div = Math.min(2.0F,40.0F / this.detectNearestMonstersDistance(targets));
-//                    System.out.println(range_div);
-                    if(range_div > 0.0F){
+                    List<Entity> targets = this.getNearbyEntities(28.0F, 12.0F);
+                    float range_div = Math.min(2.0F, 40.0F / this.detectNearestMonstersDistance(targets));
+                    if (range_div > 0.0F) {
                         this.makeSound("imported.random.warning", 0.3F, 1.0F + range_div);
                         detectorDelay += (int) (38.0F * range_div);
                     }
@@ -383,7 +372,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         ItemStack holding = getHeldItemStack();
         if (holding != null && willRepair(holding) &&
                 holding.getRemainingDurability() / holding.getMaxDamage() < 0.5F && getExperienceLevel() >= 10 + 15 * holding.getItem().getHardestMetalMaterial().min_harvest_level) {
-            addExperience(-holding.getMaxDamage() / 32, false, true);
+            this.addExperience(-holding.getMaxDamage() / 32, false, true);
             holding.setItemDamage(holding.getItemDamage() - holding.getMaxDamage() / 8);
         }
         ItemStack[] item_stack_to_repair = getWornItems();
@@ -396,49 +385,24 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         }
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public void addExperience(int amount, boolean suppress_healing, boolean suppress_sound) {
-        suppress_healing = true;
-        if (amount < 0) {
-            if (!suppress_sound)
-                this.worldObj.playSoundAtEntity(this, "imported.random.level_drain");
-        } else if (amount > 0) {
-            addScore(amount);
-            if (!suppress_sound)
-                this.worldObj.playSoundAtEntity(this, "random.orb", 0.1F, 0.5F * ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.8F));
-            ItemStack holding = getHeldItemStack();
-            if (holding != null && willRepair(holding))
-                for (; getHeldItemStack().getItemDamage() >= 4 && amount > 0; amount--)
-                    getHeldItemStack().setItemDamage(holding.getItemDamage() - 4);
+    @Inject(method = "addExperience(IZZ)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/FoodStats;setNutrition(IZ)V"))
+    private void updateWater(int amount, boolean suppress_healing, boolean suppress_sound, CallbackInfo ci) {
+        this.addWater(0);
+    }
+
+    @ModifyVariable(method = "addExperience(IZZ)V", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+    private int mending(int amount) {
+        if (amount <= 0) {
+            return amount;
+        } else {
+            int before = amount;
+            ItemStack holding = this.getHeldItemStack();
+            if (holding != null && this.willRepair(holding))
+                for (; this.getHeldItemStack().getItemDamage() >= 4 && amount > 0; amount--)
+                    this.getHeldItemStack().setItemDamage(holding.getItemDamage() - 4);
+            this.addScore(before - amount);
+            return amount;
         }
-        float health_limit_before = getHealthLimit();
-        int level_before = getExperienceLevel();
-        this.experience += amount;
-        if (this.experience < getExperienceRequired(-40))
-            this.experience = getExperienceRequired(-40);
-        int level_after = getExperienceLevel();
-        int level_change = level_after - level_before;
-        if (level_change < 0) {
-            setHealth(getHealth());
-            this.foodStats.setSatiation(this.foodStats.getSatiation(), true);
-            this.foodStats.setNutrition(this.foodStats.getNutrition(), true);
-            addWater(0);
-        } else if (level_change > 0) {
-            if (getHealthLimit() > health_limit_before && this.field_82249_h < this.ticksExisted - 100.0F) {
-                float volume = (level_after > 30) ? 1.0F : (level_after / 30.0F);
-                if (!suppress_sound)
-                    this.worldObj.playSoundAtEntity(this, "random.levelup", volume * 0.75F, 1.0F);
-                this.field_82249_h = this.ticksExisted;
-            }
-            if (!suppress_healing)
-                setHealth(getHealth() + getHealthLimit() - health_limit_before);
-        }
-        if (level_change != 0 && !this.worldObj.isRemote)
-            MinecraftServer.getServerConfigurationManager(MinecraftServer.getServer()).sendPlayerInfoToAllPlayers(true);
     }
 
     public FoodStats getFoodStats() {
@@ -505,41 +469,25 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         par1NBTTagCompound.setInteger("HeatResistance", this.HeatResistance);
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    private void checkForArmorAchievements() {
-        boolean wearing_leather = false;
-        boolean wearing_full_suit_plate = true;
-        boolean wearing_full_suit_adamantium_plate = true;
+    @Inject(method = "checkForArmorAchievements", at = @At("HEAD"))
+    private void itfArmorAchievements(CallbackInfo ci) { // TODO [Optional] add itf metal to wearAllPlateArmor check
         boolean wearing_full_suit_wolf_fur = true;
-        for (int i = 0; i < 4; i++) {
-            if (this.inventory.armorInventory[i] != null && this.inventory.armorInventory[i].getItem() instanceof ItemArmor armor) {
+        for (int i = 0; i < 4; ++i) {
+            if (this.inventory.armorInventory[i] != null && this.inventory.armorInventory[i].getItem() instanceof ItemArmor) {
+                ItemArmor armor = (ItemArmor) this.inventory.armorInventory[i].getItem();
                 Material material = armor.getArmorMaterial();
-                if (material == Material.leather)
-                    wearing_leather = true;
-                if (material != Material.copper && material != Material.silver && material != Material.gold && material != Material.iron && material != Material.mithril && material != Material.adamantium && material != Material.ancient_metal && material != Materials.tungsten && material != Materials.nickel && material != Materials.ancient_metal_sacred && material != Materials.uru)
-                    wearing_full_suit_plate = false;
-                if (material != Material.adamantium)
-                    wearing_full_suit_adamantium_plate = false;
-                if (material != Materials.wolf_fur)
+                if (material != Materials.wolf_fur) {
                     wearing_full_suit_wolf_fur = false;
+                    break;
+                }
             } else {
-                wearing_full_suit_plate = false;
-                wearing_full_suit_adamantium_plate = false;
                 wearing_full_suit_wolf_fur = false;
+                break;
             }
         }
-        if (wearing_leather)
-            triggerAchievement(AchievementList.wearLeather);
-        if (wearing_full_suit_plate)
-            triggerAchievement(AchievementList.wearAllPlateArmor);
-        if (wearing_full_suit_adamantium_plate)
-            triggerAchievement(AchievementList.wearAllAdamantiumPlateArmor);
-        if (wearing_full_suit_wolf_fur)
-            triggerAchievement(AchievementExtend.BravetheCold);
+        if (wearing_full_suit_wolf_fur) {
+            this.triggerAchievement(AchievementExtend.BravetheCold);
+        }
     }
 
     public float getNickelArmorCoverage() {
@@ -560,44 +508,27 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         return coverage;
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public EntityDamageResult attackEntityFrom(Damage damage) {
+    @Inject(method = "attackEntityFrom", at = @At("HEAD"), cancellable = true)
+    private void inject(Damage damage, CallbackInfoReturnable<EntityDamageResult> cir) {// TODO check validity
         float nickel_coverage = MathHelper.clamp_float(getNickelArmorCoverage(), 0.0F, 1.0F);
         if (damage.getResponsibleEntity() instanceof net.minecraft.EntityGelatinousCube) {
             System.out.println("nickel_coverage = " + nickel_coverage);
             if (nickel_coverage >= 0.999F)
-                return null;
+                cir.setReturnValue(null);
             damage.scaleAmount(1.0F - nickel_coverage);
         }
-        if (this.ticksExisted < 1000 && Damage.wasCausedByPlayer(damage) && isWithinTournamentSafeZone())
-            return null;
-        if (this.capabilities.disableDamage && !damage.canHarmInCreative())
-            return null;
-        if (inBed())
-            wakeUpPlayer(true, damage.getResponsibleEntity());
-        if (damage.isExplosion()) {
-            if (damage.getResponsibleEntity() == this)
-                return null;
-            damage.scaleAmount(1.5F);
-        }
-        if (Config.FinalChallenge.get())
-            damage.scaleAmount(1.0F + Constant.CalculateCurrentDiff() / 50.0F);
-        EntityDamageResult result = super.attackEntityFrom(damage);
-        return result;
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public static int getHealthLimit(int level) {
-        int HealthLMTwithTag = 0;
-        int HealthLMTwithoutTag = Math.max(Math.min(6 + level / 5 * 2, 20), 6);
+    @Inject(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
+    private void inject_1(Damage damage, CallbackInfoReturnable<EntityDamageResult> cir) {
+        if (Config.FinalChallenge.get())
+            damage.scaleAmount(1.0F + Constant.CalculateCurrentDiff() / 50.0F);// TODO check validity
+    }
+
+    @ModifyReturnValue(method = "getHealthLimit()F", at = @At("RETURN"))
+    private float itfHealth(float HealthLMTwithoutTag) {
+        float HealthLMTwithTag;
+        int level = this.getExperienceLevel();
         if (level <= 35) {
             HealthLMTwithTag = HealthLMTwithoutTag;
         } else {
@@ -633,12 +564,12 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         }
     }
 
-    public float detectNearestMonstersDistance(List <Entity>targets) {
+    public float detectNearestMonstersDistance(List<Entity> targets) {
         float distance = -1.0F;
-        for(int i = 0; i< targets.size(); i++) {
+        for (int i = 0; i < targets.size(); i++) {
             EntityMob entityMonster = targets.get(i) instanceof EntityMob ? (EntityMob) targets.get(i) : null;
             if (entityMonster != null) {
-                if(distance < 0.0F) {
+                if (distance < 0.0F) {
                     distance = (float) entityMonster.getDistanceSqToEntity(this);
                 } else {
                     distance = Math.min(distance, (float) entityMonster.getDistanceSqToEntity(this));
@@ -655,22 +586,8 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     }
 
     @Shadow
-    public int getNutrition() {
-        return 1;
-    }
-
-    @Shadow
-    public int getSatiation() {
-        return 1;
-    }
-
-    @Shadow
     public ItemStack[] getWornItems() {
         return new ItemStack[0];
-    }
-
-    @Shadow
-    public void wakeUpPlayer(boolean get_out_of_bed, Entity entity_to_look_at) {
     }
 
     @Shadow
@@ -698,16 +615,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Shadow
     public final int getExperienceLevel() {
-        return 0;
-    }
-
-    @Shadow
-    public float getHealthLimit() {
-        return 0.0F;
-    }
-
-    @Shadow
-    protected static final int getExperienceRequired(int level) {
         return 0;
     }
 

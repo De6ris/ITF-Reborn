@@ -37,8 +37,8 @@ public class BlockTorchIdle extends BlockTorch {
         double var7 = (double)par2 + 0.5;
         double var9 = (double)par3 + 0.7;
         double var11 = (double)par4 + 0.5;
-        double var13 = 0.2199999988079071;
-        double var15 = 0.27000001072883606;
+        double var13 = 0.22f;
+        double var15 = 0.27f;
         if (var6 == 1) {
             par1World.spawnParticle(EnumParticle.smoke, var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
             par1World.spawnParticle(EnumParticle.flame, var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);

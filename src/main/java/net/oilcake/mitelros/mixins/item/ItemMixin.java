@@ -3,21 +3,11 @@ package net.oilcake.mitelros.mixins.item;
 import java.io.PrintStream;
 import java.util.List;
 
-import net.minecraft.Block;
-import net.minecraft.CreativeTabs;
-import net.minecraft.EntityPlayer;
-import net.minecraft.EnumChatFormatting;
-import net.minecraft.IRecipe;
-import net.minecraft.Item;
-import net.minecraft.ItemBlock;
-import net.minecraft.ItemStack;
-import net.minecraft.Material;
-import net.minecraft.Slot;
-import net.minecraft.Translator;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
-import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -29,6 +19,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ItemMixin implements ITFItem {
     @Shadow
     private float reach_bonus;
+
+    @Shadow
+    public abstract Material getMaterialForRepairs();
+
+    @Shadow
+    protected List materials;
     private int water;
 
     public Item item;
@@ -66,26 +62,14 @@ public abstract class ItemMixin implements ITFItem {
         return this.item;
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public Item getRepairItem() {
-        Material material_for_repairs = getMaterialForRepairs();
-        if (material_for_repairs == Material.copper)
-            return Item.copperNugget;
-        if (material_for_repairs == Material.silver)
-            return Item.silverNugget;
-        if (material_for_repairs == Materials.wolf_fur)
-            return Items.Wolf_fur;
-        if (material_for_repairs == Material.gold)
-            return Item.goldNugget;
-        if (material_for_repairs != Material.iron && material_for_repairs != Material.rusted_iron) {
-            if (material_for_repairs == Material.mithril)
-                return Item.mithrilNugget;
-            if (material_for_repairs == Material.adamantium)
-                return Item.adamantiumNugget;
+    @ModifyReturnValue(method = "getRepairItem", at = @At("RETURN"))
+    private Item reSet(Item original) {
+        if (original != null) {
+            return original;
+        } else {
+            Material material_for_repairs = this.getMaterialForRepairs();
+            if (material_for_repairs == Materials.wolf_fur)
+                return Items.Wolf_fur;
             if (material_for_repairs == Materials.nickel)
                 return Items.nickelNugget;
             if (material_for_repairs == Materials.tungsten)
@@ -94,23 +78,17 @@ public abstract class ItemMixin implements ITFItem {
                 return Items.AncientmetalArmorPiece;
             if (material_for_repairs == Materials.uru)
                 return Items.UruNugget;
-            return (material_for_repairs == Material.ancient_metal) ? Item.ancientMetalNugget : null;
+            return null;
         }
-        return Item.ironNugget;
     }
 
-    @Shadow
-    public Material getMaterialForRepairs() {
-        return null;
+    @Redirect(method = "getExclusiveMaterial", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
+    private void noError(String text) {
     }
 
-    @Shadow
-    public Item setCreativeTab(CreativeTabs table) {
-        return null;
+    @Redirect(method = "getMatchingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
+    private static void noError1(String text) {
     }
 
-    @Shadow
-    public Item setMaxStackSize(int maxStackSize) {
-        return null;
-    }
+
 }

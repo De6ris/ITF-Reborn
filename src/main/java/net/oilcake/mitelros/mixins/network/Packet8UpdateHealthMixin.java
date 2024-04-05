@@ -4,6 +4,7 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.NetHandler;
 import net.minecraft.Packet;
 import net.minecraft.Packet8UpdateHealth;
@@ -16,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin({Packet8UpdateHealth.class})
+@Mixin(Packet8UpdateHealth.class)
 public abstract class Packet8UpdateHealthMixin extends Packet implements ITFPacket8 {
     public int water;
 
@@ -47,14 +48,14 @@ public abstract class Packet8UpdateHealthMixin extends Packet implements ITFPack
         return this.water = water;
     }
 
-    @Inject(method = {"readPacketData(Ljava/io/DataInput;)V"}, at = {@At("RETURN")})
+    @Inject(method = "readPacketData(Ljava/io/DataInput;)V", at = @At("RETURN"))
     private void injectReadPacketData(DataInput par1DataInput, CallbackInfo c) throws IOException {
         this.water = par1DataInput.readInt();
         this.protein = par1DataInput.readInt();
         this.phytonutrients = par1DataInput.readInt();
     }
 
-    @Inject(method = {"writePacketData(Ljava/io/DataOutput;)V"}, at = {@At("RETURN")})
+    @Inject(method = "writePacketData(Ljava/io/DataOutput;)V", at = @At("RETURN"))
     private void injectWritePacketData(DataOutput par1DataOutput, CallbackInfo c) throws IOException {
         par1DataOutput.writeInt(this.water);
         par1DataOutput.writeInt(this.protein);
@@ -71,23 +72,19 @@ public abstract class Packet8UpdateHealthMixin extends Packet implements ITFPack
 
     @Override
     public int getWater() {
-        return water;
+        return this.water;
     }
 
     public int getPhytonutrients() {
-        return phytonutrients;
+        return this.phytonutrients;
     }
 
     public int getProtein() {
-        return protein;
+        return this.protein;
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public int getPacketSize() {
-        return 22;
+    @ModifyReturnValue(method = "getPacketSize", at = @At("RETURN"))
+    public int itfPackSize(int original) {
+        return original + 12;
     }
 }
