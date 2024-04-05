@@ -4,6 +4,12 @@
 
 ---
 
+## H15a-fix
+### 漏洞修复
+* 可能修复了因 *Cannot assign field "rotationYawHead" because "var10" is null* 崩溃的问题
+
+---
+
 ## H15a
 ### 物品
 * 加入了乌鲁金属弓
@@ -17,6 +23,7 @@
 ### 指令
 * 移除了Curse, FullyAir, StoneAir,Teleport,Xsummon指令,如需使用,请安装MITE DEV Kit以及Vanilla Commands
 * 移除了TPA指令的Tab补全功能,因为地精传送已自带
+* 新增/difficulty指令，用于查看当前难度
 ### 配置文件
 * 合并了2个配置文件,并使用FishModLoader Config API重写,支持游戏内快速编辑
   * 如果发现某一项配置无效请及时汇报

@@ -9,7 +9,6 @@ import net.oilcake.mitelros.block.enchantreserver.GuiEnchantReserver;
 import net.oilcake.mitelros.entity.EntityWandFireball;
 import net.oilcake.mitelros.entity.EntityWandIceBall;
 import net.oilcake.mitelros.entity.EntityWandShockWave;
-import net.oilcake.mitelros.network.PacketDecreaseWater;
 import net.oilcake.mitelros.network.PacketEnchantReserverInfo;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;

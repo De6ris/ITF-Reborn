@@ -1,16 +1,11 @@
 package net.oilcake.mitelros.block;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
-import net.minecraft.BiomeGenBase;
-import net.minecraft.Block;
-import net.minecraft.BlockFlower;
-import net.minecraft.IBlockAccess;
-import net.minecraft.Icon;
-import net.minecraft.IconRegister;
-import net.minecraft.Material;
-import net.minecraft.Minecraft;
-import net.minecraft.StringHelper;
-import net.minecraft.World;
+
+import net.minecraft.*;
+import net.oilcake.mitelros.item.Items;
 
 public class BlockFlowerExtend extends BlockFlower {
   public static final int LUMINESCENT_HERB = 0;
@@ -159,4 +154,5 @@ public class BlockFlowerExtend extends BlockFlower {
   public boolean isLegalAt(World world, int x, int y, int z, int metadata) {
     return (isBiomeSuitable(world.getBiomeGenForCoords(x, z), metadata) && super.isLegalAt(world, x, y, z, metadata));
   }
+
 }

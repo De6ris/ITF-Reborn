@@ -3,7 +3,6 @@ package net.oilcake.mitelros.block;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFDoor;
 import net.oilcake.mitelros.api.ITFPane;
-import net.oilcake.mitelros.block.*;
 import net.oilcake.mitelros.block.observer.BlockObserver;
 import net.oilcake.mitelros.block.receiver.BlockReceiver;
 import net.oilcake.mitelros.item.Items;
@@ -12,9 +11,6 @@ import net.xiaoyu233.fml.api.block.AnvilBlock;
 import net.xiaoyu233.fml.reload.event.ItemRegistryEvent;
 import net.xiaoyu233.fml.reload.event.RecipeRegistryEvent;
 import net.xiaoyu233.fml.util.IdUtil;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 public class Blocks {
     public static int getNextBlockID() {
@@ -93,7 +89,7 @@ public class Blocks {
 
     public static final BlockAnvil anvilTungsten = new AnvilBlock(getNextBlockID(), Materials.tungsten);
 
-    public static final BlockFlowerExtend flowerextend = (BlockFlowerExtend) (new BlockFlowerExtend(getNextBlockID())).setMaxStackSize(32);
+    public static final BlockFlowerExtend flowerextend = (BlockFlowerExtend) (new BlockFlowerExtend(getNextBlockID()));
 
     public static final Block blockEnchantEnhancer = (new BlockEnchantEnhancer(getNextBlockID()))
             .setHardness(8.0F).
@@ -238,7 +234,7 @@ public class Blocks {
         register.registerShapedRecipe(new ItemStack(blockReceiver),true, "XSX", "SBS", "XSX",
                 Character.valueOf('X'), Block.cobblestone, Character.valueOf('S'), Items.shardAzurite,
                 Character.valueOf('B'), Item.redstone);
-
+        //TODO fix block recipe with subtype
         register.registerShapelessRecipe(new ItemStack(Items.glowberries, 1), true, new ItemStack(flowerextend, 1, 0));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 7), true, new ItemStack(flowerextend, 1, 1));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 4), true, new ItemStack(flowerextend, 1, 2));
@@ -247,32 +243,13 @@ public class Blocks {
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 7), true, new ItemStack(flowerextend, 1, 5));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 1), true, new ItemStack(flowerextend, 1, 6));
         register.registerShapelessRecipe(new ItemStack(Items.Agave, 1, 1), true, new ItemStack(flowerextend, 1, 7));
+//        register.registerShapelessRecipe(new ItemStack(Items.glowberries, 1), true, new ItemStack(luminescentHerb, 1));
         for(int i = 0; i <= 4; i++){
-            register.registerShapelessRecipe(new ItemStack(Item.stick,1),true,
-                    new ItemStack(Blocks.torchWoodIdle,i),new ItemStack(Blocks.torchWoodExtinguished, 4 - i));
+            register.registerShapelessRecipe(new ItemStack(Item.stick,1),true, new ItemStack(Blocks.torchWoodIdle, i),new ItemStack(Blocks.torchWoodExtinguished, 4 - i));
         }
         FurnaceRecipes.smelting().addSmelting(oreTungsten.blockID, new ItemStack(Items.tungstenIngot));
         FurnaceRecipes.smelting().addSmelting(oreNickel.blockID, new ItemStack(Items.nickelIngot));
         FurnaceRecipes.smelting().addSmelting(oreUru.blockID, new ItemStack(Items.UruIngot));
     }
 
-    static {
-        try {
-            Field field = Block.class.getDeclaredField("is_normal_cube_lookup");
-            field.setAccessible(true);
-            Field modifiers = field.getClass().getDeclaredField("modifiers");
-            modifiers.setAccessible(true);
-            modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-            field.set(null, new boolean[4096]);
-            boolean[] is_normal_block = (boolean[]) field.get(null);
-            for (Block block : Block.blocksList) {
-                if (block != null) {
-                    is_normal_block[block.blockID] = block.is_normal_cube;
-                }
-            }
-            modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-    }
 }
