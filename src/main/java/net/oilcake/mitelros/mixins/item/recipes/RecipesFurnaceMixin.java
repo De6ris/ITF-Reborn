@@ -1,20 +1,13 @@
 package net.oilcake.mitelros.mixins.item.recipes;
 
-import java.util.HashMap;
-import java.util.Map;
-import net.minecraft.Block;
-import net.minecraft.FurnaceRecipes;
-import net.minecraft.Item;
-import net.minecraft.ItemArmor;
-import net.minecraft.ItemNugget;
-import net.minecraft.ItemStack;
-import net.minecraft.ItemTool;
-import net.minecraft.Material;
-import net.minecraft.TileEntityFurnace;
+import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Mixin({FurnaceRecipes.class})
 public class RecipesFurnaceMixin {

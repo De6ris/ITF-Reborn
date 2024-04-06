@@ -1,8 +1,8 @@
 package net.oilcake.mitelros.mixins.item;
 
+import net.minecraft.ItemBucketMilk;
 import net.minecraft.ItemVessel;
 import net.minecraft.Material;
-import net.minecraft.ItemBucketMilk;
 import net.oilcake.mitelros.api.ITFItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

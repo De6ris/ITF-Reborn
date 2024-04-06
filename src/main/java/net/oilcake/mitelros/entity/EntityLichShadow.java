@@ -1,30 +1,10 @@
 package net.oilcake.mitelros.entity;
 
+import net.minecraft.*;
+import net.oilcake.mitelros.item.Items;
+
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.AxisAlignedBB;
-import net.minecraft.Damage;
-import net.minecraft.DamageSource;
-import net.minecraft.Entity;
-import net.minecraft.EntityDamageResult;
-import net.minecraft.EntityLiving;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.EntityPlayer;
-import net.minecraft.EntitySkeleton;
-import net.minecraft.EnumBlockFX;
-import net.minecraft.EnumParticle;
-import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.MathHelper;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.PathEntity;
-import net.minecraft.PathPoint;
-import net.minecraft.RandomItemListEntry;
-import net.minecraft.SharedMonsterAttributes;
-import net.minecraft.SignalData;
-import net.minecraft.WeightedRandom;
-import net.minecraft.World;
-import net.oilcake.mitelros.item.Items;
 
 public class EntityLichShadow extends EntitySkeleton {
   private int max_num_evasions;

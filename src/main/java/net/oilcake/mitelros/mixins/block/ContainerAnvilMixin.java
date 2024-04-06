@@ -1,11 +1,6 @@
 package net.oilcake.mitelros.mixins.block;
 
-import net.minecraft.ContainerRepair;
-import net.minecraft.Enchantment;
-import net.minecraft.IInventory;
-import net.minecraft.ItemStack;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.NBTTagList;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFEnchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

@@ -1,22 +1,10 @@
 package net.oilcake.mitelros.entity;
 
+import net.minecraft.*;
+import net.oilcake.mitelros.item.Items;
+
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.DamageSource;
-import net.minecraft.Entity;
-import net.minecraft.EntityBoneLord;
-import net.minecraft.EntityDamageResult;
-import net.minecraft.EntityLiving;
-import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.Minecraft;
-import net.minecraft.Potion;
-import net.minecraft.PotionEffect;
-import net.minecraft.RandomItemListEntry;
-import net.minecraft.SharedMonsterAttributes;
-import net.minecraft.WeightedRandom;
-import net.minecraft.World;
-import net.oilcake.mitelros.item.Items;
 
 public class EntityWitherBoneLord extends EntityBoneLord {
   public EntityWitherBoneLord(World par1World) {

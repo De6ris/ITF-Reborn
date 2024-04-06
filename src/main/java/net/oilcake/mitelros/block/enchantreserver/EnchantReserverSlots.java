@@ -1,13 +1,6 @@
 package net.oilcake.mitelros.block.enchantreserver;
 
-import net.minecraft.Entity;
-import net.minecraft.EntityItem;
-import net.minecraft.IInventory;
-import net.minecraft.InventoryBasic;
-import net.minecraft.ItemStack;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.Slot;
-import net.minecraft.World;
+import net.minecraft.*;
 
 public class EnchantReserverSlots extends InventoryBasic {
     public static final int slotSize = 2;

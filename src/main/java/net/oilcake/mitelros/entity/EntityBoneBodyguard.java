@@ -1,11 +1,6 @@
 package net.oilcake.mitelros.entity;
 
-import net.minecraft.EntityLiving;
-import net.minecraft.EntitySkeleton;
-import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.SharedMonsterAttributes;
-import net.minecraft.World;
+import net.minecraft.*;
 
 public class EntityBoneBodyguard extends EntitySkeleton {
   public EntityBoneBodyguard(World par1World) {

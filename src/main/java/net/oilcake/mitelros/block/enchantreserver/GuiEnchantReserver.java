@@ -1,18 +1,10 @@
 package net.oilcake.mitelros.block.enchantreserver;
 
-import java.util.List;
-
-import net.minecraft.Container;
-import net.minecraft.EntityPlayer;
-import net.minecraft.GuiContainer;
-import net.minecraft.I18n;
-import net.minecraft.ICrafting;
-import net.minecraft.InventoryPlayer;
-import net.minecraft.ItemStack;
-import net.minecraft.Packet;
-import net.minecraft.ResourceLocation;
+import net.minecraft.*;
 import net.oilcake.mitelros.network.PacketEnchantReserverInfo;
 import org.lwjgl.opengl.GL11;
+
+import java.util.List;
 
 public class GuiEnchantReserver extends GuiContainer implements ICrafting {
     private static final ResourceLocation ENCHANT_RESERVER_TEXTURE = new ResourceLocation("textures/gui/container/enchant_reserver.png");

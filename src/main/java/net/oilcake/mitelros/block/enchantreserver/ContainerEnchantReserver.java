@@ -1,16 +1,14 @@
 package net.oilcake.mitelros.block.enchantreserver;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.Nullable;
-
 import net.minecraft.Container;
 import net.minecraft.EntityPlayer;
-import net.minecraft.IInventory;
 import net.minecraft.ItemStack;
-import net.minecraft.Packet;
 import net.minecraft.Slot;
 import net.oilcake.mitelros.network.PacketEnchantReserverInfo;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContainerEnchantReserver extends Container {
     @Nullable

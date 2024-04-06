@@ -1,17 +1,9 @@
 package net.oilcake.mitelros.item;
 
-import java.util.List;
-
-import net.minecraft.CreativeTabs;
-import net.minecraft.EntityPlayer;
-import net.minecraft.ItemFood;
-import net.minecraft.ItemStack;
-import net.minecraft.Material;
-import net.minecraft.Potion;
-import net.minecraft.PotionEffect;
-import net.minecraft.World;
-import net.minecraft.EnumRarity;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
+
+import java.util.List;
 
 public class ItemGoldenAppleLegend extends ItemFood {
     public ItemGoldenAppleLegend(int id, int satiation, int nutrition, String texture) {

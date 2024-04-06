@@ -1,17 +1,9 @@
 package net.oilcake.mitelros.entity;
 
+import net.minecraft.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.EntityInvisibleStalker;
-import net.minecraft.EntityLiving;
-import net.minecraft.EntityLivingData;
-import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.Minecraft;
-import net.minecraft.RandomItemListEntry;
-import net.minecraft.SharedMonsterAttributes;
-import net.minecraft.WeightedRandom;
-import net.minecraft.World;
 
 public class EntityGhost extends EntityInvisibleStalker {
   public EntityGhost(World par1World) {

@@ -1,10 +1,11 @@
 package net.oilcake.mitelros.world.biome;
 
-import java.util.Random;
 import net.minecraft.BiomeGenBase;
 import net.minecraft.Block;
 import net.minecraft.WorldGenerator;
 import net.oilcake.mitelros.api.ITFBiomeDecorator;
+
+import java.util.Random;
 
 public class BiomeSavannaPleatu extends BiomeGenBase {
   private boolean enableRain;

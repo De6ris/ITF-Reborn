@@ -1,19 +1,9 @@
 package net.oilcake.mitelros.entity;
 
+import net.minecraft.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.DamageSource;
-import net.minecraft.EntityAIBase;
-import net.minecraft.EntityAISeekLitTorch;
-import net.minecraft.EntityLiving;
-import net.minecraft.EntityZombie;
-import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.Minecraft;
-import net.minecraft.RandomItemListEntry;
-import net.minecraft.SharedMonsterAttributes;
-import net.minecraft.WeightedRandom;
-import net.minecraft.World;
 
 public class EntityRetinueZombie extends EntityZombie {
   private int conversionTime;

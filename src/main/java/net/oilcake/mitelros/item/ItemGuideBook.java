@@ -1,11 +1,6 @@
 package net.oilcake.mitelros.item;
 
-import net.minecraft.EntityPlayer;
-import net.minecraft.ItemEditableBook;
-import net.minecraft.NBTBase;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.NBTTagList;
-import net.minecraft.NBTTagString;
+import net.minecraft.*;
 
 public class ItemGuideBook extends ItemEditableBook {
   public ItemGuideBook(int par1) {

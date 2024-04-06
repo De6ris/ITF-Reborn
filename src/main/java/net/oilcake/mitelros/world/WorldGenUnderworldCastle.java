@@ -1,18 +1,10 @@
 package net.oilcake.mitelros.world;
 
-import java.util.Random;
-import net.minecraft.Block;
-import net.minecraft.Entity;
-import net.minecraft.EnumDirection;
-import net.minecraft.IInventory;
-import net.minecraft.Item;
-import net.minecraft.TileEntityChest;
-import net.minecraft.TileEntityMobSpawner;
-import net.minecraft.WeightedRandomChestContent;
-import net.minecraft.World;
-import net.minecraft.WorldGenerator;
+import net.minecraft.*;
 import net.oilcake.mitelros.entity.EntityLich;
 import net.oilcake.mitelros.item.Items;
+
+import java.util.Random;
 
 public class WorldGenUnderworldCastle extends WorldGenerator {
   private static String[] Layer = new String[22];

@@ -1,20 +1,6 @@
 package net.oilcake.mitelros.entity;
 
-import net.minecraft.DamageSource;
-import net.minecraft.Enchantment;
-import net.minecraft.EnchantmentHelper;
-import net.minecraft.Entity;
-import net.minecraft.EntityArrow;
-import net.minecraft.EntityLiving;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.EntitySkeleton;
-import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.Potion;
-import net.minecraft.PotionEffect;
-import net.minecraft.SharedMonsterAttributes;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFSkeleton;
 import net.oilcake.mitelros.item.Items;
 

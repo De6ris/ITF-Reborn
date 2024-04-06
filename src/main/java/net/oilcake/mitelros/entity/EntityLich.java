@@ -1,38 +1,11 @@
 package net.oilcake.mitelros.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.AxisAlignedBB;
-import net.minecraft.Damage;
-import net.minecraft.DamageSource;
-import net.minecraft.Entity;
-import net.minecraft.EntityAIAttackOnCollide;
-import net.minecraft.EntityAIAvoidEntity;
-import net.minecraft.EntityAIBase;
-import net.minecraft.EntityBoneLord;
-import net.minecraft.EntityCreature;
-import net.minecraft.EntityDamageResult;
-import net.minecraft.EntityLiving;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.EntityPlayer;
-import net.minecraft.EnumBlockFX;
-import net.minecraft.EnumEntityFX;
-import net.minecraft.EnumParticle;
-import net.minecraft.IBossDisplayData;
-import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.MathHelper;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.PathEntity;
-import net.minecraft.PathPoint;
-import net.minecraft.RandomItemListEntry;
-import net.minecraft.SharedMonsterAttributes;
-import net.minecraft.SignalData;
-import net.minecraft.StatBase;
-import net.minecraft.WeightedRandom;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.achivements.AchievementExtend;
 import net.oilcake.mitelros.item.Items;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityLich extends EntityBoneLord implements IBossDisplayData {
   private EntityAIAvoidEntity aiAvoidPlayerStrategic = new EntityAIAvoidEntity((EntityCreature)this, EntityPlayer.class, 6.0F, 1.1D, 1.4D);

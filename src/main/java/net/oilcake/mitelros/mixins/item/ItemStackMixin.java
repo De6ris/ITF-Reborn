@@ -1,35 +1,7 @@
 package net.oilcake.mitelros.mixins.item;
 
 import com.google.common.collect.Multimap;
-
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import net.minecraft.AttributeModifier;
-import net.minecraft.Enchantment;
-import net.minecraft.EntityClientPlayerMP;
-import net.minecraft.EntityPlayer;
-import net.minecraft.EnumChatFormatting;
-import net.minecraft.EnumQuality;
-import net.minecraft.Item;
-import net.minecraft.ItemAppleGold;
-import net.minecraft.ItemMap;
-import net.minecraft.ItemPotion;
-import net.minecraft.ItemStack;
-import net.minecraft.ItemTool;
-import net.minecraft.Material;
-import net.minecraft.Minecraft;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.NBTTagList;
-import net.minecraft.NBTTagString;
-import net.minecraft.Slot;
-import net.minecraft.SlotCrafting;
-import net.minecraft.StatCollector;
-import net.minecraft.TileEntityFurnace;
-import net.minecraft.Translator;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFEnchantment;
 import net.oilcake.mitelros.api.ITFFurnace;
 import net.oilcake.mitelros.api.ITFItem;
@@ -42,6 +14,12 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 @Mixin({ItemStack.class})
 public class ItemStackMixin {

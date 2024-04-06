@@ -1,38 +1,17 @@
 package net.oilcake.mitelros.mixins.item;
 
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.DamageSource;
-import net.minecraft.Enchantment;
-import net.minecraft.EnchantmentHelper;
-import net.minecraft.EntityArrow;
-import net.minecraft.EntityPlayer;
-import net.minecraft.EnumChatFormatting;
-import net.minecraft.EnumSignal;
-import net.minecraft.Item;
-import net.minecraft.ItemArrow;
-import net.minecraft.ItemBow;
-import net.minecraft.ItemStack;
-import net.minecraft.Material;
-import net.minecraft.Packet85SimpleSignal;
-import net.minecraft.Slot;
-import net.minecraft.Translator;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
-import org.objectweb.asm.Opcodes;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import java.util.List;
 
 @Mixin(ItemBow.class)
 public class ItemBowMixin extends Item {

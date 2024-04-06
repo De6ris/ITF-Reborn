@@ -1,14 +1,8 @@
 package net.oilcake.mitelros.block;
 
+import net.minecraft.*;
+
 import java.util.List;
-import net.minecraft.Block;
-import net.minecraft.BlockConstants;
-import net.minecraft.CreativeTabs;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.Icon;
-import net.minecraft.IconRegister;
-import net.minecraft.Material;
-import net.minecraft.World;
 
 public class BlockEnchantEnhancer extends Block {
   private Icon TEXTURE_TOP;

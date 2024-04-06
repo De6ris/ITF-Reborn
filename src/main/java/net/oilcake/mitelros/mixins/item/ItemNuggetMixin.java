@@ -1,14 +1,11 @@
 package net.oilcake.mitelros.mixins.item;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.minecraft.Item;
 import net.minecraft.ItemIngot;
 import net.minecraft.ItemNugget;
 import net.minecraft.Material;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;

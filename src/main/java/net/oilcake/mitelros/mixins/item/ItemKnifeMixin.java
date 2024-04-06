@@ -1,12 +1,6 @@
 package net.oilcake.mitelros.mixins.item;
 
-import net.minecraft.Block;
-import net.minecraft.Entity;
-import net.minecraft.EntityPlayer;
-import net.minecraft.ItemDagger;
-import net.minecraft.ItemKnife;
-import net.minecraft.Material;
-import net.minecraft.RaycastCollision;
+import net.minecraft.*;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin({ItemKnife.class})

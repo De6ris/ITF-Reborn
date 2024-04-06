@@ -1,15 +1,6 @@
 package net.oilcake.mitelros.mixins.item;
 
-import net.minecraft.Block;
-import net.minecraft.BlockTNT;
-import net.minecraft.DamageSource;
-import net.minecraft.Entity;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.EntityPlayer;
-import net.minecraft.Item;
-import net.minecraft.ItemFlintAndSteel;
-import net.minecraft.RaycastCollision;
-import net.minecraft.TileEntityFurnace;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFurnace;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;

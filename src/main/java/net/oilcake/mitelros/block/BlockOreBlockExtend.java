@@ -1,13 +1,6 @@
 package net.oilcake.mitelros.block;
 
-import net.minecraft.Block;
-import net.minecraft.BlockBreakInfo;
-import net.minecraft.BlockConstants;
-import net.minecraft.BlockHardness;
-import net.minecraft.CreativeTabs;
-import net.minecraft.ItemIngot;
-import net.minecraft.ItemRock;
-import net.minecraft.Material;
+import net.minecraft.*;
 
 public class BlockOreBlockExtend extends Block {
     public BlockOreBlockExtend(int par1, Material material) {

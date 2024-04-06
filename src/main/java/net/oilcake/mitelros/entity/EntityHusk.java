@@ -1,11 +1,6 @@
 package net.oilcake.mitelros.entity;
 
-import net.minecraft.Entity;
-import net.minecraft.EntityDamageResult;
-import net.minecraft.EntityZombie;
-import net.minecraft.Potion;
-import net.minecraft.PotionEffect;
-import net.minecraft.World;
+import net.minecraft.*;
 
 public class EntityHusk extends EntityZombie {
   public EntityHusk(World par1World) {

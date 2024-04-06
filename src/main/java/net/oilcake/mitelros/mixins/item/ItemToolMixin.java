@@ -1,20 +1,12 @@
 package net.oilcake.mitelros.mixins.item;
 
-import java.util.List;
-
-import net.minecraft.EntityPlayer;
-import net.minecraft.EnumChatFormatting;
-import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.ItemTool;
-import net.minecraft.Material;
-import net.minecraft.Minecraft;
-import net.minecraft.Slot;
-import net.minecraft.Translator;
+import net.minecraft.*;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.List;
 
 @Mixin({ItemTool.class})
 public class ItemToolMixin extends Item {

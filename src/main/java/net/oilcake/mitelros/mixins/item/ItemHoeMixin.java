@@ -1,10 +1,6 @@
 package net.oilcake.mitelros.mixins.item;
 
-import net.minecraft.Block;
-import net.minecraft.ItemHoe;
-import net.minecraft.ItemStack;
-import net.minecraft.ItemTool;
-import net.minecraft.Material;
+import net.minecraft.*;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;

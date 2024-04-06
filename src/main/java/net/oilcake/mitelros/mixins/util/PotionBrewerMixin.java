@@ -1,7 +1,5 @@
 package net.oilcake.mitelros.mixins.util;
 
-import java.util.HashMap;
-
 import net.minecraft.Potion;
 import net.minecraft.PotionHelper;
 import org.spongepowered.asm.mixin.Final;
@@ -11,6 +9,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.HashMap;
 
 @Mixin(PotionHelper.class)
 public class PotionBrewerMixin {

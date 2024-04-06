@@ -1,21 +1,10 @@
 package net.oilcake.mitelros.entity;
 
+import net.minecraft.*;
+import net.oilcake.mitelros.api.ITFSpider;
+
 import java.util.Iterator;
 import java.util.List;
-
-import net.minecraft.DamageSource;
-import net.minecraft.Entity;
-import net.minecraft.EntityArachnid;
-import net.minecraft.EntityDamageResult;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.EntityPotion;
-import net.minecraft.EnumEntityFX;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.Potion;
-import net.minecraft.PotionEffect;
-import net.minecraft.SharedMonsterAttributes;
-import net.minecraft.World;
-import net.oilcake.mitelros.api.ITFSpider;
 
 public class EntitySpiderKing extends EntityArachnid {
     private final int num_webs;

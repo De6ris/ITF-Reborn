@@ -1,14 +1,9 @@
 package net.oilcake.mitelros.block.enchantreserver;
 
-import java.util.Arrays;
-import net.minecraft.EntityPlayer;
-import net.minecraft.IInventory;
-import net.minecraft.ISidedInventory;
-import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.TileEntity;
+import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
+
+import java.util.Arrays;
 
 public class TileEntityEnchantReserver extends TileEntity implements ISidedInventory {
   private static final int[] slots_top = new int[] { 0 };

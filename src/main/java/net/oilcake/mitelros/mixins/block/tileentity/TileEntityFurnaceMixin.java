@@ -1,18 +1,6 @@
 package net.oilcake.mitelros.mixins.block.tileentity;
 
-import net.minecraft.Block;
-import net.minecraft.BlockFurnace;
-import net.minecraft.EntityPlayer;
-import net.minecraft.EnumBlockFX;
-import net.minecraft.FurnaceRecipes;
-import net.minecraft.ISidedInventory;
-import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.Material;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.Slot;
-import net.minecraft.TileEntity;
-import net.minecraft.TileEntityFurnace;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFurnace;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.Items;

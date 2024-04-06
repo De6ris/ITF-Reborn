@@ -2,8 +2,6 @@ package net.oilcake.mitelros.block.observer;
 
 import net.minecraft.*;
 
-import java.util.Random;
-
 public class BlockObserver extends BlockDirectionalWithTileEntity{
     private Icon TEXTURE_TOP;
     private Icon TEXTURE_TOP_ON;

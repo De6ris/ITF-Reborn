@@ -1,20 +1,6 @@
 package net.oilcake.mitelros.item;
 
-import net.minecraft.Block;
-import net.minecraft.BlockTNT;
-import net.minecraft.CreativeTabs;
-import net.minecraft.DamageSource;
-import net.minecraft.Entity;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.EntityPlayer;
-import net.minecraft.EntitySheep;
-import net.minecraft.IDamageableItem;
-import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.Material;
-import net.minecraft.Minecraft;
-import net.minecraft.RaycastCollision;
-import net.minecraft.TileEntityFurnace;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFurnace;
 
 public class ItemIgnition extends Item implements IDamageableItem {

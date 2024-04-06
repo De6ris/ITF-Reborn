@@ -1,10 +1,11 @@
 package net.oilcake.mitelros.world;
 
-import java.util.Random;
 import net.minecraft.Block;
 import net.minecraft.World;
 import net.minecraft.WorldGenerator;
 import net.oilcake.mitelros.block.Blocks;
+
+import java.util.Random;
 
 public class WorldGenStoneCone extends WorldGenerator {
   private boolean isSuperLarge = false;

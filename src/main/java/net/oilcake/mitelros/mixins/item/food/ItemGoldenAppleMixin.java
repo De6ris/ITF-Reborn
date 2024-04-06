@@ -1,12 +1,6 @@
 package net.oilcake.mitelros.mixins.item.food;
 
-import net.minecraft.EntityPlayer;
-import net.minecraft.ItemAppleGold;
-import net.minecraft.ItemFood;
-import net.minecraft.ItemStack;
-import net.minecraft.Potion;
-import net.minecraft.PotionEffect;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;

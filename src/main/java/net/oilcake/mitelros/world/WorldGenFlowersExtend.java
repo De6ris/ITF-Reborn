@@ -1,11 +1,12 @@
 package net.oilcake.mitelros.world;
 
-import java.util.Random;
 import net.minecraft.Block;
 import net.minecraft.Minecraft;
 import net.minecraft.World;
 import net.minecraft.WorldGenerator;
 import net.oilcake.mitelros.block.Blocks;
+
+import java.util.Random;
 
 public class WorldGenFlowersExtend extends WorldGenerator {
   private int plantBlockId;

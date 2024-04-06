@@ -1,18 +1,16 @@
 package net.oilcake.mitelros.mixins.util;
 
-import java.io.File;
-import java.io.FileWriter;
-
 import net.minecraft.EntityPlayer;
 import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.ItemTool;
 import net.minecraft.ReferenceFileWriter;
 import net.minecraft.StringHelper;
 import net.oilcake.mitelros.api.ITFItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+
+import java.io.File;
+import java.io.FileWriter;
 
 @Mixin({ReferenceFileWriter.class})
 public class ReferenceFileWriterMixin {

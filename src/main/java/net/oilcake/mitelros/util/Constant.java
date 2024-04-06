@@ -4,7 +4,6 @@ import net.minecraft.Item;
 import net.minecraft.ItemArmor;
 import net.minecraft.ResourceLocation;
 import net.oilcake.mitelros.item.Items;
-import net.xiaoyu233.fml.util.IdUtil;
 
 public class Constant {
 

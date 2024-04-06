@@ -1,15 +1,10 @@
 package net.oilcake.mitelros.entity;
 
+import net.minecraft.*;
+import net.oilcake.mitelros.item.Items;
+
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.EntityLiving;
-import net.minecraft.EntityRevenant;
-import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.RandomItemListEntry;
-import net.minecraft.WeightedRandom;
-import net.minecraft.World;
-import net.oilcake.mitelros.item.Items;
 
 public class EntityZombieLord extends EntityRevenant {
   public EntityZombieLord(World par1World) {

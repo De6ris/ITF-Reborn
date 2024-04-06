@@ -1,44 +1,11 @@
 package net.oilcake.mitelros.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.DamageSource;
-import net.minecraft.Enchantment;
-import net.minecraft.EnchantmentHelper;
-import net.minecraft.Entity;
-import net.minecraft.EntityAIArrowAttack;
-import net.minecraft.EntityAIAttackOnCollide;
-import net.minecraft.EntityAIBase;
-import net.minecraft.EntityAIFleeSun;
-import net.minecraft.EntityAIHurtByTarget;
-import net.minecraft.EntityAILookIdle;
-import net.minecraft.EntityAIMoveToRepairItem;
-import net.minecraft.EntityAINearestAttackableTarget;
-import net.minecraft.EntityAIRestrictSun;
-import net.minecraft.EntityAISeekFiringPosition;
-import net.minecraft.EntityAISwimming;
-import net.minecraft.EntityAIWander;
-import net.minecraft.EntityAIWatchClosest;
-import net.minecraft.EntityArrow;
-import net.minecraft.EntityCreature;
-import net.minecraft.EntityLiving;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.EntityMob;
-import net.minecraft.EntityPlayer;
-import net.minecraft.EntitySkeleton;
-import net.minecraft.EnumEntityFX;
-import net.minecraft.IEntitySelector;
-import net.minecraft.IRangedAttackMob;
-import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.Minecraft;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.RandomItemListEntry;
-import net.minecraft.SharedMonsterAttributes;
-import net.minecraft.WeightedRandom;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.util.EntitySelectorHunter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityUndeadGuard extends EntitySkeleton implements IRangedAttackMob {
   IEntitySelector hunterSelector = (IEntitySelector)new EntitySelectorHunter();

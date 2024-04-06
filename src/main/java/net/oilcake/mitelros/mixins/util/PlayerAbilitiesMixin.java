@@ -1,7 +1,10 @@
 package net.oilcake.mitelros.mixins.util;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.minecraft.*;
+import net.minecraft.EntityPlayer;
+import net.minecraft.MathHelper;
+import net.minecraft.PlayerCapabilities;
+import net.minecraft.Potion;
 import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.util.CurseExtend;
 import org.spongepowered.asm.mixin.Mixin;

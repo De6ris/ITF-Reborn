@@ -1,20 +1,15 @@
 package net.oilcake.mitelros.mixins.util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import net.minecraft.Enchantment;
-import net.minecraft.EnchantmentData;
-import net.minecraft.EnchantmentHelper;
-import net.minecraft.Item;
-import net.minecraft.ItemStack;
-import net.minecraft.WeightedRandom;
+import net.minecraft.*;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 @Mixin({EnchantmentHelper.class})
 public class EnchantmentManagerMixin {

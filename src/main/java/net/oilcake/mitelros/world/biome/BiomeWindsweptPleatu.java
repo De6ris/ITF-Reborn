@@ -1,23 +1,11 @@
 package net.oilcake.mitelros.world.biome;
 
-import java.util.Random;
-import net.minecraft.BiomeGenBase;
-import net.minecraft.Block;
-import net.minecraft.EntityChicken;
-import net.minecraft.EntityCow;
-import net.minecraft.EntityDireWolf;
-import net.minecraft.EntityPig;
-import net.minecraft.EntitySkeleton;
-import net.minecraft.Minecraft;
-import net.minecraft.SpawnListEntry;
-import net.minecraft.World;
-import net.minecraft.WorldGenMinable;
-import net.minecraft.WorldGenTaiga1;
-import net.minecraft.WorldGenTaiga2;
-import net.minecraft.WorldGenerator;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFBiomeDecorator;
 import net.oilcake.mitelros.entity.EntityStray;
 import net.oilcake.mitelros.world.WorldGenStoneCone;
+
+import java.util.Random;
 
 public class BiomeWindsweptPleatu extends BiomeGenBase {
   public BiomeWindsweptPleatu(int par1) {

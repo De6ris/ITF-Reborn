@@ -1,12 +1,6 @@
 package net.oilcake.mitelros.entity;
 
-import net.minecraft.Entity;
-import net.minecraft.EntityArachnid;
-import net.minecraft.EntityDamageResult;
-import net.minecraft.Potion;
-import net.minecraft.PotionEffect;
-import net.minecraft.SharedMonsterAttributes;
-import net.minecraft.World;
+import net.minecraft.*;
 
 public class EntityClusterSpider extends EntityArachnid {
     int num_webs;

@@ -2,9 +2,9 @@ package net.oilcake.mitelros.world;
 
 import net.minecraft.BiomeGenBase;
 import net.oilcake.mitelros.util.Constant;
-import net.oilcake.mitelros.world.biome.BiomeUnderworldInFreeze;
 import net.oilcake.mitelros.world.biome.BiomeSavanna;
 import net.oilcake.mitelros.world.biome.BiomeSavannaPleatu;
+import net.oilcake.mitelros.world.biome.BiomeUnderworldInFreeze;
 import net.oilcake.mitelros.world.biome.BiomeWindsweptPleatu;
 
 public class BiomeBases extends BiomeGenBase {

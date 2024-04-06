@@ -1,11 +1,6 @@
 package net.oilcake.mitelros.mixins.item.recipes;
 
-import net.minecraft.Block;
-import net.minecraft.FurnaceRecipes;
-import net.minecraft.Item;
-import net.minecraft.ItemFood;
-import net.minecraft.ItemStack;
-import net.minecraft.RecipesMITE;
+import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;

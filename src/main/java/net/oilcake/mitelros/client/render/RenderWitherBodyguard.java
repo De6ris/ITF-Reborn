@@ -1,13 +1,6 @@
 package net.oilcake.mitelros.client.render;
 
-import net.minecraft.Entity;
-import net.minecraft.EntityLiving;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.EntitySkeleton;
-import net.minecraft.ModelBiped;
-import net.minecraft.ModelSkeleton;
-import net.minecraft.RenderBiped;
-import net.minecraft.ResourceLocation;
+import net.minecraft.*;
 import org.lwjgl.opengl.GL11;
 
 public class RenderWitherBodyguard extends RenderBiped {

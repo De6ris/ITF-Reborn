@@ -1,11 +1,6 @@
 package net.oilcake.mitelros.item;
 
-import net.minecraft.EnumEquipmentMaterial;
-import net.minecraft.MapColor;
-import net.minecraft.Material;
-import net.minecraft.MaterialFood;
-import net.minecraft.MaterialLiquid;
-import net.minecraft.Minecraft;
+import net.minecraft.*;
 
 public class Materials extends Material {
     public static final Materials nickel;
