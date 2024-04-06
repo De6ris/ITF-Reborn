@@ -187,23 +187,23 @@ public class Items extends Item {
 
     public static final ItemBucket adamantiumBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.adamantium, Materials.unsafe_water)).setContainerItem(bucketAdamantiumEmpty);
 
-    public static final ItemBucket copperBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.copper, Materials.dangerous_water)).setContainerItem(bucketCopperEmpty);
+    public static final ItemBucket copperBucketWaterDangerous = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.copper, Materials.dangerous_water)).setContainerItem(bucketCopperEmpty);
 
-    public static final ItemBucket silverBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.silver, Materials.dangerous_water)).setContainerItem(bucketSilverEmpty);
+    public static final ItemBucket silverBucketWaterDangerous = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.silver, Materials.dangerous_water)).setContainerItem(bucketSilverEmpty);
 
-    public static final ItemBucket goldBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.gold, Materials.dangerous_water)).setContainerItem(bucketGoldEmpty);
+    public static final ItemBucket goldBucketWaterDangerous = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.gold, Materials.dangerous_water)).setContainerItem(bucketGoldEmpty);
 
-    public static final ItemBucket ironBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.iron, Materials.dangerous_water)).setContainerItem(bucketIronEmpty);
+    public static final ItemBucket ironBucketWaterDangerous = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.iron, Materials.dangerous_water)).setContainerItem(bucketIronEmpty);
 
-    public static final ItemBucket nickelBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.nickel, Materials.dangerous_water)).setContainerItem(nickelBucket);
+    public static final ItemBucket nickelBucketWaterDangerous = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.nickel, Materials.dangerous_water)).setContainerItem(nickelBucket);
 
-    public static final ItemBucket ancientmetalBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.ancient_metal, Materials.dangerous_water)).setContainerItem(bucketAncientMetalEmpty);
+    public static final ItemBucket ancientmetalBucketWaterDangerous = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.ancient_metal, Materials.dangerous_water)).setContainerItem(bucketAncientMetalEmpty);
 
-    public static final ItemBucket mithrilBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.mithril, Materials.dangerous_water)).setContainerItem(bucketMithrilEmpty);
+    public static final ItemBucket mithrilBucketWaterDangerous = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.mithril, Materials.dangerous_water)).setContainerItem(bucketMithrilEmpty);
 
-    public static final ItemBucket tungstenBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.tungsten, Materials.dangerous_water)).setContainerItem(tungstenBucket);
+    public static final ItemBucket tungstenBucketWaterDangerous = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.tungsten, Materials.dangerous_water)).setContainerItem(tungstenBucket);
 
-    public static final ItemBucket adamantiumBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.adamantium, Materials.dangerous_water)).setContainerItem(bucketAdamantiumEmpty);
+    public static final ItemBucket adamantiumBucketWaterDangerous = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.adamantium, Materials.dangerous_water)).setContainerItem(bucketAdamantiumEmpty);
 
     public static final Item Wolf_fur = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.wolf_fur).setCraftingDifficultyAsComponent(100.0F).setUnlocalizedName("small_leather").setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
 
@@ -548,15 +548,15 @@ public class Items extends Item {
         event.register("buckets/tungsten/water_suspicious", tungstenBucketWaterSuspicious);
         event.register("buckets/adamantium/water_suspicious", adamantiumBucketWaterSuspicious);
         event.register("buckets/ancient_metal/water_suspicious", ancientmetalBucketWaterSuspicious);
-        event.register("buckets/copper/water_swampland", copperBucketWaterSwampland);
-        event.register("buckets/silver/water_swampland", silverBucketWaterSwampland);
-        event.register("buckets/gold/water_swampland", goldBucketWaterSwampland);
-        event.register("buckets/iron/water_swampland", ironBucketWaterSwampland);
-        event.register("buckets/nickel/water_swampland", nickelBucketWaterSwampland);
-        event.register("buckets/mithril/water_swampland", mithrilBucketWaterSwampland);
-        event.register("buckets/tungsten/water_swampland", tungstenBucketWaterSwampland);
-        event.register("buckets/adamantium/water_swampland", adamantiumBucketWaterSwampland);
-        event.register("buckets/ancient_metal/water_swampland", ancientmetalBucketWaterSwampland);
+        event.register("buckets/copper/water_swampland", copperBucketWaterDangerous);
+        event.register("buckets/silver/water_swampland", silverBucketWaterDangerous);
+        event.register("buckets/gold/water_swampland", goldBucketWaterDangerous);
+        event.register("buckets/iron/water_swampland", ironBucketWaterDangerous);
+        event.register("buckets/nickel/water_swampland", nickelBucketWaterDangerous);
+        event.register("buckets/mithril/water_swampland", mithrilBucketWaterDangerous);
+        event.register("buckets/tungsten/water_swampland", tungstenBucketWaterDangerous);
+        event.register("buckets/adamantium/water_swampland", adamantiumBucketWaterDangerous);
+        event.register("buckets/ancient_metal/water_swampland", ancientmetalBucketWaterDangerous);
         event.register("wolf_fur", Wolf_fur);
         event.register("food/horse_meat", horse_meat);
         event.register("food/horse_meat_cooked", horse_meat_cooked);
@@ -960,7 +960,7 @@ public class Items extends Item {
             register.registerShapelessRecipe(new ItemStack(sus_water_buckets[k]), true, new Object[]{sus_water_buckets[k].getEmptyVessel(), new ItemStack(bowlWaterSuspicious, 4)});//.resetDifficulty(25);
             register.registerShapelessRecipe(new ItemStack(sus_water_buckets[k]), true, new Object[]{sus_water_buckets[k].getEmptyVessel(), new ItemStack(claybowlWaterSuspicious, 4)});//.resetDifficulty(25);
         }
-        ItemBucket[] smp_water_buckets = {copperBucketWaterSwampland, silverBucketWaterSwampland, goldBucketWaterSwampland, ironBucketWaterSwampland, ancientmetalBucketWaterSwampland, mithrilBucketWaterSwampland, adamantiumBucketWaterSwampland, nickelBucketWaterSwampland, tungstenBucketWaterSwampland};
+        ItemBucket[] smp_water_buckets = {copperBucketWaterDangerous, silverBucketWaterDangerous, goldBucketWaterDangerous, ironBucketWaterDangerous, ancientmetalBucketWaterDangerous, mithrilBucketWaterDangerous, adamantiumBucketWaterDangerous, nickelBucketWaterDangerous, tungstenBucketWaterDangerous};
         for (int m = 0; m < smp_water_buckets.length; m++) {
             for (int i1 = 1; i1 <= 4; i1++) {
                 register.registerShapelessRecipe(new ItemStack(bowlWaterSwampland, i1), true, new Object[]{smp_water_buckets[m], new ItemStack(Item.bowlEmpty, i1)});//.resetDifficulty(25);
