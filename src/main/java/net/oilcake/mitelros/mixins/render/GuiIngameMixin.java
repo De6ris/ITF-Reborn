@@ -27,7 +27,7 @@ public class GuiIngameMixin extends Gui {
     @Final
     private Minecraft mc;
 
-    @Inject(method = "func_110327_a",at = @At("HEAD"))
+    @Inject(method = "func_110327_a", at = @At("HEAD"))
     private void injectITFWater(int par1, int par2, CallbackInfo ci) {
         int var12 = par1 / 2 + 91;
         int var13 = par2 - 39;
@@ -52,12 +52,13 @@ public class GuiIngameMixin extends Gui {
                 drawTexturedModalRect(var27, var28, var25 + 18, 54, 9, 9);
         }
     }
-    @Inject(method = "func_110327_a",at = @At("HEAD"))
+
+    @Inject(method = "func_110327_a", at = @At("HEAD"))
     private void injectITFAir(int par1, int par2, CallbackInfo ci) {
         AttributeInstance var10 = this.mc.thePlayer.getEntityAttribute(SharedMonsterAttributes.maxHealth);
         int var12 = par1 / 2 + 91;
         int var13 = par2 - 39;
-        float var14 = (float)var10.getAttributeValue();
+        float var14 = (float) var10.getAttributeValue();
         float var15 = this.mc.thePlayer.getAbsorptionAmount();
         int var16 = MathHelper.ceiling_float_int((var14 + var15) / 2.0F / 10.0F);
         int var17 = Math.max(10 - (var16 - 2), 3);
@@ -69,10 +70,10 @@ public class GuiIngameMixin extends Gui {
         this.mc.mcProfiler.endStartSection("air");
         if (this.mc.thePlayer.isInsideOfMaterial(Material.water)) {
             var23 = this.mc.thePlayer.getAir();
-            var28 = MathHelper.ceiling_double_int((double)(var23 - 2) * 10.0 / 300.0);
-            var25 = (byte) (MathHelper.ceiling_double_int((double)var23 * 10.0 / 300.0) - var28);
+            var28 = MathHelper.ceiling_double_int((double) (var23 - 2) * 10.0 / 300.0);
+            var25 = (byte) (MathHelper.ceiling_double_int((double) var23 * 10.0 / 300.0) - var28);
 
-            for(var26 = 0; var26 < var28 + var25; ++var26) {
+            for (var26 = 0; var26 < var28 + var25; ++var26) {
                 if (var26 < var28) {
                     this.drawTexturedModalRect(var12 - var26 * 8 - 9, displayY, 16, 18, 9, 9);
                 } else {
@@ -81,13 +82,14 @@ public class GuiIngameMixin extends Gui {
             }
         }
     }
+
     @Inject(method = "func_110327_a", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityClientPlayerMP;isInsideOfMaterial(Lnet/minecraft/Material;)Z"), cancellable = true)
     private void injectITFCancelAir(int par1, int par2, CallbackInfo ci) {
         this.mc.mcProfiler.endSection();
         ci.cancel();
     }
 
-    @Inject(method = {"renderGameOverlay(FZII)V"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z", shift = At.Shift.BEFORE)})
+    @Inject(method = "renderGameOverlay(FZII)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z", shift = At.Shift.BEFORE))
     private void injectRenderPos(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
         if (!Minecraft.inDevMode() && (!this.mc.gameSettings.showDebugInfo || this.mc.gameSettings.gui_mode != 0) && Minecraft.getErrorMessage() == null && Config.DisplayHud.get()) {
             String Weather, s, RainSnow, pos = "平面坐标: (" + MathHelper.floor_double(this.mc.thePlayer.posX) + ", " + MathHelper.floor_double(this.mc.thePlayer.posZ) + ") ";
@@ -111,7 +113,7 @@ public class GuiIngameMixin extends Gui {
                     break;
             }
             String Biome = StringUtils.substringBefore(this.mc.thePlayer.getBiome().toString(), "@").substring(19) + " ";
-            if (!this.mc.thePlayer.getBiome().isFreezing() || ((ITFWorld)this.mc.thePlayer.worldObj).getWorldSeason() != 3) {
+            if (!this.mc.thePlayer.getBiome().isFreezing() || ((ITFWorld) this.mc.thePlayer.worldObj).getWorldSeason() != 3) {
                 RainSnow = "雨";
             } else {
                 RainSnow = "雪";
@@ -158,7 +160,7 @@ public class GuiIngameMixin extends Gui {
             }
             String t = " §c挑战难度: " + Constant.CalculateCurrentDiff() + "§r ";
             StringBuilder var68 = (new StringBuilder()).append("MITE-ITF ");
-            if (((Boolean) Config.FinalChallenge.get()) && Constant.CalculateCurrentDiff() == 25)
+            if (Config.FinalChallenge.get() && Constant.CalculateCurrentDiff() == 25)
                 t = " §4终极难度§r ";
             if (Constant.CalculateCurrentDiff() < 0)
                 t = " §a休闲难度§r ";
@@ -173,10 +175,10 @@ public class GuiIngameMixin extends Gui {
         }
     }
 
-    @Inject(locals = LocalCapture.CAPTURE_FAILHARD, method = {"func_110327_a(II)V"}, at = {@At(value = "INVOKE_STRING", target = "Lnet/minecraft/Profiler;endStartSection(Ljava/lang/String;)V", args = {"ldc=air"}, shift = At.Shift.BEFORE)})
+    @Inject(locals = LocalCapture.CAPTURE_FAILHARD, method = "func_110327_a(II)V", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/Profiler;endStartSection(Ljava/lang/String;)V", args = "ldc=air", shift = At.Shift.BEFORE))
     private void injectRenderNutrition(int par1, int par2, CallbackInfo ci, boolean var3, int var4, int var5, FoodStats var7, int var8, AttributeInstance var10, int var11, int var12, int var13, float var14, float var15) {
-        int protein = Math.max(((ITFPlayer)this.mc.thePlayer).getProtein() - 800000, 0);
-        int phytonutrients = Math.max(((ITFPlayer)this.mc.thePlayer).getPhytonutrients() - 800000, 0);
+        int protein = Math.max(((ITFPlayer) this.mc.thePlayer).getProtein() - 800000, 0);
+        int phytonutrients = Math.max(((ITFPlayer) this.mc.thePlayer).getPhytonutrients() - 800000, 0);
         int var26 = var12 - 90;
         int var25 = var13 + 32;
         if (getNutrientsPriority(protein, phytonutrients)) {

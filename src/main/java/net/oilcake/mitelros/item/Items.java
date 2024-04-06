@@ -5,258 +5,259 @@ import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.reload.event.ItemRegistryEvent;
 import net.xiaoyu233.fml.reload.event.RecipeRegistryEvent;
+import net.xiaoyu233.fml.util.IdUtil;
 import net.xiaoyu233.fml.util.ReflectHelper;
 
 public class Items extends Item {
-    public static final ItemArmor nickelHelmet = new ItemHelmet(Constant.getNextItemID(), Materials.nickel, false);
+    public static final ItemArmor nickelHelmet = new ItemHelmet(IdUtil.getNextItemID(), Materials.nickel, false);
 
-    public static final ItemArmor nickelChestplate = new ItemCuirass(Constant.getNextItemID(), Materials.nickel, false);
+    public static final ItemArmor nickelChestplate = new ItemCuirass(IdUtil.getNextItemID(), Materials.nickel, false);
 
-    public static final ItemArmor nickelLeggings = new ItemLeggings(Constant.getNextItemID(), Materials.nickel, false);
+    public static final ItemArmor nickelLeggings = new ItemLeggings(IdUtil.getNextItemID(), Materials.nickel, false);
 
-    public static final ItemArmor nickelBoots = new ItemBoots(Constant.getNextItemID(), Materials.nickel, false);
+    public static final ItemArmor nickelBoots = new ItemBoots(IdUtil.getNextItemID(), Materials.nickel, false);
 
-    public static final ItemArmor nickelHelmetChain = new ItemHelmet(Constant.getNextItemID(), Materials.nickel, true);
+    public static final ItemArmor nickelHelmetChain = new ItemHelmet(IdUtil.getNextItemID(), Materials.nickel, true);
 
-    public static final ItemArmor nickelChestplateChain = new ItemCuirass(Constant.getNextItemID(), Materials.nickel, true);
+    public static final ItemArmor nickelChestplateChain = new ItemCuirass(IdUtil.getNextItemID(), Materials.nickel, true);
 
-    public static final ItemArmor nickelLeggingsChain = new ItemLeggings(Constant.getNextItemID(), Materials.nickel, true);
+    public static final ItemArmor nickelLeggingsChain = new ItemLeggings(IdUtil.getNextItemID(), Materials.nickel, true);
 
-    public static final ItemArmor nickelBootsChain = new ItemBoots(Constant.getNextItemID(), Materials.nickel, true);
+    public static final ItemArmor nickelBootsChain = new ItemBoots(IdUtil.getNextItemID(), Materials.nickel, true);
 
-    public static final ItemNugget nickelNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemNugget nickelNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final ItemAxe nickelAxe = ReflectHelper.createInstance(ItemAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemAxe nickelAxe = ReflectHelper.createInstance(ItemAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final ItemBattleAxe nickelBattleAxe = ReflectHelper.createInstance(ItemBattleAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemBattleAxe nickelBattleAxe = ReflectHelper.createInstance(ItemBattleAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final ItemDagger nickelDagger = ReflectHelper.createInstance(ItemDagger.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemDagger nickelDagger = ReflectHelper.createInstance(ItemDagger.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final Item nickelIngot = ReflectHelper.createInstance(ItemIngot.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel).setXPReward(15);
+    public static final Item nickelIngot = ReflectHelper.createInstance(ItemIngot.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel).setXPReward(15);
 
-    public static final ItemPickaxe nickelPickaxe = ReflectHelper.createInstance(ItemPickaxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemPickaxe nickelPickaxe = ReflectHelper.createInstance(ItemPickaxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final ItemShovel nickelShovel = ReflectHelper.createInstance(ItemShovel.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemShovel nickelShovel = ReflectHelper.createInstance(ItemShovel.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final ItemSword nickelSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemSword nickelSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final ItemWarHammer nickelWarHammer = ReflectHelper.createInstance(ItemWarHammer.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemWarHammer nickelWarHammer = ReflectHelper.createInstance(ItemWarHammer.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final ItemHatchet nickelHatchet = ReflectHelper.createInstance(ItemHatchet.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemHatchet nickelHatchet = ReflectHelper.createInstance(ItemHatchet.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final ItemHoe nickelHoe = ReflectHelper.createInstance(ItemHoe.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemHoe nickelHoe = ReflectHelper.createInstance(ItemHoe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final ItemKnife nickelKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemKnife nickelKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final ItemMattock nickelMattock = ReflectHelper.createInstance(ItemMattock.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemMattock nickelMattock = ReflectHelper.createInstance(ItemMattock.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final ItemScythe nickelScythe = ReflectHelper.createInstance(ItemScythe.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemScythe nickelScythe = ReflectHelper.createInstance(ItemScythe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final ItemShears nickelShears = ReflectHelper.createInstance(ItemShears.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemShears nickelShears = ReflectHelper.createInstance(ItemShears.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final Item doorNickel = new ItemDoor(Constant.getNextItemID(), Materials.nickel);
+    public static final Item doorNickel = new ItemDoor(IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemChain nickelChain = ReflectHelper.createInstance(ItemChain.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemChain nickelChain = ReflectHelper.createInstance(ItemChain.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final ItemCoin nickelCoin = ReflectHelper.createInstance(ItemCoin.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.nickel);
+    public static final ItemCoin nickelCoin = ReflectHelper.createInstance(ItemCoin.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
 
-    public static final ItemArrow arrowNickel = new ItemArrow(Constant.getNextItemID(), Materials.nickel);
+    public static final ItemArrow arrowNickel = new ItemArrow(IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemArmor tungstenHelmet = new ItemHelmet(Constant.getNextItemID(), Materials.tungsten, false);
+    public static final ItemArmor tungstenHelmet = new ItemHelmet(IdUtil.getNextItemID(), Materials.tungsten, false);
 
-    public static final ItemArmor tungstenChestplate = new ItemCuirass(Constant.getNextItemID(), Materials.tungsten, false);
+    public static final ItemArmor tungstenChestplate = new ItemCuirass(IdUtil.getNextItemID(), Materials.tungsten, false);
 
-    public static final ItemArmor tungstenLeggings = new ItemLeggings(Constant.getNextItemID(), Materials.tungsten, false);
+    public static final ItemArmor tungstenLeggings = new ItemLeggings(IdUtil.getNextItemID(), Materials.tungsten, false);
 
-    public static final ItemArmor tungstenBoots = new ItemBoots(Constant.getNextItemID(), Materials.tungsten, false);
+    public static final ItemArmor tungstenBoots = new ItemBoots(IdUtil.getNextItemID(), Materials.tungsten, false);
 
-    public static final ItemArmor tungstenHelmetChain = new ItemHelmet(Constant.getNextItemID(), Materials.tungsten, true);
+    public static final ItemArmor tungstenHelmetChain = new ItemHelmet(IdUtil.getNextItemID(), Materials.tungsten, true);
 
-    public static final ItemArmor tungstenChestplateChain = new ItemCuirass(Constant.getNextItemID(), Materials.tungsten, true);
+    public static final ItemArmor tungstenChestplateChain = new ItemCuirass(IdUtil.getNextItemID(), Materials.tungsten, true);
 
-    public static final ItemArmor tungstenLeggingsChain = new ItemLeggings(Constant.getNextItemID(), Materials.tungsten, true);
+    public static final ItemArmor tungstenLeggingsChain = new ItemLeggings(IdUtil.getNextItemID(), Materials.tungsten, true);
 
-    public static final ItemArmor tungstenBootsChain = new ItemBoots(Constant.getNextItemID(), Materials.tungsten, true);
+    public static final ItemArmor tungstenBootsChain = new ItemBoots(IdUtil.getNextItemID(), Materials.tungsten, true);
 
-    public static final ItemNugget tungstenNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemNugget tungstenNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final ItemAxe tungstenAxe = ReflectHelper.createInstance(ItemAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemAxe tungstenAxe = ReflectHelper.createInstance(ItemAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final ItemBattleAxe tungstenBattleAxe = ReflectHelper.createInstance(ItemBattleAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemBattleAxe tungstenBattleAxe = ReflectHelper.createInstance(ItemBattleAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final ItemDagger tungstenDagger = ReflectHelper.createInstance(ItemDagger.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemDagger tungstenDagger = ReflectHelper.createInstance(ItemDagger.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final Item tungstenIngot = ReflectHelper.createInstance(ItemIngot.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten).setXPReward(75);
+    public static final Item tungstenIngot = ReflectHelper.createInstance(ItemIngot.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten).setXPReward(75);
 
-    public static final ItemPickaxe tungstenPickaxe = ReflectHelper.createInstance(ItemPickaxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemPickaxe tungstenPickaxe = ReflectHelper.createInstance(ItemPickaxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final ItemShovel tungstenShovel = ReflectHelper.createInstance(ItemShovel.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemShovel tungstenShovel = ReflectHelper.createInstance(ItemShovel.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final ItemSword tungstenSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemSword tungstenSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final ItemWarHammer tungstenWarHammer = ReflectHelper.createInstance(ItemWarHammer.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemWarHammer tungstenWarHammer = ReflectHelper.createInstance(ItemWarHammer.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final ItemHatchet tungstenHatchet = ReflectHelper.createInstance(ItemHatchet.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemHatchet tungstenHatchet = ReflectHelper.createInstance(ItemHatchet.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final ItemHoe tungstenHoe = ReflectHelper.createInstance(ItemHoe.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemHoe tungstenHoe = ReflectHelper.createInstance(ItemHoe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final ItemKnife tungstenKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemKnife tungstenKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final ItemMattock tungstenMattock = ReflectHelper.createInstance(ItemMattock.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemMattock tungstenMattock = ReflectHelper.createInstance(ItemMattock.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final ItemScythe tungstenScythe = ReflectHelper.createInstance(ItemScythe.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemScythe tungstenScythe = ReflectHelper.createInstance(ItemScythe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final ItemShears tungstenShears = ReflectHelper.createInstance(ItemShears.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemShears tungstenShears = ReflectHelper.createInstance(ItemShears.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final Item doorTungsten = new ItemDoor(Constant.getNextItemID(), Materials.tungsten);
+    public static final Item doorTungsten = new ItemDoor(IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemChain tungstenChain = ReflectHelper.createInstance(ItemChain.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemChain tungstenChain = ReflectHelper.createInstance(ItemChain.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final ItemCoin tungstenCoin = ReflectHelper.createInstance(ItemCoin.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.tungsten);
+    public static final ItemCoin tungstenCoin = ReflectHelper.createInstance(ItemCoin.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
 
-    public static final ItemArrow arrowTungsten = new ItemArrow(Constant.getNextItemID(), Materials.tungsten);
+    public static final ItemArrow arrowTungsten = new ItemArrow(IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemBowl bowlPorkchopStew = (ItemBowl) (new ItemBowl(Constant.getNextItemID(), Materials.porkchop_stew, "porkchop_stew")).setFoodValue(14, 14, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("porkchopStew");
+    public static final ItemBowl bowlPorkchopStew = (ItemBowl) (new ItemBowl(IdUtil.getNextItemID(), Materials.porkchop_stew, "porkchop_stew")).setFoodValue(14, 14, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("porkchopStew");
 
-    public static final ItemBowl bowlChestnutSoup = (ItemBowl) (new ItemBowl(Constant.getNextItemID(), Materials.chestnut_soup, "lampchop_stew")).setFoodValue(12, 12, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("lampchopStew");
+    public static final ItemBowl bowlChestnutSoup = (ItemBowl) (new ItemBowl(IdUtil.getNextItemID(), Materials.chestnut_soup, "lampchop_stew")).setFoodValue(12, 12, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("lampchopStew");
 
-    public static final ItemBowl bowlWaterSuspicious = (ItemBowl) (new ItemBowl(Constant.getNextItemID(), Materials.unsafe_water, "suspicious_water")).setUnlocalizedName("SuspiciousWater");
+    public static final ItemBowl bowlWaterSuspicious = (ItemBowl) (new ItemBowl(IdUtil.getNextItemID(), Materials.unsafe_water, "suspicious_water")).setUnlocalizedName("SuspiciousWater");
 
-    public static final ItemBowl bowlWaterSwampland = (ItemBowl) (new ItemBowl(Constant.getNextItemID(), Materials.dangerous_water, "swampland_water")).setUnlocalizedName("SwamplandWater");
+    public static final ItemBowl bowlWaterSwampland = (ItemBowl) (new ItemBowl(IdUtil.getNextItemID(), Materials.dangerous_water, "swampland_water")).setUnlocalizedName("SwamplandWater");
 
-    public static final ItemPieces pieceCopper = new ItemPieces(Constant.getNextItemID(), Materials.orePieces, "pieceCopper");
+    public static final ItemPieces pieceCopper = new ItemPieces(IdUtil.getNextItemID(), Materials.orePieces, "pieceCopper");
 
-    public static final ItemPieces pieceSilver = new ItemPieces(Constant.getNextItemID(), Materials.orePieces, "pieceSilver");
+    public static final ItemPieces pieceSilver = new ItemPieces(IdUtil.getNextItemID(), Materials.orePieces, "pieceSilver");
 
-    public static final ItemPieces pieceGold = new ItemPieces(Constant.getNextItemID(), Materials.orePieces, "pieceGold");
+    public static final ItemPieces pieceGold = new ItemPieces(IdUtil.getNextItemID(), Materials.orePieces, "pieceGold");
 
-    public static final ItemPieces pieceGoldNether = new ItemPieces(Constant.getNextItemID(), Materials.orePieces, "pieceGoldNether");
+    public static final ItemPieces pieceGoldNether = new ItemPieces(IdUtil.getNextItemID(), Materials.orePieces, "pieceGoldNether");
 
-    public static final ItemPieces pieceIron = new ItemPieces(Constant.getNextItemID(), Materials.orePieces, "pieceIron");
+    public static final ItemPieces pieceIron = new ItemPieces(IdUtil.getNextItemID(), Materials.orePieces, "pieceIron");
 
-    public static final ItemPieces pieceNickel = new ItemPieces(Constant.getNextItemID(), Materials.orePieces, "pieceNickel");
+    public static final ItemPieces pieceNickel = new ItemPieces(IdUtil.getNextItemID(), Materials.orePieces, "pieceNickel");
 
-    public static final ItemPieces pieceMithril = new ItemPieces(Constant.getNextItemID(), Materials.orePieces, "pieceMithril");
+    public static final ItemPieces pieceMithril = new ItemPieces(IdUtil.getNextItemID(), Materials.orePieces, "pieceMithril");
 
-    public static final ItemPieces pieceTungsten = new ItemPieces(Constant.getNextItemID(), Materials.orePieces, "pieceTungsten");
+    public static final ItemPieces pieceTungsten = new ItemPieces(IdUtil.getNextItemID(), Materials.orePieces, "pieceTungsten");
 
-    public static final ItemPieces pieceAdamantium = new ItemPieces(Constant.getNextItemID(), Materials.orePieces, "pieceAdamantium");
+    public static final ItemPieces pieceAdamantium = new ItemPieces(IdUtil.getNextItemID(), Materials.orePieces, "pieceAdamantium");
 
-    public static final ItemFood mashedCactus = (ItemFood) (new ItemFood(Constant.getNextItemID(), Materials.mashedCactus, 1, 0, false, true, false, "mashedCactus")).setMaxStackSize(4);
+    public static final ItemFood mashedCactus = (ItemFood) (new ItemFood(IdUtil.getNextItemID(), Materials.mashedCactus, 1, 0, false, true, false, "mashedCactus")).setMaxStackSize(4);
 
-    public static final ItemFood lemon = (new ItemFood(Constant.getNextItemID(), Material.fruit, 2, 1, 1000, false, false, true, "lemon")).setPlantProduct();
+    public static final ItemFood lemon = (new ItemFood(IdUtil.getNextItemID(), Material.fruit, 2, 1, 1000, false, false, true, "lemon")).setPlantProduct();
 
-    public static final Item lemonPie = (new ItemFood(Constant.getNextItemID(), Material.pie, 10, 6, 1000, true, true, true, "lemon_pie")).setMaxStackSize(8).setPlantProduct().setAnimalProduct();
+    public static final Item lemonPie = (new ItemFood(IdUtil.getNextItemID(), Material.pie, 10, 6, 1000, true, true, true, "lemon_pie")).setMaxStackSize(8).setPlantProduct().setAnimalProduct();
 
-    public static final ItemBucket nickelBucket = new ItemBucket(Constant.getNextItemID(), Materials.nickel, null);
+    public static final ItemBucket nickelBucket = new ItemBucket(IdUtil.getNextItemID(), Materials.nickel, null);
 
-    public static final ItemBucket nickelBucketWater = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Materials.nickel, Material.water)).setContainerItem(nickelBucket);
+    public static final ItemBucket nickelBucketWater = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.nickel, Material.water)).setContainerItem(nickelBucket);
 
-    public static final ItemBucket nickelBucketLava = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Materials.nickel, Material.lava)).setContainerItem(nickelBucket);
+    public static final ItemBucket nickelBucketLava = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.nickel, Material.lava)).setContainerItem(nickelBucket);
 
-    public static final ItemBucket nickelBucketStone = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Materials.nickel, Material.stone)).setContainerItem(nickelBucket);
+    public static final ItemBucket nickelBucketStone = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.nickel, Material.stone)).setContainerItem(nickelBucket);
 
-    public static final ItemBucketMilk nickelBucketMilk = (ItemBucketMilk) (new ItemBucketMilk(Constant.getNextItemID(), Materials.nickel)).setContainerItem(nickelBucket);
+    public static final ItemBucketMilk nickelBucketMilk = (ItemBucketMilk) (new ItemBucketMilk(IdUtil.getNextItemID(), Materials.nickel)).setContainerItem(nickelBucket);
 
-    public static final ItemBucket tungstenBucket = new ItemBucket(Constant.getNextItemID(), Materials.tungsten, null);
+    public static final ItemBucket tungstenBucket = new ItemBucket(IdUtil.getNextItemID(), Materials.tungsten, null);
 
-    public static final ItemBucket tungstenBucketWater = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Materials.tungsten, Material.water)).setContainerItem(tungstenBucket);
+    public static final ItemBucket tungstenBucketWater = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.tungsten, Material.water)).setContainerItem(tungstenBucket);
 
-    public static final ItemBucket tungstenBucketLava = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Materials.tungsten, Material.lava)).setContainerItem(tungstenBucket);
+    public static final ItemBucket tungstenBucketLava = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.tungsten, Material.lava)).setContainerItem(tungstenBucket);
 
-    public static final ItemBucket tungstenBucketStone = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Materials.tungsten, Material.stone)).setContainerItem(tungstenBucket);
+    public static final ItemBucket tungstenBucketStone = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.tungsten, Material.stone)).setContainerItem(tungstenBucket);
 
-    public static final ItemBucketMilk tungstenBucketMilk = (ItemBucketMilk) (new ItemBucketMilk(Constant.getNextItemID(), Materials.tungsten)).setContainerItem(tungstenBucket);
+    public static final ItemBucketMilk tungstenBucketMilk = (ItemBucketMilk) (new ItemBucketMilk(IdUtil.getNextItemID(), Materials.tungsten)).setContainerItem(tungstenBucket);
 
-    public static final ItemBucket copperBucketWaterSuspicious = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Material.copper, Materials.unsafe_water)).setContainerItem(bucketCopperEmpty);
+    public static final ItemBucket copperBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.copper, Materials.unsafe_water)).setContainerItem(bucketCopperEmpty);
 
-    public static final ItemBucket silverBucketWaterSuspicious = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Material.silver, Materials.unsafe_water)).setContainerItem(bucketSilverEmpty);
+    public static final ItemBucket silverBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.silver, Materials.unsafe_water)).setContainerItem(bucketSilverEmpty);
 
-    public static final ItemBucket goldBucketWaterSuspicious = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Material.gold, Materials.unsafe_water)).setContainerItem(bucketGoldEmpty);
+    public static final ItemBucket goldBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.gold, Materials.unsafe_water)).setContainerItem(bucketGoldEmpty);
 
-    public static final ItemBucket ironBucketWaterSuspicious = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Material.iron, Materials.unsafe_water)).setContainerItem(bucketIronEmpty);
+    public static final ItemBucket ironBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.iron, Materials.unsafe_water)).setContainerItem(bucketIronEmpty);
 
-    public static final ItemBucket nickelBucketWaterSuspicious = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Materials.nickel, Materials.unsafe_water)).setContainerItem(nickelBucket);
+    public static final ItemBucket nickelBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.nickel, Materials.unsafe_water)).setContainerItem(nickelBucket);
 
-    public static final ItemBucket ancientmetalBucketWaterSuspicious = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Material.ancient_metal, Materials.unsafe_water)).setContainerItem(bucketAncientMetalEmpty);
+    public static final ItemBucket ancientmetalBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.ancient_metal, Materials.unsafe_water)).setContainerItem(bucketAncientMetalEmpty);
 
-    public static final ItemBucket mithrilBucketWaterSuspicious = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Material.mithril, Materials.unsafe_water)).setContainerItem(bucketMithrilEmpty);
+    public static final ItemBucket mithrilBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.mithril, Materials.unsafe_water)).setContainerItem(bucketMithrilEmpty);
 
-    public static final ItemBucket tungstenBucketWaterSuspicious = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Materials.tungsten, Materials.unsafe_water)).setContainerItem(tungstenBucket);
+    public static final ItemBucket tungstenBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.tungsten, Materials.unsafe_water)).setContainerItem(tungstenBucket);
 
-    public static final ItemBucket adamantiumBucketWaterSuspicious = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Material.adamantium, Materials.unsafe_water)).setContainerItem(bucketAdamantiumEmpty);
+    public static final ItemBucket adamantiumBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.adamantium, Materials.unsafe_water)).setContainerItem(bucketAdamantiumEmpty);
 
-    public static final ItemBucket copperBucketWaterSwampland = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Material.copper, Materials.dangerous_water)).setContainerItem(bucketCopperEmpty);
+    public static final ItemBucket copperBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.copper, Materials.dangerous_water)).setContainerItem(bucketCopperEmpty);
 
-    public static final ItemBucket silverBucketWaterSwampland = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Material.silver, Materials.dangerous_water)).setContainerItem(bucketSilverEmpty);
+    public static final ItemBucket silverBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.silver, Materials.dangerous_water)).setContainerItem(bucketSilverEmpty);
 
-    public static final ItemBucket goldBucketWaterSwampland = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Material.gold, Materials.dangerous_water)).setContainerItem(bucketGoldEmpty);
+    public static final ItemBucket goldBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.gold, Materials.dangerous_water)).setContainerItem(bucketGoldEmpty);
 
-    public static final ItemBucket ironBucketWaterSwampland = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Material.iron, Materials.dangerous_water)).setContainerItem(bucketIronEmpty);
+    public static final ItemBucket ironBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.iron, Materials.dangerous_water)).setContainerItem(bucketIronEmpty);
 
-    public static final ItemBucket nickelBucketWaterSwampland = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Materials.nickel, Materials.dangerous_water)).setContainerItem(nickelBucket);
+    public static final ItemBucket nickelBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.nickel, Materials.dangerous_water)).setContainerItem(nickelBucket);
 
-    public static final ItemBucket ancientmetalBucketWaterSwampland = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Material.ancient_metal, Materials.dangerous_water)).setContainerItem(bucketAncientMetalEmpty);
+    public static final ItemBucket ancientmetalBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.ancient_metal, Materials.dangerous_water)).setContainerItem(bucketAncientMetalEmpty);
 
-    public static final ItemBucket mithrilBucketWaterSwampland = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Material.mithril, Materials.dangerous_water)).setContainerItem(bucketMithrilEmpty);
+    public static final ItemBucket mithrilBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.mithril, Materials.dangerous_water)).setContainerItem(bucketMithrilEmpty);
 
-    public static final ItemBucket tungstenBucketWaterSwampland = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Materials.tungsten, Materials.dangerous_water)).setContainerItem(tungstenBucket);
+    public static final ItemBucket tungstenBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.tungsten, Materials.dangerous_water)).setContainerItem(tungstenBucket);
 
-    public static final ItemBucket adamantiumBucketWaterSwampland = (ItemBucket) (new ItemBucket(Constant.getNextItemID(), Material.adamantium, Materials.dangerous_water)).setContainerItem(bucketAdamantiumEmpty);
+    public static final ItemBucket adamantiumBucketWaterSwampland = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.adamantium, Materials.dangerous_water)).setContainerItem(bucketAdamantiumEmpty);
 
-    public static final Item Wolf_fur = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.wolf_fur).setCraftingDifficultyAsComponent(100.0F).setUnlocalizedName("small_leather").setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
+    public static final Item Wolf_fur = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.wolf_fur).setCraftingDifficultyAsComponent(100.0F).setUnlocalizedName("small_leather").setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
 
-    public static final Item horse_meat = new ItemMeat(Constant.getNextItemID(), 6, 6, true, false, "horse_meat");
+    public static final Item horse_meat = new ItemMeat(IdUtil.getNextItemID(), 6, 6, true, false, "horse_meat");
 
-    public static final Item horse_meat_cooked = new ItemMeat(Constant.getNextItemID(), 12, 12, true, true, "horse_meat_cooked");
+    public static final Item horse_meat_cooked = new ItemMeat(IdUtil.getNextItemID(), 12, 12, true, true, "horse_meat_cooked");
 
-    public static final ItemArmor WolfHelmet = new ItemHelmet(Constant.getNextItemID(), Materials.wolf_fur, false);
+    public static final ItemArmor WolfHelmet = new ItemHelmet(IdUtil.getNextItemID(), Materials.wolf_fur, false);
 
-    public static final ItemArmor WolfChestplate = new ItemCuirass(Constant.getNextItemID(), Materials.wolf_fur, false);
+    public static final ItemArmor WolfChestplate = new ItemCuirass(IdUtil.getNextItemID(), Materials.wolf_fur, false);
 
-    public static final ItemArmor WolfLeggings = new ItemLeggings(Constant.getNextItemID(), Materials.wolf_fur, false);
+    public static final ItemArmor WolfLeggings = new ItemLeggings(IdUtil.getNextItemID(), Materials.wolf_fur, false);
 
-    public static final ItemArmor WolfBoots = new ItemBoots(Constant.getNextItemID(), Materials.wolf_fur, false);
+    public static final ItemArmor WolfBoots = new ItemBoots(IdUtil.getNextItemID(), Materials.wolf_fur, false);
 
     public static final ItemAppleGold Goldenapple = (ItemAppleGold) (new ItemAppleGold(66, 2, 1, "VANILLA")).setAlwaysEdible().setPotionEffect(Potion.regeneration.id, 30, 0, 1.0F).setUnlocalizedName("appleGold").useVanillaTexture("apple_golden");
 
-    public static final Item Goldenapplelegend = (new ItemGoldenAppleLegend(Constant.getNextItemID(), 2, 1, "goldapple")).setAlwaysEdible().setPotionEffect(Potion.regeneration.id, 30, 4, 1.0F).setUnlocalizedName("wtfk").useVanillaTexture("apple_golden_legend");
+    public static final Item Goldenapplelegend = (new ItemGoldenAppleLegend(IdUtil.getNextItemID(), 2, 1, "goldapple")).setAlwaysEdible().setPotionEffect(Potion.regeneration.id, 30, 4, 1.0F).setUnlocalizedName("wtfk").useVanillaTexture("apple_golden_legend");
 
-    public static final ItemBowl bowlLemonade = (ItemBowl) (new ItemBowl(Constant.getNextItemID(), Materials.lemonade, "lemonade")).setFoodValue(4, 1, false, true, true).setPlantProduct().setUnlocalizedName("lemonade");
+    public static final ItemBowl bowlLemonade = (ItemBowl) (new ItemBowl(IdUtil.getNextItemID(), Materials.lemonade, "lemonade")).setFoodValue(4, 1, false, true, true).setPlantProduct().setUnlocalizedName("lemonade");
 
     public static final ItemBowl bowlEmpty = (ItemBowl) (new ItemBowl(25, null, "VANILLA")).setUnlocalizedName("bowl").useVanillaTexture("bowl").setMaxStackSize(4);
 
-    public static final ItemMorningStar morningStarCopper = new ItemMorningStar(Constant.getNextItemID(), Material.copper);
+    public static final ItemMorningStar morningStarCopper = new ItemMorningStar(IdUtil.getNextItemID(), Material.copper);
 
-    public static final ItemMorningStar morningStarSilver = new ItemMorningStar(Constant.getNextItemID(), Material.silver);
+    public static final ItemMorningStar morningStarSilver = new ItemMorningStar(IdUtil.getNextItemID(), Material.silver);
 
-    public static final ItemMorningStar morningStarGold = new ItemMorningStar(Constant.getNextItemID(), Material.gold);
+    public static final ItemMorningStar morningStarGold = new ItemMorningStar(IdUtil.getNextItemID(), Material.gold);
 
-    public static final ItemMorningStar morningStarIron = new ItemMorningStar(Constant.getNextItemID(), Material.iron);
+    public static final ItemMorningStar morningStarIron = new ItemMorningStar(IdUtil.getNextItemID(), Material.iron);
 
-    public static final ItemMorningStar morningStarNickel = new ItemMorningStar(Constant.getNextItemID(), Materials.nickel);
+    public static final ItemMorningStar morningStarNickel = new ItemMorningStar(IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemMorningStar morningStarAncientMetal = new ItemMorningStar(Constant.getNextItemID(), Material.ancient_metal);
+    public static final ItemMorningStar morningStarAncientMetal = new ItemMorningStar(IdUtil.getNextItemID(), Material.ancient_metal);
 
-    public static final ItemMorningStar morningStarMithril = new ItemMorningStar(Constant.getNextItemID(), Material.mithril);
+    public static final ItemMorningStar morningStarMithril = new ItemMorningStar(IdUtil.getNextItemID(), Material.mithril);
 
-    public static final ItemMorningStar morningStarTungsten = new ItemMorningStar(Constant.getNextItemID(), Materials.tungsten);
+    public static final ItemMorningStar morningStarTungsten = new ItemMorningStar(IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemMorningStar morningStarAdamantium = new ItemMorningStar(Constant.getNextItemID(), Material.adamantium);
+    public static final ItemMorningStar morningStarAdamantium = new ItemMorningStar(IdUtil.getNextItemID(), Material.adamantium);
 
-    public static final Item fragStalkerCreeper = new ItemStandard(Constant.getNextItemID(), Material.frags, "fragStalkerCreeper");
+    public static final Item fragStalkerCreeper = new ItemStandard(IdUtil.getNextItemID(), Material.frags, "fragStalkerCreeper");
 
-    public static final ItemFood glowberries = (ItemFood) (new ItemFood(Constant.getNextItemID(), Materials.glowberries, 1, 0, false, false, false, "glow_berries")).setMaxStackSize(16).setAlwaysEdible();
+    public static final ItemFood glowberries = (ItemFood) (new ItemFood(IdUtil.getNextItemID(), Materials.glowberries, 1, 0, false, false, false, "glow_berries")).setMaxStackSize(16).setAlwaysEdible();
 
-    public static final ItemArrow arrowMagical = new ItemArrow(Constant.getNextItemID(), Materials.magical);
+    public static final ItemArrow arrowMagical = new ItemArrow(IdUtil.getNextItemID(), Materials.magical);
 
-    public static final ItemWand LavaWand = new ItemWand(Constant.getNextItemID(), Materials.tungsten, "wandlava");
+    public static final ItemWand LavaWand = new ItemWand(IdUtil.getNextItemID(), Materials.tungsten, "wandlava");
 
-    public static final ItemWand FreezeWand = new ItemWand(Constant.getNextItemID(), Materials.nickel, "wandfreeze");
+    public static final ItemWand FreezeWand = new ItemWand(IdUtil.getNextItemID(), Materials.nickel, "wandfreeze");
 
-    public static final ItemWand ShockWand = new ItemWand(Constant.getNextItemID(), Material.ancient_metal, "wandshock");
+    public static final ItemWand ShockWand = new ItemWand(IdUtil.getNextItemID(), Material.ancient_metal, "wandshock");
 
-    public static final Item ExperimentalPotion = (new ItemPotionExperimental(Constant.getNextItemID())).setUnlocalizedName("experimentalPotion").setCreativeTab(CreativeTabs.tabMisc);
+    public static final Item ExperimentalPotion = (new ItemPotionExperimental(IdUtil.getNextItemID())).setUnlocalizedName("experimentalPotion").setCreativeTab(CreativeTabs.tabMisc);
 
     public static final ItemShardAT shardDiamond = (ItemShardAT) (new ItemShardAT(862, Material.diamond)).setUnlocalizedName("shardDiamond").setXPReward(4);
 
@@ -268,191 +269,191 @@ public class Items extends Item {
 
     public static final ItemRecordExtend recordConnected = (ItemRecordExtend) (new ItemRecordExtend(2025, "imported.connected", "record_connected", "Connected", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
 
-    public static final ItemArmor VibraniumHelmet = new ItemHelmet(Constant.getNextItemID(), Materials.vibranium, false);
+    public static final ItemArmor VibraniumHelmet = new ItemHelmet(IdUtil.getNextItemID(), Materials.vibranium, false);
 
-    public static final ItemArmor VibraniumChestplate = new ItemCuirass(Constant.getNextItemID(), Materials.vibranium, false);
+    public static final ItemArmor VibraniumChestplate = new ItemCuirass(IdUtil.getNextItemID(), Materials.vibranium, false);
 
-    public static final ItemArmor VibraniumLeggings = new ItemLeggings(Constant.getNextItemID(), Materials.vibranium, false);
+    public static final ItemArmor VibraniumLeggings = new ItemLeggings(IdUtil.getNextItemID(), Materials.vibranium, false);
 
-    public static final ItemArmor VibraniumBoots = new ItemBoots(Constant.getNextItemID(), Materials.vibranium, false);
+    public static final ItemArmor VibraniumBoots = new ItemBoots(IdUtil.getNextItemID(), Materials.vibranium, false);
 
-    public static final ItemSword VibraniumSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.vibranium);
+    public static final ItemSword VibraniumSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.vibranium);
 
-    public static final ItemRockExtend lapis = (ItemRockExtend) (new ItemRockExtend(Constant.getNextItemID(), Material.lapis_lazuli, "lapis_lazuli")).setXPReward(5);
+    public static final ItemRockExtend lapis = (ItemRockExtend) (new ItemRockExtend(IdUtil.getNextItemID(), Material.lapis_lazuli, "lapis_lazuli")).setXPReward(5);
 
-    public static final ItemArmor helmetCustom_a = new ItemHelmet(Constant.getNextItemID(), Materials.custom_a, false);
+    public static final ItemArmor helmetCustom_a = new ItemHelmet(IdUtil.getNextItemID(), Materials.custom_a, false);
 
-    public static final ItemArmor chestplateCustom_a = new ItemCuirass(Constant.getNextItemID(), Materials.custom_a, false);
+    public static final ItemArmor chestplateCustom_a = new ItemCuirass(IdUtil.getNextItemID(), Materials.custom_a, false);
 
-    public static final ItemArmor leggingsCustom_a = new ItemLeggings(Constant.getNextItemID(), Materials.custom_a, false);
+    public static final ItemArmor leggingsCustom_a = new ItemLeggings(IdUtil.getNextItemID(), Materials.custom_a, false);
 
-    public static final ItemArmor bootsCustom_a = new ItemBoots(Constant.getNextItemID(), Materials.custom_a, false);
+    public static final ItemArmor bootsCustom_a = new ItemBoots(IdUtil.getNextItemID(), Materials.custom_a, false);
 
-    public static final ItemArmor HelmetAncientmetalsacred = new ItemHelmet(Constant.getNextItemID(), Materials.ancient_metal_sacred, false);
+    public static final ItemArmor HelmetAncientmetalsacred = new ItemHelmet(IdUtil.getNextItemID(), Materials.ancient_metal_sacred, false);
 
-    public static final ItemArmor ChestplateAncientmetalsacred = new ItemCuirass(Constant.getNextItemID(), Materials.ancient_metal_sacred, false);
+    public static final ItemArmor ChestplateAncientmetalsacred = new ItemCuirass(IdUtil.getNextItemID(), Materials.ancient_metal_sacred, false);
 
-    public static final ItemArmor LeggingsAncientmetalsacred = new ItemLeggings(Constant.getNextItemID(), Materials.ancient_metal_sacred, false);
+    public static final ItemArmor LeggingsAncientmetalsacred = new ItemLeggings(IdUtil.getNextItemID(), Materials.ancient_metal_sacred, false);
 
-    public static final ItemArmor BootsAncientmetalsacred = new ItemBoots(Constant.getNextItemID(), Materials.ancient_metal_sacred, false);
+    public static final ItemArmor BootsAncientmetalsacred = new ItemBoots(IdUtil.getNextItemID(), Materials.ancient_metal_sacred, false);
 
-    public static final Item AncientmetalArmorPiece = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.ancient_metal_sacred).setCraftingDifficultyAsComponent(800.0F).setUnlocalizedName("ancient_metal_sacred_piece").setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
+    public static final Item AncientmetalArmorPiece = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.ancient_metal_sacred).setCraftingDifficultyAsComponent(800.0F).setUnlocalizedName("ancient_metal_sacred_piece").setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
 
-    public static final ItemFood Agave = (ItemFood) (new ItemFood(Constant.getNextItemID(), Materials.agave, 1, 0, false, false, false, "agave")).setMaxStackSize(16).setAlwaysEdible();
+    public static final ItemFood Agave = (ItemFood) (new ItemFood(IdUtil.getNextItemID(), Materials.agave, 1, 0, false, false, false, "agave")).setMaxStackSize(16).setAlwaysEdible();
 
-    public static final Item Pulque = (new ItemWine(Constant.getNextItemID())).setUnlocalizedName("pulque").setCreativeTab(CreativeTabs.tabFood);
+    public static final Item Pulque = (new ItemWine(IdUtil.getNextItemID())).setUnlocalizedName("pulque").setCreativeTab(CreativeTabs.tabFood);
 
-    public static final Item Ale = (new ItemWine(Constant.getNextItemID())).setUnlocalizedName("ale").setCreativeTab(CreativeTabs.tabFood);
+    public static final Item Ale = (new ItemWine(IdUtil.getNextItemID())).setUnlocalizedName("ale").setCreativeTab(CreativeTabs.tabFood);
 
-    public static final ItemBow bowTungsten = new ItemBow(Constant.getNextItemID(), Materials.tungsten);
+    public static final ItemBow bowTungsten = new ItemBow(IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemArmor UruHelmet = new ItemHelmet(Constant.getNextItemID(), Materials.uru, false);
+    public static final ItemArmor UruHelmet = new ItemHelmet(IdUtil.getNextItemID(), Materials.uru, false);
 
-    public static final ItemArmor UruChestplate = new ItemCuirass(Constant.getNextItemID(), Materials.uru, false);
+    public static final ItemArmor UruChestplate = new ItemCuirass(IdUtil.getNextItemID(), Materials.uru, false);
 
-    public static final ItemArmor UruLeggings = new ItemLeggings(Constant.getNextItemID(), Materials.uru, false);
+    public static final ItemArmor UruLeggings = new ItemLeggings(IdUtil.getNextItemID(), Materials.uru, false);
 
-    public static final ItemArmor UruBoots = new ItemBoots(Constant.getNextItemID(), Materials.uru, false);
+    public static final ItemArmor UruBoots = new ItemBoots(IdUtil.getNextItemID(), Materials.uru, false);
 
-    public static final ItemNugget UruNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.uru);
+    public static final ItemNugget UruNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
 
-    public static final ItemBattleAxe UruBattleAxe = ReflectHelper.createInstance(ItemBattleAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.uru);
+    public static final ItemBattleAxe UruBattleAxe = ReflectHelper.createInstance(ItemBattleAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
 
-    public static final Item UruIngot = ReflectHelper.createInstance(ItemIngot.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.uru).setXPReward(150);
+    public static final Item UruIngot = ReflectHelper.createInstance(ItemIngot.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru).setXPReward(150);
 
-    public static final ItemSword UruSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.uru);
+    public static final ItemSword UruSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
 
-    public static final ItemWarHammer UruWarHammer = ReflectHelper.createInstance(ItemWarHammer.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.uru);
+    public static final ItemWarHammer UruWarHammer = ReflectHelper.createInstance(ItemWarHammer.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
 
-    public static final ItemMattock UruMattock = ReflectHelper.createInstance(ItemMattock.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.uru);
+    public static final ItemMattock UruMattock = ReflectHelper.createInstance(ItemMattock.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
 
-    public static final ItemScythe UruScythe = ReflectHelper.createInstance(ItemScythe.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.uru);
+    public static final ItemScythe UruScythe = ReflectHelper.createInstance(ItemScythe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
 
-    public static final ItemPieces pieceUru = new ItemPieces(Constant.getNextItemID(), Materials.orePieces, "pieceAdamantium");
+    public static final ItemPieces pieceUru = new ItemPieces(IdUtil.getNextItemID(), Materials.orePieces, "pieceAdamantium");
 
-    public static final Item forgingnote = new ItemStandard(Constant.getNextItemID(), Materials.paper, "forging_note");
+    public static final Item forgingnote = new ItemStandard(IdUtil.getNextItemID(), Materials.paper, "forging_note");
 
-    public static final ItemSeeds seedsBeetroot = new ItemSeeds(Constant.getNextItemID(), 1, 1, false, false, false, Blocks.beetroots.blockID, Block.tilledField.blockID, "Beetrootseeds");
+    public static final ItemSeeds seedsBeetroot = new ItemSeeds(IdUtil.getNextItemID(), 1, 1, false, false, false, Blocks.beetroots.blockID, Block.tilledField.blockID, "Beetrootseeds");
 
-    public static final ItemFood beetroot = (new ItemFood(Constant.getNextItemID(), Materials.beetroot, 2, 1, 1000, false, false, true, "Beetroot")).setPlantProduct();
+    public static final ItemFood beetroot = (new ItemFood(IdUtil.getNextItemID(), Materials.beetroot, 2, 1, 1000, false, false, true, "Beetroot")).setPlantProduct();
 
-    public static final ItemBowl bowlSalmonSoup = (ItemBowl) (new ItemBowl(Constant.getNextItemID(), Materials.fish_soup, "salmon_soup")).setFoodValue(14, 14, true, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("salmonSoup");
+    public static final ItemBowl bowlSalmonSoup = (ItemBowl) (new ItemBowl(IdUtil.getNextItemID(), Materials.fish_soup, "salmon_soup")).setFoodValue(14, 14, true, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("salmonSoup");
 
-    public static final ItemBowl bowlBeetrootSoup = (ItemBowl) (new ItemBowl(Constant.getNextItemID(), Materials.beetroot, "beetroot_soup")).setFoodValue(15, 6, 6000, false, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beetrootSoup");
+    public static final ItemBowl bowlBeetrootSoup = (ItemBowl) (new ItemBowl(IdUtil.getNextItemID(), Materials.beetroot, "beetroot_soup")).setFoodValue(15, 6, 6000, false, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beetrootSoup");
 
-    public static final ItemStandard claybowlRaw = (ItemStandard) (new ItemStandard(Constant.getNextItemID(), Material.clay, "bowlclayRaw")).setMaxStackSize(4);
+    public static final ItemStandard claybowlRaw = (ItemStandard) (new ItemStandard(IdUtil.getNextItemID(), Material.clay, "bowlclayRaw")).setMaxStackSize(4);
 
-    public static final ItemBowlClay claybowlEmpty = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), null, "VANILLA")).setUnlocalizedName("bowlclay").useVanillaTexture("bowlclay").setMaxStackSize(4);
+    public static final ItemBowlClay claybowlEmpty = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), null, "VANILLA")).setUnlocalizedName("bowlclay").useVanillaTexture("bowlclay").setMaxStackSize(4);
 
-    public static final ItemBowlClay claybowlMushroomStew = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.mushroom_stew, "mushroom_stew")).setFoodValue(2, 4, false, false, false).setPlantProduct().setUnlocalizedName("mushroomStew");
+    public static final ItemBowlClay claybowlMushroomStew = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.mushroom_stew, "mushroom_stew")).setFoodValue(2, 4, false, false, false).setPlantProduct().setUnlocalizedName("mushroomStew");
 
-    public static final ItemBowlClay claybowlMilk = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.milk, "bowl_milk")).setFoodValue(0, 1, true, false, false).setAnimalProduct().setContainerItem(claybowlEmpty).setAlwaysEdible().setUnlocalizedName("bowlMilk");
+    public static final ItemBowlClay claybowlMilk = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.milk, "bowl_milk")).setFoodValue(0, 1, true, false, false).setAnimalProduct().setContainerItem(claybowlEmpty).setAlwaysEdible().setUnlocalizedName("bowlMilk");
 
-    public static final ItemBowlClay claybowlWater = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.water, "bowl_water")).setContainerItem(claybowlEmpty).setUnlocalizedName("bowlWater");
+    public static final ItemBowlClay claybowlWater = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.water, "bowl_water")).setContainerItem(claybowlEmpty).setUnlocalizedName("bowlWater");
 
-    public static final ItemBowlClay claybowlBeefStew = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.beef_stew, "beef_stew")).setFoodValue(16, 16, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beefStew");
+    public static final ItemBowlClay claybowlBeefStew = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.beef_stew, "beef_stew")).setFoodValue(16, 16, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beefStew");
 
-    public static final ItemBowlClay claybowlChickenSoup = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.chicken_soup, "chicken_soup")).setFoodValue(10, 10, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("chickenSoup");
+    public static final ItemBowlClay claybowlChickenSoup = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.chicken_soup, "chicken_soup")).setFoodValue(10, 10, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("chickenSoup");
 
-    public static final ItemBowlClay claybowlVegetableSoup = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.vegetable_soup, "vegetable_soup")).setFoodValue(6, 6, false, false, true).setPlantProduct().setUnlocalizedName("vegetableSoup");
+    public static final ItemBowlClay claybowlVegetableSoup = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.vegetable_soup, "vegetable_soup")).setFoodValue(6, 6, false, false, true).setPlantProduct().setUnlocalizedName("vegetableSoup");
 
-    public static final ItemBowlClay claybowlIceCream = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.ice_cream, "ice_cream")).setFoodValue(5, 4, 1000, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("iceCream");
+    public static final ItemBowlClay claybowlIceCream = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.ice_cream, "ice_cream")).setFoodValue(5, 4, 1000, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("iceCream");
 
-    public static final ItemBowlClay claybowlSalad = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.salad, "bowl_salad")).setFoodValue(1, 1, false, false, true).setPlantProduct().setUnlocalizedName("salad");
+    public static final ItemBowlClay claybowlSalad = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.salad, "bowl_salad")).setFoodValue(1, 1, false, false, true).setPlantProduct().setUnlocalizedName("salad");
 
-    public static final ItemBowlClay claybowlCreamOfMushroomSoup = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.cream_of_mushroom_soup, "cream_of_mushroom_soup")).setFoodValue(3, 5, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("creamOfMushroomSoup");
+    public static final ItemBowlClay claybowlCreamOfMushroomSoup = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.cream_of_mushroom_soup, "cream_of_mushroom_soup")).setFoodValue(3, 5, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("creamOfMushroomSoup");
 
-    public static final ItemBowlClay claybowlCreamOfVegetableSoup = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.cream_of_vegetable_soup, "cream_of_vegetable_soup")).setFoodValue(7, 7, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("creamOfVegetableSoup");
+    public static final ItemBowlClay claybowlCreamOfVegetableSoup = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.cream_of_vegetable_soup, "cream_of_vegetable_soup")).setFoodValue(7, 7, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("creamOfVegetableSoup");
 
-    public static final ItemBowlClay claybowlPumpkinSoup = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.pumpkin_soup, "pumpkin_soup")).setFoodValue(1, 2, false, false, true).setPlantProduct().setUnlocalizedName("pumpkinSoup");
+    public static final ItemBowlClay claybowlPumpkinSoup = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.pumpkin_soup, "pumpkin_soup")).setFoodValue(1, 2, false, false, true).setPlantProduct().setUnlocalizedName("pumpkinSoup");
 
-    public static final ItemBowlClay claybowlMashedPotato = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.mashed_potato, "mashed_potato")).setFoodValue(12, 8, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("mashedPotato");
+    public static final ItemBowlClay claybowlMashedPotato = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.mashed_potato, "mashed_potato")).setFoodValue(12, 8, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("mashedPotato");
 
-    public static final ItemBowlClay claybowlSorbet = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.sorbet, "sorbet")).setFoodValue(4, 2, 2000, false, false, true).setPlantProduct().setUnlocalizedName("sorbet");
+    public static final ItemBowlClay claybowlSorbet = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.sorbet, "sorbet")).setFoodValue(4, 2, 2000, false, false, true).setPlantProduct().setUnlocalizedName("sorbet");
 
-    public static final ItemBowlClay claybowlPorridge = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.porridge, "porridge")).setFoodValue(4, 2, 2000, false, false, true).setPlantProduct().setUnlocalizedName("porridge");
+    public static final ItemBowlClay claybowlPorridge = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.porridge, "porridge")).setFoodValue(4, 2, 2000, false, false, true).setPlantProduct().setUnlocalizedName("porridge");
 
-    public static final ItemBowlClay claybowlCereal = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Material.cereal, "cereal")).setFoodValue(4, 2, 1000, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("cereal");
+    public static final ItemBowlClay claybowlCereal = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.cereal, "cereal")).setFoodValue(4, 2, 1000, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("cereal");
 
-    public static final ItemBowlClay claybowlLemonade = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Materials.lemonade, "lemonade")).setFoodValue(4, 1, false, true, true).setPlantProduct().setUnlocalizedName("lemonade");
+    public static final ItemBowlClay claybowlLemonade = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Materials.lemonade, "lemonade")).setFoodValue(4, 1, false, true, true).setPlantProduct().setUnlocalizedName("lemonade");
 
-    public static final ItemBowlClay claybowlPorkchopStew = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Materials.porkchop_stew, "porkchop_stew")).setFoodValue(14, 14, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("porkchopStew");
+    public static final ItemBowlClay claybowlPorkchopStew = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Materials.porkchop_stew, "porkchop_stew")).setFoodValue(14, 14, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("porkchopStew");
 
-    public static final ItemBowlClay claybowlChestnutSoup = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Materials.chestnut_soup, "lampchop_stew")).setFoodValue(12, 12, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("lampchopStew");
+    public static final ItemBowlClay claybowlChestnutSoup = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Materials.chestnut_soup, "lampchop_stew")).setFoodValue(12, 12, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("lampchopStew");
 
-    public static final ItemBowlClay claybowlWaterSuspicious = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Materials.unsafe_water, "suspicious_water")).setUnlocalizedName("SuspiciousWater");
+    public static final ItemBowlClay claybowlWaterSuspicious = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Materials.unsafe_water, "suspicious_water")).setUnlocalizedName("SuspiciousWater");
 
-    public static final ItemBowlClay claybowlWaterSwampland = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Materials.dangerous_water, "swampland_water")).setUnlocalizedName("SwamplandWater");
+    public static final ItemBowlClay claybowlWaterSwampland = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Materials.dangerous_water, "swampland_water")).setUnlocalizedName("SwamplandWater");
 
-    public static final ItemBowlClay claybowlSalmonSoup = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Materials.fish_soup, "salmon_soup")).setFoodValue(14, 14, true, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("salmonSoup");
+    public static final ItemBowlClay claybowlSalmonSoup = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Materials.fish_soup, "salmon_soup")).setFoodValue(14, 14, true, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("salmonSoup");
 
-    public static final ItemBowlClay claybowlBeetrootSoup = (ItemBowlClay) (new ItemBowlClay(Constant.getNextItemID(), Materials.beetroot, "beetroot_soup")).setFoodValue(15, 6, 6000, false, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beetrootSoup");
+    public static final ItemBowlClay claybowlBeetrootSoup = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Materials.beetroot, "beetroot_soup")).setFoodValue(15, 6, 6000, false, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beetrootSoup");
 
-    public static final Item totemoffecund = (new ItemTotem(Constant.getNextItemID(), Material.gold, "totem")).setMaxStackSize(1);
+    public static final Item totemoffecund = (new ItemTotem(IdUtil.getNextItemID(), Material.gold, "totem")).setMaxStackSize(1);
 
-    public static final ItemArmor helmetCustom_b = new ItemHelmet(Constant.getNextItemID(), Materials.custom_b, false);
+    public static final ItemArmor helmetCustom_b = new ItemHelmet(IdUtil.getNextItemID(), Materials.custom_b, false);
 
-    public static final ItemArmor chestplateCustom_b = new ItemCuirass(Constant.getNextItemID(), Materials.custom_b, false);
+    public static final ItemArmor chestplateCustom_b = new ItemCuirass(IdUtil.getNextItemID(), Materials.custom_b, false);
 
-    public static final ItemArmor leggingsCustom_b = new ItemLeggings(Constant.getNextItemID(), Materials.custom_b, false);
+    public static final ItemArmor leggingsCustom_b = new ItemLeggings(IdUtil.getNextItemID(), Materials.custom_b, false);
 
-    public static final ItemArmor bootsCustom_b = new ItemBoots(Constant.getNextItemID(), Materials.custom_b, false);
+    public static final ItemArmor bootsCustom_b = new ItemBoots(IdUtil.getNextItemID(), Materials.custom_b, false);
 
-    public static final ItemFishingRod fishingRodNickel = (ItemFishingRod) (new ItemFishingRod(Constant.getNextItemID(), Materials.nickel)).setUnlocalizedName("fishingRod");
+    public static final ItemFishingRod fishingRodNickel = (ItemFishingRod) (new ItemFishingRod(IdUtil.getNextItemID(), Materials.nickel)).setUnlocalizedName("fishingRod");
 
-    public static final ItemFishingRod fishingRodTungsten = (ItemFishingRod) (new ItemFishingRod(Constant.getNextItemID(), Materials.tungsten)).setUnlocalizedName("fishingRod");
+    public static final ItemFishingRod fishingRodTungsten = (ItemFishingRod) (new ItemFishingRod(IdUtil.getNextItemID(), Materials.tungsten)).setUnlocalizedName("fishingRod");
 
-    public static final ItemCarrotOnAStick carrotOnAStickNickel = (ItemCarrotOnAStick) (new ItemCarrotOnAStick(Constant.getNextItemID(), Materials.nickel)).setUnlocalizedName("carrotOnAStick");
+    public static final ItemCarrotOnAStick carrotOnAStickNickel = (ItemCarrotOnAStick) (new ItemCarrotOnAStick(IdUtil.getNextItemID(), Materials.nickel)).setUnlocalizedName("carrotOnAStick");
 
-    public static final ItemCarrotOnAStick carrotOnAStickTungsten = (ItemCarrotOnAStick) (new ItemCarrotOnAStick(Constant.getNextItemID(), Materials.tungsten)).setUnlocalizedName("carrotOnAStick");
+    public static final ItemCarrotOnAStick carrotOnAStickTungsten = (ItemCarrotOnAStick) (new ItemCarrotOnAStick(IdUtil.getNextItemID(), Materials.tungsten)).setUnlocalizedName("carrotOnAStick");
 
-    public static final ItemPotionSuspicious SuspiciousPotion = (ItemPotionSuspicious) (new ItemPotionSuspicious(Constant.getNextItemID())).setUnlocalizedName("suspiciousPotion").setCreativeTab(CreativeTabs.tabMisc);
+    public static final ItemPotionSuspicious SuspiciousPotion = (ItemPotionSuspicious) (new ItemPotionSuspicious(IdUtil.getNextItemID())).setUnlocalizedName("suspiciousPotion").setCreativeTab(CreativeTabs.tabMisc);
 
-    public static final Item totemofdestroy = (new ItemTotem(Constant.getNextItemID(), Materials.tungsten, "totem")).setMaxStackSize(1);
+    public static final Item totemofdestroy = (new ItemTotem(IdUtil.getNextItemID(), Materials.tungsten, "totem")).setMaxStackSize(1);
 
-    public static final Item totemofpreserve = (new ItemTotem(Constant.getNextItemID(), Material.iron, "totem")).setMaxStackSize(1);
+    public static final Item totemofpreserve = (new ItemTotem(IdUtil.getNextItemID(), Material.iron, "totem")).setMaxStackSize(1);
 
-    public static final Item totemofknowledge = (new ItemTotem(Constant.getNextItemID(), Material.ancient_metal, "totem")).setMaxStackSize(1);
+    public static final Item totemofknowledge = (new ItemTotem(IdUtil.getNextItemID(), Material.ancient_metal, "totem")).setMaxStackSize(1);
 
-    public static final ItemIgnition ignitionCopper = new ItemIgnition(Constant.getNextItemID(), Material.copper);
+    public static final ItemIgnition ignitionCopper = new ItemIgnition(IdUtil.getNextItemID(), Material.copper);
 
-    public static final ItemIgnition ignitionSilver = new ItemIgnition(Constant.getNextItemID(), Material.silver);
+    public static final ItemIgnition ignitionSilver = new ItemIgnition(IdUtil.getNextItemID(), Material.silver);
 
-    public static final ItemIgnition ignitionGold = new ItemIgnition(Constant.getNextItemID(), Material.gold);
+    public static final ItemIgnition ignitionGold = new ItemIgnition(IdUtil.getNextItemID(), Material.gold);
 
     public static final ItemIgnition ignitionIron = new ItemIgnition(3, Material.iron);
 
-    public static final ItemIgnition ignitionNickel = new ItemIgnition(Constant.getNextItemID(), Materials.nickel);
+    public static final ItemIgnition ignitionNickel = new ItemIgnition(IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemIgnition ignitionTungsten = new ItemIgnition(Constant.getNextItemID(), Materials.tungsten);
+    public static final ItemIgnition ignitionTungsten = new ItemIgnition(IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemIgnition ignitionMithril = new ItemIgnition(Constant.getNextItemID(), Material.mithril);
+    public static final ItemIgnition ignitionMithril = new ItemIgnition(IdUtil.getNextItemID(), Material.mithril);
 
-    public static final ItemIgnition ignitionAncientMetal = new ItemIgnition(Constant.getNextItemID(), Material.ancient_metal);
+    public static final ItemIgnition ignitionAncientMetal = new ItemIgnition(IdUtil.getNextItemID(), Material.ancient_metal);
 
-    public static final ItemIgnition ignitionAdamantium = new ItemIgnition(Constant.getNextItemID(), Material.adamantium);
+    public static final ItemIgnition ignitionAdamantium = new ItemIgnition(IdUtil.getNextItemID(), Material.adamantium);
 
-    public static final ItemIgnition ignitionWood = new ItemIgnition(Constant.getNextItemID(), Material.wood);
+    public static final ItemIgnition ignitionWood = new ItemIgnition(IdUtil.getNextItemID(), Material.wood);
 
-    public static final ItemBrewingMisc wither_branch = (new ItemBrewingMisc(Constant.getNextItemID(), Material.wood, "wither_wood")).setPotionEffectExtend("+0-1+2+3+13&4-4");
+    public static final ItemBrewingMisc wither_branch = (new ItemBrewingMisc(IdUtil.getNextItemID(), Material.wood, "wither_wood")).setPotionEffectExtend("+0-1+2+3+13&4-4");
 
-    public static final ItemGuideBook guide = new ItemGuideBook(Constant.getNextItemID());
+    public static final ItemGuideBook guide = new ItemGuideBook(IdUtil.getNextItemID());
 
-    public static final Item totemofhunting = (new ItemTotem(Constant.getNextItemID(), Materials.nickel, "totem")).setMaxStackSize(1);
+    public static final Item totemofhunting = (new ItemTotem(IdUtil.getNextItemID(), Materials.nickel, "totem")).setMaxStackSize(1);
 
-    public static final ItemClub UruMorningStar = ReflectHelper.createInstance(ItemClub.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.uru);
+    public static final ItemClub UruMorningStar = ReflectHelper.createInstance(ItemClub.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
 
-    public static final ItemPickaxe UruPickaxe = ReflectHelper.createInstance(ItemPickaxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(Constant.getNextItemID()), Materials.uru);
+    public static final ItemPickaxe UruPickaxe = ReflectHelper.createInstance(ItemPickaxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
 
-    public static final ItemRockExtend shardAzurite = (ItemRockExtend) (new ItemRockExtend(Constant.getNextItemID(), Materials.crystal, "azurite")).setXPReward(1);
+    public static final ItemRockExtend shardAzurite = (ItemRockExtend) (new ItemRockExtend(IdUtil.getNextItemID(), Materials.crystal, "azurite")).setXPReward(1);
 
-    public static final Item detectorEmerald = new ItemDetector(Constant.getNextItemID(), Material.emerald, "emerald").setUnlocalizedName("detector");
+    public static final Item detectorEmerald = new ItemDetector(IdUtil.getNextItemID(), Material.emerald, "emerald").setUnlocalizedName("detector");
 
-    public static final Item detectorDiamond = new ItemDetector(Constant.getNextItemID(), Material.diamond, "diamond").setUnlocalizedName("detector");
+    public static final Item detectorDiamond = new ItemDetector(IdUtil.getNextItemID(), Material.diamond, "diamond").setUnlocalizedName("detector");
 
-    public static final Item sulphur = new ItemStandard(Constant.getNextItemID(), Materials.sulphur, "sulphur_sphere").setMaxStackSize(16);
+    public static final Item sulphur = new ItemStandard(IdUtil.getNextItemID(), Materials.sulphur, "sulphur_sphere").setMaxStackSize(16);
 
-    public static final ItemBow bowUru = new ItemBow(Constant.getNextItemID(), Materials.uru);
+    public static final ItemBow bowUru = new ItemBow(IdUtil.getNextItemID(), Materials.uru);
 
     public static void registerItems(ItemRegistryEvent event) {
         event.register("armor/nickel_helmet", nickelHelmet);

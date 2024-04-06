@@ -7,6 +7,7 @@ import net.minecraft.Item;
 import net.minecraft.ItemStack;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.util.Constant;
+import net.xiaoyu233.fml.util.IdUtil;
 
 public class AchievementExtend {
     public static Achievement FragofMine;
@@ -73,6 +74,6 @@ public class AchievementExtend {
     }
 
     private static int getNextAchievementID() {
-        return Constant.getNextAchievementID();
+        return IdUtil.getNextAchievementID();
     }
 }

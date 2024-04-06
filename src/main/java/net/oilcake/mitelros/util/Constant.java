@@ -14,41 +14,16 @@ public class Constant {
 
     public static int nextPotionID = 24;
 
-    public static int nextEnchantmentID = 96;
-
-    public static int nextAchievementID = 136;
-
     public static int nextBiomeID = 27;
-
-    public static int nextPacketID = 109;
-    public static int nextEntityID = 114;
     public static int nextCurseID = 16;
-
-    public static int getNextEntityID() {
-        return nextEntityID++;
-    }
-
-    public static int getNextItemID() {
-        return IdUtil.getNextItemID();
-    }
 
     public static int getNextBiomeID() {
         return nextBiomeID++;
     }
 
-    public static int getNextEnchantmentID() {
-        return nextEnchantmentID++;
-    }
-
-    public static int getNextAchievementID() {
-        return nextAchievementID++;
-    }
-
     public static int getNextCurseID() {
         return nextCurseID++;
     }
-
-
 
     public static ItemArmor[] HELMETS = null;
 
