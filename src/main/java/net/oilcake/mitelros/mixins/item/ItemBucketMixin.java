@@ -10,6 +10,7 @@ import net.oilcake.mitelros.util.DispenseBehaviorFilledBucketRedirect;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,16 +19,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemBucket.class)
 public abstract class ItemBucketMixin extends ItemVessel {
+    @Unique
+    private static final int xpNeeded = 250;
+
     @Shadow
     public static boolean shouldContainedLiquidBePlacedAsSourceBlock(EntityPlayer player, boolean ctrl_is_down) {
         return false;
     }
 
-    @Shadow public abstract boolean tryPlaceContainedLiquid(World world, EntityPlayer player, int x, int y, int z, boolean allow_placement_of_source_block);
+    @Shadow
+    public abstract boolean tryPlaceContainedLiquid(World world, EntityPlayer player, int x, int y, int z, boolean allow_placement_of_source_block);
 
-    @Shadow public abstract Block getBlockForContents();
+    @Shadow
+    public abstract Block getBlockForContents();
 
-    @Shadow public abstract float getChanceOfMeltingWhenFilledWithLava();
+    @Shadow
+    public abstract float getChanceOfMeltingWhenFilledWithLava();
 
     public ItemBucketMixin(int id, Material vessel_material, Material contents_material, int standard_volume, int max_stack_size_empty, int max_stack_size_full, String texture) {
         super(id, vessel_material, contents_material, standard_volume, max_stack_size_empty, max_stack_size_full, texture);
@@ -40,9 +47,15 @@ public abstract class ItemBucketMixin extends ItemVessel {
         }
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     public IBehaviorDispenseItem getDispenserBehavior() {
-        return isEmpty() ? new DispenseBehaviorEmptyBucketRedirect((ItemBucket) getEmptyVessel()) : ((getContents() != Material.water && getContents() != Material.lava) ? null : new DispenseBehaviorFilledBucketRedirect((ItemBucket) getEmptyVessel()));
+        return isEmpty() ? new DispenseBehaviorEmptyBucketRedirect((ItemBucket) getEmptyVessel())
+                : ((getContents() != Material.water && getContents() != Material.lava) ?
+                null : new DispenseBehaviorFilledBucketRedirect((ItemBucket) getEmptyVessel()));
     }
 
     @Inject(method = "getBlockForContents", at = @At("HEAD"), cancellable = true)
@@ -174,81 +187,90 @@ public abstract class ItemBucketMixin extends ItemVessel {
 
     @ModifyConstant(method = "tryPlaceContainedLiquid", constant = @Constant(intValue = -100))
     private int itfXP_1(int constant) {
-        return -250;
+        return -xpNeeded;
     }
 
     @ModifyConstant(method = "shouldContainedLiquidBePlacedAsSourceBlock", constant = @Constant(intValue = 100))
     private static int itfXP(int constant) {
-        return 250;
+        return xpNeeded;
+    }
+
+    @Unique
+    private static ItemVessel itfVessels(Material vessel_material, Material contents) {
+        if (contents == null) {
+            if (vessel_material == Materials.nickel)
+                return Items.nickelBucket;
+            if (vessel_material == Materials.tungsten)
+                return Items.tungstenBucket;
+        } else if (contents == Material.water) {
+            if (vessel_material == Materials.nickel)
+                return Items.nickelBucketWater;
+            if (vessel_material == Materials.tungsten)
+                return Items.tungstenBucketWater;
+        } else if (contents == Material.lava) {
+            if (vessel_material == Materials.nickel)
+                return Items.nickelBucketLava;
+            if (vessel_material == Materials.tungsten)
+                return Items.tungstenBucketLava;
+        } else if (contents == Material.milk) {
+            if (vessel_material == Materials.nickel)
+                return Items.nickelBucketMilk;
+            if (vessel_material == Materials.tungsten)
+                return Items.tungstenBucketMilk;
+        } else if (contents == Material.stone) {
+            if (vessel_material == Materials.nickel)
+                return Items.nickelBucketStone;
+            if (vessel_material == Materials.tungsten)
+                return Items.tungstenBucketStone;
+        } else if (contents == Materials.unsafe_water) {
+            if (vessel_material == Material.copper)
+                return Items.copperBucketWaterSuspicious;
+            if (vessel_material == Material.silver)
+                return Items.silverBucketWaterSuspicious;
+            if (vessel_material == Material.gold)
+                return Items.goldBucketWaterSuspicious;
+            if (vessel_material == Material.iron)
+                return Items.ironBucketWaterSuspicious;
+            if (vessel_material == Material.mithril)
+                return Items.mithrilBucketWaterSuspicious;
+            if (vessel_material == Material.adamantium)
+                return Items.adamantiumBucketWaterSuspicious;
+            if (vessel_material == Materials.nickel)
+                return Items.nickelBucketWaterSuspicious;
+            if (vessel_material == Materials.tungsten)
+                return Items.tungstenBucketWaterSuspicious;
+            if (vessel_material == Materials.ancient_metal)
+                return Items.ancientmetalBucketWaterSuspicious;
+            return null;
+        } else if (contents == Materials.dangerous_water) {
+            if (vessel_material == Material.copper)
+                return Items.copperBucketWaterDangerous;
+            if (vessel_material == Material.silver)
+                return Items.silverBucketWaterDangerous;
+            if (vessel_material == Material.gold)
+                return Items.goldBucketWaterDangerous;
+            if (vessel_material == Material.iron)
+                return Items.ironBucketWaterDangerous;
+            if (vessel_material == Material.mithril)
+                return Items.mithrilBucketWaterDangerous;
+            if (vessel_material == Material.adamantium)
+                return Items.adamantiumBucketWaterDangerous;
+            if (vessel_material == Materials.nickel)
+                return Items.nickelBucketWaterDangerous;
+            if (vessel_material == Materials.tungsten)
+                return Items.tungstenBucketWaterDangerous;
+            if (vessel_material == Material.ancient_metal)
+                return Items.ancientmetalBucketWaterDangerous;
+            return null;
+        }
+        return null;
     }
 
     @Inject(method = "getPeer", at = @At("HEAD"), cancellable = true)
     private static void itfVessel(Material vessel_material, Material contents, CallbackInfoReturnable<ItemVessel> cir) {
-        if (contents == null) {
-            if (vessel_material == Materials.nickel)
-                cir.setReturnValue(Items.nickelBucket);
-            if (vessel_material == Materials.tungsten)
-                cir.setReturnValue(Items.tungstenBucket);
-        } else if (contents == Material.water) {
-            if (vessel_material == Materials.nickel)
-                cir.setReturnValue(Items.nickelBucketWater);
-            if (vessel_material == Materials.tungsten)
-                cir.setReturnValue(Items.tungstenBucketWater);
-        } else if (contents == Material.lava) {
-            if (vessel_material == Materials.nickel)
-                cir.setReturnValue(Items.nickelBucketLava);
-            if (vessel_material == Materials.tungsten)
-                cir.setReturnValue(Items.tungstenBucketLava);
-        } else if (contents == Material.milk) {
-            if (vessel_material == Materials.nickel)
-                cir.setReturnValue(Items.nickelBucketMilk);
-            if (vessel_material == Materials.tungsten)
-                cir.setReturnValue(Items.tungstenBucketMilk);
-        } else if (contents == Material.stone) {
-            if (vessel_material == Materials.nickel)
-                cir.setReturnValue(Items.nickelBucketStone);
-            if (vessel_material == Materials.tungsten)
-                cir.setReturnValue(Items.tungstenBucketStone);
-        } else if (contents == Materials.unsafe_water) {
-            if (vessel_material == Material.copper)
-                cir.setReturnValue(Items.copperBucketWaterSuspicious);
-            if (vessel_material == Material.silver)
-                cir.setReturnValue(Items.silverBucketWaterSuspicious);
-            if (vessel_material == Material.gold)
-                cir.setReturnValue(Items.goldBucketWaterSuspicious);
-            if (vessel_material == Material.iron)
-                cir.setReturnValue(Items.ironBucketWaterSuspicious);
-            if (vessel_material == Material.mithril)
-                cir.setReturnValue(Items.mithrilBucketWaterSuspicious);
-            if (vessel_material == Material.adamantium)
-                cir.setReturnValue(Items.adamantiumBucketWaterSuspicious);
-            if (vessel_material == Materials.nickel)
-                cir.setReturnValue(Items.nickelBucketWaterSuspicious);
-            if (vessel_material == Materials.tungsten)
-                cir.setReturnValue(Items.tungstenBucketWaterSuspicious);
-            if (vessel_material == Materials.ancient_metal)
-                cir.setReturnValue(Items.ancientmetalBucketWaterSuspicious);
-            cir.setReturnValue(null);
-        } else if (contents == Materials.dangerous_water) {
-            if (vessel_material == Material.copper)
-                cir.setReturnValue(Items.copperBucketWaterDangerous);
-            if (vessel_material == Material.silver)
-                cir.setReturnValue(Items.silverBucketWaterDangerous);
-            if (vessel_material == Material.gold)
-                cir.setReturnValue(Items.goldBucketWaterDangerous);
-            if (vessel_material == Material.iron)
-                cir.setReturnValue(Items.ironBucketWaterDangerous);
-            if (vessel_material == Material.mithril)
-                cir.setReturnValue(Items.mithrilBucketWaterDangerous);
-            if (vessel_material == Material.adamantium)
-                cir.setReturnValue(Items.adamantiumBucketWaterDangerous);
-            if (vessel_material == Materials.nickel)
-                cir.setReturnValue(Items.nickelBucketWaterDangerous);
-            if (vessel_material == Materials.tungsten)
-                cir.setReturnValue(Items.tungstenBucketWaterDangerous);
-            if (vessel_material == Material.ancient_metal)
-                cir.setReturnValue(Items.ancientmetalBucketWaterDangerous);
-            cir.setReturnValue(null);
+        ItemVessel itfVessel = itfVessels(vessel_material, contents);
+        if (itfVessel != null) {
+            cir.setReturnValue(itfVessel);
         }
     }
 
@@ -256,13 +278,8 @@ public abstract class ItemBucketMixin extends ItemVessel {
         return MaterialHandler.classifyMaterialForm(material);
     }
 
-    @Shadow
-    public ItemVessel getPeerForContents(Material material) {
-        return null;
-    }
-
-    @Shadow
-    public ItemVessel getPeerForVesselMaterial(Material material) {
-        return null;
+    @ModifyConstant(method = "addInformation", constant = @Constant(intValue = 100))
+    private int itfXp(int constant) {
+        return xpNeeded;
     }
 }

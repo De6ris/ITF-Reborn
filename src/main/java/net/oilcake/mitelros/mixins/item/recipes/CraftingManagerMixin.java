@@ -89,7 +89,7 @@ public class CraftingManagerMixin {
             }
             return null;
         }
-        if (var3 != 2 || (var4.getItem() != Item.sinew && var5.getItem() != Item.sinew && var4.getItem() != Item.silk && var5.getItem() != Item.silk && var4.getItem() != Items.Wolf_fur && var5.getItem() != Items.Wolf_fur) || ((!(var4.getItem() instanceof ItemArmor) || !((ItemArmor) var4.getItem()).isLeather() || var4.stackSize != 1 || !var4.isItemDamaged()) && (!(var5.getItem() instanceof ItemArmor) || !((ItemArmor) var5.getItem()).isLeather() || var5.stackSize != 1 || !var5.isItemDamaged()))) {
+        if (var3 != 2 || (var4.getItem() != Item.sinew && var5.getItem() != Item.sinew && var4.getItem() != Item.silk && var5.getItem() != Item.silk && var4.getItem() != Items.wolf_fur && var5.getItem() != Items.wolf_fur) || ((!(var4.getItem() instanceof ItemArmor) || !((ItemArmor) var4.getItem()).isLeather() || var4.stackSize != 1 || !var4.isItemDamaged()) && (!(var5.getItem() instanceof ItemArmor) || !((ItemArmor) var5.getItem()).isLeather() || var5.stackSize != 1 || !var5.isItemDamaged()))) {
             Container event_handler = par1InventoryCrafting.getEventHandler();
             for (var6 = 0; var6 < this.recipes.size(); var6++) {
                 IRecipe var12 = (IRecipe) this.recipes.get(var6);
@@ -102,7 +102,7 @@ public class CraftingManagerMixin {
             }
             return null;
         }
-        if (var4.getItem() != Item.sinew && var4.getItem() != Item.silk && var4.getItem() != Items.Wolf_fur) {
+        if (var4.getItem() != Item.sinew && var4.getItem() != Item.silk && var4.getItem() != Items.wolf_fur) {
             item_stack_sinew = var5;
             item_stack_armor = var4;
         } else {

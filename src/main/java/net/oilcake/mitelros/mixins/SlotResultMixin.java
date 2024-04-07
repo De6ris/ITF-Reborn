@@ -2,32 +2,20 @@ package net.oilcake.mitelros.mixins;
 
 import net.minecraft.AchievementList;
 import net.minecraft.Block;
-import net.minecraft.BlockFurnace;
-import net.minecraft.BlockWorkbench;
-import net.minecraft.DedicatedServer;
 import net.minecraft.EntityPlayer;
-import net.minecraft.EnumTournamentType;
 import net.minecraft.IInventory;
 import net.minecraft.Item;
-import net.minecraft.ItemArmor;
 import net.minecraft.ItemBlock;
-import net.minecraft.ItemBowl;
 import net.minecraft.ItemStack;
-import net.minecraft.Material;
 import net.minecraft.Slot;
 import net.minecraft.SlotCrafting;
-import net.minecraft.StatBase;
-import net.minecraft.WorldServer;
 import net.oilcake.mitelros.achivements.AchievementExtend;
-import net.oilcake.mitelros.item.ItemBowlClay;
 import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(SlotCrafting.class)
 public abstract class SlotResultMixin extends Slot {
@@ -56,7 +44,7 @@ public abstract class SlotResultMixin extends Slot {
             this.thePlayer.addStat(AchievementExtend.mashedCactus, 1);
         if (item == Items.Pulque || item == Items.Ale)
             this.thePlayer.addStat(AchievementExtend.cheersforMinecraft, 1);
-        if (item == Items.ExperimentalPotion)
+        if (item == Items.experimentalPotion)
             this.thePlayer.addStat(AchievementExtend.nochoice, 1);
     }
 }

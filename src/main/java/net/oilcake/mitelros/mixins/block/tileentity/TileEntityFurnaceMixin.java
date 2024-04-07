@@ -2,6 +2,8 @@ package net.oilcake.mitelros.mixins.block.tileentity;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFurnace;
+import net.oilcake.mitelros.block.BlockBlastFurnace;
+import net.oilcake.mitelros.block.BlockSmoker;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
@@ -11,9 +13,18 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({TileEntityFurnace.class})
-public class TileEntityFurnaceMixin extends TileEntity implements ISidedInventory, ITFFurnace {
+@Mixin(TileEntityFurnace.class)
+public abstract class TileEntityFurnaceMixin extends TileEntity implements ISidedInventory, ITFFurnace {
+    @Shadow
+    protected abstract boolean canSmelt(int heat_level);
+
+    @Shadow
+    public static int getHeatLevelRequired(int item_id) {
+        return 0;
+    }
+
     @Shadow
     private ItemStack[] furnaceItemStacks = new ItemStack[3];
 
@@ -31,60 +42,56 @@ public class TileEntityFurnaceMixin extends TileEntity implements ISidedInventor
 
     private boolean activated = false;
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public static int getHeatLevelRequired(int item_id) {
+    @Inject(method = "getHeatLevelRequired", at = @At("HEAD"), cancellable = true)
+    private static void itfHeatLevel(int item_id, CallbackInfoReturnable<Integer> cir) {
         Item item = Item.getItem(item_id);
         if (item instanceof net.minecraft.ItemTool)
-            return (item.getHardestMetalMaterial() == Materials.tungsten) ? 4 : ((item.getHardestMetalMaterial() == Material.rusted_iron) ? 2 : 3);
+            cir.setReturnValue((item.getHardestMetalMaterial() == Materials.tungsten) ? 4 : ((item.getHardestMetalMaterial() == Material.rusted_iron) ? 2 : 3));
         if (item instanceof net.minecraft.ItemArmor)
-            return (item.getHardestMetalMaterial() == Materials.tungsten) ? 4 : ((item.getHardestMetalMaterial() == Material.rusted_iron) ? 2 : 3);
-        if (item_id == Block.oreAdamantium.blockID || item_id == Items.pieceAdamantium.itemID || item_id == Blocks.oreUru.blockID || item_id == Items.pieceUru.itemID)
-            return 4;
-        if (item_id == Block.oreMithril.blockID || item_id == Blocks.oreTungsten.blockID || item_id == Items.pieceMithril.itemID || item_id == Items.pieceTungsten.itemID || item_id == Items.AncientmetalArmorPiece.itemID)
-            return 3;
-        if (item_id == Block.oreCopper.blockID || item_id == Block.oreSilver.blockID || item_id == Block.oreGold.blockID || item_id == Block.oreIron.blockID || item_id == Blocks.oreNickel.blockID || item_id == Items.pieceCopper.itemID || item_id == Items.pieceSilver.itemID || item_id == Items.pieceGold.itemID || item_id == Items.pieceGoldNether.itemID || item_id == Items.pieceIron.itemID || item_id == Items.pieceNickel.itemID || item_id == Block.oreNetherQuartz.blockID || item_id == Block.oreEmerald.blockID || item_id == Block.oreDiamond.blockID || item_id == Block.oreRedstone.blockID || item_id == Block.oreLapis.blockID || item_id == Block.sandStone.blockID)
-            return 2;
-        return 1;
+            cir.setReturnValue((item.getHardestMetalMaterial() == Materials.tungsten) ? 4 : ((item.getHardestMetalMaterial() == Material.rusted_iron) ? 2 : 3));
+        if (item_id == Items.pieceAdamantium.itemID || item_id == Blocks.oreUru.blockID || item_id == Items.pieceUru.itemID)
+            cir.setReturnValue(4);
+        if (item_id == Blocks.oreTungsten.blockID || item_id == Items.pieceMithril.itemID || item_id == Items.pieceTungsten.itemID || item_id == Items.AncientmetalArmorPiece.itemID)
+            cir.setReturnValue(3);
+        if (item_id == Blocks.oreNickel.blockID || item_id == Items.pieceCopper.itemID || item_id == Items.pieceSilver.itemID || item_id == Items.pieceGold.itemID || item_id == Items.pieceGoldNether.itemID || item_id == Items.pieceIron.itemID || item_id == Items.pieceNickel.itemID)
+            cir.setReturnValue(2);
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    private boolean canSmelt(int heat_level) {
-        if (this.furnaceItemStacks[0] == null)
-            return false;
-        if (getInputItemStack().getItem() instanceof net.minecraft.ItemFood && isBlastFurnace())
-            return false;
-        if (getInputItemStack().getItem() instanceof net.minecraft.ItemArmor && !isBlastFurnace())
-            return false;
-        if (getInputItemStack().getItem() instanceof net.minecraft.ItemTool && !isBlastFurnace())
-            return false;
-        if (!(getInputItemStack().getItem() instanceof net.minecraft.ItemFood) && isSmoker())
-            return false;
-        if (heat_level > getHeatLevelRequired((getInputItemStack().getItem()).itemID) + 1)
-            return false;
-        BlockFurnace furnace = getFurnaceBlock();
-        if (furnace == null || (!acceptsLargeItems() && Slot.isLargeItem(getInputItemStack().getItem())))
-            return false;
-        ItemStack var1 = FurnaceRecipes.smelting().getSmeltingResult(getInputItemStack(), heat_level);
-        if (var1 == null)
-            return false;
-        ItemStack output_item_stack = getOutputItemStack();
-        return (output_item_stack == null) ? true : (!output_item_stack.isItemStackEqual(var1, true, false, false, true) ? false : ((output_item_stack.stackSize < getInventoryStackLimit() && output_item_stack.stackSize < output_item_stack.getMaxStackSize()) ? true : ((output_item_stack.stackSize < var1.getMaxStackSize()))));
+    @Inject(method = "canSmelt", at = @At("HEAD"), cancellable = true)
+    private void canSmelt(int heat_level, CallbackInfoReturnable<Boolean> cir) {
+        if (this.furnaceItemStacks[0] == null) {
+            cir.setReturnValue(false);
+            return;
+        }
+        if (this.getInputItemStack().getItem() instanceof ItemFood && this.isBlastFurnace()) {
+            cir.setReturnValue(false);
+            return;
+        }
+        if (this.getInputItemStack().getItem() instanceof ItemArmor && !this.isBlastFurnace()) {
+            cir.setReturnValue(false);
+            return;
+        }
+        if (this.getInputItemStack().getItem() instanceof ItemTool && !this.isBlastFurnace()) {
+            cir.setReturnValue(false);
+            return;
+        }
+        if (!(this.getInputItemStack().getItem() instanceof ItemFood) && this.isSmoker()) {
+            cir.setReturnValue(false);
+            return;
+        }
+        if (heat_level > getHeatLevelRequired((this.getInputItemStack().getItem()).itemID) + 1) {
+            cir.setReturnValue(false);
+        }
     }
 
+    @Override
     public boolean isBlastFurnace() {
-        return getFurnaceBlock() instanceof net.oilcake.mitelros.block.BlockBlastFurnace;
+        return getFurnaceBlock() instanceof BlockBlastFurnace;
     }
 
+    @Override
     public boolean isSmoker() {
-        return getFurnaceBlock() instanceof net.oilcake.mitelros.block.BlockSmoker;
+        return getFurnaceBlock() instanceof BlockSmoker;
     }
 
     public boolean canBurnbyItself() {
@@ -100,7 +107,7 @@ public class TileEntityFurnaceMixin extends TileEntity implements ISidedInventor
     }
 
     @Overwrite
-    public void updateEntity() {
+    public void updateEntity() {// TODO hard to rewrite
         if (!this.worldObj.isRemote && !isBurning() && this.activated && this.furnaceItemStacks[1] == null)
             this.activated = false;
         if (this.worldObj.isRemote || this.furnaceBurnTime == 1 || (!isFlooded() && !isSmotheredBySolidBlock())) {
@@ -115,7 +122,7 @@ public class TileEntityFurnaceMixin extends TileEntity implements ISidedInventor
                 this.heat_level = 0;
             }
             if (!this.worldObj.isRemote) {
-                if (this.furnaceBurnTime == 0 && canSmelt(getFuelHeatLevel()) && (canNormallyWork() || canBurnbyItself())) {
+                if (this.furnaceBurnTime == 0 && canSmelt(this.getFuelHeatLevel()) && (canNormallyWork() || canBurnbyItself())) {
                     this.currentItemBurnTime = this.furnaceBurnTime = getItemBurnTime(this.furnaceItemStacks[1]);
                     if (this.furnaceBurnTime > 0) {
                         this.heat_level = getItemHeatLevel(this.furnaceItemStacks[1]);
@@ -178,11 +185,6 @@ public class TileEntityFurnaceMixin extends TileEntity implements ISidedInventor
     }
 
     @Shadow
-    public boolean acceptsLargeItems() {
-        return false;
-    }
-
-    @Shadow
     public boolean isBurning() {
         return false;
     }
@@ -211,7 +213,7 @@ public class TileEntityFurnaceMixin extends TileEntity implements ISidedInventor
      * @author
      * @reason
      */
-    @Overwrite
+    @Overwrite// TODO hard to rewrite
     public void smeltItem(int heat_level) {
         if (canSmelt(heat_level)) {
             byte consumption;
@@ -219,8 +221,7 @@ public class TileEntityFurnaceMixin extends TileEntity implements ISidedInventor
             if (this.furnaceItemStacks[2] == null) {
                 this.furnaceItemStacks[2] = var1.copy();
             } else if ((this.furnaceItemStacks[2]).itemID == var1.itemID) {
-                ItemStack itemStack = this.furnaceItemStacks[2];
-                itemStack.stackSize += var1.stackSize;
+                this.furnaceItemStacks[2].stackSize += var1.stackSize;
             }
             if ((getInputItemStack()).itemID == Block.sand.blockID && var1.itemID == Block.sandStone.blockID) {
                 consumption = 4;
@@ -231,28 +232,25 @@ public class TileEntityFurnaceMixin extends TileEntity implements ISidedInventor
             } else {
                 consumption = 1;
             }
-            ItemStack var10000 = getInputItemStack();
-            var10000.stackSize -= consumption;
+            getInputItemStack().stackSize -= consumption;
             if (getInputItemStack().getItem() == Item.clay && var1.getItem() == Item.brick) {
                 int extra_converted = Math.min(getOutputItemStack().getMaxStackSize() - (getOutputItemStack()).stackSize, (getInputItemStack()).stackSize);
                 if (extra_converted > 3)
                     extra_converted = 3;
-                var10000 = getOutputItemStack();
-                var10000.stackSize += extra_converted;
-                var10000 = getInputItemStack();
-                var10000.stackSize -= extra_converted;
+                getOutputItemStack().stackSize += extra_converted;
+                getInputItemStack().stackSize -= extra_converted;
             }
             if ((this.furnaceItemStacks[0]).stackSize <= 0)
                 this.furnaceItemStacks[0] = null;
         }
     }
 
-    @Inject(method = {"readFromNBT"}, at = {@At("RETURN")})
+    @Inject(method = "readFromNBT", at = @At("RETURN"))
     public void injectReadNBT(NBTTagCompound par1NBTTagCompound, CallbackInfo callbackInfo) {
         this.activated = par1NBTTagCompound.getBoolean("activated");
     }
 
-    @Inject(method = {"writeToNBT"}, at = {@At("RETURN")})
+    @Inject(method = "writeToNBT", at = @At("RETURN"))
     public void injectWriteNBT(NBTTagCompound par1NBTTagCompound, CallbackInfo callbackInfo) {
         par1NBTTagCompound.setBoolean("activated", this.activated);
     }
@@ -270,11 +268,6 @@ public class TileEntityFurnaceMixin extends TileEntity implements ISidedInventor
     @Shadow
     public ItemStack getInputItemStack() {
         return this.furnaceItemStacks[0];
-    }
-
-    @Shadow
-    public ItemStack getFuelItemStack() {
-        return this.furnaceItemStacks[1];
     }
 
     @Shadow

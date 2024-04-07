@@ -38,7 +38,7 @@ public class ItemNuggetMixin extends ItemIngot {
 
     @Inject(method = "getForMaterial", at = @At("HEAD"), cancellable = true)
     private void inject(Material material, CallbackInfoReturnable<ItemNugget> cir) {
-        if (material == Materials.wolf_fur) cir.setReturnValue((ItemNugget) Items.Wolf_fur);
+        if (material == Materials.wolf_fur) cir.setReturnValue((ItemNugget) Items.wolf_fur);
         else if (material == Materials.nickel) cir.setReturnValue(Items.nickelNugget);
         else if (material == Materials.uru) cir.setReturnValue(Items.UruNugget);
         else if (material == Materials.tungsten) cir.setReturnValue(Items.tungstenNugget);

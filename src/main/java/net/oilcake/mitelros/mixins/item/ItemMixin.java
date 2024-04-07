@@ -48,9 +48,9 @@ public abstract class ItemMixin implements ITFItem {
         int water = this.getWater();
         if (this.water == 0) return;
         if (this.water < 0) {
-            info.add(EnumChatFormatting.YELLOW + Translator.getFormatted("item.tooltip.water.minus", new Object[]{Integer.valueOf(water)}));
+            info.add(EnumChatFormatting.YELLOW + Translator.getFormatted("item.tooltip.water.minus", new Object[]{water}));
         } else {
-            info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.add", new Object[]{Integer.valueOf(water)}));
+            info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.add", new Object[]{water}));
         }
     }
 
@@ -70,7 +70,7 @@ public abstract class ItemMixin implements ITFItem {
         } else {
             Material material_for_repairs = this.getMaterialForRepairs();
             if (material_for_repairs == Materials.wolf_fur)
-                return Items.Wolf_fur;
+                return Items.wolf_fur;
             if (material_for_repairs == Materials.nickel)
                 return Items.nickelNugget;
             if (material_for_repairs == Materials.tungsten)

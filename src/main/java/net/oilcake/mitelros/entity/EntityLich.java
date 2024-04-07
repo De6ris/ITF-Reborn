@@ -27,7 +27,7 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
   public void addRandomWeapon() {
     List<RandomItemListEntry> items = new ArrayList();
     items.add(new RandomItemListEntry(Item.swordGold, 2));
-    this.stowed_item_stack = (new ItemStack((Item)Items.ShockWand)).randomizeForMob((EntityLiving)this, true);
+    this.stowed_item_stack = (new ItemStack((Item)Items.shockWand)).randomizeForMob((EntityLiving)this, true);
     RandomItemListEntry entry = (RandomItemListEntry)WeightedRandom.getRandomItem(this.rand, items);
     setHeldItemStack((new ItemStack(entry.item)).randomizeForMob((EntityLiving)this, true));
   }
@@ -114,7 +114,7 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
         EntityLivingBase entityLivingBase = getTarget();
         if (entityLivingBase != null && canSeeTarget(true)) {
           double distance = getDistanceToEntity((Entity)entityLivingBase);
-          if ((getHeldItemStack()).itemID == Items.ShockWand.itemID) {
+          if ((getHeldItemStack()).itemID == Items.shockWand.itemID) {
             if (distance < 3.0D && 
               getHealth() >= 20.0F) {
               swapHeldItemStackWithStowed();
@@ -261,7 +261,7 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
     for (int i = 0; i < num_drops; i++)
       dropItem(Items.AncientmetalArmorPiece.itemID, 1); 
     if (recently_hit_by_player && !this.has_taken_massive_fall_damage && this.rand.nextInt(getBaseChanceOfRareDrop()) < 5 + looting * 2)
-      dropItem(Items.Goldenapplelegend); 
+      dropItem(Items.goldenAppleLegend);
     if (recently_hit_by_player && !this.has_taken_massive_fall_damage && this.rand.nextInt(getBaseChanceOfRareDrop()) < 5 + looting * 2)
       dropItemStack(new ItemStack(Item.skull.itemID, 1, 0), 0.0F); 
   }

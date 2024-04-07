@@ -8,17 +8,21 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin({BlockOre.class})
+@Mixin(BlockOre.class)
 public class BlockOreMixin extends Block {
     protected BlockOreMixin(int par1, Material par2Material, BlockConstants constants) {
         super(par1, par2Material, constants);
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
-    public int dropBlockAsEntityItem(BlockBreakInfo info) {
+    public int dropBlockAsEntityItem(BlockBreakInfo info) {// TODO kill it
         int metadata_dropped = -1;
         int quantity_dropped = 1;
-        int id_dropped = 0;
+        int id_dropped;
         if (info.wasExploded()) {
             if (this == Block.oreEmerald) {
                 id_dropped = -1;
@@ -81,7 +85,8 @@ public class BlockOreMixin extends Block {
                 info.getResponsiblePlayer().triggerAchievement((StatBase) AchievementList.diamonds);
                 quantity_dropped = 3 + info.world.rand.nextInt(5);
             } else if (this == Block.oreLapis) {
-                id_dropped = HasAbsorb ? 0 : Items.lapis.itemID;
+                id_dropped = HasAbsorb ? 0 : Item.dyePowder.itemID;
+                metadata_dropped = 4;
                 quantity_dropped = 2 + info.world.rand.nextInt(2);
             } else if (this == Block.oreCoal) {
                 id_dropped = Item.coal.itemID;

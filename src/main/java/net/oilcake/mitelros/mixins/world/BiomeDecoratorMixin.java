@@ -3,29 +3,33 @@ package net.oilcake.mitelros.mixins.world;
 import java.util.Random;
 
 import net.minecraft.BiomeDecorator;
-import net.minecraft.Minecraft;
 import net.minecraft.World;
 import net.minecraft.WorldGenMinable;
 import net.oilcake.mitelros.api.ITFBiomeDecorator;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.world.WorldGenFlowersExtend;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin({BiomeDecorator.class})
-public class BiomeDecoratorMixin implements ITFBiomeDecorator {
+@Mixin(BiomeDecorator.class)
+public abstract class BiomeDecoratorMixin implements ITFBiomeDecorator {
+    @Unique
     private WorldGenMinable nickelGen;
 
+    @Unique
     private WorldGenMinable tungstenGen;
 
+    @Unique
     private WorldGenMinable azuriteGen;
 
+    @Unique
     protected WorldGenFlowersExtend flowerExtendGen;
 
+    @Unique
     protected int flowersExtendPerChunk;
 
     @Shadow
@@ -50,48 +54,9 @@ public class BiomeDecoratorMixin implements ITFBiomeDecorator {
     protected int chunk_Z;
 
     @Shadow
-    protected WorldGenMinable adamantiteGen;
-
-    @Shadow
-    protected WorldGenMinable coalGen;
-
-    @Shadow
-    protected WorldGenMinable copperGen;
-
-    @Shadow
     protected World currentWorld;
 
-    @Shadow
-    protected WorldGenMinable diamondGen;
-
-    @Shadow
-    protected WorldGenMinable dirtGen;
-
-    @Shadow
-    protected WorldGenMinable goldGen;
-
-    @Shadow
-    protected WorldGenMinable gravelGen;
-
-    @Shadow
-    protected WorldGenMinable ironGen;
-
-    @Shadow
-    protected WorldGenMinable lapisGen;
-
-    @Shadow
-    protected WorldGenMinable mithrilGen;
-
-    @Shadow
-    protected WorldGenMinable redstoneGen;
-
-    @Shadow
-    protected WorldGenMinable silverGen;
-
-    @Shadow
-    protected WorldGenMinable silverfishGen;
-
-    @Inject(method = {"<init>(Lnet/minecraft/BiomeGenBase;)V"}, at = {@At("RETURN")})
+    @Inject(method = "<init>(Lnet/minecraft/BiomeGenBase;)V", at = @At("RETURN"))
     public void BiomeDecorator(CallbackInfo callbackInfo) {
         this.nickelGen = new WorldGenMinable(Blocks.oreNickel.blockID, 6);
         this.tungstenGen = new WorldGenMinable(Blocks.oreTungsten.blockID, 3);
@@ -100,61 +65,19 @@ public class BiomeDecoratorMixin implements ITFBiomeDecorator {
         this.flowersExtendPerChunk = 2;
     }
 
-    protected void generateOres() {
+    @Inject(method = "generateOres", at = @At("HEAD"))
+    private void itfOre(CallbackInfo ci) {
         if (this.currentWorld.isOverworld()) {
-            genMinable(200, this.dirtGen);
-            genMinable(200, this.gravelGen);
-            genMinable(50, this.coalGen);
-            genMinable(40, this.copperGen, true);
-            this.genMinable(10, this.azuriteGen, true);
-            genMinable(10, this.silverGen, true);
-            genMinable(20, this.goldGen, true);
-            genMinable(60, this.ironGen, true);
-            genMinable(10, this.mithrilGen, true);
-            genMinable(5, this.silverfishGen, true);
-            genMinable(10, this.redstoneGen);
-            genMinable(5, this.diamondGen);
-            genMinable(5, this.lapisGen);
+            genMinable(10, this.azuriteGen, true);
             genMinable(2, this.tungstenGen);
             genMinable(30, this.nickelGen, true);
         } else if (this.currentWorld.isUnderworld()) {
-            genMinable(300, this.gravelGen);
-            genMinable(40, this.copperGen, true);
-            genMinable(10, this.silverGen, true);
-            genMinable(20, this.goldGen, true);
-            genMinable(60, this.ironGen, true);
-            genMinable(10, this.mithrilGen, true);
-            genMinable(5, this.adamantiteGen, true);
-            genMinable(10, this.redstoneGen);
-            genMinable(5, this.diamondGen);
-            genMinable(5, this.lapisGen);
             genMinable(10, this.tungstenGen, true);
             genMinable(30, this.nickelGen, true);
-            if (this.currentWorld.underworld_y_offset != 0)
-                genMinable(50, this.silverfishGen);
-        } else if (!this.currentWorld.isTheEnd()) {
-            Minecraft.setErrorMessage("generateOres: don't know how to handle world " + this.currentWorld);
         }
     }
 
-    @Overwrite
-    protected void genMinable(int frequency, WorldGenMinable world_gen_minable, boolean vein_size_increases_with_depth) {
-        int resource_multiplier = 1;
-        frequency *= resource_multiplier;
-        if (this.currentWorld.underworld_y_offset != 0 && world_gen_minable != this.gravelGen)
-            frequency *= 8;
-        while (frequency-- > 0) {
-            if (this.randomGenerator.nextInt(10) == 0) {
-                int x = this.chunk_X + this.randomGenerator.nextInt(16);
-                int y = world_gen_minable.getRandomVeinHeight(this.currentWorld, this.randomGenerator);
-                int z = this.chunk_Z + this.randomGenerator.nextInt(16);
-                if (y >= 0)
-                    world_gen_minable.generate(this.currentWorld, this.randomGenerator, x, y, z, vein_size_increases_with_depth);
-            }
-        }
-    }
-
-    @Inject(method = {"decorate(Lnet/minecraft/World;Ljava/util/Random;II)V"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/BiomeDecorator;decorate()V", shift = At.Shift.AFTER)})
+    @Inject(method = "decorate(Lnet/minecraft/World;Ljava/util/Random;II)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/BiomeDecorator;decorate()V", shift = At.Shift.AFTER))
     private void Injector_world_decorate(CallbackInfo c) {
         Random random_test = new Random();
         for (int var2 = 0; var2 < this.flowersExtendPerChunk; var2++) {
@@ -170,6 +93,9 @@ public class BiomeDecoratorMixin implements ITFBiomeDecorator {
     protected void genMinable(int frequency, WorldGenMinable world_gen_minable) {
     }
 
+    @Shadow protected abstract void genMinable(int frequency, WorldGenMinable world_gen_minable, boolean vein_size_increases_with_depth);
+
+    @Override
     public void setWaterlilyPerChunk(int waterlilyPerChunk) {
         this.waterlilyPerChunk = waterlilyPerChunk;
     }

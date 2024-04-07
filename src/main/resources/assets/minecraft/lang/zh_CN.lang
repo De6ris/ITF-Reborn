@@ -49,11 +49,13 @@ potion.extend.freeze=霜冻
 potion.extend.dehydration=腹泻
 potion.extend.thirsty=干渴
 potion.extend.stunning=晕眩
+potion.extend.stretch=伸展
 
 generator.default_1_1=旧巨型生物群系
 
 item.tooltip.water.add=水分+%d
 item.tooltip.water.minus=水分%d
+item.tooltip.reach.add=触及距离+%d
 
 item.armor/nickel_helmet.name=镍头盔
 item.armor/nickel_chestplate.name=镍胸甲
@@ -340,6 +342,7 @@ item.tools/detector_emerald.name=雷达
 
 item.experimental_potion.name=实验的药水
 item.suspicious_potion.name=自然水瓶
+item.stretch_potion.name=伸展药水
 
 item.wolf_fur.name=狼的毛皮
 item.ancient_metal_armor_piece.name=镶金远古金属铠甲残片

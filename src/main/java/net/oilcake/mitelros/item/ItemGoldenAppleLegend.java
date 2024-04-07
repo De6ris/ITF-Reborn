@@ -31,7 +31,7 @@ public class ItemGoldenAppleLegend extends ItemFood {
     }
 
     public static boolean isGoldenApple(ItemStack item_stack) {
-        return (item_stack != null && item_stack.itemID == Items.Goldenapplelegend.itemID);
+        return (item_stack != null && item_stack.itemID == Items.goldenAppleLegend.itemID);
     }
 
     public static boolean isUnenchantedGoldenApple(ItemStack item_stack) {

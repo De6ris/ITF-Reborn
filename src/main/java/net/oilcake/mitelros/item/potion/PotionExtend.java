@@ -14,6 +14,7 @@ public class PotionExtend extends Potion {
     public static final Potion freeze = (new PotionExtend(getNextPotionID(), true, 65535)).setIconIndex(4, 2).setPotionName("potion.extend.freeze").func_111184_a(SharedMonsterAttributes.movementSpeed, "7107DE5E-7CE8-4030-940E-514C1F160890", -0.4, 2);
 
     public static final Potion stunning = new PotionExtend(getNextPotionID(), true, 9145210).setIconIndex(5, 2).setPotionName("potion.extend.stunning").func_111184_a(SharedMonsterAttributes.movementSpeed, "7107DE5E-7CE8-4030-940E-514C1F160890", -1, 2);
+    public static final Potion stretch = new PotionExtend(getNextPotionID(), true, 114514).setIconIndex(6, 2).setPotionName("potion.extend.stretch");
 
     public PotionExtend(int par1, boolean par2, int par3) {
         super(par1, par2, par3);

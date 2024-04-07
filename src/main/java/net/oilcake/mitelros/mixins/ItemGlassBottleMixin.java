@@ -12,6 +12,6 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public class ItemGlassBottleMixin extends Item {
     @ModifyArg(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;convertOneOfHeldItem(Lnet/minecraft/ItemStack;)V"), index = 0)
     private ItemStack inject(ItemStack created_item_stack) {
-        return new ItemStack(Items.SuspiciousPotion, 1, 0);
+        return new ItemStack(Items.suspiciousPotion, 1, 0);
     }
 }

@@ -101,6 +101,11 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         }
     }
 
+    @ModifyReturnValue(method = "getReach(Lnet/minecraft/Block;I)F", at = @At("RETURN"))
+    private float addReach(float original) {
+        return original + (this.isPotionActive(PotionExtend.stretch) ? 3.0f : 0.0f);// TODO
+    }
+
     public int getCurrent_insulin_resistance_lvl() {
         if (this.insulin_resistance_level == null)
             return 0;

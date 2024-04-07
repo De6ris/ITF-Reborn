@@ -2,6 +2,9 @@ package net.oilcake.mitelros.item;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.block.Blocks;
+import net.oilcake.mitelros.item.potion.ItemPotionExperimental;
+import net.oilcake.mitelros.item.potion.ItemPotionStretch;
+import net.oilcake.mitelros.item.potion.ItemPotionSuspicious;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.reload.event.ItemRegistryEvent;
 import net.xiaoyu233.fml.reload.event.RecipeRegistryEvent;
@@ -205,23 +208,23 @@ public class Items extends Item {
 
     public static final ItemBucket adamantiumBucketWaterDangerous = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.adamantium, Materials.dangerous_water)).setContainerItem(bucketAdamantiumEmpty);
 
-    public static final Item Wolf_fur = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.wolf_fur).setCraftingDifficultyAsComponent(100.0F).setUnlocalizedName("small_leather").setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
+    public static final Item wolf_fur = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.wolf_fur).setCraftingDifficultyAsComponent(100.0F).setUnlocalizedName("small_leather").setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
 
     public static final Item horse_meat = new ItemMeat(IdUtil.getNextItemID(), 6, 6, true, false, "horse_meat");
 
     public static final Item horse_meat_cooked = new ItemMeat(IdUtil.getNextItemID(), 12, 12, true, true, "horse_meat_cooked");
 
-    public static final ItemArmor WolfHelmet = new ItemHelmet(IdUtil.getNextItemID(), Materials.wolf_fur, false);
+    public static final ItemArmor wolfHelmet = new ItemHelmet(IdUtil.getNextItemID(), Materials.wolf_fur, false);
 
-    public static final ItemArmor WolfChestplate = new ItemCuirass(IdUtil.getNextItemID(), Materials.wolf_fur, false);
+    public static final ItemArmor wolfChestplate = new ItemCuirass(IdUtil.getNextItemID(), Materials.wolf_fur, false);
 
-    public static final ItemArmor WolfLeggings = new ItemLeggings(IdUtil.getNextItemID(), Materials.wolf_fur, false);
+    public static final ItemArmor wolfLeggings = new ItemLeggings(IdUtil.getNextItemID(), Materials.wolf_fur, false);
 
-    public static final ItemArmor WolfBoots = new ItemBoots(IdUtil.getNextItemID(), Materials.wolf_fur, false);
+    public static final ItemArmor wolfBoots = new ItemBoots(IdUtil.getNextItemID(), Materials.wolf_fur, false);
 
-    public static final ItemAppleGold Goldenapple = (ItemAppleGold) (new ItemAppleGold(66, 2, 1, "VANILLA")).setAlwaysEdible().setPotionEffect(Potion.regeneration.id, 30, 0, 1.0F).setUnlocalizedName("appleGold").useVanillaTexture("apple_golden");
+    public static final ItemAppleGold goldenApple = (ItemAppleGold) (new ItemAppleGold(66, 2, 1, "VANILLA")).setAlwaysEdible().setPotionEffect(Potion.regeneration.id, 30, 0, 1.0F).setUnlocalizedName("appleGold").useVanillaTexture("apple_golden");
 
-    public static final Item Goldenapplelegend = (new ItemGoldenAppleLegend(IdUtil.getNextItemID(), 2, 1, "goldapple")).setAlwaysEdible().setPotionEffect(Potion.regeneration.id, 30, 4, 1.0F).setUnlocalizedName("wtfk").useVanillaTexture("apple_golden_legend");
+    public static final Item goldenAppleLegend = (new ItemGoldenAppleLegend(IdUtil.getNextItemID(), 2, 1, "goldapple")).setAlwaysEdible().setPotionEffect(Potion.regeneration.id, 30, 4, 1.0F).setUnlocalizedName("wtfk").useVanillaTexture("apple_golden_legend");
 
     public static final ItemBowl bowlLemonade = (ItemBowl) (new ItemBowl(IdUtil.getNextItemID(), Materials.lemonade, "lemonade")).setFoodValue(4, 1, false, true, true).setPlantProduct().setUnlocalizedName("lemonade");
 
@@ -251,13 +254,13 @@ public class Items extends Item {
 
     public static final ItemArrow arrowMagical = new ItemArrow(IdUtil.getNextItemID(), Materials.magical);
 
-    public static final ItemWand LavaWand = new ItemWand(IdUtil.getNextItemID(), Materials.tungsten, "wandlava");
+    public static final ItemWand lavaWand = new ItemWand(IdUtil.getNextItemID(), Materials.tungsten, "wandlava");
 
-    public static final ItemWand FreezeWand = new ItemWand(IdUtil.getNextItemID(), Materials.nickel, "wandfreeze");
+    public static final ItemWand freezeWand = new ItemWand(IdUtil.getNextItemID(), Materials.nickel, "wandfreeze");
 
-    public static final ItemWand ShockWand = new ItemWand(IdUtil.getNextItemID(), Material.ancient_metal, "wandshock");
+    public static final ItemWand shockWand = new ItemWand(IdUtil.getNextItemID(), Material.ancient_metal, "wandshock");
 
-    public static final Item ExperimentalPotion = (new ItemPotionExperimental(IdUtil.getNextItemID())).setUnlocalizedName("experimentalPotion").setCreativeTab(CreativeTabs.tabMisc);
+    public static final Item experimentalPotion = (new ItemPotionExperimental(IdUtil.getNextItemID())).setUnlocalizedName("experimentalPotion").setCreativeTab(CreativeTabs.tabMisc);
 
     public static final ItemShardAT shardDiamond = (ItemShardAT) (new ItemShardAT(862, Material.diamond)).setUnlocalizedName("shardDiamond").setXPReward(4);
 
@@ -278,8 +281,6 @@ public class Items extends Item {
     public static final ItemArmor VibraniumBoots = new ItemBoots(IdUtil.getNextItemID(), Materials.vibranium, false);
 
     public static final ItemSword VibraniumSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.vibranium);
-
-    public static final ItemRockExtend lapis = (ItemRockExtend) (new ItemRockExtend(IdUtil.getNextItemID(), Material.lapis_lazuli, "lapis_lazuli")).setXPReward(5);
 
     public static final ItemArmor helmetCustom_a = new ItemHelmet(IdUtil.getNextItemID(), Materials.custom_a, false);
 
@@ -407,13 +408,13 @@ public class Items extends Item {
 
     public static final ItemCarrotOnAStick carrotOnAStickTungsten = (ItemCarrotOnAStick) (new ItemCarrotOnAStick(IdUtil.getNextItemID(), Materials.tungsten)).setUnlocalizedName("carrotOnAStick");
 
-    public static final ItemPotionSuspicious SuspiciousPotion = (ItemPotionSuspicious) (new ItemPotionSuspicious(IdUtil.getNextItemID())).setUnlocalizedName("suspiciousPotion").setCreativeTab(CreativeTabs.tabMisc);
+    public static final ItemPotionSuspicious suspiciousPotion = (ItemPotionSuspicious) (new ItemPotionSuspicious(IdUtil.getNextItemID())).setUnlocalizedName("suspiciousPotion").setCreativeTab(CreativeTabs.tabMisc);
 
-    public static final Item totemofdestroy = (new ItemTotem(IdUtil.getNextItemID(), Materials.tungsten, "totem")).setMaxStackSize(1);
+    public static final Item totemOfDestroy = (new ItemTotem(IdUtil.getNextItemID(), Materials.tungsten, "totem")).setMaxStackSize(1);
 
-    public static final Item totemofpreserve = (new ItemTotem(IdUtil.getNextItemID(), Material.iron, "totem")).setMaxStackSize(1);
+    public static final Item totemOfPreserve = (new ItemTotem(IdUtil.getNextItemID(), Material.iron, "totem")).setMaxStackSize(1);
 
-    public static final Item totemofknowledge = (new ItemTotem(IdUtil.getNextItemID(), Material.ancient_metal, "totem")).setMaxStackSize(1);
+    public static final Item totemOfKnowledge = (new ItemTotem(IdUtil.getNextItemID(), Material.ancient_metal, "totem")).setMaxStackSize(1);
 
     public static final ItemIgnition ignitionCopper = new ItemIgnition(IdUtil.getNextItemID(), Material.copper);
 
@@ -454,6 +455,7 @@ public class Items extends Item {
     public static final Item sulphur = new ItemStandard(IdUtil.getNextItemID(), Materials.sulphur, "sulphur_sphere").setMaxStackSize(16);
 
     public static final ItemBow bowUru = new ItemBow(IdUtil.getNextItemID(), Materials.uru);
+    public static final ItemPotionStretch stretchPotion = (ItemPotionStretch) (new ItemPotionStretch(IdUtil.getNextItemID())).setCreativeTab(CreativeTabs.tabMisc);
 
     public static void registerItems(ItemRegistryEvent event) {
         event.register("armor/nickel_helmet", nickelHelmet);
@@ -557,15 +559,15 @@ public class Items extends Item {
         event.register("buckets/tungsten/water_swampland", tungstenBucketWaterDangerous);
         event.register("buckets/adamantium/water_swampland", adamantiumBucketWaterDangerous);
         event.register("buckets/ancient_metal/water_swampland", ancientmetalBucketWaterDangerous);
-        event.register("wolf_fur", Wolf_fur);
+        event.register("wolf_fur", wolf_fur);
         event.register("food/horse_meat", horse_meat);
         event.register("food/horse_meat_cooked", horse_meat_cooked);
-        event.register("armor/wolf_helmet", WolfHelmet);
-        event.register("armor/wolf_jacket", WolfChestplate);
-        event.register("armor/wolf_leggings", WolfLeggings);
-        event.register("armor/wolf_boots", WolfBoots);
-        event.register("apple_golden", Goldenapple);
-        event.register("apple_golden", Goldenapplelegend);
+        event.register("armor/wolf_helmet", wolfHelmet);
+        event.register("armor/wolf_jacket", wolfChestplate);
+        event.register("armor/wolf_leggings", wolfLeggings);
+        event.register("armor/wolf_boots", wolfBoots);
+        event.register("apple_golden", goldenApple);
+        event.register("apple_golden", goldenAppleLegend);
         event.register("bowl", bowlEmpty);
         event.register("tools/copper_club", morningStarCopper);
         event.register("tools/silver_club", morningStarSilver);
@@ -579,18 +581,17 @@ public class Items extends Item {
         event.register("frag/stalker_creeper", fragStalkerCreeper);
         event.register("food/glow_berries", glowberries);
         event.register("arrows/magical_arrow", arrowMagical);
-        event.register("wand/lava", LavaWand);
-        event.register("wand/ice", FreezeWand);
-        event.register("wand/thunder", ShockWand);
-        event.register("suspicious_potion", SuspiciousPotion);
-        event.register("experimental_potion", ExperimentalPotion);
+        event.register("wand/lava", lavaWand);
+        event.register("wand/ice", freezeWand);
+        event.register("wand/thunder", shockWand);
+        event.register("potion/suspicious_potion", suspiciousPotion);
+        event.register("potion/experimental_potion", experimentalPotion);
         event.register("shards/diamond", shardDiamond);
         event.register("shards/emerald", shardEmerald);
         event.register("shards/quartz", shardNetherQuartz);
         event.register("azurite", shardAzurite);
         event.register("records/record_damnation", recordDamnation);
         event.register("records/record_connected", recordConnected);
-        event.register("lapis_lazuli", lapis);
         event.register("tools/vibranium_sword", VibraniumSword);
         event.register("armor/vibranium_helmet", VibraniumHelmet);
         event.register("armor/vibranium_chestplate", VibraniumChestplate);
@@ -655,9 +656,9 @@ public class Items extends Item {
         event.register("hardened_clay_bowls/sorbet", claybowlSorbet);
         event.register("hardened_clay_bowls/vegetable_soup", claybowlVegetableSoup);
         event.register("totem/totem_of_fecund", totemoffecund);
-        event.register("totem/totem_of_destroy", totemofdestroy);
-        event.register("totem/totem_of_knowledge", totemofknowledge);
-        event.register("totem/totem_of_preserve", totemofpreserve);
+        event.register("totem/totem_of_destroy", totemOfDestroy);
+        event.register("totem/totem_of_knowledge", totemOfKnowledge);
+        event.register("totem/totem_of_preserve", totemOfPreserve);
         event.register("totem/totem_of_hunting", totemofhunting);
         event.register("ignition/wood", ignitionWood);
         event.register("ignition/copper", ignitionCopper);
@@ -674,6 +675,7 @@ public class Items extends Item {
         event.register("tools/detector_emerald", detectorEmerald);
         event.register("sulphur_sphere", sulphur);
         event.register("bows/uru/", bowUru).setUnlocalizedName("uru_bow");
+        event.register("potion/stretch_potion", stretchPotion).setUnlocalizedName("stretch_potion");
         Constant.initItemArray();
     }
 
@@ -812,7 +814,7 @@ public class Items extends Item {
         register.registerShapelessRecipe(new ItemStack(nickelNugget, 9), true, nickelIngot);
         register.registerShapelessRecipe(new ItemStack(tungstenIngot, 9), true, Blocks.blockTungsten);
         register.registerShapelessRecipe(new ItemStack(tungstenNugget, 9), true, tungstenIngot);
-        registerArmorRecipe(register, Wolf_fur, Materials.wolf_fur);
+        registerArmorRecipe(register, wolf_fur, Materials.wolf_fur);
         registerITFToolRecipe(register);
         registerFullMetalToolRecipe(register, Materials.nickel);
         registerFullMetalToolRecipe(register, Materials.tungsten);
@@ -866,8 +868,7 @@ public class Items extends Item {
         register.registerShapelessRecipe(new ItemStack(nickelIngot, 1), true, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget);
         register.registerShapelessRecipe(new ItemStack(tungstenIngot, 1), true, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget);
         register.registerShapelessRecipe(new ItemStack(UruIngot, 1), true, UruNugget, UruNugget, UruNugget, UruNugget, UruNugget, UruNugget, UruNugget, UruNugget, UruNugget);
-        register.registerShapelessRecipe(new ItemStack(Item.leather, 1), true, Wolf_fur, Wolf_fur, Wolf_fur, Wolf_fur);
-        register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 4), false, lapis);
+        register.registerShapelessRecipe(new ItemStack(Item.leather, 1), true, wolf_fur, wolf_fur, wolf_fur, wolf_fur);
         register.registerShapelessRecipe(new ItemStack(seedsBeetroot, 1), false, beetroot, beetroot);
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 1), false, beetroot);
         register.registerShapelessRecipe(new ItemStack(Pulque, 1), true, new Object[]{Item.sugar, Agave, new ItemStack(Item.potion, 1, 0)});//.resetDifficulty(3200);
@@ -877,7 +878,7 @@ public class Items extends Item {
         register.registerShapelessRecipe(new ItemStack(nickelBucket, 1), false, new Object[]{nickelBucketStone});//.resetDifficulty(100);
         int i;
         for (i = 1; i <= 9; i++) {
-            register.registerShapelessRecipe(new ItemStack(Item.glassBottle, i), false, new ItemStack(SuspiciousPotion, i));
+            register.registerShapelessRecipe(new ItemStack(Item.glassBottle, i), false, new ItemStack(suspiciousPotion, i));
         }
         register.registerShapelessRecipe(new ItemStack(bowlBeetrootSoup, 1, 0), false, beetroot, beetroot, beetroot, beetroot, beetroot, beetroot, Item.bowlWater);
         register.registerShapelessRecipe(new ItemStack(bowlPorkchopStew, 1), true, Item.bowlWater, Item.porkCooked, Item.carrot, Item.potato, Block.mushroomBrown);
@@ -909,7 +910,7 @@ public class Items extends Item {
         register.registerShapelessRecipe(new ItemStack(claybowlChestnutSoup, 1), true, claybowlWater, Item.lambchopCooked, Item.onion, Item.potato);
         register.registerShapelessRecipe(new ItemStack(claybowlSalmonSoup, 1), true, Item.fishLargeCooked, beetroot, Block.mushroomBrown, claybowlWater);
         register.registerShapelessRecipe(new ItemStack(claybowlLemonade, 1), true, Item.sugar, lemon, claybowlWater);
-        register.registerShapelessRecipe(new ItemStack(ExperimentalPotion, 1), true, Item.blazePowder, Item.netherStalkSeeds, new ItemStack(Item.potion, 1, 0), new ItemStack(Item.appleGold, 1, 0));
+        register.registerShapelessRecipe(new ItemStack(experimentalPotion, 1), true, Item.blazePowder, Item.netherStalkSeeds, new ItemStack(Item.potion, 1, 0), new ItemStack(Item.appleGold, 1, 0));
         register.registerShapelessRecipe(new ItemStack(Item.cheese, 1), false, new Object[]{new ItemStack(claybowlMilk, 4)});//.resetDifficulty(6400);
         register.registerShapelessRecipe(new ItemStack(Item.cheese, 2), false, new Object[]{new ItemStack(claybowlMilk, 8)});//.resetDifficulty(6400);
         for (i = 1; i <= 9; i++) {
@@ -990,7 +991,7 @@ public class Items extends Item {
         FurnaceRecipes.smelting().addSmelting(AncientmetalArmorPiece.itemID, new ItemStack(ancientMetalNugget));
         FurnaceRecipes.smelting().addSmelting(claybowlWaterSuspicious.itemID, new ItemStack(claybowlWater));
         FurnaceRecipes.smelting().addSmelting(claybowlWaterSwampland.itemID, new ItemStack(claybowlWater));
-        FurnaceRecipes.smelting().addSmelting(SuspiciousPotion.itemID, new ItemStack(potion, 1, 0));
+        FurnaceRecipes.smelting().addSmelting(suspiciousPotion.itemID, new ItemStack(potion, 1, 0));
         FurnaceRecipes.smelting().addSmelting(horse_meat.itemID, new ItemStack(horse_meat_cooked));
         FurnaceRecipes.smelting().addSmelting(claybowlRaw.itemID, new ItemStack(claybowlEmpty));
         Class[] tools = {
@@ -1011,7 +1012,7 @@ public class Items extends Item {
                     }
                 }
             }
-            ItemFood.setCookingResult((ItemFood) horse_meat, (ItemFood) horse_meat_cooked, 6);
         }
+        ItemFood.setCookingResult((ItemFood) horse_meat, (ItemFood) horse_meat_cooked, 6);
     }
 }

@@ -56,7 +56,7 @@ public class ContainerEnchantmentMixin extends Container {
       } 
       if (ItemGoldenAppleLegend.isUnenchantedGoldenApple(var3)) {
         par1EntityPlayer.addExperience(-experience_cost);
-        this.tableInventory.setInventorySlotContents(0, new ItemStack(Items.Goldenapplelegend, 1, 1));
+        this.tableInventory.setInventorySlotContents(0, new ItemStack(Items.goldenAppleLegend, 1, 1));
         par1EntityPlayer.triggerAchievement((StatBase)AchievementExtend.decimator);
         return true;
       } 
@@ -105,6 +105,6 @@ public class ContainerEnchantmentMixin extends Container {
         fraction += (random.nextFloat() - 0.5F) * 0.2F; 
       return Math.max(Math.round(enchantment_levels * fraction), 1);
     } 
-    return (item.itemID == Items.Goldenapplelegend.itemID) ? 25 : 2;
+    return (item.itemID == Items.goldenAppleLegend.itemID) ? 25 : 2;
   }
 }

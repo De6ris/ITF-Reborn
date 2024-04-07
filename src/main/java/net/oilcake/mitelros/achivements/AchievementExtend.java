@@ -6,7 +6,6 @@ import net.minecraft.Block;
 import net.minecraft.Item;
 import net.minecraft.ItemStack;
 import net.oilcake.mitelros.item.Items;
-import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.util.IdUtil;
 
 public class AchievementExtend {
@@ -52,7 +51,7 @@ public class AchievementExtend {
 
     public static void registerAchievements() {
         FragofMine = (new Achievement(getNextAchievementID(), "MinePieces", 2, 3, (Item) Items.pieceCopper, AchievementList.buildPickaxe)).registerAchievement();
-        BravetheCold = (new Achievement(getNextAchievementID(), "WearAllWolfArmor", 11, -3, (Item) Items.WolfHelmet, AchievementList.wearLeather)).registerAchievement();
+        BravetheCold = (new Achievement(getNextAchievementID(), "WearAllWolfArmor", 11, -3, (Item) Items.wolfHelmet, AchievementList.wearLeather)).registerAchievement();
         Arbalistic = (new Achievement(getNextAchievementID(), "BuildTungstenBow", -4, 9, (Item) Items.bowTungsten, AchievementList.mithrilIngot)).registerAchievement();
         getWitherSkull = (new Achievement(getNextAchievementID(), "getWitherSkull", 4, 11, new ItemStack(Block.skull, 1, 1), AchievementList.portalToNether)).registerAchievement();
         getBeacon = (new Achievement(getNextAchievementID(), "getBeacon", 6, 11, (Block) Block.beacon, getWitherSkull)).setSpecial().registerAchievement();
@@ -60,9 +59,9 @@ public class AchievementExtend {
         hypothermia = (new Achievement(getNextAchievementID(), "Hypothermia", -4, 2, Block.ice, AchievementList.openInventory)).registerAchievement();
         feast = (new Achievement(getNextAchievementID(), "Feast", 1, -3, (Item) Item.bowlBeefStew, AchievementList.fineDining)).setSpecial().registerAchievement();
         SoundofUnder = (new Achievement(getNextAchievementID(), "SoundofUnder", 6, 13, Item.recordUnderworld, AchievementList.portal)).setSpecial().registerAchievement();
-        nochoice = (new Achievement(getNextAchievementID(), "NoChoice", 0, 11, Items.ExperimentalPotion, AchievementList.portal)).registerAchievement();
+        nochoice = (new Achievement(getNextAchievementID(), "NoChoice", 0, 11, Items.experimentalPotion, AchievementList.portal)).registerAchievement();
         cheersforMinecraft = (new Achievement(getNextAchievementID(), "CheersforMinecraft", -3, -5, Items.Ale, mashedCactus)).registerAchievement();
-        lichHunter = (new Achievement(getNextAchievementID(), "LichHunter", -2, 11, (Item) Items.ShockWand, AchievementList.mithrilIngot)).registerAchievement();
+        lichHunter = (new Achievement(getNextAchievementID(), "LichHunter", -2, 11, (Item) Items.shockWand, AchievementList.mithrilIngot)).registerAchievement();
         copying = (new Achievement(getNextAchievementID(), "Copying", -4, 11, Items.forgingnote, lichHunter)).registerAchievement();
         decimator = (new Achievement(getNextAchievementID(), "Decimator", -6, 12, Item.appleGold, copying)).registerAchievement();
         neverEnds = (new Achievement(getNextAchievementID(), "NeverEnds", -2, 17, Items.UruIngot, AchievementList.adamantiumIngot)).registerAchievement();

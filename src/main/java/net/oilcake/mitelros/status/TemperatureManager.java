@@ -69,10 +69,10 @@ public class TemperatureManager {
         if (EnchantmentHelper.hasEnchantment(wearingItemStack, Enchantments.enchantmentCallofNether))
             return false;
         if (biome.temperature <= ((((ITFWorld) this.player.worldObj).getWorldSeason() == 3) ? 1.0F : 0.16F) && (this.player.isOutdoors() || (this.player.worldObj.provider.dimensionId == -2 && Config.TagDeadGeothermy.get()))) {
-            return this.player.getHelmet() == null || (this.player.getHelmet()).itemID != Items.WolfHelmet.itemID ||
-                    this.player.getCuirass() == null || (this.player.getCuirass()).itemID != Items.WolfChestplate.itemID ||
-                    this.player.getLeggings() == null || (this.player.getLeggings()).itemID != Items.WolfLeggings.itemID ||
-                    this.player.getBoots() == null || (this.player.getBoots()).itemID != Items.WolfBoots.itemID;
+            return this.player.getHelmet() == null || (this.player.getHelmet()).itemID != Items.wolfHelmet.itemID ||
+                    this.player.getCuirass() == null || (this.player.getCuirass()).itemID != Items.wolfChestplate.itemID ||
+                    this.player.getLeggings() == null || (this.player.getLeggings()).itemID != Items.wolfLeggings.itemID ||
+                    this.player.getBoots() == null || (this.player.getBoots()).itemID != Items.wolfBoots.itemID;
         }
         return false;
     }

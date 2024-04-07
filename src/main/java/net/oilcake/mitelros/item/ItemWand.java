@@ -65,15 +65,15 @@ public class ItemWand extends ItemTool implements IDamageableItem {
       if (fraction_pulled >= 0.25F) {
         if (fraction_pulled > 1.0F)
           fraction_pulled = 1.0F; 
-        if (this.itemID == Items.LavaWand.itemID) {
+        if (this.itemID == Items.lavaWand.itemID) {
           world.playSoundAtEntity((Entity)player, "mob.ghast.fireball", 1.0F, 1.0F);
           world.spawnEntityInWorld((Entity)new EntityWandFireball(world, (EntityLivingBase)player));
         } 
-        if (this.itemID == Items.FreezeWand.itemID) {
+        if (this.itemID == Items.freezeWand.itemID) {
           world.playSoundAtEntity((Entity)player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
           world.spawnEntityInWorld((Entity)new EntityWandIceBall(world, (EntityLivingBase)player));
         } 
-        if (this.itemID == Items.ShockWand.itemID) {
+        if (this.itemID == Items.shockWand.itemID) {
           world.playSoundAtEntity((Entity)player, "ambient.weather.thunder", 1.0F, 1.0F);
           world.spawnEntityInWorld((Entity)new EntityWandShockWave(world, (EntityLivingBase)player));
         } 

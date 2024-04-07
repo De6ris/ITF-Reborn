@@ -34,7 +34,7 @@ public class BlockBlastFurnace extends BlockFurnace {
 
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
         Block furnace_block = Block.getBlock(getIdleBlockID());
-        if (((Boolean) Config.TagBenchingV2.get())) {
+        if (Config.TagBenchingV2.get()) {
             if (!info.wasExploded()) {
                 if (furnace_block == Blocks.blastFurnaceNetherrackIdle) {
                     dropBlockAsEntityItem(info, Block.netherrack.blockID, 0, 8, 1.0F);

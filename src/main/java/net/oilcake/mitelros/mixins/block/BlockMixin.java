@@ -18,6 +18,8 @@ public abstract class BlockMixin {
     @Inject(method = "<clinit>()V", at = @At("TAIL"))
     private static void injectClinit(CallbackInfo callback) {
         Item.itemsList[Blocks.flowerextend.blockID] = (new ItemMultiTextureTile(Blocks.flowerextend, BlockFlowerExtend.types)).setUnlocalizedName("flowers");
+        Block.pumpkinLantern.setLightValue(0.9375f);
+
         mySetLightValue(Blocks.blockAzurite, 0.75f);
         mySetLightValue(Blocks.azuriteCluster, 0.5f);
         mySetLightValue(Blocks.torchWoodIdle, 0.5f);

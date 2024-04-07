@@ -40,8 +40,8 @@ public class Config {
 
 
     /* experimentalConfig */
-    public static final FieldReference<Boolean> TagCreaturesV2 = new FieldReference(true);
-    public static final FieldReference<Boolean> TagSpawningV2 = new FieldReference(true);
+    public static final FieldReference<Boolean> TagCreaturesV2 = new FieldReference(false);
+    public static final FieldReference<Boolean> TagSpawningV2 = new FieldReference(false);
     public static final FieldReference<Boolean> TagBenchingV2 = new FieldReference(false);
     public static final FieldReference<Boolean> FinalChallenge = new FieldReference(false);
     public static final FieldReference<Boolean> Realistic = new FieldReference(false);

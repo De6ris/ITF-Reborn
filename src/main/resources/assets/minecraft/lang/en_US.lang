@@ -49,11 +49,13 @@ potion.extend.freeze=Freeze
 potion.extend.dehydration=Dehydration
 potion.extend.thirsty=Thirsty
 potion.extend.stunning=Stunned
+potion.extend.stretch=Stretch
 
 generator.default_1_1=Large Biomes(Old)
 
 item.tooltip.water.add=Water+%d
 item.tooltip.water.minus=Water%d
+item.tooltip.reach.add=Reach+%d
 
 item.armor/nickel_helmet.name=Nickel Helmet
 item.armor/nickel_chestplate.name=Nickel Chestplate
@@ -338,8 +340,9 @@ item.records/record_connected.name=Music Disc
 item.tools/detector.name=Calibrated Detector
 item.tools/detector_emerald.name=Detector
 
-item.experimental_potion.name=Experimental Potion
-item.suspicious_potion.name=Natural Water Bottle
+item.potion/experimental_potion.name=Experimental Potion
+item.potion/suspicious_potion.name=Natural Water Bottle
+item.potion/stretch_potion.name=Stretch Potion
 
 item.wolf_fur.name=Wolf Fur
 item.ancient_metal_armor_piece.name=Gilding Ancient Metal Armor Piece

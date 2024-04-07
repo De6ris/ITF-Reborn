@@ -55,7 +55,7 @@ public class EntityStray extends EntitySkeleton {
             this.spawnCounter++;
             if (this.spawnCounter > 300 &&
                     getHeldItemStack() != null) {
-                if (getTarget() != null && (getHeldItemStack()).itemID == Items.FreezeWand.itemID)
+                if (getTarget() != null && (getHeldItemStack()).itemID == Items.freezeWand.itemID)
                     getTarget().addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 350, 0));
                 this.spawnCounter = 0;
             }
@@ -65,7 +65,7 @@ public class EntityStray extends EntitySkeleton {
 
     public void addRandomWeapon() {
         if (getSkeletonType() == 2 && this.rand.nextInt(8) == 0) {
-            setHeldItemStack(new ItemStack((Item) Items.FreezeWand));
+            setHeldItemStack(new ItemStack((Item) Items.freezeWand));
             ((ITFSkeleton) this).setWizard(true);
         } else {
             setHeldItemStack((new ItemStack((getSkeletonType() == 2) ? ((this.rand.nextInt(20) == 0) ? Item.battleAxeRustedIron : Item.daggerRustedIron) : (Item) Item.bow)).randomizeForMob((EntityLiving) this, true));

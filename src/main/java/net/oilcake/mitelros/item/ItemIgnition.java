@@ -10,7 +10,7 @@ public class ItemIgnition extends Item implements IDamageableItem {
         setMaxDamage((int) (2.0F * material.durability + what));
         setMaxStackSize(1);
         setCreativeTab(CreativeTabs.tabTools);
-        addMaterial(new Material[]{Material.flint});
+        addMaterial(Material.flint);
     }
 
     public int getNumComponentsForDurability() {
