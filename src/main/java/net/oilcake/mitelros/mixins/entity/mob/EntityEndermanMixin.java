@@ -15,8 +15,11 @@ public abstract class EntityEndermanMixin extends EntityMob {
 
     @Inject(method = "dropFewItems", at = @At("HEAD"))
     private void inject(boolean recently_hit_by_player, DamageSource damage_source, CallbackInfo ci) {
-        if (recently_hit_by_player && this.rand.nextInt(2) > 0) {
-            this.dropItem(Items.stretchPotion, 1);// TODO Temporary
+        if (recently_hit_by_player && this.rand.nextInt(damage_source.getLootingModifier() + 4) > 2) {
+            int num_drops = this.rand.nextInt(2);
+            for (int i = 0; i < num_drops; ++i) {
+                this.dropItem(Items.stretchPotion, 1);// TODO Temporary
+            }
         }
     }
 }

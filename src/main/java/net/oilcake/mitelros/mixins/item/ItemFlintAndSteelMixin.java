@@ -13,6 +13,7 @@ public class ItemFlintAndSteelMixin extends Item {
      */
     @Overwrite
     public boolean onItemRightClick(EntityPlayer player, float partial_tick, boolean ctrl_is_down) {
+        System.out.println("clicked");
         RaycastCollision rc = player.getSelectedObject(partial_tick, false);
         if (rc == null)
             return false;
@@ -21,7 +22,7 @@ public class ItemFlintAndSteelMixin extends Item {
         if (rc.getBlockHit() == Block.tnt) {
             if (player.onServer())
                 BlockTNT.ignite(rc.world, rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, player);
-        } else if (rc.getBlockHit() instanceof net.minecraft.BlockFurnace) {
+        } else if (rc.getBlockHit() instanceof BlockFurnace) {
             TileEntityFurnace furnace = (TileEntityFurnace) rc.world.getBlockTileEntity(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
             ((ITFFurnace) furnace).activateFurnace();
         } else {

@@ -81,6 +81,7 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
         }
         if (heat_level > getHeatLevelRequired((this.getInputItemStack().getItem()).itemID) + 1) {
             cir.setReturnValue(false);
+            System.out.println("bad heat level" + heat_level  + "and" + getHeatLevelRequired((this.getInputItemStack().getItem()).itemID));
         }
     }
 
@@ -106,16 +107,21 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
         return (this.activated && this.furnaceItemStacks[1] != null);
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     public void updateEntity() {// TODO hard to rewrite
-        if (!this.worldObj.isRemote && !isBurning() && this.activated && this.furnaceItemStacks[1] == null)
+        if (!this.worldObj.isRemote && !isBurning() && this.activated && this.furnaceItemStacks[1] == null) {
             this.activated = false;
+        }
         if (this.worldObj.isRemote || this.furnaceBurnTime == 1 || (!isFlooded() && !isSmotheredBySolidBlock())) {
             boolean var1 = (this.furnaceBurnTime > 0);
             boolean var2 = false;
             if (this.furnaceBurnTime > 0) {
                 float temp = 1.0F;
-                if (getFurnaceBlock() instanceof net.oilcake.mitelros.block.BlockBlastFurnace || getFurnaceBlock() instanceof net.oilcake.mitelros.block.BlockSmoker)
+                if (getFurnaceBlock() instanceof BlockBlastFurnace || getFurnaceBlock() instanceof BlockSmoker)
                     temp = 2.0F;
                 this.furnaceBurnTime = (int) (this.furnaceBurnTime - temp);
             } else {
@@ -148,9 +154,9 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
                     if (item_id == Items.pieceMithril.itemID || item_id == Items.pieceTungsten.itemID || item_id == Items.pieceAdamantium.itemID)
                         speed_bonus = 2;
                     this.furnaceCookTime += speed_bonus;
-                    if (getFurnaceBlock() instanceof net.oilcake.mitelros.block.BlockBlastFurnace) {
+                    if (getFurnaceBlock() instanceof BlockBlastFurnace) {
                         this.furnaceCookTime += speed_bonus;
-                    } else if (getFurnaceBlock() instanceof net.oilcake.mitelros.block.BlockSmoker) {
+                    } else if (getFurnaceBlock() instanceof BlockSmoker) {
                         this.furnaceCookTime += speed_bonus;
                     }
                     if (this.furnaceCookTime >= temp) {

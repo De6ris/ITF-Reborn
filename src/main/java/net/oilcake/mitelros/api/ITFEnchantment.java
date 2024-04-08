@@ -1,7 +1,11 @@
 package net.oilcake.mitelros.api;
 
 public interface ITFEnchantment {
-    boolean isReverse();
+    default boolean isCurse() {
+        return false;
+    }
 
-    boolean isTreasure();
+    default boolean isTreasure() {
+        return false;
+    }
 }

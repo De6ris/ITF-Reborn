@@ -58,10 +58,6 @@ public class BlockFlowerPotExtend extends BlockFlowerPot {
         return true;
     }
 
-    public boolean canBeCarried() {
-        return false;
-    }
-
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
         if (!info.wasExploded() && !info.wasCrushed()) {
             int num_drops;
@@ -71,7 +67,7 @@ public class BlockFlowerPotExtend extends BlockFlowerPot {
     }
 
     public static ItemStack getPlantForMeta(int metadata) {
-        return (metadata == 0) ? null : new ItemStack((Block) Blocks.flowerextend, 1, metadata);
+        return (metadata == 0) ? null : new ItemStack(Blocks.flowerextend, 1, metadata);
     }
 
     public static int getMetaForPlant(ItemStack item_stack) {

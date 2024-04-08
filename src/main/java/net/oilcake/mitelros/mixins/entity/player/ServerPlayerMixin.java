@@ -1,5 +1,7 @@
 package net.oilcake.mitelros.mixins.entity.player;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.*;
@@ -21,8 +23,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin({ServerPlayer.class})
+@Mixin(ServerPlayer.class)
 public abstract class ServerPlayerMixin extends EntityPlayer implements ICrafting, ITFPlayer {
     public ServerPlayerMixin(World par1World, String par2Str) {
         super(par1World, par2Str);
@@ -228,6 +231,38 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
             this.last_nutrition = -1;
         }
     }
+
+    /**
+     * @author
+     * @reason
+     */
+    @Overwrite
+    public void readStatsFromNBT(NBTTagCompound par1NBTTagCompound) {
+        Collection tags = par1NBTTagCompound.getTags();
+        Iterator i = tags.iterator();
+
+        while (i.hasNext()) {
+            NBTBase tag = (NBTBase) i.next();
+            int id = Integer.valueOf(tag.getName());
+            StatBase stat = StatList.getStat(id);
+            if (stat == null) continue;
+            if (StatList.isEitherZeroOrOne(stat)) {
+                this.stats.put(id, par1NBTTagCompound.getByte(tag.getName()));
+            } else if (StatList.hasLongValue(stat)) {
+                this.stats.put(id, par1NBTTagCompound.getLong(tag.getName()));
+            } else {
+                this.stats.put(id, par1NBTTagCompound.getInteger(tag.getName()));
+            }
+        }
+
+    }
+
+//    @Inject(method = "readStatsFromNBT", at = @At(value = "INVOKE", target = "Lnet/minecraft/StatList;isEitherZeroOrOne(Lnet/minecraft/StatBase;)Z"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+//    private void fix(NBTTagCompound par1NBTTagCompound, CallbackInfo ci, Collection tags, Iterator i, NBTBase tag, int id, StatBase stat) {
+//        if (stat == null) {
+//            ci.cancel();
+//        }
+//    }
 
     @Shadow
     public INetworkManager getNetManager() {

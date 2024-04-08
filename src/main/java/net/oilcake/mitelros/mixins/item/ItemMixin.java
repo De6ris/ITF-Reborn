@@ -7,6 +7,7 @@ import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,17 +28,19 @@ public abstract class ItemMixin implements ITFItem {
 
     @Shadow
     protected List materials;
+    @Shadow
+    public static Item blazeRod;
     private int water;
 
     public Item item;
 
     public int itemID;
 
-    @Redirect(method = {"<init>(ILjava/lang/String;I)V"}, at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
+    @Redirect(method = "<init>(ILjava/lang/String;I)V", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
     public void removePrint(PrintStream printStream, String messsage) {
     }
 
-    @Redirect(method = {"doesSubtypeMatterForProduct(Lnet/minecraft/ItemStack;)Z"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
+    @Redirect(method = "doesSubtypeMatterForProduct(Lnet/minecraft/ItemStack;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
     public void removeErrorInfo(String text) {
     }
 
@@ -64,50 +67,6 @@ public abstract class ItemMixin implements ITFItem {
     public Item setWater(int water) {
         this.water = water;
         return this.item;
-    }
-
-    public void addInformationBeforeEnchantments(ItemStack item_stack, EntityPlayer player, List list, boolean extended_info, Slot slot) {
-        NBTTagList tagList;
-        if (item_stack.hasTagCompound() && (tagList = item_stack.getEnchantmentTagList()) != null) {
-            if (tagList.tagCount() > 0) {
-                list.add("");
-            }
-            for (int i = 0; i < tagList.tagCount(); i++) {
-                short id = ((NBTTagCompound) (tagList.tagAt(i))).getShort("id");
-                short lvl = ((NBTTagCompound) (tagList.tagAt(i))).getShort("lvl");
-                Enchantment enchantment = Enchantment.enchantmentsList[id];
-                if (enchantment != null) {
-                    if (((ITFEnchantment) (Enchantment.enchantmentsList[id])).isReverse()) {
-                        list.add(EnumChatFormatting.RED + Enchantment.enchantmentsList[id].getTranslatedName(lvl, item_stack));
-                    } else if (((ITFEnchantment) Enchantment.enchantmentsList[id]).isTreasure()) {
-                        list.add(EnumChatFormatting.getByChar('6') + Enchantment.enchantmentsList[id].getTranslatedName(lvl, item_stack));
-                    }
-                }
-            }
-        }
-    }
-
-    @Inject(method = {"addInformation(Lnet/minecraft/ItemStack;Lnet/minecraft/EntityPlayer;Ljava/util/List;ZLnet/minecraft/Slot;)V"}, at = {@At("RETURN")})
-    public void addInformationFishingRodBeforeEnchantments(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
-        NBTTagList tagList;
-        Item item = Item.itemsList[this.itemID];
-        if (item_stack.hasTagCompound() && (tagList = item_stack.getEnchantmentTagList()) != null) {
-            if (tagList.tagCount() > 0 && !(item instanceof ItemTool)) {
-                info.add("");
-            }
-            for (int i = 0; i < tagList.tagCount(); i++) {
-                short id = ((NBTTagCompound) (tagList.tagAt(i))).getShort("id");
-                short lvl = ((NBTTagCompound) (tagList.tagAt(i))).getShort("lvl");
-                Enchantment enchantment = Enchantment.enchantmentsList[id];
-                if (enchantment != null && !(item instanceof ItemTool)) {
-                    if (((ITFEnchantment) (Enchantment.enchantmentsList[id])).isReverse()) {
-                        info.add(EnumChatFormatting.RED + Enchantment.enchantmentsList[id].getTranslatedName(lvl, item_stack));
-                    } else if (((ITFEnchantment) Enchantment.enchantmentsList[id]).isTreasure()) {
-                        info.add(EnumChatFormatting.getByChar('6') + Enchantment.enchantmentsList[id].getTranslatedName(lvl, item_stack));
-                    }
-                }
-            }
-        }
     }
 
     @ModifyReturnValue(method = "getRepairItem", at = @At("RETURN"))
@@ -138,5 +97,9 @@ public abstract class ItemMixin implements ITFItem {
     private static void noError1(String text) {
     }
 
+    @Inject(method = "<clinit>", at = @At("TAIL"))
+    private static void inject(CallbackInfo ci) {
+        blazeRod.setReachBonus(0.5F);
+    }
 
 }

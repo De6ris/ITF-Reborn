@@ -18,10 +18,10 @@ public class ItemBlockMixin extends Item {
         return null;
     }
 
-    @Inject(method = "getItemStackForStatsIcon", at = @At("RETURN"))
-    private void inject(CallbackInfoReturnable<ItemStack> cir, @Local(ordinal = 0) LocalIntRef id) {
+    @Inject(method = "getItemStackForStatsIcon", at = @At("HEAD"), cancellable = true)
+    private void inject(CallbackInfoReturnable<ItemStack> cir) {
         if (this.getBlock() == Blocks.flowerPotExtend) {
-            id.set(Item.flowerPot.itemID);
+            cir.setReturnValue(new ItemStack(Item.flowerPot.itemID, 1, 0));
         }
     }
 

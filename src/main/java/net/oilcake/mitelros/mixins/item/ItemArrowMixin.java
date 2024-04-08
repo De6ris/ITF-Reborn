@@ -8,11 +8,15 @@ import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
-@Mixin({ItemArrow.class})
-public class ItemArrowMixin extends Item {
+@Mixin(ItemArrow.class)
+public abstract class ItemArrowMixin extends Item {
+    @Shadow
+    public abstract float getChanceOfRecovery();
+
     @Shadow
     @Final
     @Mutable
@@ -22,11 +26,11 @@ public class ItemArrowMixin extends Item {
     @Final
     public Material arrowhead_material;
 
-    @Inject(method = {"<clinit>()V"}, at = {@At("RETURN")})
+    @Inject(method = "<clinit>()V", at = @At("RETURN"))
     private static void injectClinit(CallbackInfo callback) {
         material_types = new Material[]{
                 Material.flint, Material.obsidian, Material.copper, Material.silver, Material.gold, Material.iron, Material.rusted_iron, Material.ancient_metal, Material.mithril, Material.adamantium,
-                (Material) Materials.nickel, (Material) Materials.tungsten, (Material) Materials.magical};
+                Materials.nickel, Materials.tungsten, Materials.magical};
     }
 
     /**
@@ -44,35 +48,14 @@ public class ItemArrowMixin extends Item {
         }
     }
 
-    @Overwrite
-    public float getChanceOfRecovery() {
-        if (ReflectHelper.dyCast(this) == arrowFlint)
-            return 0.3F;
-        if (ReflectHelper.dyCast(this) == Item.arrowObsidian)
-            return 0.4F;
-        if (ReflectHelper.dyCast(this) == Item.arrowCopper)
-            return 0.6F;
-        if (ReflectHelper.dyCast(this) == Item.arrowSilver)
-            return 0.6F;
-        if (ReflectHelper.dyCast(this) == Item.arrowGold)
-            return 0.5F;
-        if (ReflectHelper.dyCast(this) == Item.arrowRustedIron)
-            return 0.5F;
-        if (ReflectHelper.dyCast(this) == Item.arrowIron)
-            return 0.7F;
+    @Inject(method = "getChanceOfRecovery", at = @At("HEAD"), cancellable = true)
+    private void itfArrow(CallbackInfoReturnable<Float> cir) {
         if (ReflectHelper.dyCast(this) == Items.arrowNickel)
-            return 0.7F;
-        if (ReflectHelper.dyCast(this) == Item.arrowMithril)
-            return 0.8F;
-        if (ReflectHelper.dyCast(this) == Items.arrowAncientMetal)
-            return 0.8F;
+            cir.setReturnValue(0.7F);
         if (ReflectHelper.dyCast(this) == Items.arrowTungsten)
-            return 0.9F;
-        if (ReflectHelper.dyCast(this) == Item.arrowAdamantium)
-            return 0.9F;
+            cir.setReturnValue(0.9F);
         if (ReflectHelper.dyCast(this) == Items.arrowMagical)
-            return 0.0F;
-        return 0.7F;
+            cir.setReturnValue(0.0F);
     }
 
     @Shadow

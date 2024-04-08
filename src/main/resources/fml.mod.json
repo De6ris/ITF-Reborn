@@ -30,6 +30,9 @@
     "loom:injected_interfaces": {
       "net/minecraft/EntityPlayer": [
         "net/oilcake/mitelros/api/ITFPlayer"
+      ],
+      "net/minecraft/Enchantment": [
+        "net/oilcake/mitelros/api/ITFEnchantment"
       ]
     }
   }

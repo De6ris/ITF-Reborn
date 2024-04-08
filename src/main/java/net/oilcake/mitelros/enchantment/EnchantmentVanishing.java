@@ -26,8 +26,9 @@ public class EnchantmentVanishing extends Enchantment {
   public boolean canEnchantItem(Item item) {
     return (item.getMaterialForRepairs() != Materials.uru);
   }
-  
-  public boolean isReverse() {
+
+  @Override
+  public boolean isCurse() {
     return true;
   }
   

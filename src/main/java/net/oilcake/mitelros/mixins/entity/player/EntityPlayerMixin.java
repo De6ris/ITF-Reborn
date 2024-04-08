@@ -17,6 +17,7 @@ import net.oilcake.mitelros.item.ItemTotem;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
+import net.oilcake.mitelros.misc.QualityHandler;
 import net.oilcake.mitelros.status.*;
 import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.util.Constant;
@@ -36,6 +37,9 @@ import java.util.List;
 public abstract class EntityPlayerMixin extends EntityLivingBase implements ICommandSender, ITFPlayer {
 
     @Shadow
+    public abstract ItemStack getHeldItemStack();
+
+    @Shadow
     public abstract void addExperience(int amount, boolean suppress_healing, boolean suppress_sound);
 
     @Shadow
@@ -53,15 +57,8 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     public DiarrheaManager diarrheaManager = new DiarrheaManager();
 
-    public DiarrheaManager getDiarrheaManager() {
-        return diarrheaManager;
-    }
-
     @Shadow
     public EnumInsulinResistanceLevel insulin_resistance_level;
-
-    @Shadow
-    private int field_82249_h;
 
     @Shadow
     public PlayerCapabilities capabilities;
@@ -252,20 +249,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         addPotionEffect(new PotionEffect(Potion.blindness.id, 40, 4));
         this.vision_dimming += 0.75F;
         triggerAchievement(AchievementExtend.cheatdeath);
-    }
-
-    protected void checkForAfterDamage(Damage damage, EntityDamageResult result) {
-        if (result.entityWasDestroyed()) {
-            ItemStack var5 = getHeldItemStack();
-            if (var5 != null && var5.getItem() instanceof ItemTotem) {
-                ((ITFDamageResult) result).setEntity_was_destroyed(false);
-                ((ItemTotem) var5.getItem()).performNegativeEffect(this.getAsPlayer());
-            }
-            if (this.huntManager.hunt_counter > 0) {
-                ((ITFDamageResult) result).setEntity_was_destroyed(false);
-                setHealth(1.0F);
-            }
-        }
     }
 
     @Redirect(method = {"attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
@@ -542,24 +525,20 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         return Config.TagDistortion.get() ? HealthLMTwithTag : HealthLMTwithoutTag;
     }
 
-
-    @Inject(method = "getCurrentPlayerStrVsBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;isInsideOfMaterial(Lnet/minecraft/Material;)Z"))
-    private void inject(int x, int y, int z, boolean apply_held_item, CallbackInfoReturnable<Float> cir, @Local(ordinal = 0) LocalFloatRef str_vs_block) {// TODO unstable
-        if (isPotionActive(PotionExtend.freeze)) {
-            float newStr = str_vs_block.get() * (1.0F - (getActivePotionEffect(PotionExtend.freeze).getAmplifier() + 1) * 0.5F);
-            str_vs_block.set(newStr);
-        }
-    }
-
     @ModifyArg(method = "getCurrentPlayerStrVsBlock", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F"), index = 0)
-    private float inject(float str_vs_block) {
+    private float itfModify(float str_vs_block) {
+        if (this.isPotionActive(PotionExtend.freeze))
+            str_vs_block *= 1.0F - (getActivePotionEffect(PotionExtend.freeze).getAmplifier() + 1) * 0.5F;
         if (Config.FinalChallenge.get())
             str_vs_block *= 1.0F - Constant.CalculateCurrentDiff() / 100.0F;
         if (Config.Realistic.get())
             str_vs_block *= Math.min((float) Math.pow(getHealth(), 2.0D) / 25.0F, 1.0F);
+        ItemStack held_item = this.getHeldItemStack();
+        if (held_item != null && held_item.getItem() instanceof ItemTool) {
+            str_vs_block *= 1.0F + (QualityHandler.getQualityAmplifier(held_item.getQuality()) * 2.0F) / 100.0F;
+        }
         return str_vs_block;
     }
-
 
     public void attackMonsters(List<Entity> targets, float damage) {
         for (int i = 0; i < targets.size(); i++) {

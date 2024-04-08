@@ -1,16 +1,21 @@
 package net.oilcake.mitelros.mixins.item;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Materials;
+import net.oilcake.mitelros.misc.QualityHandler;
 import net.oilcake.mitelros.util.Config;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
-@Mixin({ItemArmor.class})
+@Mixin(ItemArmor.class)
 public abstract class ItemArmorMixin extends Item implements IDamageableItem {
     @Mutable
     @Shadow
@@ -30,20 +35,25 @@ public abstract class ItemArmorMixin extends Item implements IDamageableItem {
         setCraftingDifficultyAsComponent(this.effective_material.durability * 100.0F * getNumComponentsForDurability());
     }
 
+    @Inject(method = "addInformation", at = @At("TAIL"))
+    private void inject(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
+        if (extended_info && item_stack != null && item_stack.getMaterialForRepairs() == Materials.nickel)
+            info.add(EnumChatFormatting.LIGHT_GRAY + Translator.getFormatted("itemarmor.tooltip.slimeresistance", new Object[0]));
+    }
+
     /**
      * @author
      * @reason
      */
     @Overwrite
-    public void addInformation(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot) {
-        if (extended_info) {
-            info.add("");
-            float protection = getProtectionAfterDamageFactor(item_stack, player);
-            int decimal_places = 3;
-            info.add(EnumChatFormatting.BLUE + Translator.getFormatted("item.tooltip.protectionBonus", new Object[]{StringHelper.formatFloat(protection, decimal_places, decimal_places)}));
-            if (item_stack != null && item_stack.getMaterialForRepairs() == Materials.nickel)
-                info.add(EnumChatFormatting.LIGHT_GRAY + Translator.getFormatted("itemarmor.tooltip.slimeresistance", new Object[0]));
+    public final float getMultipliedProtection(ItemStack item_stack) {
+        float multiplied_protection = (float) (this.getNumComponentsForDurability() * this.getMaterialProtection()) / 24.0f;
+        if (item_stack != null && item_stack.hasEnchantment(Enchantment.protection, false)) {
+            multiplied_protection += multiplied_protection * item_stack.getEnchantmentLevelFraction(Enchantment.protection) * 0.5f;
         }
+        float qualityAmplifier = item_stack != null && item_stack.getItem().hasQuality() ? QualityHandler.getQualityAmplifier(item_stack.getQuality()) : 0;
+        multiplied_protection *= 1.0F + qualityAmplifier / 100.0F;
+        return multiplied_protection;
     }
 
     /**
