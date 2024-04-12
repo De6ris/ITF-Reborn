@@ -1,19 +1,12 @@
 package net.oilcake.mitelros.mixins.world;
 
-import java.util.Random;
-import net.minecraft.Block;
-import net.minecraft.ComponentNetherBridgeCorridor;
-import net.minecraft.EnumDirection;
-import net.minecraft.Item;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.StructureBoundingBox;
-import net.minecraft.StructureComponent;
-import net.minecraft.WeightedRandomChestContent;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.Random;
 
 @Mixin({ComponentNetherBridgeCorridor.class})
 public class WorldGenNetherBridgeCorridor2Mixin extends StructureComponent {

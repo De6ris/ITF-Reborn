@@ -1,12 +1,13 @@
 package net.oilcake.mitelros.mixins.world;
 
-import java.util.Random;
 import net.minecraft.Debug;
 import net.minecraft.WeatherEvent;
 import net.minecraft.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.Random;
 
 @Mixin({WeatherEvent.class})
 public class WeatherEventMixin {

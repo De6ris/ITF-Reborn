@@ -1,18 +1,22 @@
 package net.oilcake.mitelros.mixins.util;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
+import net.oilcake.mitelros.api.ITFEnchantment;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-@Mixin({EnchantmentHelper.class})
-public class EnchantmentManagerMixin {
+@Mixin(EnchantmentHelper.class)
+public class EnchantmentHelperMixin {
     @Shadow
     private static Map mapEnchantmentData(int enchantment_levels, ItemStack item_stack) {
         return null;
@@ -22,6 +26,15 @@ public class EnchantmentManagerMixin {
     private static void removeEnchantmentsFromMapThatConflict(Map map, ArrayList enchantments) {
     }
 
+    @ModifyExpressionValue(method = "mapEnchantmentData", at = @At(value = "INVOKE", target = "Lnet/minecraft/Enchantment;canEnchantItem(Lnet/minecraft/Item;)Z"))
+    private static boolean noTreasureAndCurse(boolean original, @Local Enchantment enchantment) {
+        return original && !((ITFEnchantment) enchantment).isCurse() && !((ITFEnchantment) enchantment).isTreasure();
+    }
+
+    /**
+     * @author uru can enchant 5
+     * @reason
+     */
     @Overwrite
     public static List buildEnchantmentList(Random random, ItemStack item_stack, int enchantment_levels) {
         Item item = item_stack.getItem();

@@ -1,13 +1,6 @@
 package net.oilcake.mitelros.mixins.entity.animal;
 
-import net.minecraft.DamageSource;
-import net.minecraft.EntityAgeable;
-import net.minecraft.EntityAnimal;
-import net.minecraft.EntityHorse;
-import net.minecraft.IInvBasic;
-import net.minecraft.InventoryBasic;
-import net.minecraft.Item;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;

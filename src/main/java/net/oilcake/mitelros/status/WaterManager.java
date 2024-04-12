@@ -7,11 +7,17 @@ import net.oilcake.mitelros.util.Config;
 
 public class WaterManager {
 
+    private EntityPlayer player;
+
     int water_duration;
 
     private double dry_resist;
 
-    public void update(EntityPlayer player) {
+    public WaterManager(EntityPlayer player) {
+        this.player = player;
+    }
+
+    public void update() {
         BiomeGenBase biome = player.worldObj.getBiomeGenForCoords(player.getBlockPosX(), player.getBlockPosZ());
         if (player.getBlockAtFeet() != null && (player.getBlockAtFeet()).blockMaterial == Material.water && player.isSneaking()) {
             this.water_duration++;

@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin({ClientPlayer.class})
+@Mixin(ClientPlayer.class)
 public abstract class ClientPlayerMixin extends AbstractClientPlayer {
 
     @Shadow

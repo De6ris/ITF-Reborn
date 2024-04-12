@@ -1,25 +1,17 @@
 package net.oilcake.mitelros.mixins.world.biome;
 
-import java.util.Random;
-
-import net.minecraft.BiomeGenBase;
-import net.minecraft.BiomeGenUnderworld;
-import net.minecraft.Block;
-import net.minecraft.EntityCreeper;
-import net.minecraft.Minecraft;
-import net.minecraft.SpawnListEntry;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.entity.EntityBoneBodyguard;
 import net.oilcake.mitelros.entity.EntityRetinueZombie;
 import net.oilcake.mitelros.entity.EntitySpiderKing;
 import net.oilcake.mitelros.entity.EntityStalkerCreeper;
 import net.oilcake.mitelros.world.WorldGenUnderworldCastle;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Random;
 
 @Mixin(BiomeGenUnderworld.class)
 public class BiomeGenUnderworldMixin extends BiomeGenBase {
@@ -38,7 +30,7 @@ public class BiomeGenUnderworldMixin extends BiomeGenBase {
 
     @Inject(method = "decorate", at = @At("TAIL"))
     public void itfDecorate(World par1World, Random par2Random, int par3, int par4, CallbackInfo ci) {
-        if (par2Random.nextInt(4095) == 0) {
+        if (par2Random.nextInt(2048) == 0) {
             int i = par3 + par2Random.nextInt(16) + 8;
             int j = par4 + par2Random.nextInt(16) + 8;
             WorldGenUnderworldCastle var7 = new WorldGenUnderworldCastle();

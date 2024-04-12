@@ -1,13 +1,10 @@
 package net.oilcake.mitelros.mixins.world.biome;
 
-import java.util.Random;
-import net.minecraft.BiomeGenBase;
-import net.minecraft.BiomeGenEnd;
-import net.minecraft.Block;
-import net.minecraft.World;
-import net.minecraft.WorldGenMinable;
+import net.minecraft.*;
 import net.oilcake.mitelros.block.Blocks;
 import org.spongepowered.asm.mixin.Mixin;
+
+import java.util.Random;
 
 @Mixin({BiomeGenEnd.class})
 public class BiomeTheEndMixin extends BiomeGenBase {

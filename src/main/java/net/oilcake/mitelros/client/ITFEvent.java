@@ -40,9 +40,9 @@ public class ITFEvent {
         if (par2Str.startsWith("tpt") && !Minecraft.inDevMode()) {
             BiomeGenBase biome = player.worldObj.getBiomeGenForCoords(player.getBlockPosX(), player.getBlockPosZ());
             if (player.getTemperatureManager().InFreeze()) {
-                player.sendChatToPlayer(ChatMessageComponent.createFromText("玩家当前体温为" + player.getBodyTemperature() + "℃，玩家受到寒冷影响").setColor(EnumChatFormatting.WHITE));
+                player.sendChatToPlayer(ChatMessageComponent.createFromText("玩家当前体温为" + player.getTemperatureManager().BodyTemperature + "℃，玩家受到寒冷影响").setColor(EnumChatFormatting.WHITE));
             } else {
-                player.sendChatToPlayer(ChatMessageComponent.createFromText("玩家当前体温为" + player.getBodyTemperature() + "℃，玩家未受到寒冷影响").setColor(EnumChatFormatting.WHITE));
+                player.sendChatToPlayer(ChatMessageComponent.createFromText("玩家当前体温为" + player.getTemperatureManager().BodyTemperature + "℃，玩家未受到寒冷影响").setColor(EnumChatFormatting.WHITE));
             }
             event.setExecuteSuccess(true);
         }
@@ -112,7 +112,7 @@ public class ITFEvent {
     public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
         ServerPlayer player = event.getPlayer();
         player.setHealth(player.getHealth());
-        ((ITFPlayer)player).broadcast();
+        ((ITFPlayer)player).getMiscManager().broadcast();
         if (!Minecraft.inDevMode())
             player.vision_dimming = 1.25F;
         if (((ITFPlayer) player).getNewPlayerManager().getNew()) {

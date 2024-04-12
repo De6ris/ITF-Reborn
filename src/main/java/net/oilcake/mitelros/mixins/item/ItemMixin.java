@@ -2,12 +2,11 @@ package net.oilcake.mitelros.mixins.item;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.*;
-import net.oilcake.mitelros.api.ITFEnchantment;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
+import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,9 +31,8 @@ public abstract class ItemMixin implements ITFItem {
     public static Item blazeRod;
     private int water;
 
-    public Item item;
+    private String extraInfo;
 
-    public int itemID;
 
     @Redirect(method = "<init>(ILjava/lang/String;I)V", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
     public void removePrint(PrintStream printStream, String messsage) {
@@ -60,13 +58,34 @@ public abstract class ItemMixin implements ITFItem {
         }
     }
 
+    @Inject(method = "addInformation", at = @At("TAIL"))
+    private void extraInfo(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
+        if (extended_info) {
+            String string = ((ITFItem) this).getExtraInfo();
+            if (string != null) {
+                info.add(EnumChatFormatting.LIGHT_GRAY + string);
+            }
+        }
+    }
+
     public int getWater() {
         return this.water;
     }
 
     public Item setWater(int water) {
         this.water = water;
-        return this.item;
+        return ReflectHelper.dyCast(this);
+    }
+
+    @Override
+    public String getExtraInfo() {
+        return extraInfo;
+    }
+
+    @Override
+    public Item setExtraInfo(String extraInfo) {
+        this.extraInfo = extraInfo;
+        return ReflectHelper.dyCast(this);
     }
 
     @ModifyReturnValue(method = "getRepairItem", at = @At("RETURN"))

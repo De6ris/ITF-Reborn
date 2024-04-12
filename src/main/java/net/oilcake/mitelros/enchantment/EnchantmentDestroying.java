@@ -2,8 +2,8 @@ package net.oilcake.mitelros.enchantment;
 
 import net.minecraft.CreativeTabs;
 import net.minecraft.Enchantment;
-import net.minecraft.Item;
 import net.minecraft.EnumRarity;
+import net.minecraft.Item;
 
 public class EnchantmentDestroying extends Enchantment {
   protected EnchantmentDestroying(int id, EnumRarity rarity, int difficulty) {

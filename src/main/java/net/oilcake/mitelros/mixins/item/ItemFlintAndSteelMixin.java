@@ -5,7 +5,7 @@ import net.oilcake.mitelros.api.ITFFurnace;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
-@Mixin({ItemFlintAndSteel.class})
+@Mixin(ItemFlintAndSteel.class)
 public class ItemFlintAndSteelMixin extends Item {
     /**
      * @author

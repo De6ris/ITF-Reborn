@@ -1,13 +1,11 @@
 package net.oilcake.mitelros.mixins.block;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.util.SeasonColorizer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyArg;

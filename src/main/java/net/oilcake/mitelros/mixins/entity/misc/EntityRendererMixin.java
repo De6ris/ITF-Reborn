@@ -1,38 +1,7 @@
 package net.oilcake.mitelros.mixins.entity.misc;
 
-import java.util.Random;
-
-import net.minecraft.BiomeGenBase;
-import net.minecraft.Block;
-import net.minecraft.BlockFluid;
-import net.minecraft.BlockTrapDoor;
-import net.minecraft.DynamicTexture;
-import net.minecraft.EntityFX;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.EntityPlayer;
-import net.minecraft.EntityRainFX;
 import net.minecraft.EntityRenderer;
-import net.minecraft.EntitySmokeFX;
-import net.minecraft.IBlockAccess;
-import net.minecraft.ItemRenderer;
-import net.minecraft.Material;
-import net.minecraft.MathHelper;
-import net.minecraft.Minecraft;
-import net.minecraft.Potion;
-import net.minecraft.RNG;
-import net.minecraft.RenderingScheme;
-import net.minecraft.ResourceLocation;
-import net.minecraft.Tessellator;
-import net.minecraft.Vec3;
-import net.minecraft.World;
-import net.minecraft.WorldClient;
-import net.oilcake.mitelros.api.ITFWorld;
-import net.oilcake.mitelros.util.CurseExtend;
-import org.lwjgl.opengl.GL11;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
 //
 @Mixin({EntityRenderer.class})
 public final class EntityRendererMixin {// TODO what does it modify

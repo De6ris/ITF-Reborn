@@ -1,11 +1,12 @@
 package net.oilcake.mitelros.mixins.world.biome;
 
-import java.util.Random;
 import net.minecraft.BiomeGenBase;
 import net.minecraft.BiomeGenHills;
 import net.minecraft.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+
+import java.util.Random;
 
 @Mixin({BiomeGenHills.class})
 public class BiomeBigHillsMixin extends BiomeGenBase {

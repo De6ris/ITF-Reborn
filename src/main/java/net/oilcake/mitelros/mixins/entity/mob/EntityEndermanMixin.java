@@ -1,6 +1,9 @@
 package net.oilcake.mitelros.mixins.entity.mob;
 
-import net.minecraft.*;
+import net.minecraft.DamageSource;
+import net.minecraft.EntityEnderman;
+import net.minecraft.EntityMob;
+import net.minecraft.World;
 import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,7 +21,7 @@ public abstract class EntityEndermanMixin extends EntityMob {
         if (recently_hit_by_player && this.rand.nextInt(damage_source.getLootingModifier() + 4) > 2) {
             int num_drops = this.rand.nextInt(2);
             for (int i = 0; i < num_drops; ++i) {
-                this.dropItem(Items.stretchPotion, 1);// TODO Temporary
+                this.dropItem(Items.enderRod, 1);// TODO Temporary
             }
         }
     }

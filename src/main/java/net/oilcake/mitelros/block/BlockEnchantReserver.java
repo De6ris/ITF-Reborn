@@ -1,7 +1,6 @@
 package net.oilcake.mitelros.block;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;
 
 import java.util.List;

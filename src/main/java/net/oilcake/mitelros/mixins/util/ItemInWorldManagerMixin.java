@@ -4,10 +4,11 @@ import net.minecraft.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 
 import java.util.LinkedList;
 
-@Mixin({ItemInWorldManager.class})
+@Mixin(ItemInWorldManager.class)
 public class ItemInWorldManagerMixin {
     @Shadow
     public World theWorld;
@@ -46,10 +47,10 @@ public class ItemInWorldManagerMixin {
         Block block = this.theWorld.getBlock(x, y, z);
         if (block == null)
             return false;
-        block.onBlockAboutToBeBroken((new BlockBreakInfo(this.theWorld, x, y, z)).setHarvestedBy((EntityLivingBase) this.thisPlayerMP));
+        block.onBlockAboutToBeBroken((new BlockBreakInfo(this.theWorld, x, y, z)).setHarvestedBy(this.thisPlayerMP));
         if (this.theWorld.getBlock(x, y, z) == null)
             return false;
-        BlockBreakInfo block_break_info = (new BlockBreakInfo(this.theWorld, x, y, z)).setHarvestedBy((EntityLivingBase) this.thisPlayerMP);
+        BlockBreakInfo block_break_info = (new BlockBreakInfo(this.theWorld, x, y, z)).setHarvestedBy(this.thisPlayerMP);
         block = block_break_info.block;
         if (block == null)
             return false;
@@ -57,10 +58,10 @@ public class ItemInWorldManagerMixin {
         int data = block_break_info.block_id + (block_break_info.getMetadata() << 12);
         if (block_break_info.wasSilkHarvested())
             data |= RenderGlobal.SFX_2001_WAS_SILK_HARVESTED;
-        this.theWorld.playAuxSFXAtEntity((EntityPlayer) this.thisPlayerMP, 2001, x, y, z, data);
+        this.theWorld.playAuxSFXAtEntity(this.thisPlayerMP, 2001, x, y, z, data);
         boolean block_was_removed = removeBlock(x, y, z);
         if (isCreative()) {
-            this.thisPlayerMP.playerNetServerHandler.sendPacketToPlayer((Packet) new Packet53BlockChange(x, y, z, this.theWorld));
+            this.thisPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(x, y, z, this.theWorld));
         } else {
             ItemStack held_item_stack = this.thisPlayerMP.getHeldItemStack();
             if (held_item_stack != null) {
@@ -75,8 +76,8 @@ public class ItemInWorldManagerMixin {
                 } else {
                     block.dropBlockAsEntityItem(block_break_info);
                 }
-                if (block == Block.wood || block == Block.mushroomCapRed || (block == Block.mushroomCapBrown && !this.tree_felling_in_progress)) {
-                    int felling = EnchantmentHelper.getTreeFellingModifier((EntityLivingBase) this.thisPlayerMP) * 4;
+                if ((block == Block.wood || block == Block.mushroomCapRed || block == Block.mushroomCapBrown) && !this.tree_felling_in_progress) {
+                    int felling = EnchantmentHelper.getTreeFellingModifier(this.thisPlayerMP) * 4;
                     this.tree_felling_in_progress = true;
                     fellTree(this.theWorld, x, y, z, felling);
                     this.tree_felling_in_progress = false;
@@ -86,13 +87,13 @@ public class ItemInWorldManagerMixin {
         if (block_was_removed && !(block instanceof net.minecraft.BlockTorch)) {
             int i = this.theWorld.getBlockId(x, y + 1, z);
             if (Block.blocksList[i] != null)
-                Block.blocksList[i].onUnderminedByPlayer(this.theWorld, (EntityPlayer) this.thisPlayerMP, x, y + 1, z);
+                Block.blocksList[i].onUnderminedByPlayer(this.theWorld, this.thisPlayerMP, x, y + 1, z);
             int[] dx = {0, 1, 0, -1};
             int[] dz = {-1, 0, 1, 0};
             for (int n = 0; n < dx.length; n++) {
                 int block_id2 = this.theWorld.getBlockId(x + dx[n], y, z + dz[n]);
                 if (Block.blocksList[block_id2] != null)
-                    Block.blocksList[block_id2].onUnderminedByPlayer(this.theWorld, (EntityPlayer) this.thisPlayerMP, x + dx[n], y, z + dz[n]);
+                    Block.blocksList[block_id2].onUnderminedByPlayer(this.theWorld, this.thisPlayerMP, x + dx[n], y, z + dz[n]);
             }
         }
         if (block_was_removed && this.theWorld.isUnderworld() && y < 6)
@@ -100,16 +101,17 @@ public class ItemInWorldManagerMixin {
                 EnumDirection direction = EnumDirection.values()[i];
                 Block neighbor = this.theWorld.getNeighborBlock(x, y, z, direction);
                 if (neighbor == Block.mantleOrCore) {
-                    this.thisPlayerMP.triggerAchievement((StatBase) AchievementList.portalToNether);
+                    this.thisPlayerMP.triggerAchievement(AchievementList.portalToNether);
                     break;
                 }
             }
         return block_was_removed;
     }
 
+    @Unique
     public void fellTree(World world, int pos_x, int pos_y, int pos_z, int chopping) {
         boolean hasNest = true;
-        LinkedList<int[]> hint = (LinkedList) new LinkedList<>();
+        LinkedList<int[]> hint = new LinkedList<>();
         hint.addLast(new int[]{0, 0, 0});
         while (hasNest) {
             int[] start = hint.getFirst();

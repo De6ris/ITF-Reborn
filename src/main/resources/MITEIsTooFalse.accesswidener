@@ -12,6 +12,8 @@ accessible method net/minecraft/EntityLivingBase tryDamageArmor (Lnet/minecraft/
 accessible field net/minecraft/Entity rand Ljava/util/Random;
 
 accessible field net/minecraft/Material durability F
+accessible field net/minecraft/Material name Ljava/lang/String;
+accessible field net/minecraft/Material min_harvest_level I
 
 accessible method net/minecraft/EnumInsulinResistanceLevel getColor ()Lnet/minecraft/EnumChatFormatting;
 
@@ -20,11 +22,6 @@ accessible method net/minecraft/SlotCrafting getNumCraftingResults (Lnet/minecra
 accessible method net/minecraft/CraftingManager addRecipe (Lnet/minecraft/ItemStack;Z[Ljava/lang/Object;)Lnet/minecraft/ShapedRecipes;
 accessible method net/minecraft/CraftingManager addShapelessRecipe (Lnet/minecraft/ItemStack;Z[Ljava/lang/Object;)Lnet/minecraft/ShapelessRecipes;
 
-accessible field net/minecraft/Material name Ljava/lang/String;
-accessible field net/minecraft/Material min_harvest_level I
-
-accessible method net/minecraft/ItemStack isItemStackEqual (Lnet/minecraft/ItemStack;ZZZZ)Z
-
 accessible method net/minecraft/DamageSource setFireAspect (Z)Lnet/minecraft/DamageSource;
 
 accessible method net/minecraft/World chunkExistsAndIsNotEmptyFromBlockCoords (II)Z
@@ -32,3 +29,7 @@ accessible method net/minecraft/World chunkExistsAndIsNotEmptyFromBlockCoords (I
 extendable class net/minecraft/BlockDoor
 
 accessible field net/minecraft/EntitySkeleton frenzied_by_bone_lord_countdown I
+
+accessible method net/minecraft/ItemStack isItemStackEqual (Lnet/minecraft/ItemStack;ZZZZ)Z
+
+accessible method net/minecraft/BiomeGenBase setDisableRain ()Lnet/minecraft/BiomeGenBase;

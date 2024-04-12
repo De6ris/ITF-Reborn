@@ -1,7 +1,5 @@
 package net.oilcake.mitelros.mixins.world;
 
-import java.util.Random;
-
 import net.minecraft.BiomeDecorator;
 import net.minecraft.World;
 import net.minecraft.WorldGenMinable;
@@ -14,6 +12,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Random;
 
 @Mixin(BiomeDecorator.class)
 public abstract class BiomeDecoratorMixin implements ITFBiomeDecorator {

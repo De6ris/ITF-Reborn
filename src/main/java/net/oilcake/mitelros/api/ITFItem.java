@@ -7,7 +7,7 @@ public interface ITFItem {
 
     Item setWater(int water);
 
-    void setResourceLocation(String location);
+    Item setExtraInfo(String info);
 
-    String getResourceLocationPrefix();
+    String getExtraInfo();
 }

@@ -1,22 +1,6 @@
 package net.oilcake.mitelros.mixins.world;
 
-import net.minecraft.GenLayer;
-import net.minecraft.GenLayerAddIsland;
-import net.minecraft.GenLayerAddMushroomIsland;
-import net.minecraft.GenLayerAddSnow;
-import net.minecraft.GenLayerBiome;
-import net.minecraft.GenLayerFuzzyZoom;
-import net.minecraft.GenLayerHills;
-import net.minecraft.GenLayerIsland;
-import net.minecraft.GenLayerRiver;
-import net.minecraft.GenLayerRiverInit;
-import net.minecraft.GenLayerRiverMix;
-import net.minecraft.GenLayerShore;
-import net.minecraft.GenLayerSmooth;
-import net.minecraft.GenLayerSwampRivers;
-import net.minecraft.GenLayerVoronoiZoom;
-import net.minecraft.GenLayerZoom;
-import net.minecraft.WorldType;
+import net.minecraft.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 

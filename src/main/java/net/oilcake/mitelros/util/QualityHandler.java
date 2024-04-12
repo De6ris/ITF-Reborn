@@ -1,4 +1,4 @@
-package net.oilcake.mitelros.misc;
+package net.oilcake.mitelros.util;
 
 import net.minecraft.EnumQuality;
 import net.minecraft.Item;
@@ -32,7 +32,8 @@ public class QualityHandler {
         int amplifier = getQualityAmplifier(quality);
         if (isTool) amplifier *= 2;
         if (amplifier == 0) return null;
-        return (amplifier > 0 ? "提升" : "降低") +
+        return "品质效果: " +
+                (amplifier > 0 ? "提升" : "降低") +
                 amplifier +
                 effect;
     }

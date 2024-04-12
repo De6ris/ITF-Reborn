@@ -1,29 +1,26 @@
 package net.oilcake.mitelros.world.biome;
 
-import net.minecraft.*;
+import net.minecraft.BiomeGenBase;
+import net.minecraft.Block;
+import net.minecraft.WorldGenerator;
 import net.oilcake.mitelros.api.ITFBiomeDecorator;
-import net.oilcake.mitelros.util.Config;
 
 import java.util.Random;
 
-public class BiomeSavanna extends BiomeGenBase {
-
-    public BiomeSavanna(int par1) {
+public class BiomeSavannaPlateau extends BiomeGenBase {
+    public BiomeSavannaPlateau(int par1) {
         super(par1);
-        this.spawnableCreatureList.add(new SpawnListEntry(EntityHorse.class, 5, 1, 2));
-        ((ITFBiomeDecorator) this.theBiomeDecorator).setTreesPerChunk(0);
+        ((ITFBiomeDecorator) this.theBiomeDecorator).setTreesPerChunk(1);
         ((ITFBiomeDecorator) this.theBiomeDecorator).setFlowersPerChunk(3);
         ((ITFBiomeDecorator) this.theBiomeDecorator).setGrassPerChunk(10);
         ((ITFBiomeDecorator) this.theBiomeDecorator).setFlowersExtendPerChunk(1);
-        setBiomeName("Savanna");
+        setBiomeName("SavannaPlateau");
         setColor(16421912);
         setDisableRain();
         this.topBlock = (byte) Block.grass.blockID;
         this.fillerBlock = (byte) Block.dirt.blockID;
-        setMinMaxHeight(0.1F, 0.4F);
+        setMinMaxHeight(0.9F, 1.5F);
         setTemperatureRainfall(1.6F, 0.0F);
-        if (Config.TagApocalypse.get())
-            removeEntityFromSpawnableLists(EntityHorse.class);
     }
 
     public WorldGenerator getRandomWorldGenForTrees(Random par1Random) {

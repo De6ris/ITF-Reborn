@@ -1,11 +1,11 @@
 package net.oilcake.mitelros.mixins.server;
 
-import java.io.PrintStream;
-
 import net.minecraft.PlayerManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
+
+import java.io.PrintStream;
 
 @Mixin({PlayerManager.class})
 public class PlayerManagerMixin {

@@ -6,9 +6,14 @@ import net.oilcake.mitelros.achivements.AchievementExtend;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 
 public class DiarrheaManager {
+    private EntityPlayer player;
     private int diarrheaCounter;
 
-    public void update(EntityPlayer player) {
+    public DiarrheaManager(EntityPlayer player) {
+        this.player = player;
+    }
+
+    public void update() {
         if (player.isPotionActive(PotionExtend.dehydration) && this.diarrheaCounter <= 1200) {
             this.diarrheaCounter++;
         } else if (this.diarrheaCounter > 0) {

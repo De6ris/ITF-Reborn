@@ -8,14 +8,18 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin({ItemAppleGold.class})
+@Mixin(ItemAppleGold.class)
 public class ItemGoldenAppleMixin extends ItemFood {
-    @Inject(method = {"<init>(IIILjava/lang/String;)V"}, at = {@At("RETURN")})
+    @Inject(method = "<init>(IIILjava/lang/String;)V", at = @At("RETURN"))
     public void injectCtor(CallbackInfo callbackInfo) {
         ((ITFItem) this).setWater(-3);
         setPotionEffect("+0+1+2-3+13&4-4");
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     protected void onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         if (par1ItemStack.getItemSubtype() == 0 &&

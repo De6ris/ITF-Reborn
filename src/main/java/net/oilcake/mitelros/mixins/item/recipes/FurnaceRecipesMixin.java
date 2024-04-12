@@ -28,27 +28,32 @@ public class FurnaceRecipesMixin {
                 return (ItemStack) this.smeltingList.get(input_item_id);
             } else {
                 ItemStack result_item_stack;
-                if (input_item_stack.getItem() instanceof ItemArmor) {
-                    int quantity = (int) (((input_item_stack.getMaxDamage() - input_item_stack.getItemDamage()) / (float) input_item_stack.getMaxDamage()) * ((ItemArmor) input_item_stack.getItem()).getNumComponentsForDurability() * (input_item_stack.getItem().isChainMail() ? 4.0F : 9.0F));
+                if (input_item_stack.getItem() instanceof ItemArmor armor) {
+                    float ingotToNugget = input_item_stack.getItem().isChainMail() ? 4.0F : 9.0F;
+                    float durabilityRatio = (input_item_stack.getMaxDamage() - input_item_stack.getItemDamage()) / (float) input_item_stack.getMaxDamage();
+                    float component = armor.getNumComponentsForDurability();
+                    int quantity = (int) (durabilityRatio * component * ingotToNugget / 3.0F);
                     ItemStack output;
-                    if (input_item_stack.getItem().getHardestMetalMaterial() == Material.rusted_iron) {
+                    if (armor.getHardestMetalMaterial() == Material.rusted_iron) {
                         quantity /= 3;
                         output = new ItemStack(Item.getMatchingItem(ItemNugget.class, Material.iron), quantity);
                     } else {
-                        output = new ItemStack(Item.getMatchingItem(ItemNugget.class, input_item_stack.getItem().getMaterialForRepairs()), quantity);
+                        output = new ItemStack(Item.getMatchingItem(ItemNugget.class, armor.getMaterialForRepairs()), quantity);
                     }
                     if (quantity == 0) {
                         output.setStackSize(1);
                     }
                     result_item_stack = output;
-                } else if (input_item_stack.getItem() instanceof ItemTool) {
-                    int quantity = (int) (((input_item_stack.getMaxDamage() - input_item_stack.getItemDamage()) / (float) input_item_stack.getMaxDamage()) * ((ItemTool) input_item_stack.getItem()).getNumComponentsForDurability() * 9.0F);
+                } else if (input_item_stack.getItem() instanceof ItemTool tool) {
+                    float durabilityRatio = (input_item_stack.getMaxDamage() - input_item_stack.getItemDamage()) / (float) input_item_stack.getMaxDamage();
+                    float component = tool.getNumComponentsForDurability();
+                    int quantity = (int) (durabilityRatio * component * 3.0F);
                     ItemStack output;
-                    if (input_item_stack.getItem().getHardestMetalMaterial() == Material.rusted_iron) {
+                    if (tool.getHardestMetalMaterial() == Material.rusted_iron) {
                         quantity /= 3;
                         output = new ItemStack(Item.getMatchingItem(ItemNugget.class, Material.iron), quantity);
                     } else {
-                        output = new ItemStack(Item.getMatchingItem(ItemNugget.class, input_item_stack.getItem().getMaterialForRepairs()), quantity);
+                        output = new ItemStack(Item.getMatchingItem(ItemNugget.class, tool.getMaterialForRepairs()), quantity);
                     }
                     if (quantity == 0) {
                         output.setStackSize(1);

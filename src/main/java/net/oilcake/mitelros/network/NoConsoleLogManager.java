@@ -1,8 +1,8 @@
 package net.oilcake.mitelros.network;
 
-import java.util.logging.Logger;
-
 import net.minecraft.ILogAgent;
+
+import java.util.logging.Logger;
 
 public class NoConsoleLogManager implements ILogAgent {
     private final Logger logger = Logger.getLogger("ITF");

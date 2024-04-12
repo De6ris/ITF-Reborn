@@ -1,17 +1,11 @@
 package net.oilcake.mitelros.mixins.world;
 
-import java.util.Random;
-
-import net.minecraft.BiomeGenBase;
-import net.minecraft.Block;
-import net.minecraft.ChunkProviderGenerate;
-import net.minecraft.IChunkProvider;
-import net.minecraft.MathHelper;
-import net.minecraft.NoiseGeneratorOctaves;
-import net.minecraft.World;
+import net.minecraft.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.Random;
 
 @Mixin({ChunkProviderGenerate.class})
 public abstract class ChunkProviderGenerateMixin implements IChunkProvider {

@@ -6,6 +6,7 @@ import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 
 public class FeastManager {
+    private EntityPlayer player;
     public boolean Feast_trigger_salad;
 
     public boolean Feast_trigger_porridge;
@@ -46,7 +47,8 @@ public class FeastManager {
 
     public boolean rewarded_disc_connected;
 
-    public FeastManager() {
+    public FeastManager(EntityPlayer player) {
+        this.player = player;
         this.Feast_trigger_salad = false;
         this.Feast_trigger_porridge = false;
         this.Feast_trigger_beef_stew = false;
@@ -69,7 +71,7 @@ public class FeastManager {
         this.rewarded_disc_connected = false;
     }
 
-    public void achievementCheck(EntityPlayer player) {
+    public void achievementCheck() {
         boolean success = (this.Feast_trigger_sorbet && this.Feast_trigger_cereal && this.Feast_trigger_chestnut_soup && this.Feast_trigger_chicken_soup && this.Feast_trigger_beef_stew && this.Feast_trigger_cream_mushroom_soup && this.Feast_trigger_cream_vegetable_soup && this.Feast_trigger_ice_cream && this.Feast_trigger_lemonade && this.Feast_trigger_mashed_potatoes && this.Feast_trigger_porkchop_stew && this.Feast_trigger_salad && this.Feast_trigger_pumpkin_soup && this.Feast_trigger_porridge && this.Feast_trigger_mushroom_soup && this.Feast_trigger_vegetable_soup && this.Feast_trigger_salmon_soup && this.Feast_trigger_beetroot_soup && !this.rewarded_disc_damnation);
         if (!success) {
             return;
@@ -80,6 +82,19 @@ public class FeastManager {
         EntityItem RewardingRecord = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, new ItemStack(Items.recordDamnation.itemID, 1));
         player.worldObj.spawnEntityInWorld(RewardingRecord);
         RewardingRecord.entityFX(EnumEntityFX.summoned);
+
+        if (player.isPotionActive(Potion.moveSpeed) && player.isPotionActive(Potion.regeneration) &&
+                player.isPotionActive(Potion.fireResistance) && player.isPotionActive(Potion.nightVision) &&
+                player.isPotionActive(Potion.damageBoost) && player.isPotionActive(Potion.resistance) &&
+                player.isPotionActive(Potion.invisibility) && !this.rewarded_disc_connected) {
+            player.triggerAchievement(AchievementExtend.invincible);
+            player.addExperience(2500);
+            this.rewarded_disc_connected = true;
+            EntityItem RewardingRecord2 = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, new ItemStack(Items.recordConnected.itemID, 1));
+            player.worldObj.spawnEntityInWorld(RewardingRecord2);
+            RewardingRecord2.entityFX(EnumEntityFX.summoned);
+        }
+
     }
 
     public void update(ItemVessel itemVessel) {

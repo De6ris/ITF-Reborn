@@ -1,15 +1,10 @@
 package net.oilcake.mitelros.mixins.block;
 
-import net.minecraft.*;
-import net.oilcake.mitelros.item.Items;
+import net.minecraft.Block;
+import net.minecraft.BlockConstants;
+import net.minecraft.BlockGravel;
+import net.minecraft.Material;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.Random;
 
 @Mixin(BlockGravel.class)
 public class BlockGravelMixin extends Block {// TODO add itf metal to loot

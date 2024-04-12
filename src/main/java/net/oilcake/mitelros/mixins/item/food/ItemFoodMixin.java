@@ -7,8 +7,6 @@ import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.util.Config;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -63,7 +61,7 @@ public class ItemFoodMixin extends Item {
                 player.addWater(1);
         }
         if (ReflectHelper.dyCast(this) instanceof ItemMeat meat) {
-            int outcome = rand.nextInt(Config.Realistic.get() ? 1 : 2);
+            int outcome = rand.nextInt(Config.Realistic.get() ? 1 : 4);
             if (!meat.is_cooked) {
                 if (outcome == (Config.TagDigest.get() ? 4 : 0))
                     player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (240.0D * (1.0D + rand.nextDouble())), 0));

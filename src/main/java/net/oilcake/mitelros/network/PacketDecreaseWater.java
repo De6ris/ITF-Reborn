@@ -1,12 +1,12 @@
 package net.oilcake.mitelros.network;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
-
 import net.minecraft.NetHandler;
 import net.minecraft.Packet;
 import net.oilcake.mitelros.api.ITFNetHandler;
+
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 
 public class PacketDecreaseWater extends Packet {
     public float hungerWater;

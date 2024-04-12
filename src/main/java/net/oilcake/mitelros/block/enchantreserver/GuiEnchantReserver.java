@@ -48,15 +48,15 @@ public class GuiEnchantReserver extends GuiContainer implements ICrafting {
         int var6 = this.guiLeft;
         int var7 = this.guiTop;
         drawTexturedModalRect(var4, var5, 0, 0, this.xSize, this.ySize);
-        int exp = Math.max(0, this.tileEntityEnchantReserver.getEXP() - 2000);
-        int maxExp = this.tileEntityEnchantReserver.getMAXEXP() - 2000;
+        int exp = Math.max(0, this.tileEntityEnchantReserver.getEXP() - this.tileEntityEnchantReserver.getLaunchEXP());
+        int maxExp = this.tileEntityEnchantReserver.getMAXEXP() - this.tileEntityEnchantReserver.getLaunchEXP();
         int r;
         int g;
         int b;
-        if (tileEntityEnchantReserver.getEXP() < 2000) {
-            r = 160 + (int) (24.0F * ((float) tileEntityEnchantReserver.getEXP() / 2000.0F));
-            g = 30 + (int) (196.0F * ((float) tileEntityEnchantReserver.getEXP() / 2000.0F));
-            b = 30 - (int) (27.0F * ((float) tileEntityEnchantReserver.getEXP() / 2000.0F));
+        if (tileEntityEnchantReserver.getEXP() < this.tileEntityEnchantReserver.getLaunchEXP()) {
+            r = 160 + (int) (24.0F * ((float) tileEntityEnchantReserver.getEXP() / (float) this.tileEntityEnchantReserver.getLaunchEXP()));
+            g = 30 + (int) (196.0F * ((float) tileEntityEnchantReserver.getEXP() / (float) this.tileEntityEnchantReserver.getLaunchEXP()));
+            b = 30 - (int) (27.0F * ((float) tileEntityEnchantReserver.getEXP() / (float) this.tileEntityEnchantReserver.getLaunchEXP()));
         } else {
             r = 184 - (int) (120.0F * ((float) exp / (float) maxExp));
             g = 226 - (int) (66.0F * ((float) exp / (float) maxExp));
@@ -64,8 +64,8 @@ public class GuiEnchantReserver extends GuiContainer implements ICrafting {
         }
         int color = (r << 16) + (g << 8) + b;
         drawTexturedModalRect(var6 + 99, var7 + 21, 176, 0, 16, (int) (43.0F * exp / maxExp));
-        if (tileEntityEnchantReserver.getEXP() < 2000) {
-            this.fontRenderer.drawString(tileEntityEnchantReserver.getEXP() + "/" + 2000, this.width / 2 + 8, this.height / 2 - 70, color);
+        if (tileEntityEnchantReserver.getEXP() < this.tileEntityEnchantReserver.getLaunchEXP()) {
+            this.fontRenderer.drawString(tileEntityEnchantReserver.getEXP() + "/" + this.tileEntityEnchantReserver.getLaunchEXP(), this.width / 2 + 8, this.height / 2 - 70, color);
         } else {
             this.fontRenderer.drawString(exp + "/" + maxExp, this.width / 2 + 8, this.height / 2 - 70, color);
         }
@@ -79,7 +79,7 @@ public class GuiEnchantReserver extends GuiContainer implements ICrafting {
     }
 
     public void sendProgressBarUpdate(Container container, int i, int i1) {
-        this.player.sendPacket((Packet) new PacketEnchantReserverInfo());
+        this.player.sendPacket(new PacketEnchantReserverInfo());
     }
 
     public void setEnchantInfo(int exp) {

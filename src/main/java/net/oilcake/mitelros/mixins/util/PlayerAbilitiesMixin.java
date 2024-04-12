@@ -8,28 +8,16 @@ import net.minecraft.Potion;
 import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.util.CurseExtend;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-@Mixin({PlayerCapabilities.class})
+@Mixin(PlayerCapabilities.class)
 public class PlayerAbilitiesMixin {
-    @Shadow
-    private float flySpeed = 0.05F;
 
     @Shadow
     public EntityPlayer player;
-
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public float getFlySpeed() {
-        return (this.player.isSprinting() || (this.player.getPlayerController() != null && this.player.getPlayerController().isRunToggledOn(this.player) && this.player.inCreativeMode())) ? (this.flySpeed * 2.5F) : this.flySpeed;
-    }
 
     @ModifyConstant(method = "getWalkSpeed", constant = @Constant(floatValue = 0.75F))
     private float inject(float constant) {

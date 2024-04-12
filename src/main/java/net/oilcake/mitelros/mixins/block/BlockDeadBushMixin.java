@@ -1,12 +1,11 @@
 package net.oilcake.mitelros.mixins.block;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
-import net.minecraft.*;
+import net.minecraft.BlockDeadBush;
+import net.minecraft.BlockFlower;
+import net.minecraft.Material;
 import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 

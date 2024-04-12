@@ -49,7 +49,8 @@ potion.extend.freeze=霜冻
 potion.extend.dehydration=腹泻
 potion.extend.thirsty=干渴
 potion.extend.stunning=晕眩
-potion.extend.stretch=伸展
+
+potion.extend.stretch.postfix=延展药水
 
 generator.default_1_1=旧巨型生物群系
 
@@ -315,6 +316,7 @@ item.totem/totem_of_preserve.name=存护图腾
 item.totem/totem_of_hunting.name=巡猎图腾
 item.wither_branch.name=凋零残叶
 item.sulphur_sphere.name=硫磺
+item.enderRod.name=末影棒
 
 item.ignition/wood.name=引火器
 item.ignition/copper.name=铜打火石
@@ -340,9 +342,9 @@ item.records/record_connected.name=音乐唱片
 item.tools/detector.name=校频雷达
 item.tools/detector_emerald.name=雷达
 
-item.experimental_potion.name=实验的药水
-item.suspicious_potion.name=自然水瓶
-item.stretch_potion.name=伸展药水
+item.potion/experimental_potion.name=实验的药水
+item.potion/suspicious_potion.name=自然水瓶
+item.potion/stretch_potion.name=延展药水
 
 item.wolf_fur.name=狼的毛皮
 item.ancient_metal_armor_piece.name=镶金远古金属铠甲残片

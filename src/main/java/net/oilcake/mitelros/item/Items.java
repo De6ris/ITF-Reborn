@@ -1,9 +1,9 @@
 package net.oilcake.mitelros.item;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.potion.ItemPotionExperimental;
-import net.oilcake.mitelros.item.potion.ItemPotionStretch;
 import net.oilcake.mitelros.item.potion.ItemPotionSuspicious;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.reload.event.ItemRegistryEvent;
@@ -254,11 +254,11 @@ public class Items extends Item {
 
     public static final ItemArrow arrowMagical = new ItemArrow(IdUtil.getNextItemID(), Materials.magical);
 
-    public static final ItemWand lavaWand = new ItemWand(IdUtil.getNextItemID(), Materials.tungsten, "wandlava");
+    public static final ItemWand lavaWand = new ItemWand(IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemWand freezeWand = new ItemWand(IdUtil.getNextItemID(), Materials.nickel, "wandfreeze");
+    public static final ItemWand freezeWand = new ItemWand(IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemWand shockWand = new ItemWand(IdUtil.getNextItemID(), Material.ancient_metal, "wandshock");
+    public static final ItemWand shockWand = new ItemWand(IdUtil.getNextItemID(), Material.ancient_metal);
 
     public static final Item experimentalPotion = (new ItemPotionExperimental(IdUtil.getNextItemID())).setUnlocalizedName("experimentalPotion").setCreativeTab(CreativeTabs.tabMisc);
 
@@ -452,10 +452,10 @@ public class Items extends Item {
 
     public static final Item detectorDiamond = new ItemDetector(IdUtil.getNextItemID(), Material.diamond, "diamond").setUnlocalizedName("detector");
 
-    public static final Item sulphur = new ItemStandard(IdUtil.getNextItemID(), Materials.sulphur, "sulphur_sphere").setMaxStackSize(16);
+    public static final Item sulphur = new ItemStandard(IdUtil.getNextItemID(), Materials.sulphur, "sulphur_sphere");
 
     public static final ItemBow bowUru = new ItemBow(IdUtil.getNextItemID(), Materials.uru);
-    public static final ItemPotionStretch stretchPotion = (ItemPotionStretch) (new ItemPotionStretch(IdUtil.getNextItemID())).setCreativeTab(CreativeTabs.tabMisc);
+    public static final Item enderRod = ((ITFItem) (new ItemBrewingMisc(IdUtil.getNextItemID(), Material.ender_pearl, "enderRod")).setPotionEffectExtend("+0+1-2+3+13&4-4").setReachBonus(0.5F)).setExtraInfo("似乎能提升触及距离, 还能酿药?");
 
     public static void registerItems(ItemRegistryEvent event) {
         event.register("armor/nickel_helmet", nickelHelmet);
@@ -675,7 +675,7 @@ public class Items extends Item {
         event.register("tools/detector_emerald", detectorEmerald);
         event.register("sulphur_sphere", sulphur);
         event.register("bows/uru/", bowUru).setUnlocalizedName("uru_bow");
-        event.register("potion/stretch_potion", stretchPotion).setUnlocalizedName("stretch_potion");
+        event.register("enderRod", enderRod).setUnlocalizedName("enderRod");
         Constant.initItemArray();
     }
 
@@ -831,19 +831,19 @@ public class Items extends Item {
 
                 Character.valueOf('S'), sinew,
                 Character.valueOf('W'), stick);
-        register.registerShapedRecipe(new ItemStack(detectorEmerald, 1),true, "FAF", "ANA", "FAF",
+        register.registerShapedRecipe(new ItemStack(detectorEmerald, 1), true, "FAF", "ANA", "FAF",
 
                 Character.valueOf('A'), Item.goldNugget,
                 Character.valueOf('F'), Item.ancientMetalNugget,
                 Character.valueOf('N'), Item.emerald);
-        register.registerShapedRecipe(new ItemStack(detectorDiamond, 1),true, "FAF", "ANA", "FAF",
+        register.registerShapedRecipe(new ItemStack(detectorDiamond, 1), true, "FAF", "ANA", "FAF",
 
-                Character.valueOf('A'),Item.goldNugget,
-                Character.valueOf('F'),Item.ancientMetalNugget,
-                Character.valueOf('N'),Item.diamond);
+                Character.valueOf('A'), Item.goldNugget,
+                Character.valueOf('F'), Item.ancientMetalNugget,
+                Character.valueOf('N'), Item.diamond);
 
-        register.registerShapelessRecipe(new ItemStack(sulphur,9),true, new ItemStack(Blocks.blockSulphur,1));
-        register.registerShapelessRecipe(new ItemStack(Item.gunpowder,8),true, new ItemStack(Items.sulphur, 8),new ItemStack(Item.coal, 1, 1));
+        register.registerShapelessRecipe(new ItemStack(sulphur, 9), true, new ItemStack(Blocks.blockSulphur, 1));
+        register.registerShapelessRecipe(new ItemStack(Item.gunpowder, 8), true, new ItemStack(Items.sulphur, 8), new ItemStack(Item.coal, 1, 1));
         register.registerShapelessRecipe(new ItemStack(forgingnote, 2), false, forgingnote, Item.writableBook);
         register.registerShapelessRecipe(new ItemStack(UruHelmet, 1), true, forgingnote, UruIngot, Item.helmetMithril, Item.ingotMithril);
         register.registerShapelessRecipe(new ItemStack(UruChestplate, 1), true, forgingnote, UruIngot, Item.plateMithril, Item.ingotMithril);

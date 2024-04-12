@@ -1,7 +1,9 @@
 package net.oilcake.mitelros.mixins.item;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.minecraft.*;
+import net.minecraft.Item;
+import net.minecraft.ItemTool;
+import net.minecraft.Material;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

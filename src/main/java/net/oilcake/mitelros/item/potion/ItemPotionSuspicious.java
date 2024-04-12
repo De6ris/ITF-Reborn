@@ -2,8 +2,6 @@ package net.oilcake.mitelros.item.potion;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
-import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.util.Config;
 
 public class ItemPotionSuspicious extends Item {

@@ -1,10 +1,7 @@
 package net.oilcake.mitelros;
 
-import com.chocohead.mm.api.ClassTinkerers;
-import com.chocohead.mm.api.EnumAdder;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import net.minecraft.EnumQuality;
-import net.oilcake.mitelros.api.ITFEnumExtend;
 import net.xiaoyu233.fml.util.EnumExtends;
 
 public class EarlyRiser implements PreLaunchEntrypoint {

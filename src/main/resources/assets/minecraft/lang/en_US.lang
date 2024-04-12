@@ -49,7 +49,8 @@ potion.extend.freeze=Freeze
 potion.extend.dehydration=Dehydration
 potion.extend.thirsty=Thirsty
 potion.extend.stunning=Stunned
-potion.extend.stretch=Stretch
+
+potion.extend.stretch.postfix=Stretch Potion
 
 generator.default_1_1=Large Biomes(Old)
 
@@ -315,6 +316,7 @@ item.totem/totem_of_preserve.name=Totem of Preservation
 item.totem/totem_of_hunting.name=Totem of The Hunt
 item.wither_branch.name=Wither Branch
 item.sulphur_sphere.name=Sulphur
+item.enderRod.name=Ender Rod
 
 item.ignition/wood.name=Ignition
 item.ignition/copper.name=Copper Fire Starter

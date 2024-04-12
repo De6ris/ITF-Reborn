@@ -1,19 +1,10 @@
 package net.oilcake.mitelros.mixins.entity.player;
 
-import net.minecraft.EnchantmentHelper;
-import net.minecraft.EntityPlayer;
-import net.minecraft.EnumSignal;
-import net.minecraft.InventoryPlayer;
-import net.minecraft.ItemStack;
-import net.minecraft.Packet;
-import net.minecraft.Packet85SimpleSignal;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFInventory;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({InventoryPlayer.class})
 public class InventoryPlayerMixin implements ITFInventory {

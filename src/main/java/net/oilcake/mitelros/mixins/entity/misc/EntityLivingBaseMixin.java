@@ -3,7 +3,6 @@ package net.oilcake.mitelros.mixins.entity.misc;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.misc.QualityHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;

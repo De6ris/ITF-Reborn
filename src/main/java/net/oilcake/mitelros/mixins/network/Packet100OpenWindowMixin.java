@@ -1,6 +1,8 @@
 package net.oilcake.mitelros.mixins.network;
 
-import net.minecraft.*;
+import net.minecraft.EntityClientPlayerMP;
+import net.minecraft.InventoryBasic;
+import net.minecraft.Packet100OpenWindow;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import org.spongepowered.asm.mixin.Mixin;

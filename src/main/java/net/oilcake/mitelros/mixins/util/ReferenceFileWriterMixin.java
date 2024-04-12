@@ -17,6 +17,10 @@ public class ReferenceFileWriterMixin {
     @Shadow
     private static String newline;
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     private static void writeFoodValueFile(File dir) throws Exception {
         FileWriter fw = new FileWriter(dir.getPath() + "/food_value.txt");
@@ -39,6 +43,10 @@ public class ReferenceFileWriterMixin {
         fw.close();
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     private static void writeItemReachFile(File dir) throws Exception {
         FileWriter fw = new FileWriter(dir.getPath() + "/item_reach.txt");

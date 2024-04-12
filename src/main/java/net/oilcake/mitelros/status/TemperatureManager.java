@@ -13,13 +13,13 @@ public class TemperatureManager {
 
     private EntityPlayer player;
 
-    private int HeatResistance;
+    public int HeatResistance;
 
     public int FreezingCooldown;
 
-    private int FreezingWarning;
+    public int FreezingWarning;
 
-    private float BodyTemperature = 37.2F;
+    public float BodyTemperature = 37.2F;
 
     public TemperatureManager(EntityPlayer player) {
         this.player = player;
@@ -38,7 +38,6 @@ public class TemperatureManager {
     }
 
     public void update() {
-
         int freezeunit = Math.max(this.FreezingCooldown - 1500 * this.player.getMiscManager().getWeight(player), 0);
         this.BodyTemperature = 37.2F - 1.25E-4F * freezeunit;
         int freezelevel = Math.max(freezeunit / 12000, 0);

@@ -1,17 +1,21 @@
 package net.oilcake.mitelros.mixins.item;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.enchantment.Enchantments;
-import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import java.util.List;
 
 @Mixin(ItemBow.class)
 public class ItemBowMixin extends Item {
@@ -27,15 +31,15 @@ public class ItemBowMixin extends Item {
         super(id, Material.wood, "bows/" + reinforcement_material.toString() + "/");
     }
 
-    @Inject(method = {"<clinit>()V"}, at = {@At("FIELD")})
+    @Inject(method = {"<clinit>()V"}, at = {@At("FIELD")})// TODO fix this
     private static void injectClinit(CallbackInfo callback) {
         possible_arrow_materials = new Material[]{
                 Material.flint, Material.obsidian, Material.copper, Material.silver, Material.rusted_iron, Material.gold, Material.iron, Material.mithril, Material.adamantium, Material.ancient_metal,
                 Materials.nickel, Materials.tungsten, Materials.magical};
     }
 
-    @Overwrite
-    public static int getTicksForMaxPull(ItemStack item_stack) {
+    @Inject(method = "getTicksForMaxPull", at = @At("HEAD"), cancellable = true)
+    private static void getTicksForMaxPull(ItemStack item_stack, CallbackInfoReturnable<Integer> cir) {// TODO compability
         int TicksPull;
         Material material = item_stack.getMaterialForRepairs();
         if (material == Materials.tungsten) {
@@ -49,27 +53,17 @@ public class ItemBowMixin extends Item {
         } else {
             TicksPull = 20;
         }
-        return (int) (TicksPull * (1.0F - 0.5F * EnchantmentHelper.getEnchantmentLevelFraction(Enchantment.quickness, item_stack)));
+        cir.setReturnValue((int) (TicksPull * (1.0F - 0.5F * EnchantmentHelper.getEnchantmentLevelFraction(Enchantment.quickness, item_stack))));
     }
 
-    @Overwrite
-    public boolean onItemRightClick(EntityPlayer player, float partial_tick, boolean ctrl_is_down) {
-        if (!player.inCreativeMode() && player.inventory.getReadiedArrow() == null && !EnchantmentHelper.hasEnchantment(player.getHeldItemStack(), Enchantments.enchantmentInfinity)) {
-            return false;
-        } else {
-            player.nocked_arrow = player.inventory.getReadiedArrow();
-            if ((player.nocked_arrow == null && player.inCreativeMode()) || EnchantmentHelper.hasEnchantment(player.getHeldItemStack(), Enchantments.enchantmentInfinity))
-                player.nocked_arrow = Items.arrowMagical;
-            if (player.onServer())
-                player.sendPacketToAssociatedPlayers((new Packet85SimpleSignal(EnumSignal.nocked_arrow)).setShort(player.nocked_arrow.itemID).setEntityID(player), false);
-            player.setHeldItemInUse();
-            return true;
-        }
+    @ModifyExpressionValue(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;inCreativeMode()Z"))
+    private boolean infinity(boolean original, @Local(argsOnly = true) EntityPlayer player) {
+        return original || EnchantmentHelper.hasEnchantment(player.getHeldItemStack(), Enchantments.enchantmentInfinity);
     }
 
-    @Redirect(method = "onPlayerStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;inCreativeMode()Z"))
-    private boolean inject(EntityPlayer instance) {
-        return true;
+    @ModifyExpressionValue(method = "onPlayerStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;inCreativeMode()Z"))
+    private boolean infinity_1(boolean original, @Local(argsOnly = true) EntityPlayer player) {
+        return original || EnchantmentHelper.hasEnchantment(player.getHeldItemStack(), Enchantments.enchantmentInfinity);
     }
 
     @Inject(method = "onPlayerStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;tryDamageHeldItem(Lnet/minecraft/DamageSource;I)Lnet/minecraft/ItemDamageResult;"), locals = LocalCapture.CAPTURE_FAILSOFT)
@@ -79,13 +73,13 @@ public class ItemBowMixin extends Item {
         }
         Material material = item_stack.getMaterialForRepairs();
         if (material == Materials.tungsten) {
-            entity_arrow.setDamage(entity_arrow.getDamage() * 1.149999976158142D);
+            entity_arrow.setDamage(entity_arrow.getDamage() * 1.15D);
         } else if (material == Materials.uru) {
-            entity_arrow.setDamage(entity_arrow.getDamage() * 1.199999966878156D);
+            entity_arrow.setDamage(entity_arrow.getDamage() * 1.2D);
         } else if (material == Material.mithril) {
-            entity_arrow.setDamage(entity_arrow.getDamage() * 1.100000023841858D);
+            entity_arrow.setDamage(entity_arrow.getDamage() * 1.1D);
         } else if (material == Material.ancient_metal) {
-            entity_arrow.setDamage(entity_arrow.getDamage() * 1.0499999523162842D);
+            entity_arrow.setDamage(entity_arrow.getDamage() * 1.05D);
         } else {
             entity_arrow.setDamage(entity_arrow.getDamage() * 0.75D);
         }
@@ -94,38 +88,28 @@ public class ItemBowMixin extends Item {
         }
     }
 
-    @Inject(method = {"<init>(ILnet/minecraft/Material;)V"}, at = {@At("RETURN")})
+    @Inject(method = "<init>(ILnet/minecraft/Material;)V", at = @At("RETURN"))
     private void injectInit(CallbackInfo callbackInfo) {
         this.setMaxDamage((this.reinforcement_material == Materials.tungsten) ? 256 : ((this.reinforcement_material == Materials.uru) ? 512 : ((this.reinforcement_material == Material.mithril) ? 128 : ((this.reinforcement_material == Material.ancient_metal) ? 64 : 32))));
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public void addInformation(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot) {
-        if (extended_info && this.reinforcement_material.isMetal()) {
-            int bonus = (this.reinforcement_material == Material.mithril) ? 25 : ((this.reinforcement_material == Materials.tungsten) ? 35 : ((this.reinforcement_material == Materials.uru) ? 45 : 10));
-            info.add("");
-            info.add(EnumChatFormatting.BLUE + Translator.getFormatted("item.tooltip.velocityBonus", new Object[]{Integer.valueOf(bonus)}));
+
+    @ModifyConstant(method = "addInformation", constant = @Constant(intValue = 10))
+    private int itfBonus(int bonus) {
+        if (this.reinforcement_material == Materials.tungsten) {
+            bonus = 35;
+        } else if (this.reinforcement_material == Materials.uru) {
+            bonus = 45;
         }
-        super.addInformation(item_stack, player, info, extended_info, slot);
+        return bonus;
     }
 
-    @Redirect(method = {"<init>(ILnet/minecraft/Material;)V"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemBow;setMaxDamage(I)Lnet/minecraft/Item;"))
-    private Item redirectSetMaxDamage(ItemBow instance, int i) {
+    @Inject(method = "<init>", at = @At("TAIL"))
+    private void itfMaxDamage(int id, Material reinforcement_material, CallbackInfo ci) {
         if (this.reinforcement_material == Materials.tungsten) {
             setMaxDamage(256);
         } else if (this.reinforcement_material == Materials.uru) {
             setMaxDamage(512);
-        } else if (this.reinforcement_material == Material.mithril) {
-            setMaxDamage(128);
-        } else if (this.reinforcement_material == Material.ancient_metal) {
-            setMaxDamage(64);
-        } else {
-            setMaxDamage(32);
         }
-        return null;
     }
 }

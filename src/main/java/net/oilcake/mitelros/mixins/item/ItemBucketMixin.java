@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.mixins.item;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.block.MaterialHandler;
 import net.oilcake.mitelros.item.Items;
@@ -45,6 +46,11 @@ public abstract class ItemBucketMixin extends ItemVessel {
         if (this.getVesselMaterial() == Materials.tungsten) {
             cir.setReturnValue(0.0F);
         }
+    }
+
+    @ModifyReturnValue(method = "getChanceOfMeltingWhenFilledWithLava", at = @At("RETURN"))
+    private float harder(float original) {
+        return original * 2.5F;
     }
 
     /**
@@ -97,6 +103,7 @@ public abstract class ItemBucketMixin extends ItemVessel {
                         if (player.inCreativeMode() || ctrl_is_down)
                             rc.world.setBlockToAir(x, y, z);
                         if (!player.inCreativeMode())
+                            System.out.println(getChanceOfMeltingWhenFilledWithLava());
                             if (material == Material.lava && rc.world.rand.nextFloat() < getChanceOfMeltingWhenFilledWithLava()) {
                                 player.addStat(StatList.objectBreakStats[this.itemID], 1);
                                 ItemStack held_item_stack = player.getHeldItemStack();

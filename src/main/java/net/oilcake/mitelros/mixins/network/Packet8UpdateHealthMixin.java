@@ -1,21 +1,18 @@
 package net.oilcake.mitelros.mixins.network;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
-
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.minecraft.NetHandler;
 import net.minecraft.Packet;
 import net.minecraft.Packet8UpdateHealth;
 import net.oilcake.mitelros.api.ITFPacket8;
-import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 
 @Mixin(Packet8UpdateHealth.class)
 public abstract class Packet8UpdateHealthMixin extends Packet implements ITFPacket8 {

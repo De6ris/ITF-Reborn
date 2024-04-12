@@ -1,35 +1,25 @@
 package net.oilcake.mitelros.mixins.enchantment;
 
-import net.minecraft.CreativeTabs;
 import net.minecraft.Enchantment;
 import net.minecraft.EnchantmentPiercing;
-import net.minecraft.Item;
-import net.minecraft.ItemBattleAxe;
-import net.minecraft.ItemPickaxe;
 import net.minecraft.EnumRarity;
+import net.minecraft.Item;
 import net.oilcake.mitelros.item.ItemMorningStar;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({EnchantmentPiercing.class})
-public class EnchantmentPiercingMixin extends Enchantment {
-  protected EnchantmentPiercingMixin(int id, EnumRarity rarity, int difficulty) {
-    super(id, rarity, difficulty);
-  }
-  
-  @Shadow
-  public String getNameSuffix() {
-    return null;
-  }
-  
-  @Overwrite
-  public boolean canEnchantItem(Item item) {
-    return (item.getClass() == ItemPickaxe.class || item.getClass() == ItemBattleAxe.class || item.getClass() == ItemMorningStar.class);
-  }
-  
-  @Shadow
-  public boolean isOnCreativeTab(CreativeTabs creativeModeTab) {
-    return false;
-  }
+@Mixin(EnchantmentPiercing.class)
+public abstract class EnchantmentPiercingMixin extends Enchantment {
+    protected EnchantmentPiercingMixin(int id, EnumRarity rarity, int difficulty) {
+        super(id, rarity, difficulty);
+    }
+
+    @Inject(method = "canEnchantItem", at = @At("HEAD"), cancellable = true)
+    private void inject(Item item, CallbackInfoReturnable<Boolean> cir) {
+        if (item.getClass() == ItemMorningStar.class) {
+            cir.setReturnValue(true);
+        }
+    }
 }

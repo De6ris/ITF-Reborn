@@ -1,12 +1,11 @@
 package net.oilcake.mitelros.mixins.item;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFEnchantment;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.item.Materials;
-import net.oilcake.mitelros.misc.QualityHandler;
+import net.oilcake.mitelros.util.QualityHandler;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -44,10 +43,10 @@ public abstract class ItemStackMixin {
     }
 
     @Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemTool;getToolMaterial()Lnet/minecraft/Material;"))
-    private void nickelInfo(EntityPlayer par1EntityPlayer, boolean par2, Slot slot, CallbackInfoReturnable<List> cir, @Local LocalRef<ArrayList<String>> var3) {
+    private void nickelInfo(EntityPlayer par1EntityPlayer, boolean par2, Slot slot, CallbackInfoReturnable<List> cir, @Local ArrayList<String> var3) {
         Item var4 = Item.itemsList[this.itemID];
         if (((ItemTool) var4).getToolMaterial() == Materials.nickel) {
-            var3.get().add(EnumChatFormatting.LIGHT_GRAY + Translator.getFormatted("itemtool.tooltip.slimeresistance", new Object[0]));
+            var3.add(EnumChatFormatting.LIGHT_GRAY + Translator.getFormatted("itemtool.tooltip.slimeresistance", new Object[0]));
         }
     }
 
@@ -83,11 +82,6 @@ public abstract class ItemStackMixin {
                 var3.add(EnumChatFormatting.GRAY + description);
             }
         }
-    }
-
-    @Inject(method = "getTooltip", at = @At("RETURN"))
-    private void forgeEntry(EntityPlayer par1EntityPlayer, boolean par2, Slot slot, CallbackInfoReturnable<List> cir, @Local LocalRef<ArrayList<String>> var3) {
-
     }
 
     @Shadow

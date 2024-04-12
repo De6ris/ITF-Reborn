@@ -1,7 +1,5 @@
 package net.oilcake.mitelros.mixins.item;
 
-import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import net.minecraft.*;
 import net.oilcake.mitelros.block.BlockTorchIdle;
 import net.oilcake.mitelros.block.Blocks;
