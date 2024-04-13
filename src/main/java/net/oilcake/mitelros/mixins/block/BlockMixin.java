@@ -20,8 +20,8 @@ public abstract class BlockMixin {
         Item.itemsList[Blocks.flowerextend.blockID] = (new ItemMultiTextureTile(Blocks.flowerextend, BlockFlowerExtend.types)).setUnlocalizedName("flowers");
         Block.pumpkinLantern.setLightValue(0.9375f);
 
-        mySetLightValue(Blocks.blockAzurite, 0.75f);
-        mySetLightValue(Blocks.azuriteCluster, 0.5f);
+        mySetLightValue(Blocks.blockAzurite, 1.0f);
+        mySetLightValue(Blocks.azuriteCluster, 0.75f);
         mySetLightValue(Blocks.torchWoodIdle, 0.5f);
         mySetLightValue(Blocks.torchWoodExtinguished, 0.1f);
     }

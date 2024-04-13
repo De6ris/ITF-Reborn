@@ -110,10 +110,10 @@ public class Blocks {
     public static final Block blockAzurite = new BlockGrowableOre(getNextBlockID(), Materials.crystal, 2)
             .setStepSound(Block.soundGlassFootstep).
             setHardness(1.2F).
-            setResistance(12.0f).setLightValue(0.75F);
+            setResistance(12.0f).setLightValue(1.0F);
 
     public static final Block azuriteCluster = new BlockCaveMisc(getNextBlockID(), Materials.crystal)
-            .setLightValue(0.5F).
+            .setLightValue(0.75F).
             setHardness(0.6F).
             setMinHarvestLevel(1).
             setResistance(6.0f).setStepSound(Block.soundGlassFootstep);
