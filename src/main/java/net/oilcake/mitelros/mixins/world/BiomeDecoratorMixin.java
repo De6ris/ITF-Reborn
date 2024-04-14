@@ -69,7 +69,7 @@ public abstract class BiomeDecoratorMixin implements ITFBiomeDecorator {
     private void itfOre(CallbackInfo ci) {
         if (this.currentWorld.isOverworld()) {
             genMinable(10, this.azuriteGen, true);
-            genMinable(2, this.tungstenGen);
+//            genMinable(2, this.tungstenGen);
             genMinable(30, this.nickelGen, true);
         } else if (this.currentWorld.isUnderworld()) {
             genMinable(10, this.tungstenGen, true);

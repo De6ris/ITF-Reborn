@@ -30,7 +30,7 @@ public class ItemFoodMixin extends Item {
             return Config.TagDryDilemma.get() ? 1 : 2;
         if (id == 135)
             return Config.TagDryDilemma.get() ? 1 : 2;
-        if (material == Materials.glowberries)
+        if (material == (Materials.glowberries) || material == (Materials.peeledSugarcane))
             return 1;
         if (material == Material.cheese || id == 88)
             return -1;

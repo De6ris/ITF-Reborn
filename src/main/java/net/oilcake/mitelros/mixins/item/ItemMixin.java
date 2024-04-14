@@ -29,9 +29,14 @@ public abstract class ItemMixin implements ITFItem {
     protected List materials;
     @Shadow
     public static Item blazeRod;
+    @Shadow
+    public static Item wheat;
+
     private int water;
 
     private String extraInfo;
+
+    private Item item;
 
 
     @Redirect(method = "<init>(ILjava/lang/String;I)V", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
@@ -51,6 +56,9 @@ public abstract class ItemMixin implements ITFItem {
     private void waterInfo(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
         int water = this.getWater();
         if (this.water == 0) return;
+//        if (item_stack == Items.Agave && this.water < 0) {
+//            info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.agave"));
+//        }
         if (this.water < 0) {
             info.add(EnumChatFormatting.YELLOW + Translator.getFormatted("item.tooltip.water.minus", new Object[]{water}));
         } else {

@@ -49,6 +49,7 @@ potion.extend.freeze=Freeze
 potion.extend.dehydration=Dehydration
 potion.extend.thirsty=Thirsty
 potion.extend.stunning=Stunned
+potion.extend.stretch=Stretch
 
 potion.extend.stretch.postfix=Stretch Potion
 
@@ -56,6 +57,7 @@ generator.default_1_1=Large Biomes(Old)
 
 item.tooltip.water.add=Water+%d
 item.tooltip.water.minus=Water%d
+item.tooltip.water.agave=40% Water+1
 item.tooltip.reach.add=Reach+%d
 
 item.armor/nickel_helmet.name=Nickel Helmet
@@ -215,6 +217,7 @@ item.armor/ancient_metal_sacred_chestplate.name=Gilding Ancient Metal Chestplate
 item.armor/ancient_metal_sacred_leggings.name=Gilding Ancient Metal Leggings
 item.armor/ancient_metal_sacred_boots.name=Gilding Ancient Metal Boots
 
+item.tools/rusted_iron_club.name=Rusted Iron Morningstar
 item.tools/copper_club.name=Copper Morningstar
 item.tools/silver_club.name=Silver Morningstar
 item.tools/gold_club.name=Golden Morningstar
@@ -222,6 +225,9 @@ item.tools/iron_club.name=Iron Morningstar
 item.tools/ancient_metal_club.name=Ancient Metal Morningstar
 item.tools/mithril_club.name=Mithril Morningstar
 item.tools/adamantium_club.name=Adamantium Morningstar
+
+item.tools/flint_hoe.name=Flint Hoe
+item.tools/stick_knife.name=Stick Knife
 
 item.bowls/lampchop_stew.name=Chestnut Soup
 item.bowls/porkchop_stew.name=Porkchop Stew
@@ -294,6 +300,11 @@ item.buckets/ancient_metal/water_suspicious.name=Ancient Metal Bucket of Suspici
 item.buckets/ancient_metal/water_swampland.name=Ancient Metal Bucket of Swampland Water
 item.buckets/adamantium/water_suspicious.name=Adamantium Bucket of Suspicious Water
 item.buckets/adamantium/water_swampland.name=Adamantium Bucket of Swampland Water
+item.buckets/wood/empty.name=Wood Bucket
+item.buckets/wood/water.name=Wood Bucket of Water
+item.buckets/wood/milk.name=Wood Bucket of Milk
+item.buckets/wood/water_suspicious.name=Wood Bucket of Suspicious Water
+item.buckets/wood/water_swampland.name=Wood Bucket of Swampland Water
 
 item.food/mashed_cactus.name=Mashed Cactus
 item.food/lemon.name=Lemon
@@ -306,6 +317,7 @@ item.food/glow_berries.name=Glow Berries
 item.food/agave.name=Agave
 item.food/beetroot.name=Beetroot
 item.food/beetroot_seeds.name=Beetroot seeds
+item.food/peeled_sugarcane.name=Peeled Sugarcane
 item.pulque.name=Pulque
 item.ale.name=Ale
 item.forging_note.name=Forging Note
@@ -314,11 +326,14 @@ item.totem/totem_of_knowledge.name=Totem of Erudition
 item.totem/totem_of_destroy.name=Totem of Destruction
 item.totem/totem_of_preserve.name=Totem of Preservation
 item.totem/totem_of_hunting.name=Totem of The Hunt
+item.totem/totem_of_sentry.name=Totem of Sentry
+item.totem/totem_of_unknown.name=Totem of UNKNOWN
 item.wither_branch.name=Wither Branch
 item.sulphur_sphere.name=Sulphur
 item.enderRod.name=Ender Rod
 
 item.ignition/wood.name=Ignition
+item.ignition/rusted_iron.name=Rusted Iron Fire Starter
 item.ignition/copper.name=Copper Fire Starter
 item.ignition/silver.name=Silver Fire Starter
 item.ignition/gold.name=Gold Fire Starter
@@ -374,6 +389,10 @@ entity.EntityZombieRetinue.name=Zombie Retinue
 entity.EntityBoneBodyguard.name=Skeleton Bodyguard
 entity.EntityGhost.name=Ghost
 entity.EntityEvil.name=Evil
+entity.EntityCastleGuard.name=Ancient Golem
+entity.EntityPigManGuard.name=PigZombie Guard
+entity.EntitySpirit.name=Spirit
+entity.EntityLongdeadSentry.name=Longdead Sentry
 entity.EntitySkeletonHorse.name=Skeleton Horse
 entity.EntityUndeadGuard.name=Undead Guard
 

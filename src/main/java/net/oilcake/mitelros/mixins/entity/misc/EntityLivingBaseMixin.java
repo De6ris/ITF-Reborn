@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -63,6 +64,16 @@ public abstract class EntityLivingBaseMixin extends Entity {
     public float getResistanceToParalysis() {
         return 0.0F;
     }
+
+    @Inject(method = "onDeathUpdate", at = @At(value = "FIELD", shift = At.Shift.AFTER, target = "Lnet/minecraft/EntityLivingBase;deathTime:I", ordinal = 1))
+    private void injectTick(CallbackInfo callbackInfo){
+        if(this.getAsEntityLivingBase() instanceof EntityCubic || this.getAsEntityLivingBase() instanceof EntityWight || this.getAsEntityLivingBase() instanceof EntityInvisibleStalker) {
+            this.deathTime = 20;
+        }
+    }
+
+    @Shadow
+    public int deathTime;
 
     @Shadow
     protected void dropFewItems(boolean par1, DamageSource damage_source) {

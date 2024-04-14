@@ -64,7 +64,7 @@ public class AchievementExtend {
         forgingLegend = (new Achievement(getNextAchievementID(), "ForgingLegend", -6, 10, (Item) Items.ChestplateAncientmetalsacred, copying)).registerAchievement();
         invincible = (new Achievement(getNextAchievementID(), "Invincible", -3, 12, Items.Pulque, AchievementList.potion)).registerAchievement().setSpecial();
         stormStriker = (new Achievement(getNextAchievementID(), "StormStriker", 9, 16, new ItemStack(Block.skull, 1, 3), AchievementList.theEnd2)).registerAchievement().setSpecial();
-        cheatdeath = (new Achievement(getNextAchievementID(), "DeathCheater", -3, 14, Items.totemoffecund, AchievementList.potion)).registerAchievement();
+        cheatdeath = (new Achievement(getNextAchievementID(), "DeathCheater", -3, 14, Items.totemOfFecund, AchievementList.potion)).registerAchievement();
         pull = (new Achievement(getNextAchievementID(), "Pull", -3, -5, Item.manure, mashedCactus)).registerAchievement();
     }
 

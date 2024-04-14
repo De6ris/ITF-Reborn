@@ -30,7 +30,7 @@ public class ItemToolMixin extends Item {
     @Unique
     private float itfMaterial() {
         if (this.effective_material == Materials.uru)
-            return 3.0F;
+            return 4.0F;
         if (this.effective_material == Materials.nickel)
             return 2.0F;
         if (this.effective_material == Materials.tungsten)

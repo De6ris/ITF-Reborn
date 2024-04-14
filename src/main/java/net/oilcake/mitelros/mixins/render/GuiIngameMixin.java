@@ -4,6 +4,7 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.api.ITFWorld;
+import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.util.Constant;
 import org.apache.commons.lang3.StringUtils;
@@ -38,10 +39,10 @@ public class GuiIngameMixin extends Gui {
             int var25 = 16;
             int var36 = 0;
             int var27 = var12 - temp * 8 - 9;
-//            if (this.mc.thePlayer.isPotionActive(PotionExtend.dehydration)) {
-//                var36 += 27;
-//                var25 = 9;
-//            }
+            if (this.mc.thePlayer.isPotionActive(PotionExtend.dehydration)) {
+                var25 += 27;
+                var36 = 3;
+            }
             if (temp < ((ITFFoodStats) this.mc.thePlayer.getFoodStats()).getWaterLimit() / 2)
                 drawTexturedModalRect(var27, var28, 16 + var36 * 9, 54, 9, 9);
             if (temp * 2 + 1 < water)
@@ -156,12 +157,12 @@ public class GuiIngameMixin extends Gui {
                 String text = GuiIngame.server_load + "%";
                 drawString(this.mc.fontRenderer, text, sr.getScaledWidth() - this.mc.fontRenderer.getStringWidth(text) - 2, 2, 14737632);
             }
-            String t = " §c挑战难度: " + Constant.CalculateCurrentDiff() + "§r ";
+            String t = Constant.CalculateCurrentDiff() >= 16 ? "§c挑战难度：§4" + Constant.CalculateCurrentDiff() + " §f" : (Constant.CalculateCurrentDiff() >= 12 ? " 挑战难度：§c" + Constant.CalculateCurrentDiff() + " §f" : (Constant.CalculateCurrentDiff() >= 8 ? " 挑战难度：§6" + Constant.CalculateCurrentDiff() + " §f" : (Constant.CalculateCurrentDiff() >= 4 ? " 挑战难度：§a" + Constant.CalculateCurrentDiff() + " §f" : (Constant.CalculateCurrentDiff() >= 0 ? " 挑战难度：" + Constant.CalculateCurrentDiff() + " §f" : null))));
             StringBuilder var68 = (new StringBuilder()).append("MITE-ITF ");
-            if (Config.FinalChallenge.get() && Constant.CalculateCurrentDiff() == 25)
-                t = " §4终极难度§r ";
+            if (Config.FinalChallenge.get() && Constant.CalculateCurrentDiff() == 31)
+                t = "§4终极难度§r ";
             if (Constant.CalculateCurrentDiff() < 0)
-                t = " §a休闲难度§r ";
+                t = "§a休闲难度§r ";
             if (player.getHeldItemStack() != null && player.getHeldItemStack().getItem() == Item.compass)
                 var68.append(pos);
             if (player.getHeldItemStack() != null && player.getHeldItemStack().getItem() == Item.pocketSundial)

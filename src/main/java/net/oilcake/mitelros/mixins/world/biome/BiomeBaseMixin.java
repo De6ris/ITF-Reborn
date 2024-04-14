@@ -2,9 +2,7 @@ package net.oilcake.mitelros.mixins.world.biome;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.*;
-import net.oilcake.mitelros.entity.EntityBoneBodyguard;
-import net.oilcake.mitelros.entity.EntityRetinueZombie;
-import net.oilcake.mitelros.entity.EntityUnknown;
+import net.oilcake.mitelros.entity.*;
 import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.world.BiomeBases;
 import org.objectweb.asm.Opcodes;
@@ -57,6 +55,28 @@ public class BiomeBaseMixin {
     public void injectCtor(CallbackInfo callbackInfo) {
         this.spawnableMonsterList.add(new SpawnListEntry(EntityRetinueZombie.class, (Config.TagFallenInMineLVL2.get() || Config.TagFallenInMineLVL1.get()) ? 35 : 10, 4, 4));
         this.spawnableMonsterList.add(new SpawnListEntry(EntityBoneBodyguard.class, (Config.TagBattleSufferLVL2.get() || Config.TagBattleSufferLVL1.get()) ? 35 : 10, 4, 4));
+        if (Config.TagDimensionInvade.get()) {
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityLongdead.class, 40, 4, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityLongdeadGuardian.class, 20, 2, 1));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityAncientBoneLord.class, 5, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityCaveSpider.class, 20, 4, 1));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityStalkerCreeper.class, 30, 2, 4));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityInfernalCreeper.class, 20, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityDemonSpider.class, 20, 1, 4));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityHellhound.class, 20, 1, 4));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityEvil.class, 10, 1, 4));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityPigZombie.class, 20, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntitySpiderKing.class, 2, 1, 1));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityGhast.class, 10, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityWitherBoneLord.class, 1, 1, 1));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityWitherBodyguard.class, 3, 1, 1));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityWitherBodyguard.class, 3, 1, 1));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntitySpirit.class, 5, 1, 1));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityPigmanGuard.class, 10, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityPigmanLord.class, 2, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityEvil.class, 20, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityFireElemental.class, 10, 1, 2));
+        }
         if (Config.TagCreaturesV2.get())
             RegenAnimals();
         if (Config.TagApocalypse.get())

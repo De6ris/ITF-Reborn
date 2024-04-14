@@ -62,6 +62,13 @@ public abstract class WorldGenMinableMixin {
                 relative_height = rand.nextFloat();
             } while (!(relative_height < rand.nextFloat()));
         }
+        if (world.isUnderworld()) {
+            if (world.underworld_y_offset != 0) {
+                if (block == Blocks.oreTungsten) {
+                    cir.setReturnValue(rand.nextInt(16 + world.underworld_y_offset));
+                }
+            }
+        }
         int min_height = this.getMinVeinHeight(world);
         int height_range = this.getMaxVeinHeight(world) - min_height + 1;
         cir.setReturnValue(min_height + (int) (relative_height * (float) height_range));

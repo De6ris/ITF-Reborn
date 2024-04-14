@@ -3,6 +3,7 @@ package net.oilcake.mitelros.item;
 import net.minecraft.*;
 import net.oilcake.mitelros.achivements.AchievementExtend;
 import net.oilcake.mitelros.api.ITFPlayer;
+import net.oilcake.mitelros.entity.EntityLongdeadSentry;
 
 public class ItemTotem extends Item {
     public ItemTotem(int id, Material material, String texture) {
@@ -46,6 +47,19 @@ public class ItemTotem extends Item {
                 player.entityFX(EnumEntityFX.smoke);
             player.worldObj.createExplosion((Entity) player, player.posX, player.posY + 1.5D, player.posZ, 0.0F, 4.0F - 4.0F * delta, true);
             player.setHealth(player.getMaxHealth() / 2.0F, true, player.getHealFX());
+        } else if (totem_material == Materials.adamantium) {
+            EntityLongdeadSentry sentry = new EntityLongdeadSentry(player.worldObj);
+            sentry.setPosition(player.posX, player.posY, player.posZ);
+            sentry.refreshDespawnCounter(-9600);
+            player.worldObj.spawnEntityInWorld(sentry);
+            sentry.onSpawnWithEgg(null);
+            sentry.entityFX(EnumEntityFX.summoned);
+        } else if (totem_material == Material.rusted_iron) {
+            for (int i = 0; i < 8; i++) {
+                player.entityFX(EnumEntityFX.smoke_and_steam);
+            }
+            player.addPotionEffect(new PotionEffect(Potion.resistance.id, 400, 10));
+            player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 400, 127));
         } else {
             Minecraft.setErrorMessage("effectSpecified(): Undefined Material " + totem_material.toString() + ".");
         }

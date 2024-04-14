@@ -20,8 +20,8 @@ public abstract class BlockTorchMixin extends BlockMounted {
         if (super.updateTick(world, x, y, z, random)) {
             cir.setReturnValue(true);
         } else {
-            int ran = random.nextInt(512);
-            if (ran == 0 && world.getBlockId(x, y, z) == Block.torchWood.blockID) {
+            int rand = random.nextInt(512);
+            if (rand == 0 && world.getBlockId(x, y, z) == Block.torchWood.blockID) {
                 world.setBlock(x, y, z, Blocks.torchWoodIdle.blockID, world.getBlockMetadata(x, y, z), 2);
             }
             cir.setReturnValue(false);

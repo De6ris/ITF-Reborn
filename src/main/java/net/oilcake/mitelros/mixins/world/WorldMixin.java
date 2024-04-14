@@ -121,7 +121,7 @@ public abstract class WorldMixin implements ITFWorld {
     }
 
     public int getSeasonType(int day) {
-        return day / 32 % 4;
+        return day % 128 / 32;
     }
 
     public float getRainDurationModify(int Season) {

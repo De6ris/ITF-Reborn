@@ -5,6 +5,9 @@ import net.minecraft.*;
 import net.oilcake.mitelros.achivements.AchievementExtend;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.Blocks;
+import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;
+import net.oilcake.mitelros.block.observer.TileEntityObserver;
+import net.oilcake.mitelros.block.receiver.TileEntityReceiver;
 import net.oilcake.mitelros.client.render.*;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.entity.*;
@@ -149,6 +152,10 @@ public class ITFEvent {
         event.register(EntityGhost.class, "EntityGhost", 557, 9539985, 6629376);
         event.register(EntityEvil.class, "EntityEvil", 558, 9539985, 14008320);
         event.register(EntityUndeadGuard.class, "EntityUndeadGuard", 559, 12698049, 4802889);
+        event.register(EntityPigmanGuard.class,"EntityPigManGuard", 560,15373203, 5066061);
+        event.register(EntityCastleGuard.class, "EntityCastleGuard", 561,0x565656,0x999999);
+        event.register(EntitySpirit.class,"EntitySpirit" ,562,0xFFFFFFF,0xFFAD0000);
+        event.register(EntityLongdeadSentry.class,"EntityLongdeadSentry", 563,13422277, 7699821);
         event.register(EntityUnknown.class, "null", 1895);
     }
 
@@ -167,13 +174,15 @@ public class ITFEvent {
         event.register(EntityWandFireball.class, new RenderSnowball(Item.fireballCharge));
         event.register(EntityWandIceBall.class, new RenderSnowball(Item.snowball));
         event.register(EntityWandShockWave.class, new RenderSnowball(Item.eyeOfEnder));
+        event.register(EntityCastleGuard.class, new RenderCastleGuard());
+        event.register(EntitySpirit.class, new RenderSpirit());
         event.register(EntityUnknown.class, new RenderUnknown());
     }
 
-//    @Subscribe// TODO why comment
-//    public void onTileEntityRegister(TileEntityRegistry event) {
-//        event.register(TileEntityEnchantReserver.class, "EnchantReserver");
-//        event.register(TileEntityObserver.class, "Observer");
-//        event.register(TileEntityReceiver.class, "Receiver");
-//    }
+    @Subscribe
+    public void onTileEntityRegister(TileEntityRegisterEvent event) {
+        event.register(TileEntityEnchantReserver.class, "EnchantReserver");
+        event.register(TileEntityObserver.class, "Observer");
+        event.register(TileEntityReceiver.class, "Receiver");
+    }
 }

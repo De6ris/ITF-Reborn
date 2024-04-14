@@ -2,6 +2,7 @@ package net.oilcake.mitelros.entity;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
+import net.oilcake.mitelros.util.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,8 @@ public class EntityPigmanLord extends EntityPigZombie {
   
   protected void applyEntityAttributes() {
     super.applyEntityAttributes();
-    setEntityAttribute(SharedMonsterAttributes.maxHealth, 30.0D);
-    setEntityAttribute(SharedMonsterAttributes.attackDamage, 9.0D);
+    this.setEntityAttribute(SharedMonsterAttributes.maxHealth, Config.TagDemonDescend.get() ? 45.0D : 30.0D);
+    this.setEntityAttribute(SharedMonsterAttributes.attackDamage, Config.TagDemonDescend.get() ? 11.25D : 9.0D);
   }
   
   public EntityPigmanLord(World par1World) {
@@ -41,7 +42,10 @@ public class EntityPigmanLord extends EntityPigZombie {
     if (!Minecraft.isInTournamentMode()) {
       items.add(new RandomItemListEntry((Item)Items.tungstenBattleAxe, 1));
       items.add(new RandomItemListEntry((Item)Items.tungstenWarHammer, 1));
-    } 
+        if (Config.TagDemonDescend.get()){
+          items.add(new RandomItemListEntry(Items.morningStarTungsten, 4));
+        }
+    }
     RandomItemListEntry entry = (RandomItemListEntry)WeightedRandom.getRandomItem(this.rand, items);
     setHeldItemStack((new ItemStack(entry.item)).randomizeForMob((EntityLiving)this, true));
   }
@@ -55,6 +59,41 @@ public class EntityPigmanLord extends EntityPigZombie {
   }
   
   public int getExperienceValue() {
-    return super.getExperienceValue() * 2;
+    return super.getExperienceValue() * 6;
   }
+
+  public int getMaxSpawnedInChunk() {
+    return 1;
+  }
+
+  private int spawnCounter;
+  private int spawnSums;
+  private boolean gathering_troops = false;
+
+  public void onUpdate() {
+    super.onUpdate();
+    if (!getWorld().isRemote) {
+      if (this.getTarget() != null) {
+        if (!this.isNoDespawnRequired() && this.getTarget() != null) {
+          this.gathering_troops = true;
+          this.func_110163_bv();
+        }
+      }
+      if (spawnSums <= 4 && gathering_troops) {
+        if (spawnCounter < 20) {
+          if (Config.TagDemonDescend.get()) spawnCounter++;
+        } else {
+          EntityPigmanGuard Belongings = new EntityPigmanGuard(worldObj);
+          Belongings.setPosition(posX, posY, posZ);
+          Belongings.refreshDespawnCounter(-9600);
+          worldObj.spawnEntityInWorld(Belongings);
+          Belongings.onSpawnWithEgg(null);
+          Belongings.entityFX(EnumEntityFX.summoned);
+          spawnCounter = 0;
+          spawnSums++;
+        }
+      }
+    }
+  }
+
 }

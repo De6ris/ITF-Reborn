@@ -1,10 +1,8 @@
 package net.oilcake.mitelros.mixins.world.biome;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.entity.EntityBoneBodyguard;
-import net.oilcake.mitelros.entity.EntityRetinueZombie;
-import net.oilcake.mitelros.entity.EntitySpiderKing;
-import net.oilcake.mitelros.entity.EntityStalkerCreeper;
+import net.oilcake.mitelros.entity.*;
+import net.oilcake.mitelros.util.Config;
 import net.oilcake.mitelros.world.WorldGenUnderworldCastle;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,6 +24,27 @@ public class BiomeGenUnderworldMixin extends BiomeGenBase {
         removeEntityFromSpawnableLists(EntityRetinueZombie.class);
         this.spawnableMonsterList.add(new SpawnListEntry(EntityStalkerCreeper.class, 100, 1, 2));
         this.spawnableMonsterList.add(new SpawnListEntry(EntitySpiderKing.class, 5, 1, 1));
+        if (Config.TagDimensionInvade.get()) {
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityRevenant.class, 40, 2, 4));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityInfernalCreeper.class, 20, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityDemonSpider.class, 30, 1, 4));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityHellhound.class, 30, 1, 4));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityEvil.class, 30, 2, 4));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityPigZombie.class, 50, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityMagmaCube.class, 30, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityPigmanLord.class, 5, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityPigmanGuard.class, 20, 1, 4));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityGhast.class, 30, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityEarthElemental.class, 40, 1, 1));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityWitherBoneLord.class, 5, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityWitherBodyguard.class, 10, 2, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityBlackWidowSpider.class, 20, 2, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityWoodSpider.class, 40, 2, 4));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityStray.class, 40, 2, 4));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityHusk.class, 40, 2, 4));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntitySpirit.class, 10, 1, 1));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityFireElemental.class, 30, 1, 2));
+        }
     }
 
     @Inject(method = "decorate", at = @At("TAIL"))

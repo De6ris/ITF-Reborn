@@ -11,6 +11,8 @@ import net.xiaoyu233.fml.reload.event.RecipeRegistryEvent;
 import net.xiaoyu233.fml.util.IdUtil;
 import net.xiaoyu233.fml.util.ReflectHelper;
 
+import static net.xiaoyu233.fml.util.ReflectHelper.createInstance;
+
 public class Items extends Item {
     public static final ItemArmor nickelHelmet = new ItemHelmet(IdUtil.getNextItemID(), Materials.nickel, false);
 
@@ -390,7 +392,7 @@ public class Items extends Item {
 
     public static final ItemBowlClay claybowlBeetrootSoup = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Materials.beetroot, "beetroot_soup")).setFoodValue(15, 6, 6000, false, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beetrootSoup");
 
-    public static final Item totemoffecund = (new ItemTotem(IdUtil.getNextItemID(), Material.gold, "totem")).setMaxStackSize(1);
+    public static final Item totemOfFecund = (new ItemTotem(IdUtil.getNextItemID(), Material.gold, "totem")).setMaxStackSize(1);
 
     public static final ItemArmor helmetCustom_b = new ItemHelmet(IdUtil.getNextItemID(), Materials.custom_b, false);
 
@@ -440,7 +442,7 @@ public class Items extends Item {
 
     public static final ItemGuideBook guide = new ItemGuideBook(IdUtil.getNextItemID());
 
-    public static final Item totemofhunting = (new ItemTotem(IdUtil.getNextItemID(), Materials.nickel, "totem")).setMaxStackSize(1);
+    public static final Item totemOfHunting = (new ItemTotem(IdUtil.getNextItemID(), Materials.nickel, "totem")).setMaxStackSize(1);
 
     public static final ItemClub UruMorningStar = ReflectHelper.createInstance(ItemClub.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
 
@@ -455,7 +457,33 @@ public class Items extends Item {
     public static final Item sulphur = new ItemStandard(IdUtil.getNextItemID(), Materials.sulphur, "sulphur_sphere");
 
     public static final ItemBow bowUru = new ItemBow(IdUtil.getNextItemID(), Materials.uru);
+
     public static final Item enderRod = ((ITFItem) (new ItemBrewingMisc(IdUtil.getNextItemID(), Material.ender_pearl, "enderRod")).setPotionEffectExtend("+0+1-2+3+13&4-4").setReachBonus(0.5F)).setExtraInfo("似乎能提升触及距离, 还能酿药?");
+
+    public static final ItemMorningStar morningStarRustedIron= new ItemMorningStar(IdUtil.getNextItemID(), Material.rusted_iron);
+
+    public static final ItemBucket woodBucket = (ItemBucket) new ItemBucket(IdUtil.getNextItemID(), Materials.wood,null);
+
+    public static final ItemBucket woodBucketWater = (ItemBucket) new ItemBucket(IdUtil.getNextItemID(), Materials.wood, Materials.water).setContainerItem(woodBucket);
+
+    public static final ItemBucket woodBucketWaterSuspicious = (ItemBucket) new ItemBucket(IdUtil.getNextItemID(), Materials.wood, Materials.unsafe_water).setContainerItem(woodBucket);
+
+    public static final ItemBucket woodBucketWaterDangerous = (ItemBucket) new ItemBucket(IdUtil.getNextItemID(), Materials.wood,Materials.dangerous_water).setContainerItem(woodBucket);
+
+    public static final ItemBucketMilk woodBucketMilk = (ItemBucketMilk) new ItemBucketMilk(IdUtil.getNextItemID(), Materials.wood).setContainerItem(woodBucket);
+
+    public static final ItemHoe hoeFlint = createInstance(ItemHoe.class,new Class[]{int.class, Material.class}, IdUtil.getNextItemID(),Materials.flint);
+
+    public static final ItemFood peeledSugarcane = (new ItemFood(IdUtil.getNextItemID(), Materials.peeledSugarcane, 0, 1, 1200, false, false, true, "peeledSugarcane")).setPlantProduct();
+
+    public static final Item totemOfSentry = (new ItemTotem(IdUtil.getNextItemID(),Material.adamantium,"totem")).setMaxStackSize(1);
+
+    public static final Item totemOfUnknown = (new ItemTotem(IdUtil.getNextItemID(),Material.rusted_iron,"totem")).setMaxStackSize(1);
+
+    public static final ItemIgnition ignitionRustedIron = new ItemIgnition(IdUtil.getNextItemID(), Material.rusted_iron);
+
+    public static final ItemKnife stickKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.wood);
+
 
     public static void registerItems(ItemRegistryEvent event) {
         event.register("armor/nickel_helmet", nickelHelmet);
@@ -655,11 +683,11 @@ public class Items extends Item {
         event.register("hardened_clay_bowls/salmon_soup", claybowlSalmonSoup);
         event.register("hardened_clay_bowls/sorbet", claybowlSorbet);
         event.register("hardened_clay_bowls/vegetable_soup", claybowlVegetableSoup);
-        event.register("totem/totem_of_fecund", totemoffecund);
+        event.register("totem/totem_of_fecund", totemOfFecund);
         event.register("totem/totem_of_destroy", totemOfDestroy);
         event.register("totem/totem_of_knowledge", totemOfKnowledge);
         event.register("totem/totem_of_preserve", totemOfPreserve);
-        event.register("totem/totem_of_hunting", totemofhunting);
+        event.register("totem/totem_of_hunting", totemOfHunting);
         event.register("ignition/wood", ignitionWood);
         event.register("ignition/copper", ignitionCopper);
         event.register("ignition/silver", ignitionSilver);
@@ -676,6 +704,19 @@ public class Items extends Item {
         event.register("sulphur_sphere", sulphur);
         event.register("bows/uru/", bowUru).setUnlocalizedName("uru_bow");
         event.register("enderRod", enderRod).setUnlocalizedName("enderRod");
+        event.register("tools/rusted_iron_club",morningStarRustedIron);
+        event.register("buckets/wood/empty", woodBucket);
+        event.register("buckets/wood/water", woodBucketWater);
+        event.register("buckets/wood/water_suspicious", woodBucketWaterSuspicious);
+        event.register("buckets/wood/water_swampland", woodBucketWaterDangerous);
+        event.register("buckets/wood/milk", woodBucketMilk);
+        event.register("tools/flint_hoe", hoeFlint);
+        event.register("food/peeled_sugarcane", peeledSugarcane);
+        event.register("totem/totem_of_sentry", totemOfSentry);
+        event.register("totem/totem_of_unknown", totemOfUnknown);
+        event.register("ignition/rusted_iron", ignitionRustedIron);
+        event.register("tools/flint_hoe", hoeFlint);
+        event.register("tools/stick_knife", stickKnife);
         Constant.initItemArray();
     }
 
@@ -842,8 +883,57 @@ public class Items extends Item {
                 Character.valueOf('F'), Item.ancientMetalNugget,
                 Character.valueOf('N'), Item.diamond);
 
+        register.registerShapedRecipe(new ItemStack(woodBucket, 1), true, "W W", " W ",
+
+                Character.valueOf('W'), Block.wood);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "SP", "S ",
+
+                Character.valueOf('F'), Item.flint,
+                Character.valueOf('S'), Item.stick,
+                Character.valueOf('P'), Items.sinew);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "S ", "SP",
+
+                Character.valueOf('F'), Item.flint,
+                Character.valueOf('S'), Item.stick,
+                Character.valueOf('P'), Items.sinew);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", " S", "PS",
+
+                Character.valueOf('F'), Item.flint,
+                Character.valueOf('S'), Item.stick,
+                Character.valueOf('P'), Items.sinew);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "PS", " S",
+
+                Character.valueOf('F'), Item.flint,
+                Character.valueOf('S'), Item.stick,
+                Character.valueOf('P'), Items.sinew);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "PS", " S",
+
+                Character.valueOf('F'), Item.flint,
+                Character.valueOf('S'), Item.stick,
+                Character.valueOf('P'), Item.silk);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", " S", "PS",
+
+                Character.valueOf('F'), Item.flint,
+                Character.valueOf('S'), Item.stick,
+                Character.valueOf('P'), Item.silk);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "SP", "S ",
+
+                Character.valueOf('F'), Item.flint,
+                Character.valueOf('S'), Item.stick,
+                Character.valueOf('P'), Item.silk);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "S ", "SP",
+
+                Character.valueOf('F'), Item.flint,
+                Character.valueOf('S'), Item.stick,
+                Character.valueOf('P'), Item.silk);
+        register.registerShapedRecipe(new ItemStack(stickKnife, 1), true, "S", "S",
+
+                Character.valueOf('S'), Item.stick);
+
+        register.registerShapelessRecipe(new ItemStack(totemOfUnknown, 1), true, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon);
+        register.registerShapelessRecipe(new ItemStack(peeledSugarcane, 2), false, Item.reed, Item.reed);
         register.registerShapelessRecipe(new ItemStack(sulphur, 9), true, new ItemStack(Blocks.blockSulphur, 1));
-        register.registerShapelessRecipe(new ItemStack(Item.gunpowder, 8), true, new ItemStack(Items.sulphur, 8), new ItemStack(Item.coal, 1, 1));
+        register.registerShapelessRecipe(new ItemStack(Item.gunpowder, 5), true, new ItemStack(Items.sulphur, 8), new ItemStack(Item.coal, 1, 1));
         register.registerShapelessRecipe(new ItemStack(forgingnote, 2), false, forgingnote, Item.writableBook);
         register.registerShapelessRecipe(new ItemStack(UruHelmet, 1), true, forgingnote, UruIngot, Item.helmetMithril, Item.ingotMithril);
         register.registerShapelessRecipe(new ItemStack(UruChestplate, 1), true, forgingnote, UruIngot, Item.plateMithril, Item.ingotMithril);

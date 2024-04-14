@@ -9,7 +9,7 @@ public class Constant {
 
     public static final ResourceLocation icons_itf = new ResourceLocation("textures/gui/icons_mitf.png");
 
-    public static final int CONFIG_VERSION = 1;
+    public static final int CONFIG_VERSION = 2;
 
     public static int nextPotionID = 24;
 
@@ -69,8 +69,6 @@ public class Constant {
             Diff += 2;
         if (Config.TagHeatStroke.get())
             Diff++;
-        if (Config.TagNoWeatherPredict.get())
-            Diff++;
         if (Config.TagInstinctSurvival.get())
             Diff++;
         if (Config.TagInvisibleFollower.get())
@@ -93,14 +91,16 @@ public class Constant {
             Diff += 2;
         if (Config.TagMiracleDisaster.get())
             Diff++;
-        if (Config.TagAcousma.get())
-            Diff++;
         if (Config.TagPseudoVision.get())
             Diff++;
         if (Config.TagRejection.get())
             Diff += 2;
         if (Config.TagUnderAlliance.get())
             Diff++;
+        if (Config.TagDimensionInvade.get())
+            Diff += 4;
+        if (Config.TagDemonDescend.get())
+            Diff += 2;
 
         if (Config.TagArmament.get())
             Diff -= 2;
@@ -108,6 +108,12 @@ public class Constant {
             Diff -= 2;
         if (Config.TagDigest.get())
             Diff -= 2;
+
+        /* del */
+        if (Config.TagAcousma.get())
+            Diff++;
+        if (Config.TagNoWeatherPredict.get())
+            Diff++;
 
         return Diff;
     }

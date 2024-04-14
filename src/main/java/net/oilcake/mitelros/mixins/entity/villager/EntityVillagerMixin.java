@@ -49,6 +49,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
         }
         MerchantRecipeList var2 = new MerchantRecipeList();
         switch (getProfession()) {
+            //农民
             case 1:
                 if (this.rand.nextFloat() < adjustProbability(0.25F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.wheat, 14 + this.rand.nextInt(3)), new ItemStack(Item.emerald.itemID, 1, 0)));
@@ -75,6 +76,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
                 if (this.rand.nextFloat() < adjustProbability(0.15F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 4), new ItemStack(Item.goldenCarrot.itemID, 2 + this.rand.nextInt(2), 0)));
                 break;
+            //牧羊人
             case 2:
                 if (this.rand.nextFloat() < adjustProbability(0.5F))
                     var2.add(new MerchantRecipe(new ItemStack(Block.cloth.blockID, 7 + this.rand.nextInt(2)), new ItemStack(Item.emerald.itemID, 1, 0)));
@@ -115,6 +117,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
                 if (this.rand.nextFloat() < adjustProbability(0.3F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 1), new ItemStack(Block.cloth.blockID, 3 + this.rand.nextInt(2), 15)));
                 break;
+            //制箭师
             case 3:
                 if (this.rand.nextFloat() < adjustProbability(0.5F))
                     var2.add(new MerchantRecipe(new ItemStack((Block) Block.gravel, 4), new ItemStack(Item.emerald), new ItemStack(Item.flint.itemID, 4 + this.rand.nextInt(2), 0)));
@@ -131,6 +134,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
                 if (this.rand.nextFloat() < adjustProbability(0.5F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.feather, 12 + this.rand.nextInt(4)), new ItemStack(Item.emerald.itemID, 1, 0)));
                 break;
+            //烘焙师
             case 4:
                 if (this.rand.nextFloat() < adjustProbability(0.15F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 4), new ItemStack(Item.pumpkinPie.itemID, 1 + this.rand.nextInt(2), 0)));
@@ -153,6 +157,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
                 if (this.rand.nextFloat() < adjustProbability(0.3F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 1), new ItemStack((Item) Items.bowlLemonade, 2, 0)));
                 break;
+            //大厨
             case 5:
                 if (this.rand.nextFloat() < adjustProbability(0.3F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 3), new ItemStack((Item) Items.ignitionIron, 1, 0)));
@@ -171,6 +176,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
                 if (this.rand.nextFloat() < adjustProbability(0.2F))
                     var2.add(new MerchantRecipe(new ItemStack((Item) Item.bowlEmpty, 4), new ItemStack(Item.shardEmerald, 1, 0)));
                 break;
+            //渔夫
             case 6:
                 if (this.rand.nextFloat() < adjustProbability(0.3F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 3), new ItemStack((Item) Item.fishingRodIron, 1, 0)));
@@ -187,6 +193,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
                 if (this.rand.nextFloat() < adjustProbability(0.3F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 1), new ItemStack(Item.fishLargeCooked.itemID, 7 + this.rand.nextInt(3), 0)));
                 break;
+            //抄录员
             case 7:
                 if (this.rand.nextFloat() < adjustProbability(0.07F)) {
                     Enchantment var8 = Enchantment.enchantmentsBookList[this.rand.nextInt(Enchantment.enchantmentsBookList.length)];
@@ -204,6 +211,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
                 if (this.rand.nextFloat() < adjustProbability(0.2F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 3), new ItemStack(Block.bookShelf, 1, 0)));
                 break;
+            //学者
             case 8:
                 if (this.rand.nextFloat() < adjustProbability(0.2F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 3), new ItemStack(Item.compass, 1, 0)));
@@ -216,6 +224,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
                 if (this.rand.nextFloat() < adjustProbability(0.15F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 7), new ItemStack(Item.nameTag, 1, 0)));
                 break;
+            //牧师
             case 9:
                 if (this.rand.nextFloat() < adjustProbability(0.5F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.emerald.itemID, 1), new ItemStack(Item.expBottle.itemID, 1, 0)));
@@ -226,9 +235,11 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
                 if (this.rand.nextFloat() < adjustProbability(0.25F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.bone, 14 + this.rand.nextInt(3)), new ItemStack(Item.emerald.itemID, 1, 0)));
                 if (this.rand.nextFloat() < adjustProbability(0.1F))
-                    var2.add(new MerchantRecipe(new ItemStack(Item.emerald.itemID, 7 + this.rand.nextInt(3)), new ItemStack(Items.totemoffecund.itemID, 1, 0)));
+                    var2.add(new MerchantRecipe(new ItemStack(Item.emerald.itemID, 7 + this.rand.nextInt(3)), new ItemStack(Items.totemOfFecund.itemID, 1, 0)));
                 if (this.rand.nextFloat() < adjustProbability(0.1F))
-                    var2.add(new MerchantRecipe(new ItemStack(Item.emerald.itemID, 7 + this.rand.nextInt(3)), new ItemStack(Items.totemofhunting.itemID, 1, 0)));
+                    var2.add(new MerchantRecipe(new ItemStack(Item.emerald.itemID, 7 + this.rand.nextInt(3)), new ItemStack(Items.totemOfHunting.itemID, 1, 0)));
+                if (this.rand.nextFloat() < this.adjustProbability(0.2F))
+                    var2.add(new MerchantRecipe(new ItemStack(Items.AncientmetalArmorPiece.itemID, 12 + rand.nextInt(4)), new ItemStack(Item.emerald.itemID, 1, 0)));
                 var3 = new int[]{Items.nickelSword.itemID, Items.nickelPickaxe.itemID, Item.swordIron.itemID, Item.pickaxeIron.itemID};
                 var4 = var3;
                 var5 = var3.length;
@@ -240,6 +251,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
                     var6++;
                 }
                 break;
+            //酿药师
             case 10:
                 if (this.rand.nextFloat() < adjustProbability(0.25F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.netherStalkSeeds, 14 + this.rand.nextInt(3)), new ItemStack(Item.emerald.itemID, 1, 0)));
@@ -258,6 +270,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
                 if (this.rand.nextFloat() < adjustProbability(0.25F))
                     var2.add(new MerchantRecipe(new ItemStack(Block.mushroomBrown.blockID, 14 + this.rand.nextInt(3)), new ItemStack(Item.emerald.itemID, 1, 0)));
                 break;
+            //工具匠
             case 11:
                 addMerchantItem(var2, Item.coal.itemID, this.rand, adjustProbability(0.7F));
                 addMerchantItem(var2, Item.ingotIron.itemID, this.rand, adjustProbability(0.5F));
@@ -275,6 +288,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
                 addBlacksmithItem(var2, Item.swordCopper.itemID, this.rand, adjustProbability(0.5F));
                 addBlacksmithItem(var2, Item.daggerIron.itemID, this.rand, adjustProbability(0.5F));
                 break;
+            //盔甲匠
             case 12:
                 addMerchantItem(var2, Item.coal.itemID, this.rand, adjustProbability(0.7F));
                 addMerchantItem(var2, Item.ingotIron.itemID, this.rand, adjustProbability(0.5F));
@@ -296,6 +310,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
                 addBlacksmithItem(var2, Item.legsIron.itemID, this.rand, adjustProbability(0.2F));
                 addBlacksmithItem(var2, Item.bootsIron.itemID, this.rand, adjustProbability(0.2F));
                 break;
+            //屠夫
             case 13:
                 addMerchantItem(var2, Item.coal.itemID, this.rand, adjustProbability(0.7F));
                 addMerchantItem(var2, Item.porkRaw.itemID, this.rand, adjustProbability(0.5F));
@@ -309,6 +324,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
                 if (this.rand.nextFloat() < adjustProbability(0.5F))
                     var2.add(new MerchantRecipe(new ItemStack(Item.emerald, 1), new ItemStack(Items.horse_meat_cooked.itemID, 5 + this.rand.nextInt(2), 0)));
                 break;
+            //皮匠
             case 14:
                 addBlacksmithItem(var2, Item.saddle.itemID, this.rand, adjustProbability(0.1F));
                 addBlacksmithItem(var2, Item.plateLeather.itemID, this.rand, adjustProbability(0.3F));

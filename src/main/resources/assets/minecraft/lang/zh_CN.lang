@@ -49,6 +49,7 @@ potion.extend.freeze=霜冻
 potion.extend.dehydration=腹泻
 potion.extend.thirsty=干渴
 potion.extend.stunning=晕眩
+potion.extend.stretch=延展
 
 potion.extend.stretch.postfix=延展药水
 
@@ -56,6 +57,7 @@ generator.default_1_1=旧巨型生物群系
 
 item.tooltip.water.add=水分+%d
 item.tooltip.water.minus=水分%d
+item.tooltip.water.agave=40%水分+1
 item.tooltip.reach.add=触及距离+%d
 
 item.armor/nickel_helmet.name=镍头盔
@@ -215,6 +217,7 @@ item.armor/ancient_metal_sacred_chestplate.name=镶金远古金属胸甲
 item.armor/ancient_metal_sacred_leggings.name=镶金远古金属护腿
 item.armor/ancient_metal_sacred_boots.name=镶金远古金属靴子
 
+item.tools/rusted_iron_club.name=锈铁钉头锤
 item.tools/copper_club.name=铜钉头锤
 item.tools/silver_club.name=银钉头锤
 item.tools/gold_club.name=金钉头锤
@@ -222,6 +225,9 @@ item.tools/iron_club.name=铁钉头锤
 item.tools/ancient_metal_club.name=远古金属钉头锤
 item.tools/mithril_club.name=秘银钉头锤
 item.tools/adamantium_club.name=艾德曼合金钉头锤
+
+item.tools/flint_hoe.name=燧石锄
+item.tools/stick_knife.name=木棍小刀
 
 item.bowls/lampchop_stew.name=栗羊羹
 item.bowls/porkchop_stew.name=猪肉煲
@@ -294,6 +300,11 @@ item.buckets/ancient_metal/water_suspicious.name=装满可疑的水的远古金�
 item.buckets/ancient_metal/water_swampland.name=装满沼泽水的远古金属桶
 item.buckets/adamantium/water_suspicious.name=装满可疑的水的艾德曼合金桶
 item.buckets/adamantium/water_swampland.name=装满沼泽水的艾德曼合金桶
+item.buckets/wood/empty.name=木桶
+item.buckets/wood/water.name=装满水的木桶
+item.buckets/wood/milk.name=装满牛奶的木桶
+item.buckets/wood/water_suspicious.name=装满可疑的水的木桶
+item.buckets/wood/water_swampland.name=装满沼泽水的木桶
 
 item.food/mashed_cactus.name=碎仙人掌
 item.food/lemon.name=柠檬
@@ -306,6 +317,7 @@ item.food/glow_berries.name=发光浆果
 item.food/agave.name=龙舌兰草
 item.food/beetroot.name=甜菜根
 item.food/beetroot_seeds.name=甜菜种子
+item.food/peeled_sugarcane.name=去皮甘蔗
 item.pulque.name=普利克酒
 item.ale.name=麦芽酒
 item.forging_note.name=锻造笔记
@@ -314,11 +326,14 @@ item.totem/totem_of_knowledge.name=智识图腾
 item.totem/totem_of_destroy.name=毁灭图腾
 item.totem/totem_of_preserve.name=存护图腾
 item.totem/totem_of_hunting.name=巡猎图腾
+item.totem/totem_of_sentry.name=哨兵图腾
+item.totem/totem_of_unknown.name=不可名状图腾
 item.wither_branch.name=凋零残叶
 item.sulphur_sphere.name=硫磺
 item.enderRod.name=末影棒
 
 item.ignition/wood.name=引火器
+item.ignition/rusted_iron.name=锈铁打火石
 item.ignition/copper.name=铜打火石
 item.ignition/silver.name=银打火石
 item.ignition/gold.name=金打火石
@@ -376,6 +391,10 @@ entity.EntityGhost.name=怨灵
 entity.EntityEvil.name=恶灵
 entity.EntitySkeletonHorse.name=骷髅马
 entity.EntityUndeadGuard.name=亡灵守卫
+entity.EntityPigManGuard.name=僵尸猪人守卫
+entity.EntityCastleGuard.name=远古傀儡
+entity.EntitySpirit.name=阴魂
+entity.EntityLongdeadSentry.name=古尸哨兵
 
 death.extend.attack.thirsty=干枯了
 death.extend.attack.freeze=冻死了

@@ -21,9 +21,9 @@ repositories {
 loom {
     accessWidenerPath = file("src/main/resources/MITEIsTooFalse.accesswidener")
     mergedMinecraftJar()
-    setFML(new File("D:\\Code\\Java\\FML3.0.0\\lib\\FishModLoader.jar"))
+    setFML(new File("libs\\FishModLoader-v3.2.2.jar"))
     mods {
-        "ITF-Reborn" {
+        "MITE-ITF-Reborn" {
             sourceSet sourceSets.main
         }
     }

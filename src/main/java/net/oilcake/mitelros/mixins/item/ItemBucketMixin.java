@@ -209,11 +209,15 @@ public abstract class ItemBucketMixin extends ItemVessel {
                 return Items.nickelBucket;
             if (vessel_material == Materials.tungsten)
                 return Items.tungstenBucket;
+            if (vessel_material == Material.wood)
+                return Items.woodBucket;
         } else if (contents == Material.water) {
             if (vessel_material == Materials.nickel)
                 return Items.nickelBucketWater;
             if (vessel_material == Materials.tungsten)
                 return Items.tungstenBucketWater;
+            if (vessel_material == Material.wood)
+                return Items.woodBucketWater;
         } else if (contents == Material.lava) {
             if (vessel_material == Materials.nickel)
                 return Items.nickelBucketLava;
@@ -224,6 +228,8 @@ public abstract class ItemBucketMixin extends ItemVessel {
                 return Items.nickelBucketMilk;
             if (vessel_material == Materials.tungsten)
                 return Items.tungstenBucketMilk;
+            if (vessel_material == Material.wood)
+                return Items.woodBucketMilk;
         } else if (contents == Material.stone) {
             if (vessel_material == Materials.nickel)
                 return Items.nickelBucketStone;
@@ -248,6 +254,8 @@ public abstract class ItemBucketMixin extends ItemVessel {
                 return Items.tungstenBucketWaterSuspicious;
             if (vessel_material == Materials.ancient_metal)
                 return Items.ancientmetalBucketWaterSuspicious;
+            if (vessel_material == Material.wood)
+                return Items.woodBucketWaterSuspicious;
             return null;
         } else if (contents == Materials.dangerous_water) {
             if (vessel_material == Material.copper)
@@ -268,6 +276,8 @@ public abstract class ItemBucketMixin extends ItemVessel {
                 return Items.tungstenBucketWaterDangerous;
             if (vessel_material == Material.ancient_metal)
                 return Items.ancientmetalBucketWaterDangerous;
+            if (vessel_material == Material.wood)
+                return Items.woodBucketWaterDangerous;
             return null;
         }
         return null;

@@ -47,12 +47,15 @@ public class Materials extends Material {
 
     public static final Material sulphur;
 
+    public static final Material peeledSugarcane;
+
+
 
     static {
         nickel = (Materials) (new Materials(EnumEquipmentMaterials.NICKEL)).setRequiresTool().setMetal(false).setMinHarvestLevel(3);
         tungsten = (Materials) (new Materials(EnumEquipmentMaterials.TUNGSTEN)).setRequiresTool().setMetal(true).setHarmedByLava(false).setMinHarvestLevel(4);
         vibranium = (Materials) (new Materials(EnumEquipmentMaterials.VIBRANIUM)).setRequiresTool().setMetal(true).setMinHarvestLevel(1);
-        uru = (Materials) (new Materials(EnumEquipmentMaterials.URU)).setRequiresTool().setMetal(true).setMinHarvestLevel(5);
+        uru = (Materials) (new Materials(EnumEquipmentMaterials.URU)).setRequiresTool().setMetal(true).setHarmedByLava(false).setMinHarvestLevel(5);
         porkchop_stew = (new MaterialFood("porkchop_stew")).setHarmedByPepsin();
         chestnut_soup = (new MaterialFood("chestnut_soup")).setHarmedByPepsin();
         fish_soup = (new MaterialFood("chestnut_soup")).setHarmedByPepsin();
@@ -71,6 +74,7 @@ public class Materials extends Material {
         beetroot = new MaterialFood("beetroot");
         crystal = new Material("crystal").setDurability(4.0F);
         sulphur = new Material("sulphur").setDurability(2.0F);
+        peeledSugarcane = new MaterialFood("peeledSugarcane");
     }
 
 

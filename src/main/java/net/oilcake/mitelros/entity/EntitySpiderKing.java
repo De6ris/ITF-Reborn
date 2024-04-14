@@ -130,7 +130,11 @@ public class EntitySpiderKing extends EntityArachnid {
     }
 
     public int getExperienceValue() {
-        return super.getExperienceValue() * 3;
+        return super.getExperienceValue() * 6;
+    }
+
+    public int getMaxSpawnedInChunk() {
+        return 1;
     }
 
 }
