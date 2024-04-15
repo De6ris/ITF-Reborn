@@ -474,11 +474,11 @@ public class Items extends Item {
 
     public static final ItemHoe hoeFlint = createInstance(ItemHoe.class,new Class[]{int.class, Material.class}, IdUtil.getNextItemID(),Materials.flint);
 
-    public static final ItemFood peeledSugarcane = (new ItemFood(IdUtil.getNextItemID(), Materials.peeledSugarcane, 0, 1, 1200, false, false, true, "peeledSugarcane")).setPlantProduct();
+    public static final ItemFood peeledSugarcane = (new ItemFood(IdUtil.getNextItemID(), Materials.peeledSugarcane, 0, 1, 1000, false, false, true, "peeledSugarcane")).setPlantProduct();
 
-    public static final Item totemOfSentry = (new ItemTotem(IdUtil.getNextItemID(),Material.adamantium,"totem")).setMaxStackSize(1);
+    public static final Item totemOfSentry = (new ItemTotem(IdUtil.getNextItemID(), Material.adamantium,"totem")).setMaxStackSize(1);
 
-    public static final Item totemOfUnknown = (new ItemTotem(IdUtil.getNextItemID(),Material.rusted_iron,"totem")).setMaxStackSize(1);
+    public static final Item totemOfUnknown = (new ItemTotem(IdUtil.getNextItemID(), Material.rusted_iron,"totem")).setMaxStackSize(1);
 
     public static final ItemIgnition ignitionRustedIron = new ItemIgnition(IdUtil.getNextItemID(), Material.rusted_iron);
 

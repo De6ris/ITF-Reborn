@@ -67,7 +67,7 @@ public class BiomeBaseMixin {
             this.spawnableMonsterList.add(new SpawnListEntry(EntityEvil.class, 10, 1, 4));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityPigZombie.class, 20, 1, 2));
             this.spawnableMonsterList.add(new SpawnListEntry(EntitySpiderKing.class, 2, 1, 1));
-            this.spawnableMonsterList.add(new SpawnListEntry(EntityGhast.class, 10, 1, 2));
+//            this.spawnableMonsterList.add(new SpawnListEntry(EntityGhast.class, 10, 1, 2));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityWitherBoneLord.class, 1, 1, 1));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityWitherBodyguard.class, 3, 1, 1));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityWitherBodyguard.class, 3, 1, 1));
