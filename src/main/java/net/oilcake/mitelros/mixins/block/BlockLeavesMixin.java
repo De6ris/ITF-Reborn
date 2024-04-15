@@ -2,7 +2,7 @@ package net.oilcake.mitelros.mixins.block;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import net.oilcake.mitelros.util.SeasonColorizer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -52,7 +52,7 @@ public class BlockLeavesMixin extends BlockLeavesBase {
         int var7 = 0;
         int var8 = 0;
 
-        if (Config.SeasonColor.get()) {
+        if (ITFConfig.SeasonColor.get()) {
             for (int var9 = -1; var9 <= 1; ++var9) {
                 for (int var10 = -1; var10 <= 1; ++var10) {
                     int var11 = par1IBlockAccess.getBiomeGenForCoords(par2 + var10, par4 + var9).getBiomeFoliageColor();

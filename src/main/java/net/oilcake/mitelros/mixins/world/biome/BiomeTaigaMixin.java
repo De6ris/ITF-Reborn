@@ -2,7 +2,7 @@ package net.oilcake.mitelros.mixins.world.biome;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.entity.EntityStray;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,7 +20,7 @@ public class BiomeTaigaMixin extends BiomeGenBase {
   public void injectCtor(CallbackInfo callbackInfo) {
     removeEntityFromSpawnableLists(EntitySkeleton.class);
     this.spawnableMonsterList.add(new SpawnListEntry(EntityStray.class, 100, 1, 4));
-    if (((Boolean) Config.TagCreaturesV2.get()))
+    if (((Boolean) ITFConfig.TagCreaturesV2.get()))
       RegenHostileAnimals(); 
   }
   

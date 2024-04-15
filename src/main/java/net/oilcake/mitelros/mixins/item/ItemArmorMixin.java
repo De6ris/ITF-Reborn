@@ -2,7 +2,7 @@ package net.oilcake.mitelros.mixins.item;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Materials;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import net.oilcake.mitelros.util.QualityHandler;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -81,11 +81,11 @@ public abstract class ItemArmorMixin extends Item implements IDamageableItem {
     @Inject(method = "getDamageFactor", at = @At("RETURN"), cancellable = true)
     private void inject(ItemStack item_stack, EntityLivingBase owner, CallbackInfoReturnable<Float> cir) {
         float returned = cir.getReturnValue();
-        if (!owner.isEntityPlayer() && Config.TagInstinctSurvival.get()) {
+        if (!owner.isEntityPlayer() && ITFConfig.TagInstinctSurvival.get()) {
             cir.setReturnValue(returned + 0.25F);
             return;
         }
-        if (Config.TagArmament.get()) {
+        if (ITFConfig.TagArmament.get()) {
             cir.setReturnValue(returned * 2);
         }
     }

@@ -6,7 +6,7 @@ import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -46,7 +46,7 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
     @Overwrite
     public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
         if (player.onServer()) {
-            if (((Boolean) Config.Realistic.get())) {
+            if (((Boolean) ITFConfig.Realistic.get())) {
                 if (contains(Materials.dangerous_water)) {
                     double rand = Math.random();
                     player.addPotionEffect(new PotionEffect(Potion.poison.id, (int) (450.0D * (1.0D + rand)), 0));

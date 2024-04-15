@@ -2,7 +2,7 @@ package net.oilcake.mitelros.mixins.block;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Materials;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
@@ -46,7 +46,7 @@ public abstract class BlockWorkbenchMixin extends Block {
 
     @Override
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
-        if (Config.TagBenchingV2.get() || info.wasExploded()) {
+        if (ITFConfig.TagBenchingV2.get() || info.wasExploded()) {
             if (info.wasExploded()) {
                 int quantity_drops = 2 + (int) (this.random.nextFloat() * 4.0F);
                 if (info.getMetadata() < 4) {

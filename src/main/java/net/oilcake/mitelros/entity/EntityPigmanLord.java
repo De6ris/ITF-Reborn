@@ -2,7 +2,7 @@ package net.oilcake.mitelros.entity;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +14,8 @@ public class EntityPigmanLord extends EntityPigZombie {
   
   protected void applyEntityAttributes() {
     super.applyEntityAttributes();
-    this.setEntityAttribute(SharedMonsterAttributes.maxHealth, Config.TagDemonDescend.get() ? 45.0D : 30.0D);
-    this.setEntityAttribute(SharedMonsterAttributes.attackDamage, Config.TagDemonDescend.get() ? 11.25D : 9.0D);
+    this.setEntityAttribute(SharedMonsterAttributes.maxHealth, ITFConfig.TagDemonDescend.get() ? 45.0D : 30.0D);
+    this.setEntityAttribute(SharedMonsterAttributes.attackDamage, ITFConfig.TagDemonDescend.get() ? 11.25D : 9.0D);
   }
   
   public EntityPigmanLord(World par1World) {
@@ -42,7 +42,7 @@ public class EntityPigmanLord extends EntityPigZombie {
     if (!Minecraft.isInTournamentMode()) {
       items.add(new RandomItemListEntry((Item)Items.tungstenBattleAxe, 1));
       items.add(new RandomItemListEntry((Item)Items.tungstenWarHammer, 1));
-        if (Config.TagDemonDescend.get()){
+        if (ITFConfig.TagDemonDescend.get()){
           items.add(new RandomItemListEntry(Items.morningStarTungsten, 4));
         }
     }
@@ -81,7 +81,7 @@ public class EntityPigmanLord extends EntityPigZombie {
       }
       if (spawnSums <= 4 && gathering_troops) {
         if (spawnCounter < 20) {
-          if (Config.TagDemonDescend.get()) spawnCounter++;
+          if (ITFConfig.TagDemonDescend.get()) spawnCounter++;
         } else {
           EntityPigmanGuard Belongings = new EntityPigmanGuard(worldObj);
           Belongings.setPosition(posX, posY, posZ);

@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.block;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 
 public class BlockSmoker extends BlockFurnace {
     protected BlockSmoker(int par1, boolean par2) {
@@ -27,7 +27,7 @@ public class BlockSmoker extends BlockFurnace {
     }
 
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
-        if (Config.TagBenchingV2.get()) {
+        if (ITFConfig.TagBenchingV2.get()) {
             if (info.wasExploded()) {
                 dropBlockAsEntityItem(info, Block.cobblestone.blockID);
                 dropBlockAsEntityItem(info, Item.stick.itemID, 0, 1, 1.3F);

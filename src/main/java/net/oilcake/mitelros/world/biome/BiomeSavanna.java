@@ -2,7 +2,7 @@ package net.oilcake.mitelros.world.biome;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFBiomeDecorator;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 
 import java.util.Random;
 
@@ -22,7 +22,7 @@ public class BiomeSavanna extends BiomeGenBase {
         this.fillerBlock = (byte) Block.dirt.blockID;
         setMinMaxHeight(0.1F, 0.4F);
         setTemperatureRainfall(1.6F, 0.0F);
-        if (Config.TagApocalypse.get())
+        if (ITFConfig.TagApocalypse.get())
             removeEntityFromSpawnableLists(EntityHorse.class);
     }
 

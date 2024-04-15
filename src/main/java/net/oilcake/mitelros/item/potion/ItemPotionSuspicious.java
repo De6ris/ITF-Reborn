@@ -2,7 +2,7 @@ package net.oilcake.mitelros.item.potion;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 
 public class ItemPotionSuspicious extends Item {
     public ItemPotionSuspicious(int id) {
@@ -16,11 +16,11 @@ public class ItemPotionSuspicious extends Item {
     public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
         double rand = Math.random();
         if (player.onServer()) {
-            if (Config.Realistic.get()) {
+            if (ITFConfig.Realistic.get()) {
                 player.addPotionEffect(new PotionEffect(Potion.poison.id, (int) (450.0D * (1.0D + rand)), 0));
                 player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
             } else {
-                if (rand > (Config.TagDigest.get().booleanValue() ? 1.0D : 0.8D))
+                if (rand > (ITFConfig.TagDigest.get() ? 1.0D : 0.8D))
                     player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
                 player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
             }

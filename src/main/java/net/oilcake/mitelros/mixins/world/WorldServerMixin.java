@@ -2,7 +2,7 @@ package net.oilcake.mitelros.mixins.world;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.entity.*;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -46,7 +46,7 @@ public class WorldServerMixin extends World {
                     if (this.rand.nextInt(40) >= y && this.rand.nextFloat() < 0.5F)
                         return EntityInfernalCreeper.class;
                     if (y <= 40)
-                        return ((Boolean) Config.TagInvisibleFollower.get()) ? EntityStalkerCreeper.class : entity_class;
+                        return ((Boolean) ITFConfig.TagInvisibleFollower.get()) ? EntityStalkerCreeper.class : entity_class;
                     return entity_class;
                 }
             } else if (entity_class == EntitySlime.class) {
@@ -163,7 +163,7 @@ public class WorldServerMixin extends World {
         Iterator<ChunkCoordIntPair> var3 = this.activeChunkSet.iterator();
         boolean perform_random_block_ticks = shouldRandomBlockTicksBePerformed();
         boolean is_blood_moon = isBloodMoon24HourPeriod();
-        for (int rarity_of_lightning = is_blood_moon ? (((Boolean) Config.TagUnstableConvection.get()) ? 5000 : 20000) : (((Boolean) Config.TagUnstableConvection.get()) ? 25000 : 100000); var3.hasNext(); this.theProfiler.endSection()) {
+        for (int rarity_of_lightning = is_blood_moon ? (((Boolean) ITFConfig.TagUnstableConvection.get()) ? 5000 : 20000) : (((Boolean) ITFConfig.TagUnstableConvection.get()) ? 25000 : 100000); var3.hasNext(); this.theProfiler.endSection()) {
             ChunkCoordIntPair var4 = var3.next();
             int var5 = var4.chunkXPos * 16;
             int var6 = var4.chunkZPos * 16;

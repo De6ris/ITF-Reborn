@@ -9,7 +9,7 @@ import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.status.*;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -77,7 +77,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Inject(method = "jump", at = @At("HEAD"), cancellable = true)
     private void cancel(CallbackInfo ci) {
-        if ((getHealth() > 5.0F && this.capabilities.getWalkSpeed() >= 0.05F && hasFoodEnergy()) || !Config.Realistic.get()) {
+        if ((getHealth() > 5.0F && this.capabilities.getWalkSpeed() >= 0.05F && hasFoodEnergy()) || !ITFConfig.Realistic.get()) {
             return;
         }
         ci.cancel();
@@ -85,7 +85,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Override
     public boolean isOnLadder() {
-        if (Config.Realistic.get() && (getHealth() <= 5.0F || this.capabilities.getWalkSpeed() < 0.05F || !hasFoodEnergy())) {
+        if (ITFConfig.Realistic.get() && (getHealth() <= 5.0F || this.capabilities.getWalkSpeed() < 0.05F || !hasFoodEnergy())) {
             return this.miscManager.itfLadder();
         }
         return super.isOnLadder();
@@ -199,7 +199,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
             this.drunkManager.update1();
             this.temperatureManager.update();
             this.drunkManager.update2();
-            if (getHealth() < 5.0F && Config.Realistic.get())
+            if (getHealth() < 5.0F && ITFConfig.Realistic.get())
                 this.vision_dimming = Math.max(this.vision_dimming, 1.0F - getHealthFraction());
         }
         this.feastManager.achievementCheck();
@@ -281,7 +281,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Inject(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
     private void inject_1(Damage damage, CallbackInfoReturnable<EntityDamageResult> cir) {
-        if (Config.FinalChallenge.get())
+        if (ITFConfig.FinalChallenge.get())
             damage.scaleAmount(1.0F + Constant.CalculateCurrentDiff() / 50.0F);// TODO check validity
     }
 
@@ -294,7 +294,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         } else {
             HealthLMTwithTag = Math.max(Math.min(14 + level / 10 * 2, 40), 20);
         }
-        return Config.TagDistortion.get() ? HealthLMTwithTag : HealthLMTwithoutTag;
+        return ITFConfig.TagDistortion.get() ? HealthLMTwithTag : HealthLMTwithoutTag;
     }
 
     @ModifyArg(method = "getCurrentPlayerStrVsBlock", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F"), index = 0)
@@ -304,7 +304,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Inject(method = "fall", at = @At("TAIL"))
     private void TagMovingV2(float par1, CallbackInfo ci) {
-        if (Config.TagMovingV2.get())
+        if (ITFConfig.TagMovingV2.get())
             this.setSprinting(false);
     }
 

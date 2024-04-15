@@ -3,7 +3,7 @@ package net.oilcake.mitelros.mixins.world.biome;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.entity.*;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import net.oilcake.mitelros.world.BiomeBases;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
@@ -53,9 +53,9 @@ public class BiomeBaseMixin {
 
     @Inject(method = "<init>(I)V", at = @At("RETURN"))
     public void injectCtor(CallbackInfo callbackInfo) {
-        this.spawnableMonsterList.add(new SpawnListEntry(EntityRetinueZombie.class, (Config.TagFallenInMineLVL2.get() || Config.TagFallenInMineLVL1.get()) ? 35 : 10, 4, 4));
-        this.spawnableMonsterList.add(new SpawnListEntry(EntityBoneBodyguard.class, (Config.TagBattleSufferLVL2.get() || Config.TagBattleSufferLVL1.get()) ? 35 : 10, 4, 4));
-        if (Config.TagDimensionInvade.get()) {
+        this.spawnableMonsterList.add(new SpawnListEntry(EntityRetinueZombie.class, (ITFConfig.TagFallenInMineLVL2.get() || ITFConfig.TagFallenInMineLVL1.get()) ? 35 : 10, 4, 4));
+        this.spawnableMonsterList.add(new SpawnListEntry(EntityBoneBodyguard.class, (ITFConfig.TagBattleSufferLVL2.get() || ITFConfig.TagBattleSufferLVL1.get()) ? 35 : 10, 4, 4));
+        if (ITFConfig.TagDimensionInvade.get()) {
             this.spawnableMonsterList.add(new SpawnListEntry(EntityLongdead.class, 40, 4, 2));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityLongdeadGuardian.class, 20, 2, 1));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityAncientBoneLord.class, 5, 1, 2));
@@ -77,9 +77,9 @@ public class BiomeBaseMixin {
             this.spawnableMonsterList.add(new SpawnListEntry(EntityEvil.class, 20, 1, 2));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityFireElemental.class, 10, 1, 2));
         }
-        if (Config.TagCreaturesV2.get())
+        if (ITFConfig.TagCreaturesV2.get())
             RegenAnimals();
-        if (Config.TagApocalypse.get())
+        if (ITFConfig.TagApocalypse.get())
             DisgenAnimals();
     }
 

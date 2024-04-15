@@ -6,7 +6,7 @@ import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import net.oilcake.mitelros.util.DamageSourceExtend;
 
 public class TemperatureManager {
@@ -67,7 +67,7 @@ public class TemperatureManager {
         ItemStack wearingItemStack = this.player.getCuirass();
         if (EnchantmentHelper.hasEnchantment(wearingItemStack, Enchantments.enchantmentCallofNether))
             return false;
-        if (biome.temperature <= ((((ITFWorld) this.player.worldObj).getWorldSeason() == 3) ? 1.0F : 0.16F) && (this.player.isOutdoors() || (this.player.worldObj.provider.dimensionId == -2 && Config.TagDeadGeothermy.get()))) {
+        if (biome.temperature <= ((((ITFWorld) this.player.worldObj).getWorldSeason() == 3) ? 1.0F : 0.16F) && (this.player.isOutdoors() || (this.player.worldObj.provider.dimensionId == -2 && ITFConfig.TagDeadGeothermy.get()))) {
             return this.player.getHelmet() == null || (this.player.getHelmet()).itemID != Items.wolfHelmet.itemID ||
                     this.player.getCuirass() == null || (this.player.getCuirass()).itemID != Items.wolfChestplate.itemID ||
                     this.player.getLeggings() == null || (this.player.getLeggings()).itemID != Items.wolfLeggings.itemID ||
@@ -79,6 +79,6 @@ public class TemperatureManager {
 
     public boolean InHeat() {
         BiomeGenBase biome = this.player.worldObj.getBiomeGenForCoords(this.player.getBlockPosX(), this.player.getBlockPosZ());
-        return (biome.temperature >= 1.5F && Config.TagHeatStorm.get());
+        return (biome.temperature >= 1.5F && ITFConfig.TagHeatStorm.get());
     }
 }

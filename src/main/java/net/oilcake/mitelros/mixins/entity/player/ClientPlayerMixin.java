@@ -5,7 +5,7 @@ import net.minecraft.*;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.block.enchantreserver.GuiEnchantReserver;
 import net.oilcake.mitelros.item.Materials;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -67,7 +67,7 @@ public abstract class ClientPlayerMixin extends AbstractClientPlayer {
 
     @ModifyExpressionValue(method = "setSprinting", at = @At(value = "INVOKE", target = "Lnet/minecraft/ClientPlayer;hasCurse(Lnet/minecraft/Curse;Z)Z"))
     private boolean cantRun(boolean original) {
-        return original || (getHealth() / 5.0F < 1.0F && Config.Realistic.get());
+        return original || (getHealth() / 5.0F < 1.0F && ITFConfig.Realistic.get());
     }
 
     public int getProtein() {

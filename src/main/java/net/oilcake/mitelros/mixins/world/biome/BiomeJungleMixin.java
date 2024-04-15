@@ -3,7 +3,7 @@ package net.oilcake.mitelros.mixins.world.biome;
 import net.minecraft.BiomeGenBase;
 import net.minecraft.BiomeGenJungle;
 import net.minecraft.EntityChicken;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,7 +17,7 @@ public class BiomeJungleMixin extends BiomeGenBase {
   
   @Inject(method = {"<init>(I)V"}, at = {@At("RETURN")})
   public void injectCtor(CallbackInfo callbackInfo) {
-    if (((Boolean) Config.TagApocalypse.get()).booleanValue())
+    if (((Boolean) ITFConfig.TagApocalypse.get()).booleanValue())
       removeEntityFromSpawnableLists(EntityChicken.class); 
   }
 }

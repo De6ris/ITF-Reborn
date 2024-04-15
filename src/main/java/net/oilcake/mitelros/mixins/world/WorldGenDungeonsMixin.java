@@ -2,7 +2,7 @@ package net.oilcake.mitelros.mixins.world;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -99,7 +99,7 @@ public class WorldGenDungeonsMixin extends WorldGenerator {
     int danger;
     if (world.isUnderworld())
       return (par1Random.nextInt(6) == 0) ? "LongdeadGuardian" : "Longdead"; 
-    if (((Boolean) Config.TagMiracleDisaster.get())) {
+    if (((Boolean) ITFConfig.TagMiracleDisaster.get())) {
       danger = par1Random.nextInt(7);
     } else {
       if (par1Random.nextInt(2) == 0) {

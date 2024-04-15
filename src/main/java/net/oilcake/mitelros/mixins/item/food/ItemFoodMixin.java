@@ -4,7 +4,7 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,9 +27,9 @@ public class ItemFoodMixin extends Item {
 
     public int resetWaterVal(int id, Material material) {
         if (material == Material.fruit)
-            return Config.TagDryDilemma.get() ? 1 : 2;
+            return ITFConfig.TagDryDilemma.get() ? 1 : 2;
         if (id == 135)
-            return Config.TagDryDilemma.get() ? 1 : 2;
+            return ITFConfig.TagDryDilemma.get() ? 1 : 2;
         if (material == (Materials.glowberries) || material == (Materials.peeledSugarcane))
             return 1;
         if (material == Material.cheese || id == 88)
@@ -49,21 +49,21 @@ public class ItemFoodMixin extends Item {
         if (hasMaterial(Material.bread) || hasMaterial(Material.desert))
             player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
         if (hasMaterial(Materials.glowberries)) {
-            if (rand.nextDouble() > (Config.TagDryDilemma.get() ? 0.5D : 1.0D))
+            if (rand.nextDouble() > (ITFConfig.TagDryDilemma.get() ? 0.5D : 1.0D))
                 player.addWater(-1);
         }
         if (hasMaterial(Materials.agave)) {
-            if (rand.nextDouble() > (Config.TagDryDilemma.get() ? 0.2D : 0.4D))
+            if (rand.nextDouble() > (ITFConfig.TagDryDilemma.get() ? 0.2D : 0.4D))
                 player.addWater(-1);
         }
         if (this.itemID == Item.egg.itemID) {
-            if (rand.nextDouble() > (Config.TagDryDilemma.get() ? 0.5D : 0.25D))
+            if (rand.nextDouble() > (ITFConfig.TagDryDilemma.get() ? 0.5D : 0.25D))
                 player.addWater(1);
         }
         if (ReflectHelper.dyCast(this) instanceof ItemMeat meat) {
-            int outcome = rand.nextInt(Config.Realistic.get() ? 1 : 4);
+            int outcome = rand.nextInt(ITFConfig.Realistic.get() ? 1 : 4);
             if (!meat.is_cooked) {
-                if (outcome == (Config.TagDigest.get() ? 4 : 0))
+                if (outcome == (ITFConfig.TagDigest.get() ? 4 : 0))
                     player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (240.0D * (1.0D + rand.nextDouble())), 0));
             } else {
                 player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));

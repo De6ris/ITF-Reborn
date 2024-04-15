@@ -416,7 +416,7 @@ public class Items extends Item {
 
     public static final Item totemOfPreserve = (new ItemTotem(IdUtil.getNextItemID(), Material.iron, "totem")).setMaxStackSize(1);
 
-    public static final Item totemOfKnowledge = (new ItemTotem(IdUtil.getNextItemID(), Material.ancient_metal, "totem")).setMaxStackSize(1);
+    public static final Item totemOfKnowledge = ((ITFItem)(new ItemTotem(IdUtil.getNextItemID(), Material.ancient_metal, "totem")).setMaxStackSize(1)).setExtraInfo("右键提升20%经验");
 
     public static final ItemIgnition ignitionCopper = new ItemIgnition(IdUtil.getNextItemID(), Material.copper);
 

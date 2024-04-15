@@ -3,7 +3,7 @@ package net.oilcake.mitelros.status;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 
 public class WaterManager {
 
@@ -36,7 +36,7 @@ public class WaterManager {
                 player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, 160, 0));
             }
         }
-        this.dry_resist += (Config.TagHeatStroke.get() ? 2.0D : 1.0D) + biome.getFloatTemperature();
+        this.dry_resist += (ITFConfig.TagHeatStroke.get() ? 2.0D : 1.0D) + biome.getFloatTemperature();
         if (player.isPotionActive(PotionExtend.dehydration))
             this.dry_resist += Math.min(80.0D, (player.getActivePotionEffect(PotionExtend.dehydration).getAmplifier() + 1) * 20.0D);
         if (player.isPotionActive(PotionExtend.thirsty))

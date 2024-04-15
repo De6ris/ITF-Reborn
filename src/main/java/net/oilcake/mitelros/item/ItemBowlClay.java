@@ -3,7 +3,7 @@ package net.oilcake.mitelros.item;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 
 public class ItemBowlClay extends ItemVessel {
 
@@ -94,7 +94,7 @@ public class ItemBowlClay extends ItemVessel {
 
     public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
         if (player.onServer()) {
-            if (((Boolean) Config.Realistic.get())) {
+            if (((Boolean) ITFConfig.Realistic.get())) {
                 if (contains(Materials.dangerous_water)) {
                     double rand = Math.random();
                     player.addPotionEffect(new PotionEffect(Potion.poison.id, (int) (450.0D * (1.0D + rand)), 0));
@@ -102,20 +102,20 @@ public class ItemBowlClay extends ItemVessel {
                 }
                 if (contains(Materials.unsafe_water)) {
                     double rand = Math.random();
-                    if (rand > (Config.TagDigest.get() ? 1.0D : 0.5D))
+                    if (rand > (ITFConfig.TagDigest.get() ? 1.0D : 0.5D))
                         player.addPotionEffect(new PotionEffect(Potion.poison.id, (int) (450.0D * (1.0D + rand)), 0));
                     player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
                 }
             } else {
                 if (contains(Materials.dangerous_water)) {
                     double rand = Math.random();
-                    if (rand > (Config.TagDigest.get() ? 1.0D : 0.2D))
+                    if (rand > (ITFConfig.TagDigest.get() ? 1.0D : 0.2D))
                         player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
                     player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
                 }
                 if (contains(Materials.unsafe_water)) {
                     double rand = Math.random();
-                    if (rand > (Config.TagDigest.get() ? 1.0D : 0.8D))
+                    if (rand > (ITFConfig.TagDigest.get() ? 1.0D : 0.8D))
                         player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
                     player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
                 }

@@ -2,7 +2,7 @@ package net.oilcake.mitelros.mixins.block;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.*;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,7 +17,7 @@ public abstract class BlockFurnaceMixin extends BlockDirectionalWithTileEntity {
 
     @Inject(method = "dropBlockAsEntityItem", at = @At("HEAD"), cancellable = true)
     private void inject(BlockBreakInfo info, CallbackInfoReturnable<Integer> cir) {
-        if (Config.TagBenchingV2.get()) {
+        if (ITFConfig.TagBenchingV2.get()) {
             Block furnace_block = Block.getBlock(getIdleBlockID());
             if (furnace_block == Block.furnaceClayIdle) {
                 if (!info.wasExploded()) {

@@ -5,7 +5,7 @@ import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import net.oilcake.mitelros.util.Constant;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
@@ -90,7 +90,7 @@ public class GuiIngameMixin extends Gui {
 
     @Inject(method = "renderGameOverlay(FZII)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z", shift = At.Shift.BEFORE))
     private void injectRenderPos(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
-        if (!Minecraft.inDevMode() && (!this.mc.gameSettings.showDebugInfo || this.mc.gameSettings.gui_mode != 0) && Minecraft.getErrorMessage() == null && Config.DisplayHud.get()) {
+        if (!Minecraft.inDevMode() && (!this.mc.gameSettings.showDebugInfo || this.mc.gameSettings.gui_mode != 0) && Minecraft.getErrorMessage() == null && ITFConfig.DisplayHud.get()) {
             String Weather, s, RainSnow, pos = "平面坐标: (" + MathHelper.floor_double(this.mc.thePlayer.posX) + ", " + MathHelper.floor_double(this.mc.thePlayer.posZ) + ") ";
             String time = "时间: (" + this.mc.thePlayer.getWorld().getHourOfDay() + ":" + (this.mc.thePlayer.getWorld().getTotalWorldTime() % 1000L * 60L / 1000L) + ") ";
             EntityPlayer player = this.mc.thePlayer.getAsPlayer();
@@ -159,7 +159,7 @@ public class GuiIngameMixin extends Gui {
             }
             String t = Constant.CalculateCurrentDiff() >= 16 ? "§c挑战难度：§4" + Constant.CalculateCurrentDiff() + " §f" : (Constant.CalculateCurrentDiff() >= 12 ? " 挑战难度：§c" + Constant.CalculateCurrentDiff() + " §f" : (Constant.CalculateCurrentDiff() >= 8 ? " 挑战难度：§6" + Constant.CalculateCurrentDiff() + " §f" : (Constant.CalculateCurrentDiff() >= 4 ? " 挑战难度：§a" + Constant.CalculateCurrentDiff() + " §f" : (Constant.CalculateCurrentDiff() >= 0 ? " 挑战难度：" + Constant.CalculateCurrentDiff() + " §f" : null))));
             StringBuilder var68 = (new StringBuilder()).append("MITE-ITF ");
-            if (Config.FinalChallenge.get() && Constant.CalculateCurrentDiff() == 31)
+            if (ITFConfig.FinalChallenge.get() && Constant.CalculateCurrentDiff() == 31)
                 t = "§4终极难度§r ";
             if (Constant.CalculateCurrentDiff() < 0)
                 t = "§a休闲难度§r ";

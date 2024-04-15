@@ -2,7 +2,7 @@ package net.oilcake.mitelros.mixins.world.biome;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.entity.*;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import net.oilcake.mitelros.world.WorldGenSulphur;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,7 +27,7 @@ public class BiomeHellMixin extends BiomeGenBase {
     this.spawnableMonsterList.add(new SpawnListEntry(EntityPigmanLord.class, 5, 1, 1));
     this.spawnableMonsterList.add(new SpawnListEntry(EntityPigmanGuard.class, 10, 1, 2));
     this.spawnableMonsterList.add(new SpawnListEntry(EntitySpirit.class,10,1,2));
-    if (Config.TagDimensionInvade.get()) {
+    if (ITFConfig.TagDimensionInvade.get()) {
       this.spawnableMonsterList.add(new SpawnListEntry(EntitySpiderKing.class, 10, 1, 2));
       this.spawnableMonsterList.add(new SpawnListEntry(EntityLongdeadGuardian.class, 40, 2, 4));
       this.spawnableMonsterList.add(new SpawnListEntry(EntityLongdead.class, 80, 4, 4));

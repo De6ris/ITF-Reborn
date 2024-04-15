@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.mixins.util;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -63,9 +63,9 @@ public class DamageMixin {
                 if (target.rand.nextFloat() < 0.2F)
                     return 0.0F;
             }
-            return Math.max(this.amount - effective_protection, ((Boolean) Config.TagArmament.get()) ? 0.0F : 1.0F);
+            return Math.max(this.amount - effective_protection, ((Boolean) ITFConfig.TagArmament.get()) ? 0.0F : 1.0F);
         }
-        return Math.max(this.amount - effective_protection, ((Boolean) Config.TagInstinctSurvival.get()) ? 0.0F : 1.0F);
+        return Math.max(this.amount - effective_protection, ((Boolean) ITFConfig.TagInstinctSurvival.get()) ? 0.0F : 1.0F);
     }
 
     @Shadow

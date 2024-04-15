@@ -2,7 +2,7 @@ package net.oilcake.mitelros.mixins.block;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.block.Blocks;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import net.oilcake.mitelros.util.SeasonColorizer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -25,7 +25,7 @@ public class BlockGrassMixin extends Block {
     int r;
     int g;
     int b;
-    if (Config.SeasonColor.get()) {
+    if (ITFConfig.SeasonColor.get()) {
       for (r = -1; r <= 1; ++r) {
         for (g = -1; g <= 1; ++g) {
           b = par1IBlockAccess.getBiomeGenForCoords(par2 + g, par4 + r).getBiomeGrassColor();

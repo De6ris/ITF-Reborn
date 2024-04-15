@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.status;
 
 import net.minecraft.EntityPlayer;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 
 public class DrunkManager {
     private EntityPlayer player;
@@ -31,8 +31,8 @@ public class DrunkManager {
 
     public void update2() {
         if (this.player.getTemperatureManager().InFreeze() || this.isDrunk()) {
-            this.player.getTemperatureManager().FreezingCooldown += Config.TagLegendFreeze.get() ? 3 : 1;
-            this.player.getTemperatureManager().FreezingCooldown += (this.isDrunk()) ? (Config.TagLegendFreeze.get() ? 3 : 1) : 0;
+            this.player.getTemperatureManager().FreezingCooldown += ITFConfig.TagLegendFreeze.get() ? 3 : 1;
+            this.player.getTemperatureManager().FreezingCooldown += (this.isDrunk()) ? (ITFConfig.TagLegendFreeze.get() ? 3 : 1) : 0;
         } else if (this.player.getTemperatureManager().FreezingCooldown > 0) {
             this.player.getTemperatureManager().FreezingCooldown--;
         }

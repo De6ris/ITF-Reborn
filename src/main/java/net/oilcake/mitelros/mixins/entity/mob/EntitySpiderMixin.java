@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.mixins.entity.mob;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -18,7 +18,7 @@ public class EntitySpiderMixin extends EntityArachnid {
             var2 = this.worldObj.isUnderworld() ? new EntityLongdead(this.worldObj) : new EntitySkeleton(this.worldObj);
             ((EntitySkeleton) var2).setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
             ((EntitySkeleton) var2).onSpawnWithEgg((EntityLivingData) null);
-        } while (((EntitySkeleton) var2).getSkeletonType() != 0 && !((Boolean) Config.TagUnderAlliance.get()).booleanValue());
+        } while (((EntitySkeleton) var2).getSkeletonType() != 0 && !((Boolean) ITFConfig.TagUnderAlliance.get()).booleanValue());
         return (EntitySkeleton) var2;
     }
 }

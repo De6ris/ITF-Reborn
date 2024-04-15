@@ -2,7 +2,7 @@ package net.oilcake.mitelros.mixins.entity.mob;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.entity.EntityRetinueZombie;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,9 +25,9 @@ public class EntityRevenantMixin extends EntityZombie {
     super.applyEntityAttributes();
     setEntityAttribute(SharedMonsterAttributes.followRange, 40.0D);
     setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.25999999046325684D);
-    setEntityAttribute(SharedMonsterAttributes.attackDamage, ((Boolean) Config.TagFallenInMineLVL2.get()).booleanValue() ? 8.75D : 7.0D);
+    setEntityAttribute(SharedMonsterAttributes.attackDamage, ((Boolean) ITFConfig.TagFallenInMineLVL2.get()).booleanValue() ? 8.75D : 7.0D);
     setEntityAttribute(field_110186_bp, this.rand.nextDouble() * 0.10000000149011612D);
-    setEntityAttribute(SharedMonsterAttributes.maxHealth, ((Boolean) Config.TagFallenInMineLVL2.get()).booleanValue() ? 45.0D : 30.0D);
+    setEntityAttribute(SharedMonsterAttributes.maxHealth, ((Boolean) ITFConfig.TagFallenInMineLVL2.get()).booleanValue() ? 45.0D : 30.0D);
   }
   
   public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
@@ -51,7 +51,7 @@ public class EntityRevenantMixin extends EntityZombie {
       } 
       if (this.spawnSums <= 8 && this.gathering_troops)
         if (this.spawnCounter < 20) {
-          if (((Boolean) Config.TagFallenInMineLVL2.get()).booleanValue())
+          if (((Boolean) ITFConfig.TagFallenInMineLVL2.get()).booleanValue())
             this.spawnCounter++; 
         } else {
           EntityRetinueZombie Belongings = new EntityRetinueZombie(this.worldObj);

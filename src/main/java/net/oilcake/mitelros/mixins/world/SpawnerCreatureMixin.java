@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.mixins.world;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.util.Config;
+import net.oilcake.mitelros.util.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -212,7 +212,7 @@ public class SpawnerCreatureMixin {
     float hostile_mob_spawning_rate_modifier;
     if (world.provider.dimensionId != 0)
       return 0.25F; 
-    if (((Boolean) Config.TagSpawningV2.get())) {
+    if (((Boolean) ITFConfig.TagSpawningV2.get())) {
       hostile_mob_spawning_rate_modifier = Math.abs(world.getTimeOfDay() - 12000.0F) / 6000.0F;
       if (hostile_mob_spawning_rate_modifier < 1.0F && (world.isBloodMoon(false) || world.isThundering(true)))
         hostile_mob_spawning_rate_modifier = 1.0F; 

@@ -59,61 +59,55 @@ public class Constant {
 
     public static int CalculateCurrentDiff() {
         int Diff = 0;
-        if (Config.TagFallenInMineLVL1.get() && !Config.TagFallenInMineLVL2.get())
+        if (ITFConfig.TagFallenInMineLVL1.get() && !ITFConfig.TagFallenInMineLVL2.get())
             Diff++;
-        if (Config.TagBattleSufferLVL1.get() && !Config.TagBattleSufferLVL2.get())
+        if (ITFConfig.TagBattleSufferLVL1.get() && !ITFConfig.TagBattleSufferLVL2.get())
             Diff++;
-        if (Config.TagFallenInMineLVL2.get())
+        if (ITFConfig.TagFallenInMineLVL2.get())
             Diff += 2;
-        if (Config.TagBattleSufferLVL2.get())
+        if (ITFConfig.TagBattleSufferLVL2.get())
             Diff += 2;
-        if (Config.TagHeatStroke.get())
+        if (ITFConfig.TagHeatStroke.get())
             Diff++;
-        if (Config.TagInstinctSurvival.get())
+        if (ITFConfig.TagInstinctSurvival.get())
             Diff++;
-        if (Config.TagInvisibleFollower.get())
+        if (ITFConfig.TagInvisibleFollower.get())
             Diff++;
-        if (Config.TagLegendFreeze.get())
+        if (ITFConfig.TagLegendFreeze.get())
             Diff++;
-        if (Config.TagEternalRaining.get())
+        if (ITFConfig.TagEternalRaining.get())
             Diff += 2;
-        if (Config.TagUnstableConvection.get())
+        if (ITFConfig.TagUnstableConvection.get())
             Diff++;
-        if (Config.TagDryDilemma.get())
+        if (ITFConfig.TagDryDilemma.get())
             Diff++;
-        if (Config.TagDeadGeothermy.get())
+        if (ITFConfig.TagDeadGeothermy.get())
             Diff += 2;
-        if (Config.TagHeatStorm.get())
+        if (ITFConfig.TagHeatStorm.get())
             Diff++;
-        if (Config.TagApocalypse.get())
+        if (ITFConfig.TagApocalypse.get())
             Diff += 3;
-        if (Config.TagWorshipDark.get())
+        if (ITFConfig.TagWorshipDark.get())
             Diff += 2;
-        if (Config.TagMiracleDisaster.get())
+        if (ITFConfig.TagMiracleDisaster.get())
             Diff++;
-        if (Config.TagPseudoVision.get())
+        if (ITFConfig.TagPseudoVision.get())
             Diff++;
-        if (Config.TagRejection.get())
+        if (ITFConfig.TagRejection.get())
             Diff += 2;
-        if (Config.TagUnderAlliance.get())
+        if (ITFConfig.TagUnderAlliance.get())
             Diff++;
-        if (Config.TagDimensionInvade.get())
+        if (ITFConfig.TagDimensionInvade.get())
             Diff += 4;
-        if (Config.TagDemonDescend.get())
+        if (ITFConfig.TagDemonDescend.get())
             Diff += 2;
 
-        if (Config.TagArmament.get())
+        if (ITFConfig.TagArmament.get())
             Diff -= 2;
-        if (Config.TagDistortion.get())
+        if (ITFConfig.TagDistortion.get())
             Diff -= 2;
-        if (Config.TagDigest.get())
+        if (ITFConfig.TagDigest.get())
             Diff -= 2;
-
-        /* del */
-        if (Config.TagAcousma.get())
-            Diff++;
-        if (Config.TagNoWeatherPredict.get())
-            Diff++;
 
         return Diff;
     }

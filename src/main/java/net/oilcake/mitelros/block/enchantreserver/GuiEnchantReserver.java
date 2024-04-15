@@ -33,6 +33,20 @@ public class GuiEnchantReserver extends GuiContainer implements ICrafting {
         this.player = player;
     }
 
+    @Override
+    public void drawScreen(int mouse_x, int mouse_y, float par3) {
+        super.drawScreen(mouse_x, mouse_y, par3);
+        Slot slot = this.getSlotThatMouseIsOver(mouse_x, mouse_y);
+        if (slot == null) return;
+        if (slot.getHasStack()) return;
+        if (slot.slotNumber > 1) return;
+        String toDraw = "请放置水瓶, 金属粒等能够储存经验的物品";
+        if (slot.slotNumber == 0) {
+            toDraw = "请放置钻石等具有经验的物品";
+        }
+        this.drawCreativeTabHoveringText(EnumChatFormatting.GOLD + toDraw, mouse_x, mouse_y);
+    }
+
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         String var3 = this.tileEntityEnchantReserver.hasCustomName() ? this.tileEntityEnchantReserver.getCustomNameOrUnlocalized() : I18n.getString(this.tileEntityEnchantReserver.getCustomNameOrUnlocalized());
         this.fontRenderer.drawString(var3, this.xSize / 2 - this.fontRenderer.getStringWidth(var3) / 2, 6, 4210752);
