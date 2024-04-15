@@ -9,6 +9,7 @@ import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.ContainerEnchantReserver;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.util.Constant;
+import net.oilcake.mitelros.util.ITFConfig;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -23,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 @Mixin(ServerPlayer.class)
 public abstract class ServerPlayerMixin extends EntityPlayer implements ICrafting, ITFPlayer {
@@ -88,6 +90,14 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
 
     @Inject(method = "onUpdateEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/FoodStats;getHunger()F"))
     private void inject(CallbackInfo ci) {
+        if (!this.is_cursed && ITFConfig.TagRejection.getBooleanValue()) {
+            EntityWitch temp = new EntityWitch(this.worldObj);
+            int username_hash = 0;
+            for (int i = 0; i < this.username.length(); i++)
+                username_hash += this.username.charAt(i) * i;
+            this.worldObj.getAsWorldServer().addCurse(getAsEntityPlayerMP(), temp, Curse.getRandomCurse(new Random((this.rand.nextInt() + username_hash))), 0);
+            learnCurseEffect();
+        }
         float health = this.getHealth();
         int satiation = this.getSatiation();
         int nutrition = this.getNutrition();

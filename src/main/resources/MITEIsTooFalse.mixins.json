@@ -87,6 +87,7 @@
     "item.ItemFlintAndSteelMixin",
     "item.ItemHoeMixin",
     "item.ItemKnifeMixin",
+    "item.ItemMapMixin",
     "item.ItemMixin",
     "item.ItemNuggetMixin",
     "item.ItemPickaxeMixin",

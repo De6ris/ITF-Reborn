@@ -20,6 +20,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Random;
 
+import static net.oilcake.mitelros.ITFStart.MOD_ID;
+
 @Mixin(GuiIngame.class)
 public class GuiIngameMixin extends Gui {
     @Shadow
@@ -158,7 +160,7 @@ public class GuiIngameMixin extends Gui {
                 drawString(this.mc.fontRenderer, text, sr.getScaledWidth() - this.mc.fontRenderer.getStringWidth(text) - 2, 2, 14737632);
             }
             String t = Constant.CalculateCurrentDiff() >= 16 ? "§c挑战难度：§4" + Constant.CalculateCurrentDiff() + " §f" : (Constant.CalculateCurrentDiff() >= 12 ? " 挑战难度：§c" + Constant.CalculateCurrentDiff() + " §f" : (Constant.CalculateCurrentDiff() >= 8 ? " 挑战难度：§6" + Constant.CalculateCurrentDiff() + " §f" : (Constant.CalculateCurrentDiff() >= 4 ? " 挑战难度：§a" + Constant.CalculateCurrentDiff() + " §f" : (Constant.CalculateCurrentDiff() >= 0 ? " 挑战难度：" + Constant.CalculateCurrentDiff() + " §f" : null))));
-            StringBuilder var68 = (new StringBuilder()).append("MITE-ITF ");
+            StringBuilder var68 = (new StringBuilder()).append(MOD_ID);
             if (ITFConfig.FinalChallenge.get() && Constant.CalculateCurrentDiff() == 31)
                 t = "§4终极难度§r ";
             if (Constant.CalculateCurrentDiff() < 0)
