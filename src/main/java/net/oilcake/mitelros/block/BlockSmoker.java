@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.block;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.util.ITFConfig;
+import net.oilcake.mitelros.config.ITFConfig;
 
 public class BlockSmoker extends BlockFurnace {
     protected BlockSmoker(int par1, boolean par2) {

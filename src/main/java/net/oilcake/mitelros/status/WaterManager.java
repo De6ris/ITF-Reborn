@@ -3,7 +3,7 @@ package net.oilcake.mitelros.status;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.util.ITFConfig;
+import net.oilcake.mitelros.config.ITFConfig;
 
 public class WaterManager {
 

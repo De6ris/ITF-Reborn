@@ -3,7 +3,7 @@ package net.oilcake.mitelros.mixins.world.biome;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.entity.*;
-import net.oilcake.mitelros.util.ITFConfig;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.world.BiomeBases;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;

@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.status;
 
 import net.minecraft.EntityPlayer;
-import net.oilcake.mitelros.util.ITFConfig;
+import net.oilcake.mitelros.config.ITFConfig;
 
 public class DrunkManager {
     private EntityPlayer player;

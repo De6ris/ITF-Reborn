@@ -3,7 +3,7 @@ package net.oilcake.mitelros.mixins.entity.mob;
 import net.minecraft.*;
 import net.oilcake.mitelros.entity.EntityBoneBodyguard;
 import net.oilcake.mitelros.entity.EntitySpiderKing;
-import net.oilcake.mitelros.util.ITFConfig;
+import net.oilcake.mitelros.config.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;

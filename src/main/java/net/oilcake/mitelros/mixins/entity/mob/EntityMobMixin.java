@@ -4,7 +4,7 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.util.ITFConfig;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.util.Constant;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

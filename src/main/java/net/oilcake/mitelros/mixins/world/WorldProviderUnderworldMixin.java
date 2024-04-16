@@ -4,7 +4,7 @@ import net.minecraft.BiomeGenBase;
 import net.minecraft.WorldChunkManagerHell;
 import net.minecraft.WorldProvider;
 import net.minecraft.WorldProviderUnderworld;
-import net.oilcake.mitelros.util.ITFConfig;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.world.BiomeBases;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

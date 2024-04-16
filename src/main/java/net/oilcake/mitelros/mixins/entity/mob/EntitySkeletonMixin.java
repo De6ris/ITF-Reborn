@@ -6,18 +6,19 @@ import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Calendar;
 
-@Mixin({EntitySkeleton.class})
+@Mixin(EntitySkeleton.class)
 public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAttackMob, ITFSkeleton {
-    @Shadow
-    private int frenzied_by_bone_lord_countdown;
 
-    int num_arrows;
+    @Unique
+    private int num_arrows;
 
     @Shadow
     private EntityAIArrowAttack aiArrowAttack;
@@ -28,107 +29,93 @@ public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAt
     @Shadow
     public int forced_skeleton_type;
 
-    protected boolean Is_Wizard;
+    protected boolean isWizard;
 
     public boolean getWizard() {
-        return this.Is_Wizard;
+        return this.isWizard;
     }
 
-    public void setWizard(boolean is_Wizard) {
-        this.Is_Wizard = is_Wizard;
+    public void setWizard(boolean isWizard) {
+        this.isWizard = isWizard;
     }
 
     public EntitySkeletonMixin(World par1World) {
         super(par1World);
-        this.Is_Wizard = false;
+        this.isWizard = false;
     }
 
-    @Inject(method = {"<init>(Lnet/minecraft/World;)V"}, at = {@At("RETURN")})
+    @Inject(method = "<init>(Lnet/minecraft/World;)V", at = @At("RETURN"))
     public void injectCtor(CallbackInfo callbackInfo) {
         this.num_arrows = this.rand.nextInt(3) + (isLongdead() ? 6 : 2) + (isLongdeadGuardian() ? 2 : 0);
-        this.tasks.addTask(3, (EntityAIBase) new EntityAIAvoidEntity((EntityCreature) this, EntityWolf.class, 10.0F, 1.0D, 1.2D));
+        this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityWolf.class, 10.0F, 1.0D, 1.2D));
     }
 
-    @Overwrite
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
-        super.readEntityFromNBT(par1NBTTagCompound);
-        if (par1NBTTagCompound.hasKey("SkeletonType")) {
-            byte var2 = par1NBTTagCompound.getByte("SkeletonType");
-            setSkeletonType(var2);
-        }
-        setCombatTask();
+    @Inject(method = "readEntityFromNBT", at = @At("TAIL"))
+    private void readArrows(NBTTagCompound par1NBTTagCompound, CallbackInfo ci) {
         this.num_arrows = par1NBTTagCompound.getByte("num_arrows");
     }
 
-    @Overwrite
-    public void onLivingUpdate() {
-        if (this.worldObj.isRemote && getSkeletonType() == 1)
-            setSize(0.72F, 2.34F);
-        if (this.frenzied_by_bone_lord_countdown > 0)
-            setFrenziedByBoneLordCountdown(this.frenzied_by_bone_lord_countdown - 1);
+    @Inject(method = "onLivingUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityMob;onLivingUpdate()V"))
+    public void itfUpdate(CallbackInfo ci) {
         if (this.num_arrows == 0 && getHeldItemStack() != null && getHeldItemStack().getItem() instanceof net.minecraft.ItemBow)
-            setHeldItemStack((ItemStack) null);
+            setHeldItemStack(null);
         if (getHeldItemStack() == null && getSkeletonType() == 0) {
             setSkeletonType(2);
             setCombatTask();
         }
-        super.onLivingUpdate();
     }
 
-    @Overwrite
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
-        super.writeEntityToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setByte("SkeletonType", (byte) getSkeletonType());
+    @Inject(method = "writeEntityToNBT", at = @At("TAIL"))
+    public void writeArrows(NBTTagCompound par1NBTTagCompound, CallbackInfo ci) {
         par1NBTTagCompound.setByte("num_arrows", (byte) this.num_arrows);
     }
 
-    @Overwrite
-    public void setCombatTask() {
-        this.tasks.removeTask((EntityAIBase) this.aiAttackOnCollide);
-        this.tasks.removeTask((EntityAIBase) this.aiArrowAttack);
-        ItemStack var1 = getHeldItemStack();
-        if (var1 != null && var1.getItem() instanceof net.minecraft.ItemBow && this.num_arrows > 0) {
-            this.tasks.addTask(4, (EntityAIBase) this.aiArrowAttack);
-            this.tasks.addTask(3, (EntityAIBase) new EntityAISeekFiringPosition((EntityLiving) this, 1.0F, true));
-        } else {
-            this.tasks.addTask(4, (EntityAIBase) this.aiAttackOnCollide);
+    @Redirect(method = "setCombatTask", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntitySkeleton;getHeldItemStack()Lnet/minecraft/ItemStack;"))
+    private ItemStack redirect(EntitySkeleton instance) {
+        if (this.num_arrows == 0) {
+            return null;
         }
+        return instance.getHeldItemStack();
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     public EntityLivingData onSpawnWithEgg(EntityLivingData par1EntityLivingData) {
         par1EntityLivingData = super.onSpawnWithEgg(par1EntityLivingData);
         int skeleton_type = (this.forced_skeleton_type >= 0) ? this.forced_skeleton_type : getRandomSkeletonType(this.worldObj);
-        if (skeleton_type == 1) {
+        if (skeleton_type == 1) {// TODO only changed == 1 stuff
             if (isBoneLord()) {
-                setCurrentItemOrArmor(1, (new ItemStack((Item) Items.tungstenBoots)).randomizeForMob((EntityLiving) this, false));
-                setCurrentItemOrArmor(2, (new ItemStack((Item) Items.tungstenLeggings)).randomizeForMob((EntityLiving) this, false));
-                setCurrentItemOrArmor(3, (new ItemStack((Item) Items.tungstenChestplate)).randomizeForMob((EntityLiving) this, false));
-                setCurrentItemOrArmor(4, (new ItemStack((Item) Items.tungstenHelmet)).randomizeForMob((EntityLiving) this, false));
+                setCurrentItemOrArmor(1, (new ItemStack(Items.tungstenBoots)).randomizeForMob(this, false));
+                setCurrentItemOrArmor(2, (new ItemStack(Items.tungstenLeggings)).randomizeForMob(this, false));
+                setCurrentItemOrArmor(3, (new ItemStack(Items.tungstenChestplate)).randomizeForMob(this, false));
+                setCurrentItemOrArmor(4, (new ItemStack(Items.tungstenHelmet)).randomizeForMob(this, false));
                 getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(8.0D);
             } else {
-                setCurrentItemOrArmor(1, (new ItemStack((Item) Items.tungstenBootsChain)).randomizeForMob((EntityLiving) this, false));
-                setCurrentItemOrArmor(2, (new ItemStack((Item) Items.tungstenLeggingsChain)).randomizeForMob((EntityLiving) this, false));
-                setCurrentItemOrArmor(3, (new ItemStack((Item) Items.tungstenChestplateChain)).randomizeForMob((EntityLiving) this, false));
-                setCurrentItemOrArmor(4, (new ItemStack((Item) Items.tungstenHelmetChain)).randomizeForMob((EntityLiving) this, false));
+                setCurrentItemOrArmor(1, (new ItemStack(Items.tungstenBootsChain)).randomizeForMob(this, false));
+                setCurrentItemOrArmor(2, (new ItemStack(Items.tungstenLeggingsChain)).randomizeForMob(this, false));
+                setCurrentItemOrArmor(3, (new ItemStack(Items.tungstenChestplateChain)).randomizeForMob(this, false));
+                setCurrentItemOrArmor(4, (new ItemStack(Items.tungstenHelmetChain)).randomizeForMob(this, false));
                 getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(6.0D);
             }
             if (this.rand.nextInt(24) == 0) {
-                this.Is_Wizard = true;
-                setCurrentItemOrArmor(0, (new ItemStack((Item) Items.lavaWand)).randomizeForMob((EntityLiving) this, false));
-                this.tasks.addTask(3, (EntityAIBase) new EntityAIAvoidEntity((EntityCreature) this, EntityPlayer.class, 9.0F, 1.0D, 1.0D));
-                this.tasks.addTask(4, (EntityAIBase) this.aiArrowAttack);
+                this.isWizard = true;
+                setCurrentItemOrArmor(0, (new ItemStack(Items.lavaWand)).randomizeForMob(this, false));
+                this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityPlayer.class, 9.0F, 1.0D, 1.0D));
+                this.tasks.addTask(4, this.aiArrowAttack);
             } else {
-                setCurrentItemOrArmor(0, (new ItemStack((Item) Items.tungstenSword)).randomizeForMob((EntityLiving) this, false));
-                this.tasks.addTask(4, (EntityAIBase) this.aiAttackOnCollide);
+                setCurrentItemOrArmor(0, (new ItemStack(Items.tungstenSword)).randomizeForMob(this, false));
+                this.tasks.addTask(4, this.aiAttackOnCollide);
             }
             setSkeletonType(1);
         } else {
             if (skeleton_type == 2) {
                 setSkeletonType(2);
-                this.tasks.addTask(4, (EntityAIBase) this.aiAttackOnCollide);
+                this.tasks.addTask(4, this.aiAttackOnCollide);
             } else if (skeleton_type == 0) {
-                this.tasks.addTask(4, (EntityAIBase) this.aiArrowAttack);
+                this.tasks.addTask(4, this.aiArrowAttack);
             } else {
                 Minecraft.setErrorMessage("onSpawnWithEgg: Unrecognized skeleton type " + skeleton_type);
             }
@@ -160,22 +147,6 @@ public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAt
     }
 
     @Shadow
-    protected void addRandomEquipment() {
-    }
-
-    @Overwrite
-    public void addRandomWeapon() {
-        if (getSkeletonType() == 2 && this.rand.nextInt(20) == 0) {
-            int day_of_world = this.worldObj.getDayOfWorld();
-            if (day_of_world >= 10) {
-                setCurrentItemOrArmor(0, (new ItemStack((day_of_world >= 20 && !this.rand.nextBoolean()) ? Item.swordRustedIron : Item.daggerRustedIron)).randomizeForMob((EntityLiving) this, false));
-                return;
-            }
-        }
-        setCurrentItemOrArmor(0, (new ItemStack((getSkeletonType() == 2) ? Item.clubWood : (Item) Item.bow)).randomizeForMob((EntityLiving) this, true));
-    }
-
-    @Shadow
     public int getSkeletonType() {
         return this.dataWatcher.getWatchableObjectByte(13);
     }
@@ -184,41 +155,20 @@ public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAt
     public abstract boolean isLongdeadGuardian();
 
     @Shadow
-    public boolean setFrenziedByBoneLordCountdown(int frenzied_by_bone_lord_countdown) {
-        return false;
-    }
-
-    @Shadow
     public abstract void setHeldItemStack(ItemStack paramItemStack);
 
     @Shadow
     public abstract boolean isBoneLord();
 
     @Shadow
-    public abstract boolean isAncientBoneLord();
+    public abstract void setCombatTask();
 
-    @Overwrite
-    public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2) {
-        EntityArrow var3 = new EntityArrow(this.worldObj, (EntityLivingBase) this, par1EntityLivingBase, 1.6F, (14 - this.worldObj.difficultySetting * 4), isLongdead() ? Item.arrowAncientMetal : Item.arrowRustedIron, false);
-        int var4 = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, getHeldItemStack());
-        int var5 = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, getHeldItemStack());
-        double damage = (par2 * 2.0F) + this.rand.nextGaussian() * 0.25D + (this.worldObj.difficultySetting * 0.11F);
-        var3.setDamage(damage);
-        if (var4 > 0)
-            var3.setDamage(var3.getDamage() + var4 * 0.5D + 0.5D);
-        if (var5 > 0)
-            var3.setKnockbackStrength(var5);
-        if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, getHeldItemStack()) > 0 || getSkeletonType() == 1 || (isBurning() && this.rand.nextInt(3) == 0))
-            var3.setFire(100);
-        playSound("random.bow", 1.0F, 1.0F / (getRNG().nextFloat() * 0.4F + 0.8F));
-        this.worldObj.spawnEntityInWorld((Entity) var3);
-        this.num_arrows--;
-    }
+    @Shadow
+    protected abstract void addRandomEquipment();
 
-    @Overwrite
-    protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
-        int looting = damage_source.getLootingModifier();
-        if (this.Is_Wizard) {
+    @Inject(method = "dropFewItems", at = @At("HEAD"))
+    private void wizardDrop(boolean recently_hit_by_player, DamageSource damage_source, CallbackInfo ci) {
+        if (this.isWizard) {
             int j = 1 + this.rand.nextInt(2);
             if (!recently_hit_by_player)
                 j = 0;
@@ -228,31 +178,27 @@ public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAt
             for (k = 0; k < j; k++)
                 dropItem(Item.netherStalkSeeds.itemID, 1);
         }
-        if (getSkeletonType() == 1) {
-            int j = this.rand.nextInt(3 + looting) - 1;
-            if (j > 0 && !recently_hit_by_player)
-                j -= this.rand.nextInt(j + 1);
-            for (int k = 0; k < j; k++)
-                dropItem(Item.coal.itemID, 1);
-            if (recently_hit_by_player && !this.has_taken_massive_fall_damage && this.rand.nextInt(getBaseChanceOfRareDrop()) < 5 + looting * 2)
-                dropItemStack(new ItemStack(Item.skull.itemID, 1, 1), 0.0F);
-        } else if (getSkeletonType() != 2) {
-            int j = Math.min(this.num_arrows, this.rand.nextInt(2 + looting));
-            if (j > 0 && !recently_hit_by_player)
-                j -= this.rand.nextInt(j + 1);
-            if (isLongdead() && j > 0)
-                j = (this.rand.nextInt(3) == 0) ? 1 : 0;
-            for (int k = 0; k < j; k++)
-                dropItem(isLongdead() ? Item.arrowAncientMetal.itemID : Item.arrowRustedIron.itemID, 1);
-        }
-        int num_drops = this.rand.nextInt(3);
-        if (num_drops > 0 && !recently_hit_by_player)
-            num_drops -= this.rand.nextInt(num_drops + 1);
-        for (int i = 0; i < num_drops; i++)
-            dropItem(Item.bone.itemID, 1);
     }
 
-    public void setNum_arrows(int arrows) {
-        this.num_arrows = arrows;
+    @Inject(method = "dropFewItems", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntitySkeleton;getSkeletonType()I", ordinal = 1))
+    private void itfDropArrow(boolean recently_hit_by_player, DamageSource damage_source, CallbackInfo ci) {
+        if (this.getSkeletonType() != 2) {
+            int looting = damage_source.getLootingModifier();
+            int j = Math.min(this.num_arrows, this.rand.nextInt(2 + looting));
+            if (j > 0 && !recently_hit_by_player) {
+                j -= this.rand.nextInt(j + 1);
+            }
+            if (isLongdead() && j > 0) {
+                j = (this.rand.nextInt(3) == 0) ? 1 : 0;
+            }
+            for (int k = 0; k < j; k++) {
+                dropItem(isLongdead() ? Item.arrowAncientMetal.itemID : Item.arrowRustedIron.itemID, 1);
+            }
+        }
+    }
+
+    @Redirect(method = "dropFewItems", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntitySkeleton;getSkeletonType()I", ordinal = 1))
+    private int doNotDropArrow(EntitySkeleton instance) {
+        return 2;
     }
 }

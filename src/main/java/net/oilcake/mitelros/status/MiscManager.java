@@ -8,12 +8,14 @@ import net.oilcake.mitelros.item.ItemTotem;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.util.ITFConfig;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.CurseExtend;
 import net.oilcake.mitelros.util.QualityHandler;
 
 import java.util.List;
+
+import static net.oilcake.mitelros.ITFStart.MOD_ID;
 
 public class MiscManager {
 
@@ -219,17 +221,18 @@ public class MiscManager {
 
 
     public void broadcast() {
-        player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("ITF-Reborn挂载成功,当前版本:").setColor(EnumChatFormatting.BLUE)
+        player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey(MOD_ID + "挂载成功,当前版本:").setColor(EnumChatFormatting.BLUE)
                 .appendComponent(ChatMessageComponent.createFromText(ITFStart.Version).setColor(EnumChatFormatting.YELLOW))
-                .appendComponent(ChatMessageComponent.createFromTranslationKey(",作者:Lee074,Huix,Kalsey,由Debris移植到FML3.2.1,现由Debris和Xy_Lose共同维护")));
-        if (Constant.CalculateCurrentDiff() != 0) {
+                .appendComponent(ChatMessageComponent.createFromTranslationKey(",作者:Lee074,Huix,Kalsey,由Debris移植到高版本FML,现由Debris和Xy_Lose共同维护")));
+        int difficulty = Constant.CalculateCurrentDiff();
+        if (difficulty != 0) {
             player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("[MITE-ITF]")
-                    .appendComponent(ChatMessageComponent.createFromTranslationKey("当前难度：" + Constant.CalculateCurrentDiff())
-                            .setColor((Constant.CalculateCurrentDiff() >= 16) ? EnumChatFormatting.DARK_RED :
-                                    ((Constant.CalculateCurrentDiff() >= 12) ? EnumChatFormatting.RED :
-                                            ((Constant.CalculateCurrentDiff() >= 8) ? EnumChatFormatting.YELLOW :
-                                                    ((Constant.CalculateCurrentDiff() >= 4) ? EnumChatFormatting.GREEN :
-                                                            ((Constant.CalculateCurrentDiff() > 0) ? EnumChatFormatting.AQUA :
+                    .appendComponent(ChatMessageComponent.createFromTranslationKey("当前难度：" + difficulty)
+                            .setColor((difficulty >= 16) ? EnumChatFormatting.DARK_RED :
+                                    ((difficulty >= 12) ? EnumChatFormatting.RED :
+                                            ((difficulty >= 8) ? EnumChatFormatting.YELLOW :
+                                                    ((difficulty >= 4) ? EnumChatFormatting.GREEN :
+                                                            ((difficulty > 0) ? EnumChatFormatting.AQUA :
                                                                     EnumChatFormatting.BLUE)))))));
         }
     }

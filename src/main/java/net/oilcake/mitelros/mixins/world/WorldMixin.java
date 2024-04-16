@@ -3,7 +3,7 @@ package net.oilcake.mitelros.mixins.world;
 import net.minecraft.Debug;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFWorld;
-import net.oilcake.mitelros.util.ITFConfig;
+import net.oilcake.mitelros.config.ITFConfig;
 import org.spongepowered.asm.mixin.*;
 
 import java.util.ArrayList;

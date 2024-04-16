@@ -2,7 +2,7 @@ package net.oilcake.mitelros.world.biome;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFBiomeDecorator;
-import net.oilcake.mitelros.util.ITFConfig;
+import net.oilcake.mitelros.config.ITFConfig;
 
 import java.util.Random;
 

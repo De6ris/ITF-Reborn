@@ -1,4 +1,4 @@
-package net.oilcake.mitelros.util;
+package net.oilcake.mitelros.config;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -8,12 +8,9 @@ import fi.dy.masa.malilib.config.options.ConfigBase;
 import fi.dy.masa.malilib.config.options.ConfigBoolean;
 import fi.dy.masa.malilib.config.options.ConfigHotkey;
 import fi.dy.masa.malilib.util.JsonUtils;
+import net.minecraft.GuiScreen;
 import net.oilcake.mitelros.ITFStart;
-import net.xiaoyu233.fml.config.ConfigCategory;
-import net.xiaoyu233.fml.config.ConfigEntry;
-import net.xiaoyu233.fml.config.ConfigRoot;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +56,7 @@ public class ITFConfig extends SimpleConfigs {
     public static final ConfigBoolean SeasonColor = new ConfigBoolean("季节植被颜色", true);
     public static final ConfigBoolean DisplayHud = new ConfigBoolean("信息显示", true);
 
+    public static List<ConfigBase> challenge;
     public static List<ConfigBase> spite;
     public static List<ConfigBase> enemy;
     public static List<ConfigBase> luck;
@@ -77,21 +75,30 @@ public class ITFConfig extends SimpleConfigs {
         enemy = List.of(TagMiracleDisaster, TagInvisibleFollower, TagUnderAlliance, TagPseudoVision, TagInstinctSurvival, TagFallenInMineLVL1, TagBattleSufferLVL1, TagFallenInMineLVL2, TagBattleSufferLVL2, TagWorshipDark, TagDemonDescend);
         luck = List.of(TagDistortion, TagDigest, TagArmament);
 
-        others = List.of(SeasonColor, DisplayHud);
+        challenge = new ArrayList<>();
+        challenge.addAll(spite);
+        challenge.addAll(enemy);
+        challenge.addAll(luck);
 
         experimental = List.of(TagCreaturesV2, TagSpawningV2, TagBenchingV2, FinalChallenge, Realistic, TagMovingV2);
 
+        others = List.of(SeasonColor, DisplayHud);
+
         values = new ArrayList<>();
-        values.addAll(spite);
-        values.addAll(enemy);
-        values.addAll(luck);
+        values.addAll(challenge);
         values.addAll(experimental);
         values.addAll(others);
+
         Instance = new ITFConfig(ITFStart.MOD_ID, null, values);
     }
 
     public static ITFConfig getInstance() {
         return Instance;
+    }
+
+    @Override
+    public GuiScreen getScreen(GuiScreen parentScreen) {
+        return new ITFConfigScreen(parentScreen, ITFStart.MOD_ID, this);
     }
 
     @Override

@@ -2,7 +2,7 @@ package net.oilcake.mitelros.mixins.entity.misc;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.block.Blocks;
-import net.oilcake.mitelros.util.ITFConfig;
+import net.oilcake.mitelros.config.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;

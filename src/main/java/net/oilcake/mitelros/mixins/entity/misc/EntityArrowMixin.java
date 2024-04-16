@@ -5,7 +5,7 @@ import net.oilcake.mitelros.entity.EntityBoneBodyguard;
 import net.oilcake.mitelros.entity.EntityStray;
 import net.oilcake.mitelros.entity.EntityWitherBodyguard;
 import net.oilcake.mitelros.item.Items;
-import net.oilcake.mitelros.util.ITFConfig;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.util.Constant;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

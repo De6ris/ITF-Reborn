@@ -2,7 +2,7 @@ package net.oilcake.mitelros.mixins.block;
 
 import net.minecraft.BlockVine;
 import net.minecraft.IBlockAccess;
-import net.oilcake.mitelros.util.ITFConfig;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.util.SeasonColorizer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;

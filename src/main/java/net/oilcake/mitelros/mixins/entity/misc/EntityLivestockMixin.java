@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.mixins.entity.misc;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.util.ITFConfig;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.util.DamageSourceExtend;
 import net.xiaoyu233.fml.reload.transform.util.EntityLivestockAccessor;
 import org.spongepowered.asm.mixin.Mixin;

@@ -3,6 +3,7 @@ package net.oilcake.mitelros.util;
 import net.minecraft.Item;
 import net.minecraft.ItemArmor;
 import net.minecraft.ResourceLocation;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 
 public class Constant {

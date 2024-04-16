@@ -75,12 +75,13 @@ public class ITFEvent {
             event.setExecuteSuccess(true);
         }
         if (par2Str.startsWith("difficulty")) {
-            player.sendChatToPlayer(ChatMessageComponent.createFromText("当前难度: " + Constant.CalculateCurrentDiff())
-                    .setColor(Constant.CalculateCurrentDiff() >= 16 ? EnumChatFormatting.DARK_RED :
-                            Constant.CalculateCurrentDiff() >= 12 ? EnumChatFormatting.RED :
-                                    Constant.CalculateCurrentDiff() >= 8 ? EnumChatFormatting.YELLOW :
-                                            Constant.CalculateCurrentDiff() >= 4 ? EnumChatFormatting.GREEN :
-                                                    Constant.CalculateCurrentDiff() > 0 ? EnumChatFormatting.AQUA :
+            int difficulty = Constant.CalculateCurrentDiff();
+            player.sendChatToPlayer(ChatMessageComponent.createFromText("当前难度: " + difficulty)
+                    .setColor(difficulty >= 16 ? EnumChatFormatting.DARK_RED :
+                            difficulty >= 12 ? EnumChatFormatting.RED :
+                                    difficulty >= 8 ? EnumChatFormatting.YELLOW :
+                                            difficulty >= 4 ? EnumChatFormatting.GREEN :
+                                                    difficulty > 0 ? EnumChatFormatting.AQUA :
                                                             EnumChatFormatting.BLUE));
             event.setExecuteSuccess(true);
         }
@@ -115,7 +116,7 @@ public class ITFEvent {
     public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
         ServerPlayer player = event.getPlayer();
         player.setHealth(player.getHealth());
-        ((ITFPlayer)player).getMiscManager().broadcast();
+        ((ITFPlayer) player).getMiscManager().broadcast();
         if (!Minecraft.inDevMode())
             player.vision_dimming = 1.25F;
         if (((ITFPlayer) player).getNewPlayerManager().getNew()) {
@@ -152,10 +153,10 @@ public class ITFEvent {
         event.register(EntityGhost.class, "EntityGhost", 557, 9539985, 6629376);
         event.register(EntityEvil.class, "EntityEvil", 558, 9539985, 14008320);
         event.register(EntityUndeadGuard.class, "EntityUndeadGuard", 559, 12698049, 4802889);
-        event.register(EntityPigmanGuard.class,"EntityPigManGuard", 560,15373203, 5066061);
-        event.register(EntityCastleGuard.class, "EntityCastleGuard", 561,0x565656,0x999999);
-        event.register(EntitySpirit.class,"EntitySpirit" ,562,0xFFFFFFF,0xFFAD0000);
-        event.register(EntityLongdeadSentry.class,"EntityLongdeadSentry", 563,13422277, 7699821);
+        event.register(EntityPigmanGuard.class, "EntityPigManGuard", 560, 15373203, 5066061);
+        event.register(EntityCastleGuard.class, "EntityCastleGuard", 561, 0x565656, 0x999999);
+        event.register(EntitySpirit.class, "EntitySpirit", 562, 0xFFFFFFF, 0xFFAD0000);
+        event.register(EntityLongdeadSentry.class, "EntityLongdeadSentry", 563, 13422277, 7699821);
         event.register(EntityUnknown.class, "null", 1895);
     }
 
