@@ -9,11 +9,12 @@ import net.oilcake.mitelros.network.PacketDecreaseWater;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin({NetServerHandler.class})
+@Mixin(NetServerHandler.class)
 public abstract class NetServerHandlerMixin extends NetHandler implements ITFNetHandler {
     @Shadow
     public ServerPlayer playerEntity;
 
+    @Override
     public void handleDecreaseWater(PacketDecreaseWater packet) {
         (this.playerEntity.getAsPlayer()).decreaseWaterServerSide(packet.hungerWater);
     }

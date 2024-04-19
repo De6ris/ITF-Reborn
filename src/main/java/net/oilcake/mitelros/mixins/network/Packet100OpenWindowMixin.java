@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin({Packet100OpenWindow.class})
+@Mixin(Packet100OpenWindow.class)
 public class Packet100OpenWindowMixin {
     @Shadow
     public int inventoryType;
@@ -46,7 +46,7 @@ public class Packet100OpenWindowMixin {
     @Inject(method = "handleOpenWindow", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"), cancellable = true)
     private void inject(EntityClientPlayerMP player, CallbackInfo ci) {
         if (this.inventoryType == 14) {
-            ((ITFPlayer)player).displayGUIEnchantReserver(this.x, this.y, this.z, new EnchantReserverSlots(new InventoryBasic(this.windowTitle, this.useProvidedWindowTitle, this.slotsCount)));
+            ((ITFPlayer) player).displayGUIEnchantReserver(this.x, this.y, this.z, new EnchantReserverSlots(new InventoryBasic(this.windowTitle, this.useProvidedWindowTitle, this.slotsCount)));
             player.openContainer.windowId = this.windowId;
             ci.cancel();
         }

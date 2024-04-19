@@ -4,7 +4,6 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
-import net.oilcake.mitelros.api.ITFInventory;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.config.ITFConfig;
@@ -22,16 +21,16 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(EntityPlayer.class)
 public abstract class EntityPlayerMixin extends EntityLivingBase implements ICommandSender, ITFPlayer {
-
-    @Shadow
-    public abstract int getExperienceLevel();
-
     public EntityPlayerMixin(World par1World) {
         super(par1World);
     }
 
     @Shadow
-    public abstract ItemStack getHeldItemStack();
+    public InventoryPlayer inventory;
+
+    @Shadow
+    public abstract int getExperienceLevel();
+
 
     @Shadow
     public abstract boolean hasFoodEnergy();
@@ -93,13 +92,8 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         return super.isOnLadder();
     }
 
-    @Inject(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;willDeliverCriticalStrike()Z"), cancellable = true)
+    @Inject(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;isSprinting()Z"), cancellable = true)
     private void explosion(Entity target, CallbackInfo ci) {
-        float damage = calcRawMeleeDamageVs(target, willDeliverCriticalStrike(), isSuspendedInLiquid());
-        if (damage <= 0.0F) {
-            ci.cancel();
-            return;
-        }
         this.enchantmentManager.destroy(target);
     }
 
@@ -132,8 +126,9 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Inject(method = "onDeath(Lnet/minecraft/DamageSource;)V", at = @At("TAIL"))
     public void onDeath(DamageSource par1DamageSource, CallbackInfo callbackInfo) {
-        if (!this.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory"))
-            ((ITFInventory) this.inventory).vanishingItems();
+        if (!this.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory")) {
+            EnchantmentManager.vanish(this.inventory);
+        }
     }
 
     public int getWater() {
@@ -149,10 +144,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
             ((ITFFoodStats) this.foodStats).decreaseWaterServerSide(hungerWater);
     }
 
-    public boolean DuringDehydration() {
-        return (getWater() == 0);
-    }
-
     @ModifyReturnValue(method = "hasFoodEnergy", at = @At("RETURN"))
     private boolean needWater(boolean original) {
         return original && this.getWater() != 0;
@@ -166,9 +157,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Shadow
     protected FoodStats foodStats;
-
-    @Shadow
-    public InventoryPlayer inventory;
 
     @Shadow
     public float vision_dimming;
@@ -316,23 +304,8 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         return original * 2;
     }
 
-    @Override
-    public void setTemperature(float temperature) {
-        this.temperatureManager.bodyTemperature = temperature;
-    }
-
     @Shadow
     public ItemStack[] getWornItems() {
         return new ItemStack[0];
-    }
-
-    @Shadow
-    public boolean willDeliverCriticalStrike() {
-        return false;
-    }
-
-    @Shadow
-    public float calcRawMeleeDamageVs(Entity target, boolean critical, boolean suspended_in_liquid) {
-        return 0.0F;
     }
 }

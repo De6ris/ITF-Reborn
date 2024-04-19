@@ -42,11 +42,6 @@ public class EntityArachnidMixin extends EntityMob implements ITFSpider {
         return this.frenziedManager;
     }
 
-    @Unique
-    public void setFrenzied_counter(int counter) {
-        this.frenziedManager.setCounter(counter);
-    }
-
     @Override
     public boolean isFrenzied() {
         return (super.isFrenzied() || this.frenziedManager.getCounter() > 0);

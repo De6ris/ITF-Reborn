@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.status;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.achivements.AchievementExtend;
+import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.enchantment.Enchantments;

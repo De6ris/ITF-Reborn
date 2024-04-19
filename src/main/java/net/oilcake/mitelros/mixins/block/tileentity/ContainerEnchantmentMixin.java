@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.mixins.block.tileentity;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.achivements.AchievementExtend;
+import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.ItemGoldenAppleLegend;
 import net.oilcake.mitelros.item.Items;

@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class EntitySpiderKing extends EntityArachnid {
-    private final int num_webs;
 
     private int spawnCounter;
 
@@ -18,7 +17,6 @@ public class EntitySpiderKing extends EntityArachnid {
     public EntitySpiderKing(World par1World) {
         super(par1World, 1.45F);
         this.gathering_troops = false;
-        this.num_webs = 4;
     }
 
     protected String getLivingSound() {
@@ -108,7 +106,7 @@ public class EntitySpiderKing extends EntityArachnid {
                     EntityClusterSpider clusterSpider = new EntityClusterSpider(this.worldObj);
                     clusterSpider.setPosition(this.posX + this.rand.nextInt(4) - this.rand.nextInt(4), this.posY, this.posZ - this.rand.nextInt(4) + this.rand.nextInt(4));
                     clusterSpider.refreshDespawnCounter(-9600);
-                    this.worldObj.spawnEntityInWorld((Entity) clusterSpider);
+                    this.worldObj.spawnEntityInWorld(clusterSpider);
                     clusterSpider.onSpawnWithEgg(null);
                     clusterSpider.entityFX(EnumEntityFX.summoned);
                     this.spawnCounter = 0;
@@ -120,12 +118,12 @@ public class EntitySpiderKing extends EntityArachnid {
     public void onDeathUpdate() {
         super.onDeathUpdate();
         if (this.deathTime == 20) {
-            EntityPotion potion = new EntityPotion(this.worldObj, (EntityLivingBase) this, 16388);
+            EntityPotion potion = new EntityPotion(this.worldObj, this, 16388);
             potion.setPosition(this.posX, this.posY - 1.0D, this.posZ);
-            this.worldObj.spawnEntityInWorld((Entity) potion);
-            potion = new EntityPotion(this.worldObj, (EntityLivingBase) this, 16426);
+            this.worldObj.spawnEntityInWorld(potion);
+            potion = new EntityPotion(this.worldObj, this, 16426);
             potion.setPosition(this.posX, this.posY - 1.0D, this.posZ);
-            this.worldObj.spawnEntityInWorld((Entity) potion);
+            this.worldObj.spawnEntityInWorld(potion);
         }
     }
 

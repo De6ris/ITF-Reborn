@@ -6,19 +6,19 @@ import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.util.SeasonColorizer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({BlockVine.class})
+@Mixin(BlockVine.class)
 public class BlockVineMixin {
-  @Overwrite
-  public final int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
-    int OriColor = par1IBlockAccess.getBiomeGenForCoords(par2, par4).getBiomeFoliageColor();
-    int MixedColor = SeasonColorizer.getSeasonColorizerModifierRed(par1IBlockAccess.getWorld(), OriColor >> 16);
-    int FinalColor = 0xFFFF & OriColor;
-    FinalColor += MixedColor << 16;
-    if (ITFConfig.SeasonColor.get()) {
-      return FinalColor;
-    } else {
-      return OriColor;
+    @Inject(method = "colorMultiplier", at = @At("RETURN"), cancellable = true)
+    private void seasonColor(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, CallbackInfoReturnable<Integer> cir) {
+        if (!ITFConfig.SeasonColor.get()) {
+            return;
+        }
+        int original = cir.getReturnValue();
+        int mixedColor = SeasonColorizer.getSeasonColorizerModifierRed(par1IBlockAccess.getWorld(), original >> 16);
+        cir.setReturnValue(0xFFFF & original + (mixedColor << 16));
     }
-  }
 }

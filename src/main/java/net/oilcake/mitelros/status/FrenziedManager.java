@@ -1,7 +1,6 @@
 package net.oilcake.mitelros.status;
 
 public class FrenziedManager {
-
     private int counter;
 
     public void update() {

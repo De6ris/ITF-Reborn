@@ -1,9 +1,10 @@
 package net.oilcake.mitelros.command;
 
-import net.minecraft.*;
+import net.minecraft.CommandBase;
+import net.minecraft.ICommandSender;
+import net.minecraft.ServerPlayer;
+import net.minecraft.WrongUsageException;
 import net.oilcake.mitelros.api.ITFPlayer;
-
-import java.util.List;
 
 public class CommandSetTemperature extends CommandBase {
 

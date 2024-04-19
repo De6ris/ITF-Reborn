@@ -2,7 +2,7 @@ package net.oilcake.mitelros.client;
 
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.*;
-import net.oilcake.mitelros.achivements.AchievementExtend;
+import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;

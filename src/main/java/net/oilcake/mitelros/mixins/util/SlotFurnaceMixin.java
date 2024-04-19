@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.mixins.util;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.achivements.AchievementExtend;
+import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;

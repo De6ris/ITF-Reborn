@@ -2,6 +2,7 @@ package net.oilcake.mitelros.api;
 
 import net.oilcake.mitelros.network.PacketDecreaseWater;
 import net.oilcake.mitelros.network.PacketEnchantReserverInfo;
+import net.oilcake.mitelros.network.PacketUpdateNutrition;
 
 public interface ITFNetHandler {
     default void processEnchantReserverInfo(PacketEnchantReserverInfo packet) {
@@ -9,4 +10,6 @@ public interface ITFNetHandler {
 
     default void handleDecreaseWater(PacketDecreaseWater packet) {
     }
+
+    default void handleUpdateNutrition(PacketUpdateNutrition packet){}
 }

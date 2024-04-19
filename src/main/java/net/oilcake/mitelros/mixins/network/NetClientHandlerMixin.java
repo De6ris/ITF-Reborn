@@ -1,15 +1,16 @@
 package net.oilcake.mitelros.mixins.network;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.ITFClientPlayer;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFNetHandler;
-import net.oilcake.mitelros.api.ITFPacket8;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.GuiEnchantReserver;
 import net.oilcake.mitelros.entity.EntityWandFireball;
 import net.oilcake.mitelros.entity.EntityWandIceBall;
 import net.oilcake.mitelros.entity.EntityWandShockWave;
 import net.oilcake.mitelros.network.PacketEnchantReserverInfo;
+import net.oilcake.mitelros.network.PacketUpdateNutrition;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.SoftOverride;
@@ -20,71 +21,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(NetClientHandler.class)
 public abstract class NetClientHandlerMixin extends NetHandler implements ITFNetHandler {
-
-    @Unique
-    private int waterCounter = 10;
-    @Unique
-    private int phytoCounter = 10;
-    @Unique
-    private int proteinCounter = 10;
-
-    @Inject(method = "handleUpdateHealth", at = @At("TAIL"))
-    private void itfHealth(Packet8UpdateHealth par1Packet8UpdateHealth, CallbackInfo ci) {
-        this.updateWater(par1Packet8UpdateHealth);
-        this.updatePhyto(par1Packet8UpdateHealth);
-        this.updateProtein(par1Packet8UpdateHealth);
-        this.updateTemperature(par1Packet8UpdateHealth);
-    }
-
-    private void updateTemperature(Packet8UpdateHealth par1Packet8UpdateHealth) {
-        ((ITFPlayer) this.mc.thePlayer.getAsPlayer()).setTemperature(((ITFPacket8) par1Packet8UpdateHealth).getTemperature());
-    }
-
-    private void updateProtein(Packet8UpdateHealth par1Packet8UpdateHealth) {
-        int protein = ((ITFPacket8) par1Packet8UpdateHealth).getProtein();
-        if (protein != 0) {
-            ((ITFPlayer) this.mc.thePlayer.getAsPlayer()).setProtein(protein);
-            this.proteinCounter = 0;
-            return;
-        } else {
-            this.proteinCounter++;
-        }
-        if (this.proteinCounter > 15) {
-            ((ITFPlayer) this.mc.thePlayer.getAsPlayer()).setProtein(0);
-            this.proteinCounter = 0;
-        }
-    }
-
-    private void updatePhyto(Packet8UpdateHealth par1Packet8UpdateHealth) {
-        int phyto = ((ITFPacket8) par1Packet8UpdateHealth).getPhytonutrients();
-        if (phyto != 0) {
-            ((ITFPlayer) this.mc.thePlayer.getAsPlayer()).setPhytonutrients(phyto);
-            this.phytoCounter = 0;
-            return;
-        } else {
-            this.phytoCounter++;
-        }
-        if (this.phytoCounter > 15) {
-            ((ITFPlayer) this.mc.thePlayer.getAsPlayer()).setPhytonutrients(0);
-            this.phytoCounter = 0;
-        }
-    }
-
-    private void updateWater(Packet8UpdateHealth par1Packet8UpdateHealth) {
-        int water = ((ITFPacket8) par1Packet8UpdateHealth).getWater();
-        if (water != 0) {
-            ((ITFFoodStats) this.mc.thePlayer.getFoodStats()).setSatiationWater(water, false);
-            this.waterCounter = 0;
-            return;
-        } else {
-            this.waterCounter++;
-        }
-        if (this.waterCounter > 15) {
-            ((ITFFoodStats) this.mc.thePlayer.getFoodStats()).setSatiationWater(((ITFPacket8) par1Packet8UpdateHealth).getWater(), false);
-            this.waterCounter = 0;
-        }
-    }
-
     @Inject(method = "handleVehicleSpawn", at = @At("HEAD"), cancellable = true)
     private void itfEntity(Packet23VehicleSpawn par1Packet23VehicleSpawn, CallbackInfo ci) {
         if (par1Packet23VehicleSpawn.type < 100 || par1Packet23VehicleSpawn.type > 102) {
@@ -155,6 +91,16 @@ public abstract class NetClientHandlerMixin extends NetHandler implements ITFNet
         GuiScreen openingGUI = this.mc.currentScreen;
         if (openingGUI instanceof GuiEnchantReserver)
             ((GuiEnchantReserver) openingGUI).setEnchantInfo(packet.getEXP());
+    }
+
+    @Override
+    @Unique
+    public void handleUpdateNutrition(PacketUpdateNutrition packet) {
+        ITFClientPlayer clientPlayer = this.mc.thePlayer;
+        clientPlayer.setPhytonutrients(packet.getPhytonutrients());
+        clientPlayer.setProtein(packet.getProtein());
+        ((ITFFoodStats) this.mc.thePlayer.getFoodStats()).setSatiationWater(packet.getWater(), false);
+        ((ITFPlayer) this.mc.thePlayer).getTemperatureManager().bodyTemperature = packet.getTemp();
     }
 
     @Shadow

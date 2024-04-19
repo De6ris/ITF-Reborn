@@ -2,13 +2,13 @@ package net.oilcake.mitelros.mixins.entity.player;
 
 import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
-import net.oilcake.mitelros.achivements.AchievementExtend;
-import net.oilcake.mitelros.api.ITFInventory;
-import net.oilcake.mitelros.api.ITFPacket8;
+import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.ContainerEnchantReserver;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.config.ITFConfig;
+import net.oilcake.mitelros.network.PacketUpdateNutrition;
+import net.oilcake.mitelros.status.EnchantmentManager;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,7 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
 @Mixin(ServerPlayer.class)
@@ -36,9 +35,9 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     protected abstract void incrementWindowID();
 
     @Unique
-    private int last_water = -99999999;
+    private int last_water;
     @Unique
-    private float last_temperature = Float.MIN_VALUE;
+    private float last_temperature;
 
     @Unique
     private int last_phytonutrients;
@@ -50,9 +49,6 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     private int currentWindowId;
 
     @Shadow
-    public boolean playerConqueredTheEnd;
-
-    @Shadow
     private int protein;
 
     @Shadow
@@ -62,24 +58,17 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     private int phytonutrients;
 
     @Shadow
-    private float lastHealth;
-
-    @Shadow
-    private int last_experience;
-
-    @Shadow
-    private int last_nutrition;
-
-    @Shadow
     public NetServerHandler playerNetServerHandler;
 
+
     @Shadow
-    public MinecraftServer mcServer;
+    public abstract boolean isMalnourished();
 
     @Inject(method = "onDeath", at = @At("RETURN"))
     public void onDeath(DamageSource par1DamageSource, CallbackInfo callbackInfo) {
-        if (!this.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory"))
-            ((ITFInventory) this.inventory).vanishingItems();
+        if (!this.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory")) {
+            EnchantmentManager.vanish(this.inventory);
+        }
     }
 
     @Inject(method = "onUpdate", at = @At("RETURN"))
@@ -100,15 +89,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
         int water = this.getWater();
         float temperature = this.getTemperatureManager().bodyTemperature;
         if (water != this.last_water || this.phytonutrients != this.last_phytonutrients || this.protein != this.last_protein || temperature != this.last_temperature) {
-            float health = this.getHealth();
-            int satiation = this.getSatiation();
-            int nutrition = this.getNutrition();
-            Packet8UpdateHealth updateWater = new Packet8UpdateHealth(health, satiation, nutrition, this.vision_dimming);
-            ((ITFPacket8) updateWater).setWater(water);
-            ((ITFPacket8) updateWater).setPhytonutrients(this.phytonutrients);
-            ((ITFPacket8) updateWater).setProtein(this.protein);
-            ((ITFPacket8) updateWater).setTemperature(temperature);
-            this.playerNetServerHandler.sendPacketToPlayer(updateWater);
+            this.playerNetServerHandler.sendPacketToPlayer(new PacketUpdateNutrition(phytonutrients, protein, water, temperature));
             this.last_water = water;
             this.last_phytonutrients = this.phytonutrients;
             this.last_protein = this.protein;
@@ -158,88 +139,40 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
         cir.setReturnValue(this.protein <= 800000 && this.phytonutrients <= 800000);
     }
 
-    public boolean isMalnourishedLv1() {
-        if (this.protein <= 800000 && this.protein >= 320000)
-            return true;
-        return (this.phytonutrients <= 800000 && this.phytonutrients >= 320000);
+    @Override
+    public int malnourishedLevel() {
+        int min = Math.min(this.protein, this.phytonutrients);
+        if (min < 160000) return 3;
+        if (min < 320000) return 2;
+        if (min < 800000) return 1;
+        return 0;
     }
 
-    public boolean isMalnourishedLv2() {
-        if (this.protein < 320000 && this.protein >= 160000)
-            return true;
-        return (this.phytonutrients < 320000 && this.phytonutrients >= 160000);
-    }
-
-    public boolean isMalnourishedLv3() {
-        if (this.protein < 160000 && this.protein >= 0)
-            return true;
-        return (this.phytonutrients < 160000 && this.phytonutrients >= 0);
-    }
-
-    public boolean isMalnourishedFin() {
+    public boolean isMalnourishedFinal() {
         if (this.protein == 0)
             return true;
         return (this.phytonutrients == 0);
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public float getWetnessAndMalnourishmentHungerMultiplier() {
-        int x = getBlockPosX();
-        int y = getFootBlockPosY();
-        int z = getBlockPosZ();
-        float rain_factor = isInRain() ? (this.worldObj.isThundering(true) ? 0.5F : 0.25F) : 0.0F;
-        float immersion_factor = (this.worldObj.getBlockMaterial(x, y + 1, z) == Material.water) ? 0.5F : ((this.worldObj.getBlockMaterial(x, y, z) == Material.water) ? 0.25F : 0.0F);
-        float wetness_factor = Math.max(rain_factor, immersion_factor);
-        if (isInRain() && !this.worldObj.isThundering(true) && immersion_factor == 0.25F)
-            wetness_factor += 0.125F;
-        if (this.worldObj.isBiomeFreezing(x, z)) {
-            wetness_factor *= 2.0F;
-        } else if ((this.worldObj.getBiomeGenForCoords(x, z)).temperature >= BiomeGenBase.desertRiver.temperature) {
-            wetness_factor = 0.0F;
-        }
-        float malnourishment_factor = isMalnourishedLv1() ? 0.5F : (isMalnourishedLv2() ? 1.0F : (isMalnourishedLv3() ? 3.0F : (isMalnourishedFin() ? 31.0F : 0.0F)));
-        return 1.0F + wetness_factor + malnourishment_factor;
-    }
-
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public void travelToDimension(int par1) {
-        if (this.dimension == 1 && par1 == 1) {
-            triggerAchievement(AchievementList.theEnd2);
-            if (Constant.calculateCurrentDifficulty() >= 12)
-                triggerAchievement(AchievementExtend.stormStriker);
-            this.worldObj.removeEntity(this);
-            this.playerConqueredTheEnd = true;
-            this.playerNetServerHandler.sendPacketToPlayer(new Packet70GameEvent(4, 0));
+    @Inject(method = "getWetnessAndMalnourishmentHungerMultiplier", at = @At("RETURN"), cancellable = true)
+    private void malnourishment(CallbackInfoReturnable<Float> cir) {
+        float original = cir.getReturnValue();
+        float oldFactor = this.isMalnourished() ? 0.5F : 0.0F;
+        original -= oldFactor;
+        float newFactor;
+        if (this.isMalnourishedFinal()) {
+            newFactor = 31.0F;
         } else {
-            WorldServer destination_world = this.mcServer.worldServerForDimension(par1);
-            if (destination_world.isUnderworld())
-                this.worldObj.getWorldInfo().setUnderworldVisited();
-            if (destination_world.isTheNether())
-                this.worldObj.getWorldInfo().setNetherVisited();
-            if (destination_world.isTheEnd() && destination_world.playerEntities.size() == 0)
-                ((WorldProviderEnd) (this.mcServer.worldServerForDimension(par1)).provider).heal_ender_dragon = true;
-            if (this.dimension == 0 && par1 == 1) {
-                triggerAchievement(AchievementList.theEnd);
-                ChunkCoordinates var2 = this.mcServer.worldServerForDimension(par1).getEntrancePortalLocation();
-                if (var2 != null)
-                    this.playerNetServerHandler.setPlayerLocation(var2.posX, var2.posY, var2.posZ, 0.0F, 0.0F);
-                par1 = 1;
-            } else {
-                triggerAchievement(AchievementList.portal);
-            }
-            this.mcServer.getConfigurationManager().transferPlayerToDimension(getAsEntityPlayerMP(), par1);
-            this.last_experience = -1;
-            this.lastHealth = -1.0F;
-            this.last_nutrition = -1;
+            int level = this.malnourishedLevel();
+            newFactor = level == 3 ? 3.0F : (level == 2 ? 1.0F : (level == 1 ? 0.5F : 0.0F));
         }
+        cir.setReturnValue(original + newFactor);
+    }
+
+    @Inject(method = "travelToDimension", at = @At(value = "INVOKE", target = "Lnet/minecraft/World;removeEntity(Lnet/minecraft/Entity;)V"))
+    private void itfAchievement(int par1, CallbackInfo ci) {
+        if (Constant.calculateCurrentDifficulty() >= 12)
+            triggerAchievement(AchievementExtend.stormStriker);
     }
 
     /**
@@ -247,7 +180,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
      * @reason
      */
     @Overwrite
-    public void readStatsFromNBT(NBTTagCompound par1NBTTagCompound) {
+    public void readStatsFromNBT(NBTTagCompound par1NBTTagCompound) {// TODO why null?
         Collection tags = par1NBTTagCompound.getTags();
         Iterator i = tags.iterator();
 
@@ -264,36 +197,5 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
                 this.stats.put(id, par1NBTTagCompound.getInteger(tag.getName()));
             }
         }
-    }
-
-    @Shadow
-    public INetworkManager getNetManager() {
-        return null;
-    }
-
-    @Shadow
-    public void sendChatToPlayer(ChatMessageComponent chatMessage) {
-    }
-
-    @Shadow
-    public boolean canCommandSenderUseCommand(int i, String s) {
-        return false;
-    }
-
-    @Shadow
-    public ChunkCoordinates getPlayerCoordinates() {
-        return null;
-    }
-
-    @Shadow
-    public void sendContainerAndContentsToPlayer(Container container, List list) {
-    }
-
-    @Shadow
-    public void sendSlotContents(Container container, int i, ItemStack itemStack) {
-    }
-
-    @Shadow
-    public void sendProgressBarUpdate(Container container, int i, int i1) {
     }
 }

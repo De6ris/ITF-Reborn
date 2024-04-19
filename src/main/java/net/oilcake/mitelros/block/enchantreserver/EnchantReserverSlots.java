@@ -40,7 +40,7 @@ public class EnchantReserverSlots extends InventoryBasic {
         this.input = new Slot(iInventory, getInputIndex(), 63, 19) {
             @Override
             public boolean isItemValid(ItemStack par1ItemStack) {
-                return par1ItemStack.getItem() instanceof net.minecraft.ItemRock ||
+                return (par1ItemStack.getItem() instanceof net.minecraft.ItemRock) ||
                         (par1ItemStack.getItem().itemID == Item.dyePowder.itemID && par1ItemStack.getItemSubtype() == 4);
             }
         };

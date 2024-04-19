@@ -2,6 +2,7 @@ package net.oilcake.mitelros.item;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
+import net.oilcake.mitelros.api.ItemRockExtend;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.potion.ItemPotionExperimental;
 import net.oilcake.mitelros.item.potion.ItemPotionSuspicious;

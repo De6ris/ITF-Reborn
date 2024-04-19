@@ -120,7 +120,7 @@ public class FoodStatsMixin implements ITFFoodStats {
                 this.starve_progress--;
                 this.hunger_for_nutrition_only = 0.0F;
             }
-        } else if (this.player.DuringDehydration()) {
+        } else if (this.player.getWater() == 0) {
             this.heal_progress = 0.0F;
             this.dehydration_progress += 0.002F;
             if (this.dehydration_progress >= 1.0F) {
@@ -128,7 +128,7 @@ public class FoodStatsMixin implements ITFFoodStats {
                 this.dehydration_progress--;
                 this.water_for_nutrition_only = 0.0F;
             }
-        } else if (((ITFPlayer) par1EntityPlayer).isMalnourishedFin()) {
+        } else if (((ITFPlayer) par1EntityPlayer).isMalnourishedFinal()) {
             this.heal_progress = 0.0F;
             this.malnourished_progress += 0.002F;
             if (this.malnourished_progress >= 1.0F) {
@@ -136,8 +136,10 @@ public class FoodStatsMixin implements ITFFoodStats {
                 this.malnourished_progress--;
             }
         } else {
+            int malnourishedLevel = ((ITFPlayer) par1EntityPlayer).malnourishedLevel();
+            float factor = malnourishedLevel > 1 ? 0.0F : (malnourishedLevel == 1 ? 0.25F : 1.0F);
             this.heal_progress += (4.0E-4F + this.nutrition * 2.0E-5F)
-                    * (((ITFPlayer) par1EntityPlayer).isMalnourishedLv1() ? 0.25F : ((((ITFPlayer) par1EntityPlayer).isMalnourishedLv2() ? 0.0F : (((ITFPlayer) par1EntityPlayer).isMalnourishedLv3() ? 0.0F : 1.0F))))
+                    * factor
                     * (par1EntityPlayer.inBed() ? 8.0F : 1.0F) * EnchantmentHelper.getRegenerationModifier(this.player);
             this.starve_progress = 0.0F;
             if (par1EntityPlayer.worldObj.getGameRules().getGameRuleBooleanValue("naturalRegeneration") && par1EntityPlayer.shouldHeal()) {

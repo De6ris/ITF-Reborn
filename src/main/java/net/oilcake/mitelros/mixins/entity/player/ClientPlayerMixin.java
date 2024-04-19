@@ -2,6 +2,7 @@ package net.oilcake.mitelros.mixins.entity.player;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.*;
+import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.block.enchantreserver.GuiEnchantReserver;
 import net.oilcake.mitelros.config.ITFConfig;
@@ -12,14 +13,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ClientPlayer.class)
-public abstract class ClientPlayerMixin extends AbstractClientPlayer {
-
+public abstract class ClientPlayerMixin extends AbstractClientPlayer implements ITFPlayer {
     @Shadow
     protected Minecraft mc;
-
-    private int phytonutrients;
-
-    private int protein;
 
     public ClientPlayerMixin(World par1World, String par2Str) {
         super(par1World, par2Str);
@@ -68,21 +64,5 @@ public abstract class ClientPlayerMixin extends AbstractClientPlayer {
     @ModifyExpressionValue(method = "setSprinting", at = @At(value = "INVOKE", target = "Lnet/minecraft/ClientPlayer;hasCurse(Lnet/minecraft/Curse;Z)Z"))
     private boolean cantRun(boolean original) {
         return original || (getHealth() / 5.0F < 1.0F && ITFConfig.Realistic.get());
-    }
-
-    public int getProtein() {
-        return this.protein;
-    }
-
-    public int getPhytonutrients() {
-        return this.phytonutrients;
-    }
-
-    public void setProtein(int protein) {
-        this.protein = protein;
-    }
-
-    public void setPhytonutrients(int phytonutrients) {
-        this.phytonutrients = phytonutrients;
     }
 }

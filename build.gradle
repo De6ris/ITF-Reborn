@@ -21,7 +21,7 @@ repositories {
 loom {
     accessWidenerPath = file("src/main/resources/MITEIsTooFalse.accesswidener")
     mergedMinecraftJar()
-    setFML(new File("libs\\FishModLoader-v3.2.2.jar"))
+    setFML(new File("D:\\Code\\Java\\FML3.0.0\\lib\\FishModLoader.jar"))
     mods {
         "MITE-ITF-Reborn" {
             sourceSet sourceSets.main
@@ -41,6 +41,12 @@ dependencies {
 //	implementation("org.spongepowered:mixin:0.8.5")
 
     implementation files(loom.getFML().toPath())
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\ManyLib.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\ModernMite.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\OhMyMiteClient.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\GammaFree.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\MITEDevHackMod-FML3.0.0.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\Neodymium.jar")
 }
 
 processResources {

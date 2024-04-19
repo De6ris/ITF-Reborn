@@ -157,4 +157,21 @@ public class EnchantmentManager {
     public boolean willRepair(ItemStack holding) {
         return EnchantmentHelper.hasEnchantment(holding, Enchantments.enchantmentMending);
     }
+
+    public static void vanish(InventoryPlayer inventory) {
+        int var1;
+        for (var1 = 0; var1 < inventory.mainInventory.length; var1++) {
+            if (inventory.mainInventory[var1] != null && EnchantmentHelper.hasEnchantment(inventory.mainInventory[var1], Enchantments.enchantmentVanishing)) {
+                inventory.destroyInventoryItemStack(inventory.mainInventory[var1]);
+                inventory.mainInventory[var1] = null;
+            }
+        }
+        for (var1 = 0; var1 < inventory.armorInventory.length; var1++) {
+            if (inventory.armorInventory[var1] != null && EnchantmentHelper.hasEnchantment(inventory.armorInventory[var1], Enchantments.enchantmentVanishing)) {
+                inventory.destroyInventoryItemStack(inventory.armorInventory[var1]);
+                inventory.armorInventory[var1] = null;
+            }
+        }
+        inventory.player.sendPacket(new Packet85SimpleSignal(EnumSignal.clear_inventory));
+    }
 }

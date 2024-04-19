@@ -21,29 +21,13 @@ public interface ITFPlayer {
 
     void decreaseWaterServerSide(float hungerWater);
 
-    boolean isMalnourishedFin();
+    boolean isMalnourishedFinal();
 
-    boolean isMalnourishedLv1();
-
-    boolean isMalnourishedLv2();
-
-    boolean isMalnourishedLv3();
-
-    boolean DuringDehydration();
+    int malnourishedLevel();
 
     int getCurrent_insulin_resistance_lvl();
-
-    void setPhytonutrients(int phytonutrients);
-
-    void setProtein(int protein);
-
-    int getPhytonutrients();
-
-    int getProtein();
 
     DrunkManager getDrunkManager();
 
     HuntManager getHuntManager();
-
-    void setTemperature(float temperature);
 }
