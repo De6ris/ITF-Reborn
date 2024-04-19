@@ -7,9 +7,9 @@ import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFInventory;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.status.*;
-import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,6 +36,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @Shadow
     public abstract boolean hasFoodEnergy();
 
+    @Unique
     public NewPlayerManager newPlayerManager = new NewPlayerManager();
 
     @Override
@@ -43,6 +44,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         return newPlayerManager;
     }
 
+    @Unique
     public DiarrheaManager diarrheaManager = new DiarrheaManager(ReflectHelper.dyCast(this));
 
     @Shadow
@@ -51,6 +53,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @Shadow
     public PlayerCapabilities capabilities;
 
+    @Unique
     private final HuntManager huntManager = new HuntManager(ReflectHelper.dyCast(this));
 
     @Override
@@ -67,7 +70,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     private float addReachToEntity(float original) {
         return original + (this.isPotionActive(PotionExtend.stretch) ? this.getActivePotionEffect(PotionExtend.stretch).getAmplifier() * 1.5F : 0.0F);
     }
-
 
     public int getCurrent_insulin_resistance_lvl() {
         if (this.insulin_resistance_level == null)
@@ -135,16 +137,16 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     }
 
     public int getWater() {
-        return ((ITFFoodStats) getFoodStats()).getWater();
+        return ((ITFFoodStats) this.foodStats).getWater();
     }
 
     public int addWater(int water) {
-        return ((ITFFoodStats) getFoodStats()).addWater(water);
+        return ((ITFFoodStats) this.foodStats).addWater(water);
     }
 
     public void decreaseWaterServerSide(float hungerWater) {
         if (!this.capabilities.isCreativeMode && !this.capabilities.disableDamage)
-            ((ITFFoodStats) getFoodStats()).decreaseWaterServerSide(hungerWater);
+            ((ITFFoodStats) this.foodStats).decreaseWaterServerSide(hungerWater);
     }
 
     public boolean DuringDehydration() {
@@ -197,7 +199,9 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
                 this.vision_dimming = 0.05F;
             this.waterManager.update();
             this.drunkManager.update1();
-            this.temperatureManager.update();
+            if (ITFConfig.TagTemperature.getBooleanValue()) {
+                this.temperatureManager.update();
+            }
             this.drunkManager.update2();
             if (getHealth() < 5.0F && ITFConfig.Realistic.get())
                 this.vision_dimming = Math.max(this.vision_dimming, 1.0F - getHealthFraction());
@@ -205,6 +209,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         this.feastManager.achievementCheck();
         this.enchantmentManager.arroganceUpdate();
         this.enchantmentManager.mendingUpdate();
+        this.enchantmentManager.lightMendingUpdate();
     }
 
     @Inject(method = "addExperience(IZZ)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/FoodStats;setNutrition(IZ)V"))
@@ -215,10 +220,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @ModifyVariable(method = "addExperience(IZZ)V", at = @At("HEAD"), ordinal = 0, argsOnly = true)// TODO need checking
     private int mending(int amount) {
         return this.enchantmentManager.onAddingEXP(amount);
-    }
-
-    public FoodStats getFoodStats() {
-        return this.foodStats;
     }
 
     @Unique
@@ -246,10 +247,11 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         this.huntManager.hunt_cap = par1NBTTagCompound.getBoolean("UsedTotemOfHunt");
         this.huntManager.hunt_counter = par1NBTTagCompound.getInteger("TotemDyingCounter");
         this.newPlayerManager.setNew(par1NBTTagCompound.getBoolean("isNewPlayer"));
-        this.temperatureManager.FreezingCooldown = par1NBTTagCompound.getInteger("FreezingCooldown");
-        this.temperatureManager.FreezingWarning = par1NBTTagCompound.getInteger("FreezingWarning");
+        this.temperatureManager.freezingCoolDown = par1NBTTagCompound.getInteger("FreezingCooldown");
+        this.temperatureManager.freezingWarning = par1NBTTagCompound.getInteger("FreezingWarning");
+        this.temperatureManager.heatResistance = par1NBTTagCompound.getInteger("HeatResistance");
+        this.temperatureManager.bodyTemperature = par1NBTTagCompound.getFloat("BodyTemperature");
         this.drunkManager.setDrunk_duration(par1NBTTagCompound.getInteger("DrunkDuration"));
-        this.temperatureManager.HeatResistance = par1NBTTagCompound.getInteger("HeatResistance");
     }
 
     @Inject(method = "writeEntityToNBT", at = @At("HEAD"))
@@ -258,10 +260,11 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         par1NBTTagCompound.setBoolean("UsedTotemOfHunt", this.huntManager.hunt_cap);
         par1NBTTagCompound.setInteger("TotemDyingCounter", this.huntManager.hunt_counter);
         par1NBTTagCompound.setBoolean("isNewPlayer", this.newPlayerManager.getNew());
-        par1NBTTagCompound.setInteger("FreezingCooldown", this.temperatureManager.FreezingCooldown);
-        par1NBTTagCompound.setInteger("FreezingWarning", this.temperatureManager.FreezingWarning);
+        par1NBTTagCompound.setInteger("FreezingCooldown", this.temperatureManager.freezingCoolDown);
+        par1NBTTagCompound.setInteger("FreezingWarning", this.temperatureManager.freezingWarning);
+        par1NBTTagCompound.setInteger("HeatResistance", this.temperatureManager.heatResistance);
+        par1NBTTagCompound.setFloat("BodyTemperature", this.temperatureManager.bodyTemperature);
         par1NBTTagCompound.setInteger("DrunkDuration", this.drunkManager.getDrunk_duration());
-        par1NBTTagCompound.setInteger("HeatResistance", this.temperatureManager.HeatResistance);
     }
 
     @Inject(method = "checkForArmorAchievements", at = @At("HEAD"))
@@ -282,7 +285,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @Inject(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
     private void inject_1(Damage damage, CallbackInfoReturnable<EntityDamageResult> cir) {
         if (ITFConfig.FinalChallenge.get())
-            damage.scaleAmount(1.0F + Constant.CalculateCurrentDiff() / 50.0F);// TODO check validity
+            damage.scaleAmount(1.0F + Constant.calculateCurrentDifficulty() / 50.0F);
     }
 
     @ModifyReturnValue(method = "getHealthLimit()F", at = @At("RETURN"))
@@ -311,6 +314,11 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @ModifyReturnValue(method = "getCraftingExperienceCost", at = @At("RETURN"))
     private int moreEXPNeeded(int original) {
         return original * 2;
+    }
+
+    @Override
+    public void setTemperature(float temperature) {
+        this.temperatureManager.bodyTemperature = temperature;
     }
 
     @Shadow

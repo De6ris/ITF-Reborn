@@ -44,4 +44,6 @@ public interface ITFPlayer {
     DrunkManager getDrunkManager();
 
     HuntManager getHuntManager();
+
+    void setTemperature(float temperature);
 }

@@ -8,7 +8,7 @@ import net.xiaoyu233.fml.reload.event.MITEEvents;
 
 public class ITFStart implements ModInitializer {
     public static final String MOD_ID = "MITE-ITF-Reborn";
-    public static final String Version = "H16a-Fix";
+    public static final String Version = "H16c";
 
     @Override
     public void onInitialize() {

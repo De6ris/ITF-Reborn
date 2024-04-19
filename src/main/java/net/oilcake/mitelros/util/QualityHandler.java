@@ -30,7 +30,7 @@ public class QualityHandler {
             return null;
         }
         int amplifier = getQualityAmplifier(quality);
-        if (isTool) amplifier *= 2;
+        if (isTool) amplifier *= 3;
         if (amplifier == 0) return null;
         return "品质效果: " +
                 (amplifier > 0 ? "提升" : "降低") +

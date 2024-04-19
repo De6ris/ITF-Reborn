@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFEnchantment;
 import net.oilcake.mitelros.api.ITFItem;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.QualityHandler;
 import net.xiaoyu233.fml.util.ReflectHelper;
@@ -11,6 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
@@ -82,6 +84,11 @@ public abstract class ItemStackMixin {
                 var3.add(EnumChatFormatting.GRAY + description);
             }
         }
+    }
+
+    @ModifyArg(method = "tryDamageItem(Lnet/minecraft/DamageSource;ILnet/minecraft/EntityLivingBase;)Lnet/minecraft/ItemDamageResult;", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemStack;tryDamageItem(Lnet/minecraft/World;IZ)Lnet/minecraft/ItemDamageResult;", ordinal = 1), index = 1)
+    private int corrosion(int damage) {
+        return (int) ((ITFConfig.TagCorrosion.getIntegerValue() * 0.3f + 1.0f ) * damage);
     }
 
     @Shadow

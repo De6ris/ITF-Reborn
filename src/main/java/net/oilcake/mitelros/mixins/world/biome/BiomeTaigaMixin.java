@@ -1,8 +1,8 @@
 package net.oilcake.mitelros.mixins.world.biome;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.entity.EntityStray;
 import net.oilcake.mitelros.config.ITFConfig;
+import net.oilcake.mitelros.entity.EntityStray;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

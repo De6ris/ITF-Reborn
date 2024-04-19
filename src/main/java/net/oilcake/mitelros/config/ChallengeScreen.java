@@ -1,27 +1,25 @@
 package net.oilcake.mitelros.config;
 
-import com.google.common.collect.ImmutableList;
 import fi.dy.masa.malilib.config.SimpleConfigs;
 import fi.dy.masa.malilib.config.interfaces.IConfigResettable;
-import fi.dy.masa.malilib.config.options.ConfigBase;
+import fi.dy.masa.malilib.config.options.ConfigInteger;
+import fi.dy.masa.malilib.gui.button.GuiButtonCommented;
+import fi.dy.masa.malilib.gui.screen.GuiScreenCommented;
 import fi.dy.masa.malilib.gui.screen.ValueScreen;
 import net.minecraft.GuiButton;
 import net.minecraft.GuiScreen;
 import net.minecraft.GuiYesNoMITE;
 import net.minecraft.I18n;
 
-public class ChallengeScreen extends GuiScreen {
+public class ChallengeScreen extends GuiScreenCommented {
 
     private GuiScreen parentScreen;
-    protected String screenTitle;
     private final SimpleConfigs configs;
-    private final ImmutableList<ConfigBase> values;
 
-    public ChallengeScreen(GuiScreen parentScreen, String screenTitle, SimpleConfigs configs) {
+    public ChallengeScreen(GuiScreen parentScreen) {
+        super("挑战设置");
         this.parentScreen = parentScreen;
-        this.screenTitle = screenTitle;
-        this.configs = configs;
-        this.values = ImmutableList.copyOf(configs.getValues());
+        this.configs = ITFConfig.getInstance();
     }
 
     public void initGui() {
@@ -30,7 +28,8 @@ public class ChallengeScreen extends GuiScreen {
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 6 + 24, "自然恶意"));
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 6 + 48, "疯狂劲敌"));
         this.buttonList.add(new GuiButton(2, this.width / 2 - 100, this.height / 6 + 72, "天赐福星"));
-        this.buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 6 + 120, "重置全部挑战设置"));
+        this.buttonList.add(new GuiButtonCommented(3, this.width / 2 - 100, this.height / 6 + 120, "重置全部挑战设置", "仅重置挑战设置, 而不影响实验性玩法等"));
+        this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 6 + 96, "启用终极挑战"));
 
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, I18n.getString("gui.done")));
     }
@@ -48,7 +47,11 @@ public class ChallengeScreen extends GuiScreen {
                 this.mc.displayGuiScreen(new ValueScreen(this, "数值设置", this.configs.setValues(ITFConfig.luck)));
                 break;
             case 3:
-                var3 = new GuiYesNoMITE(this, "真的要重置全部挑战设置吗?", this.configs.getName(), "是", "否", 1);
+                var3 = new GuiYesNoMITE(this, "真的要重置全部挑战设置吗?", this.configs.getName(), "是", "否", 3);
+                this.mc.displayGuiScreen(var3);
+                break;
+            case 4:
+                var3 = new GuiYesNoMITE(this, "真的要启用终极挑战吗?", this.configs.getName(), "是", "否", 4);
                 this.mc.displayGuiScreen(var3);
                 break;
             case 200:
@@ -59,18 +62,28 @@ public class ChallengeScreen extends GuiScreen {
 
     public void confirmClicked(boolean par1, int par2) {
         if (par1) {
-            if (par2 == 1) {
-                this.values.forEach(IConfigResettable::resetToDefault);
-                this.values.forEach(x -> System.out.println(x.getName()));
+            if (par2 == 3) {
+                ITFConfig.challenge.forEach(IConfigResettable::resetToDefault);
+                this.configs.save();
+            }
+            if (par2 == 4) {
+                ITFConfig.spite.forEach(x -> {
+                    if (x instanceof ConfigBooleanChallenge challenge) challenge.setBooleanValue(true);
+                    if (x instanceof ConfigInteger configInteger)
+                        configInteger.setIntegerValue(configInteger.getMaxIntegerValue());
+                });
+                ITFConfig.enemy.forEach(x -> {
+                    if (x instanceof ConfigBooleanChallenge challenge) challenge.setBooleanValue(true);
+                    if (x instanceof ConfigInteger configInteger)
+                        configInteger.setIntegerValue(configInteger.getMaxIntegerValue());
+                });
+                ITFConfig.luck.forEach(x -> {
+                    if (x instanceof ConfigBooleanChallenge challenge) challenge.setBooleanValue(false);
+                    if (x instanceof ConfigInteger configInteger) configInteger.setIntegerValue(0);
+                });
                 this.configs.save();
             }
         }
         this.mc.displayGuiScreen(this);
-    }
-
-    public void drawScreen(int par1, int par2, float par3) {
-        this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 20, 16777215);
-        super.drawScreen(par1, par2, par3);
     }
 }

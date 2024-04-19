@@ -101,7 +101,6 @@ public abstract class EntityItemMixin extends Entity {
             this.cooking_progress += damage.getAmount() * 3.0f;
             if (this.cooking_progress >= 100.0f) {
                 ItemStack cooked_item_stack = new ItemStack(Item.coal, item_stack.stackSize, 1);
-//                this.playSound("imported.random.sizzle", 1.0f, 1.0f);// TODO add music
                 this.setEntityItemStack(cooked_item_stack);
             }
             cir.setReturnValue(result.setEntityWasAffected());

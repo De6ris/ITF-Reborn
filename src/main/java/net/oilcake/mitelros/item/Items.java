@@ -148,7 +148,7 @@ public class Items extends Item {
 
     public static final ItemPieces pieceAdamantium = new ItemPieces(IdUtil.getNextItemID(), Materials.orePieces, "pieceAdamantium");
 
-    public static final ItemFood mashedCactus = (ItemFood) (new ItemFood(IdUtil.getNextItemID(), Materials.mashedCactus, 1, 0, false, true, false, "mashedCactus")).setMaxStackSize(4);
+    public static final ItemFood mashedCactus = (ItemFood) ((ITFItem) (new ItemFood(IdUtil.getNextItemID(), Materials.mashedCactus, 2, 0, 250, false, true, false, "mashedCactus"))).setWater(1).setMaxStackSize(8);
 
     public static final ItemFood lemon = (new ItemFood(IdUtil.getNextItemID(), Material.fruit, 2, 1, 1000, false, false, true, "lemon")).setPlantProduct();
 
@@ -416,7 +416,7 @@ public class Items extends Item {
 
     public static final Item totemOfPreserve = (new ItemTotem(IdUtil.getNextItemID(), Material.iron, "totem")).setMaxStackSize(1);
 
-    public static final Item totemOfKnowledge = ((ITFItem)(new ItemTotem(IdUtil.getNextItemID(), Material.ancient_metal, "totem")).setMaxStackSize(1)).setExtraInfo("右键提升20%经验");
+    public static final Item totemOfKnowledge = ((ITFItem) (new ItemTotem(IdUtil.getNextItemID(), Material.ancient_metal, "totem")).setMaxStackSize(1)).setExtraInfo("右键提升20%经验");
 
     public static final ItemIgnition ignitionCopper = new ItemIgnition(IdUtil.getNextItemID(), Material.copper);
 
@@ -460,25 +460,25 @@ public class Items extends Item {
 
     public static final Item enderRod = ((ITFItem) (new ItemBrewingMisc(IdUtil.getNextItemID(), Material.ender_pearl, "enderRod")).setPotionEffectExtend("+0+1-2+3+13&4-4").setReachBonus(0.5F)).setExtraInfo("似乎能提升触及距离, 还能酿药?");
 
-    public static final ItemMorningStar morningStarRustedIron= new ItemMorningStar(IdUtil.getNextItemID(), Material.rusted_iron);
+    public static final ItemMorningStar morningStarRustedIron = new ItemMorningStar(IdUtil.getNextItemID(), Material.rusted_iron);
 
-    public static final ItemBucket woodBucket = (ItemBucket) new ItemBucket(IdUtil.getNextItemID(), Materials.wood,null);
+    public static final ItemBucket woodBucket = (ItemBucket) new ItemBucket(IdUtil.getNextItemID(), Materials.wood, null);
 
     public static final ItemBucket woodBucketWater = (ItemBucket) new ItemBucket(IdUtil.getNextItemID(), Materials.wood, Materials.water).setContainerItem(woodBucket);
 
     public static final ItemBucket woodBucketWaterSuspicious = (ItemBucket) new ItemBucket(IdUtil.getNextItemID(), Materials.wood, Materials.unsafe_water).setContainerItem(woodBucket);
 
-    public static final ItemBucket woodBucketWaterDangerous = (ItemBucket) new ItemBucket(IdUtil.getNextItemID(), Materials.wood,Materials.dangerous_water).setContainerItem(woodBucket);
+    public static final ItemBucket woodBucketWaterDangerous = (ItemBucket) new ItemBucket(IdUtil.getNextItemID(), Materials.wood, Materials.dangerous_water).setContainerItem(woodBucket);
 
     public static final ItemBucketMilk woodBucketMilk = (ItemBucketMilk) new ItemBucketMilk(IdUtil.getNextItemID(), Materials.wood).setContainerItem(woodBucket);
 
-    public static final ItemHoe hoeFlint = createInstance(ItemHoe.class,new Class[]{int.class, Material.class}, IdUtil.getNextItemID(),Materials.flint);
+    public static final ItemHoe hoeFlint = createInstance(ItemHoe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.flint);
 
     public static final ItemFood peeledSugarcane = (new ItemFood(IdUtil.getNextItemID(), Materials.peeledSugarcane, 0, 1, 1000, false, false, true, "peeledSugarcane")).setPlantProduct();
 
-    public static final Item totemOfSentry = (new ItemTotem(IdUtil.getNextItemID(), Material.adamantium,"totem")).setMaxStackSize(1);
+    public static final Item totemOfSentry = (new ItemTotem(IdUtil.getNextItemID(), Material.adamantium, "totem")).setMaxStackSize(1);
 
-    public static final Item totemOfUnknown = (new ItemTotem(IdUtil.getNextItemID(), Material.rusted_iron,"totem")).setMaxStackSize(1);
+    public static final Item totemOfUnknown = (new ItemTotem(IdUtil.getNextItemID(), Material.rusted_iron, "totem")).setMaxStackSize(1);
 
     public static final ItemIgnition ignitionRustedIron = new ItemIgnition(IdUtil.getNextItemID(), Material.rusted_iron);
 
@@ -704,7 +704,7 @@ public class Items extends Item {
         event.register("sulphur_sphere", sulphur);
         event.register("bows/uru/", bowUru).setUnlocalizedName("uru_bow");
         event.register("enderRod", enderRod).setUnlocalizedName("enderRod");
-        event.register("tools/rusted_iron_club",morningStarRustedIron);
+        event.register("tools/rusted_iron_club", morningStarRustedIron);
         event.register("buckets/wood/empty", woodBucket);
         event.register("buckets/wood/water", woodBucketWater);
         event.register("buckets/wood/water_suspicious", woodBucketWaterSuspicious);

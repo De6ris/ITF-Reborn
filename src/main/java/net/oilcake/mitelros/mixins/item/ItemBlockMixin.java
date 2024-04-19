@@ -1,7 +1,9 @@
 package net.oilcake.mitelros.mixins.item;
 
-import net.minecraft.*;
-import net.oilcake.mitelros.block.BlockTorchIdle;
+import net.minecraft.Block;
+import net.minecraft.Item;
+import net.minecraft.ItemBlock;
+import net.minecraft.ItemStack;
 import net.oilcake.mitelros.block.Blocks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,10 +28,10 @@ public class ItemBlockMixin extends Item {
     @Inject(method = "getBurnTime", at = @At("HEAD"), cancellable = true)
     private void inject(ItemStack item_stack, CallbackInfoReturnable<Integer> cir) {
         Block block = this.getBlock();
-        if (block instanceof BlockRedstoneTorch) {
-            cir.setReturnValue(100);
-        } else if (block instanceof BlockTorchIdle) {
-            cir.setReturnValue(25);
+        if (block == Blocks.torchWoodIdle) {
+            cir.setReturnValue(400);
+        } else if (block == Blocks.torchWoodExtinguished) {
+            cir.setReturnValue(50);
         }
     }
 }

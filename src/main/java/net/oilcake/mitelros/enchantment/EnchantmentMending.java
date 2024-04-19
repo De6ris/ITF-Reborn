@@ -1,9 +1,6 @@
 package net.oilcake.mitelros.enchantment;
 
-import net.minecraft.CreativeTabs;
-import net.minecraft.Enchantment;
-import net.minecraft.EnumRarity;
-import net.minecraft.Item;
+import net.minecraft.*;
 
 public class EnchantmentMending extends Enchantment {
     protected EnchantmentMending(int id, EnumRarity rarity, int difficulty) {
@@ -14,12 +11,17 @@ public class EnchantmentMending extends Enchantment {
         return 1;
     }
 
-    public boolean canApplyTogether(Enchantment par1Enchantment) {
-        return (super.canApplyTogether(par1Enchantment) && par1Enchantment.effectId != unbreaking.effectId);
-    }
-
     public String getNameSuffix() {
-        return "mending";
+        if (this == Enchantments.enchantmentMending) {
+            return "mending.all";
+        } else if (this == Enchantments.enchantmentSunlightMending) {
+            return "mending.sunlight";
+        } else if (this == Enchantments.enchantmentMoonlightMending) {
+            return "mending.moonlight";
+        } else {
+            Minecraft.setErrorMessage("getNameSuffix: no handler for " + this);
+            return null;
+        }
     }
 
     public boolean canEnchantItem(Item item) {

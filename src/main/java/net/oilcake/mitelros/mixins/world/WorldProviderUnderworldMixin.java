@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin({WorldProviderUnderworld.class})
+@Mixin(WorldProviderUnderworld.class)
 public class WorldProviderUnderworldMixin extends WorldProvider {
     public WorldProviderUnderworldMixin(int dimension_id, String name) {
         super(dimension_id, name);

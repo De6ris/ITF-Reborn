@@ -18,5 +18,6 @@ public class ServerCommandManagerMixin extends CommandHandler {
         registerCommand(new CommandAddCurrentSituation());
         registerCommand(new CommandHunger());
         registerCommand(new CommandDamage());
+        registerCommand(new CommandSetTemperature());
     }
 }

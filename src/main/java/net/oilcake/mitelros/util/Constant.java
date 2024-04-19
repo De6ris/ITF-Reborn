@@ -1,8 +1,11 @@
 package net.oilcake.mitelros.util;
 
+import fi.dy.masa.malilib.config.options.ConfigBase;
+import fi.dy.masa.malilib.config.options.ConfigInteger;
 import net.minecraft.Item;
 import net.minecraft.ItemArmor;
 import net.minecraft.ResourceLocation;
+import net.oilcake.mitelros.config.ConfigBooleanChallenge;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 
@@ -10,10 +13,7 @@ public class Constant {
 
     public static final ResourceLocation icons_itf = new ResourceLocation("textures/gui/icons_mitf.png");
 
-    public static final int CONFIG_VERSION = 2;
-
     public static int nextPotionID = 24;
-
     public static int nextBiomeID = 27;
     public static int nextCurseID = 16;
 
@@ -58,58 +58,16 @@ public class Constant {
         SWORDS = new Item[]{Item.swordRustedIron, Item.swordIron, Item.swordAncientMetal, Item.swordMithril, Item.swordAdamantium, Items.nickelSword, Items.tungstenSword, Items.VibraniumSword, Items.UruSword};
     }
 
-    public static int CalculateCurrentDiff() {
-        int Diff = 0;
-        if (ITFConfig.TagFallenInMineLVL1.get() && !ITFConfig.TagFallenInMineLVL2.get())
-            Diff++;
-        if (ITFConfig.TagBattleSufferLVL1.get() && !ITFConfig.TagBattleSufferLVL2.get())
-            Diff++;
-        if (ITFConfig.TagFallenInMineLVL2.get())
-            Diff += 2;
-        if (ITFConfig.TagBattleSufferLVL2.get())
-            Diff += 2;
-        if (ITFConfig.TagHeatStroke.get())
-            Diff++;
-        if (ITFConfig.TagInstinctSurvival.get())
-            Diff++;
-        if (ITFConfig.TagInvisibleFollower.get())
-            Diff++;
-        if (ITFConfig.TagLegendFreeze.get())
-            Diff++;
-        if (ITFConfig.TagEternalRaining.get())
-            Diff += 2;
-        if (ITFConfig.TagUnstableConvection.get())
-            Diff++;
-        if (ITFConfig.TagDryDilemma.get())
-            Diff++;
-        if (ITFConfig.TagDeadGeothermy.get())
-            Diff += 2;
-        if (ITFConfig.TagHeatStorm.get())
-            Diff++;
-        if (ITFConfig.TagApocalypse.get())
-            Diff += 3;
-        if (ITFConfig.TagWorshipDark.get())
-            Diff += 2;
-        if (ITFConfig.TagMiracleDisaster.get())
-            Diff++;
-        if (ITFConfig.TagPseudoVision.get())
-            Diff++;
-        if (ITFConfig.TagRejection.get())
-            Diff += 2;
-        if (ITFConfig.TagUnderAlliance.get())
-            Diff++;
-        if (ITFConfig.TagDimensionInvade.get())
-            Diff += 4;
-        if (ITFConfig.TagDemonDescend.get())
-            Diff += 2;
-
-        if (ITFConfig.TagArmament.get())
-            Diff -= 2;
-        if (ITFConfig.TagDistortion.get())
-            Diff -= 2;
-        if (ITFConfig.TagDigest.get())
-            Diff -= 2;
-
-        return Diff;
+    public static int calculateCurrentDifficulty() {
+        int difficulty = 0;
+        for (ConfigBase configBase : ITFConfig.challenge) {
+            if (configBase instanceof ConfigBooleanChallenge challenge && challenge.getBooleanValue()) {
+                difficulty += challenge.getLevel();
+            }
+            if (configBase instanceof ConfigInteger configInteger) {
+                difficulty += configInteger.getIntegerValue();
+            }
+        }
+        return difficulty;
     }
 }

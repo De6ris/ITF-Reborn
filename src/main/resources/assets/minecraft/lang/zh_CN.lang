@@ -78,12 +78,15 @@ enchantment.vanishing=消失诅咒
 enchantment.melting=熔毁
 enchantment.absorb=汲取
 enchantment.destroying=毁灭
-enchantment.callofnether=下界呼唤
+enchantment.temperature.callofnether=下界呼唤
+enchantment.temperature.callofpolar=极地呼唤
 enchantment.infinity=无限
 enchantment.arrogance=傲慢诅咒
 enchantment.sweeping=横扫
 enchantment.thresher=剥壳
-enchantment.mending=修补
+enchantment.mending.all=经验修补
+enchantment.mending.sunlight=日光修补
+enchantment.mending.moonlight=月光修补
 
 potion.dehydration=脱水
 

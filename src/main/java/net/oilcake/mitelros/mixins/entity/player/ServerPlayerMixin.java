@@ -8,8 +8,8 @@ import net.oilcake.mitelros.api.ITFPacket8;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.ContainerEnchantReserver;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
-import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.config.ITFConfig;
+import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -37,9 +37,8 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
 
     @Unique
     private int last_water = -99999999;
-
     @Unique
-    private int last_FreezingCooldown = -99999999;
+    private float last_temperature = Float.MIN_VALUE;
 
     @Unique
     private int last_phytonutrients;
@@ -85,7 +84,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
 
     @Inject(method = "onUpdate", at = @At("RETURN"))
     public void onUpdate(CallbackInfo callbackInfo) {
-        sendPacket((new Packet85SimpleSignal(EnumSignal.malnourished)).setInteger(((this.protein <= 800000) ? 1 : 0) | ((this.phytonutrients <= 800000) ? 4 : 0) | (this.getCurrent_insulin_resistance_lvl()) << 3 | getInsulinResistance() << 8));
+        this.sendPacket((new Packet85SimpleSignal(EnumSignal.malnourished)).setInteger(((this.protein <= 800000) ? 1 : 0) | ((this.phytonutrients <= 800000) ? 4 : 0) | (this.getCurrent_insulin_resistance_lvl()) << 3 | getInsulinResistance() << 8));
     }
 
     @Inject(method = "onUpdateEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/FoodStats;getHunger()F"))
@@ -98,21 +97,22 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
             this.worldObj.getAsWorldServer().addCurse(getAsEntityPlayerMP(), temp, Curse.getRandomCurse(new Random((this.rand.nextInt() + username_hash))), 0);
             learnCurseEffect();
         }
-        float health = this.getHealth();
-        int satiation = this.getSatiation();
-        int nutrition = this.getNutrition();
-        int FreezingCooldown = this.getTemperatureManager().getFreezingCooldown();
         int water = this.getWater();
-        if (water != this.last_water || FreezingCooldown != this.last_FreezingCooldown || this.phytonutrients != this.last_phytonutrients || this.protein != this.last_protein) {
+        float temperature = this.getTemperatureManager().bodyTemperature;
+        if (water != this.last_water || this.phytonutrients != this.last_phytonutrients || this.protein != this.last_protein || temperature != this.last_temperature) {
+            float health = this.getHealth();
+            int satiation = this.getSatiation();
+            int nutrition = this.getNutrition();
             Packet8UpdateHealth updateWater = new Packet8UpdateHealth(health, satiation, nutrition, this.vision_dimming);
             ((ITFPacket8) updateWater).setWater(water);
             ((ITFPacket8) updateWater).setPhytonutrients(this.phytonutrients);
             ((ITFPacket8) updateWater).setProtein(this.protein);
+            ((ITFPacket8) updateWater).setTemperature(temperature);
             this.playerNetServerHandler.sendPacketToPlayer(updateWater);
             this.last_water = water;
-            this.last_FreezingCooldown = FreezingCooldown;
             this.last_phytonutrients = this.phytonutrients;
             this.last_protein = this.protein;
+            this.last_temperature = temperature;
         }
     }
 
@@ -131,12 +131,13 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
         return 960000;
     }
 
-    @Inject(method = {"<init>(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/World;Ljava/lang/String;Lnet/minecraft/ItemInWorldManager;)V"}, at = {@At("RETURN")})
+    @Inject(method = "<init>(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/World;Ljava/lang/String;Lnet/minecraft/ItemInWorldManager;)V", at = @At("RETURN"))
     private void injectInit(MinecraftServer par1MinecraftServer, World par2World, String par3Str, ItemInWorldManager par4ItemInWorldManager, CallbackInfo callback) {
         this.protein = this.essential_fats = this.phytonutrients = 960000;
     }
 
 
+    @Override
     public void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
         incrementWindowID();
         TileEntity tile_entity = this.worldObj.getBlockTileEntity(x, y, z);
@@ -212,7 +213,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     public void travelToDimension(int par1) {
         if (this.dimension == 1 && par1 == 1) {
             triggerAchievement(AchievementList.theEnd2);
-            if (Constant.CalculateCurrentDiff() >= 12)
+            if (Constant.calculateCurrentDifficulty() >= 12)
                 triggerAchievement(AchievementExtend.stormStriker);
             this.worldObj.removeEntity(this);
             this.playerConqueredTheEnd = true;
@@ -263,15 +264,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
                 this.stats.put(id, par1NBTTagCompound.getInteger(tag.getName()));
             }
         }
-
     }
-
-//    @Inject(method = "readStatsFromNBT", at = @At(value = "INVOKE", target = "Lnet/minecraft/StatList;isEitherZeroOrOne(Lnet/minecraft/StatBase;)Z"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
-//    private void fix(NBTTagCompound par1NBTTagCompound, CallbackInfo ci, Collection tags, Iterator i, NBTBase tag, int id, StatBase stat) {
-//        if (stat == null) {
-//            ci.cancel();
-//        }
-//    }
 
     @Shadow
     public INetworkManager getNetManager() {

@@ -4,11 +4,11 @@ import net.minecraft.*;
 import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.achivements.AchievementExtend;
 import net.oilcake.mitelros.api.ITFDamageResult;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.ItemTotem;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.CurseExtend;
 import net.oilcake.mitelros.util.QualityHandler;
@@ -27,34 +27,6 @@ public class MiscManager {
         this.player = player;
     }
 
-    public int getWeight(EntityPlayer player) {
-        int weight = 0;
-        ItemStack helmet = player.getHelmet();
-        ItemStack cuirass = player.getCuirass();
-        ItemStack leggings = player.getLeggings();
-        ItemStack boots = player.getBoots();
-        if (helmet != null) {
-            weight += 2;
-            if (helmet.itemID == Items.wolfHelmet.itemID) weight += 2;
-            else if (helmet.itemID == Item.helmetLeather.itemID) weight += 1;
-        }
-        if (cuirass != null) {
-            weight += 2;
-            if (cuirass.itemID == Items.wolfChestplate.itemID) weight += 2;
-            else if (cuirass.itemID == Item.plateLeather.itemID) weight += 1;
-        }
-        if (leggings != null) {
-            weight += 2;
-            if (leggings.itemID == Items.wolfLeggings.itemID) weight += 2;
-            else if (leggings.itemID == Item.legsLeather.itemID) weight += 1;
-        }
-        if (boots != null) {
-            weight += 2;
-            if (boots.itemID == Items.wolfBoots.itemID) weight += 2;
-            else if (boots.itemID == Item.bootsLeather.itemID) weight += 1;
-        }
-        return weight;
-    }
 
     public float getNickelArmorCoverage() {
         float coverage = 0.0F;
@@ -78,12 +50,12 @@ public class MiscManager {
         if (player.isPotionActive(PotionExtend.freeze))
             str_vs_block *= 1.0F - (player.getActivePotionEffect(PotionExtend.freeze).getAmplifier() + 1) * 0.5F;
         if (ITFConfig.FinalChallenge.get())
-            str_vs_block *= 1.0F - Constant.CalculateCurrentDiff() / 100.0F;
+            str_vs_block *= 1.0F - Constant.calculateCurrentDifficulty() / 100.0F;
         if (ITFConfig.Realistic.get())
             str_vs_block *= Math.min((float) Math.pow(player.getHealth(), 2.0D) / 25.0F, 1.0F);
         ItemStack held_item = player.getHeldItemStack();
         if (held_item != null && held_item.getItem() instanceof ItemTool) {
-            str_vs_block *= 1.0F + (QualityHandler.getQualityAmplifier(held_item.getQuality()) * 2.0F) / 100.0F;
+            str_vs_block *= 1.0F + (QualityHandler.getQualityAmplifier(held_item.getQuality()) * 3.0F) / 100.0F;
         }
         return str_vs_block;
     }
@@ -224,7 +196,7 @@ public class MiscManager {
         player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey(MOD_ID + "挂载成功,当前版本:").setColor(EnumChatFormatting.BLUE)
                 .appendComponent(ChatMessageComponent.createFromText(ITFStart.Version).setColor(EnumChatFormatting.YELLOW))
                 .appendComponent(ChatMessageComponent.createFromTranslationKey(",作者:Lee074,Huix,Kalsey,由Debris移植到高版本FML,现由Debris和Xy_Lose共同维护")));
-        int difficulty = Constant.CalculateCurrentDiff();
+        int difficulty = Constant.calculateCurrentDifficulty();
         if (difficulty != 0) {
             player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("[MITE-ITF]")
                     .appendComponent(ChatMessageComponent.createFromTranslationKey("当前难度：" + difficulty)

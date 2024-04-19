@@ -6,6 +6,7 @@ import net.minecraft.Packet8UpdateHealth;
 import net.oilcake.mitelros.api.ITFPacket8;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -16,11 +17,16 @@ import java.io.IOException;
 
 @Mixin(Packet8UpdateHealth.class)
 public abstract class Packet8UpdateHealthMixin extends Packet implements ITFPacket8 {
-    public int water;
+    @Unique
+    private int water;
 
-    public int phytonutrients;
+    @Unique
+    private int phytonutrients;
 
-    public int protein;
+    @Unique
+    private int protein;
+    @Unique
+    private float temperature;
 
     @Shadow
     public float healthMP;
@@ -41,15 +47,13 @@ public abstract class Packet8UpdateHealthMixin extends Packet implements ITFPack
         this.vision_dimming = vision_dimming;
     }
 
-    public int setWater(int water) {
-        return this.water = water;
-    }
 
     @Inject(method = "readPacketData(Ljava/io/DataInput;)V", at = @At("RETURN"))
     private void injectReadPacketData(DataInput par1DataInput, CallbackInfo c) throws IOException {
         this.water = par1DataInput.readInt();
         this.protein = par1DataInput.readInt();
         this.phytonutrients = par1DataInput.readInt();
+        this.temperature = par1DataInput.readFloat();
     }
 
     @Inject(method = "writePacketData(Ljava/io/DataOutput;)V", at = @At("RETURN"))
@@ -57,6 +61,11 @@ public abstract class Packet8UpdateHealthMixin extends Packet implements ITFPack
         par1DataOutput.writeInt(this.water);
         par1DataOutput.writeInt(this.protein);
         par1DataOutput.writeInt(this.phytonutrients);
+        par1DataOutput.writeFloat(this.temperature);
+    }
+
+    public int setWater(int water) {
+        return this.water = water;
     }
 
     public void setPhytonutrients(int phytonutrients) {
@@ -68,20 +77,32 @@ public abstract class Packet8UpdateHealthMixin extends Packet implements ITFPack
     }
 
     @Override
+    public void setTemperature(float temperature) {
+        this.temperature = temperature;
+    }
+
+    @Override
     public int getWater() {
         return this.water;
     }
 
+    @Override
     public int getPhytonutrients() {
         return this.phytonutrients;
     }
+    @Override
 
     public int getProtein() {
         return this.protein;
     }
 
+    @Override
+    public float getTemperature() {
+        return temperature;
+    }
+
     @ModifyReturnValue(method = "getPacketSize", at = @At("RETURN"))
     public int itfPackSize(int original) {
-        return original + 12;
+        return original + 16;
     }
 }

@@ -6,10 +6,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static net.oilcake.mitelros.block.BlockHandler.getMatchingBlock;
 
-@Mixin({BlockAnvil.class})
+@Mixin(BlockAnvil.class)
 public class BlockAnvilMixin extends BlockFalling {
     @Shadow
     public Material metal_type;
@@ -18,17 +21,10 @@ public class BlockAnvilMixin extends BlockFalling {
         super(par1, material, constants);
     }
 
-    protected void dropXpOnBlockBreak(World par1World, int par2, int par3, int par4, int par5) {
-    }
-
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public int dropBlockAsEntityItem(BlockBreakInfo info) {
-        TileEntityAnvil tile_entity_anvil = (TileEntityAnvil) info.tile_entity;
-        if (((Boolean) ITFConfig.TagBenchingV2.get()) || info.wasExploded()) {
+    @Inject(method = "dropBlockAsEntityItem", at = @At("HEAD"), cancellable = true)
+    private void benching(BlockBreakInfo info, CallbackInfoReturnable<Integer> cir) {
+        if (ITFConfig.TagBenchingV2.get() || info.wasExploded()) {
+            TileEntityAnvil tile_entity_anvil = (TileEntityAnvil) info.tile_entity;
             float centesimal = getAnvilDurabilityByCentesimal(tile_entity_anvil.damage);
             if (centesimal <= 0.5D) {
                 int expecting_nuggets = (int) (279.0F * centesimal);
@@ -46,22 +42,16 @@ public class BlockAnvilMixin extends BlockFalling {
                     expecting_nuggets--;
                     dropBlockAsEntityItem(info, (Item.getMatchingItem(ItemNugget.class, this.metal_type)).itemID);
                 }
-                return 0;
+                cir.setReturnValue(0);
             }
-            return super.dropBlockAsEntityItem(info.setDamage(tile_entity_anvil.damage));
+            cir.setReturnValue(super.dropBlockAsEntityItem(info.setDamage(tile_entity_anvil.damage)));
         }
-        return super.dropBlockAsEntityItem(info.setDamage(tile_entity_anvil.damage));
     }
 
     @Unique
     public float getAnvilDurabilityByCentesimal(int damage) {
         float nowDurability = (getDurability() - damage);
         return nowDurability / getDurability();
-    }
-
-    @Shadow
-    public int getMinimumDamageForStage(int stage) {
-        return 0;
     }
 
     @Shadow

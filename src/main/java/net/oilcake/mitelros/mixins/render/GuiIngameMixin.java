@@ -4,9 +4,11 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.api.ITFWorld;
-import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.config.ITFConfig;
+import net.oilcake.mitelros.item.potion.PotionExtend;
+import net.oilcake.mitelros.status.TemperatureManager;
 import net.oilcake.mitelros.util.Constant;
+import net.oilcake.mitelros.util.GuiInGameInfoHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
@@ -90,79 +92,40 @@ public class GuiIngameMixin extends Gui {
         ci.cancel();
     }
 
+    @Redirect(method = "renderGameOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z"))
+    private boolean disableDevInfo() {
+        return false;
+    }
+
     @Inject(method = "renderGameOverlay(FZII)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z", shift = At.Shift.BEFORE))
     private void injectRenderPos(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
-        if (!Minecraft.inDevMode() && (!this.mc.gameSettings.showDebugInfo || this.mc.gameSettings.gui_mode != 0) && Minecraft.getErrorMessage() == null && ITFConfig.DisplayHud.get()) {
-            String weather, direction, rainSnow, pos = "平面坐标: (" + MathHelper.floor_double(this.mc.thePlayer.posX) + ", " + MathHelper.floor_double(this.mc.thePlayer.posZ) + ") ";
+        if ((ITFConfig.DisplayHud.get() && (!this.mc.gameSettings.showDebugInfo || this.mc.gameSettings.gui_mode != 0)) && Minecraft.getErrorMessage() == null) {
+            String pos = "平面坐标: (" + MathHelper.floor_double(this.mc.thePlayer.posX) + ", " + MathHelper.floor_double(this.mc.thePlayer.posZ) + ") ";
             String time = "时间: (" + this.mc.thePlayer.getWorld().getHourOfDay() + ":" + (this.mc.thePlayer.getWorld().getTotalWorldTime() % 1000L * 60L / 1000L) + ") ";
             EntityPlayer player = this.mc.thePlayer.getAsPlayer();
-            direction = switch (this.mc.thePlayer.getDirectionFromYaw().toString()) {
-                case "EAST" -> "东";
-                case "WEST" -> "西";
-                case "NORTH" -> "北";
-                case "SOUTH" -> "南";
-                default -> "null";
-            };
-            String Biome = StringUtils.substringBefore(this.mc.thePlayer.getBiome().toString(), "@").substring(19) + " ";
-            if (!this.mc.thePlayer.getBiome().isFreezing() || ((ITFWorld) this.mc.thePlayer.worldObj).getWorldSeason() != 3) {
-                rainSnow = "雨";
-            } else {
-                rainSnow = "雪";
-            }
-            WeatherEvent event = this.mc.theWorld.getCurrentWeatherEvent();
-            Random R = new Random(this.mc.theWorld.getDayOfWorld());
-            if (event != null) {
-                if (this.mc.theWorld.getDayOfWorld() % 32 == 0) {
-                    weather = "雷暴";
-                } else {
-                    int ran2 = R.nextInt(3);
-                    if (ran2 == 0) {
-                        weather = "小" + rainSnow;
-                    } else if (ran2 == 1) {
-                        weather = "中" + rainSnow;
-                    } else {
-                        weather = "大" + rainSnow;
-                    }
-                }
-            } else {
-                event = this.mc.theWorld.getNextWeatherEvent(false);
-                if (event != null) {
-                    if (event.start - this.mc.theWorld.getAdjustedTimeOfDay() < 2000L) {
-                        weather = "有雨";
-                    } else {
-                        weather = "阴";
-                    }
-                } else {
-                    int ran2 = R.nextInt(3);
-                    if (ran2 == 0) {
-                        weather = "晴";
-                    } else if (ran2 == 1) {
-                        weather = "多云";
-                    } else {
-                        weather = "晴转多云";
-                    }
-                }
-            }
-            String GAinfo = " " + direction + " " + Biome + " " + weather;
             if (GuiIngame.server_load >= 0) {
                 ScaledResolution sr = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
                 String text = GuiIngame.server_load + "%";
                 drawString(this.mc.fontRenderer, text, sr.getScaledWidth() - this.mc.fontRenderer.getStringWidth(text) - 2, 2, 14737632);
             }
-            int difficulty = Constant.CalculateCurrentDiff();
-            String t = difficulty >= 16 ? "§c挑战难度：§4" + difficulty + " §f" : (difficulty >= 12 ? " 挑战难度：§c" + difficulty + " §f" : (difficulty >= 8 ? " 挑战难度：§6" + difficulty + " §f" : (difficulty >= 4 ? " 挑战难度：§a" + difficulty + " §f" : (difficulty >= 0 ? " 挑战难度：" + difficulty + " §f" : null))));
+            int difficulty = Constant.calculateCurrentDifficulty();
+            String difficultyText = difficulty >= 16 ? "§c挑战难度：§4" + difficulty + " §f" : (difficulty >= 12 ? " 挑战难度：§c" + difficulty + " §f" : (difficulty >= 8 ? " 挑战难度：§6" + difficulty + " §f" : (difficulty >= 4 ? " 挑战难度：§a" + difficulty + " §f" : (difficulty >= 0 ? " 挑战难度：" + difficulty + " §f" : null))));
             StringBuilder var68 = (new StringBuilder()).append(MOD_ID);
-            if (ITFConfig.FinalChallenge.get() && difficulty == 31)
-                t = "§4终极难度§r ";
+            if (ITFConfig.FinalChallenge.get() && difficulty == ITFConfig.ultimateDifficulty)
+                difficultyText = "§4终极难度§r ";
             if (difficulty < 0)
-                t = "§a休闲难度§r ";
+                difficultyText = "§a休闲难度§r ";
             if (player.getHeldItemStack() != null && player.getHeldItemStack().getItem() == Item.compass)
                 var68.append(pos);
             if (player.getHeldItemStack() != null && player.getHeldItemStack().getItem() == Item.pocketSundial)
                 var68.append(time);
             if (difficulty != 0)
-                var68.append(t);
-            var68.append(weather);
+                var68.append(difficultyText);
+            var68.append(GuiInGameInfoHandler.weather(this.mc));
+            TemperatureManager temperatureManager = ((ITFPlayer) this.mc.thePlayer).getTemperatureManager();
+            float temperature = temperatureManager.bodyTemperature;
+            int unit = temperatureManager.getUnit();
+            var68.append(String.format(" 体温: %.3f°C (你感到: %s%d)", temperature, unit > 0 ? "+" : "", unit));
             drawString(this.mc.fontRenderer, var68.toString(), 2, 2, 14737632);
         }
     }

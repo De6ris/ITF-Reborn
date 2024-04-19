@@ -2,8 +2,8 @@ package net.oilcake.mitelros.mixins.world.biome;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.*;
-import net.oilcake.mitelros.entity.*;
 import net.oilcake.mitelros.config.ITFConfig;
+import net.oilcake.mitelros.entity.*;
 import net.oilcake.mitelros.world.BiomeBases;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
@@ -53,11 +53,11 @@ public class BiomeBaseMixin {
 
     @Inject(method = "<init>(I)V", at = @At("RETURN"))
     public void injectCtor(CallbackInfo callbackInfo) {
-        this.spawnableMonsterList.add(new SpawnListEntry(EntityRetinueZombie.class, (ITFConfig.TagFallenInMineLVL2.get() || ITFConfig.TagFallenInMineLVL1.get()) ? 35 : 10, 4, 4));
-        this.spawnableMonsterList.add(new SpawnListEntry(EntityBoneBodyguard.class, (ITFConfig.TagBattleSufferLVL2.get() || ITFConfig.TagBattleSufferLVL1.get()) ? 35 : 10, 4, 4));
+        this.spawnableMonsterList.add(new SpawnListEntry(EntityRetinueZombie.class, (ITFConfig.TagFallenInMine.getIntegerValue() > 0) ? 35 : 10, 4, 4));
+        this.spawnableMonsterList.add(new SpawnListEntry(EntityBoneBodyguard.class, (ITFConfig.TagBattleSuffer.getIntegerValue() > 0) ? 35 : 10, 4, 4));
         if (ITFConfig.TagDimensionInvade.get()) {
-            this.spawnableMonsterList.add(new SpawnListEntry(EntityLongdead.class, 40, 4, 2));
-            this.spawnableMonsterList.add(new SpawnListEntry(EntityLongdeadGuardian.class, 20, 2, 1));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityLongdead.class, 50, 4, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityLongdeadGuardian.class, 25, 2, 1));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityAncientBoneLord.class, 5, 1, 2));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityCaveSpider.class, 20, 4, 1));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityStalkerCreeper.class, 30, 2, 4));
@@ -65,17 +65,17 @@ public class BiomeBaseMixin {
             this.spawnableMonsterList.add(new SpawnListEntry(EntityDemonSpider.class, 20, 1, 4));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityHellhound.class, 20, 1, 4));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityEvil.class, 10, 1, 4));
-            this.spawnableMonsterList.add(new SpawnListEntry(EntityPigZombie.class, 20, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityPigZombie.class, 10, 1, 2));
             this.spawnableMonsterList.add(new SpawnListEntry(EntitySpiderKing.class, 2, 1, 1));
 //            this.spawnableMonsterList.add(new SpawnListEntry(EntityGhast.class, 10, 1, 2));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityWitherBoneLord.class, 1, 1, 1));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityWitherBodyguard.class, 3, 1, 1));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityWitherBodyguard.class, 3, 1, 1));
             this.spawnableMonsterList.add(new SpawnListEntry(EntitySpirit.class, 5, 1, 1));
-            this.spawnableMonsterList.add(new SpawnListEntry(EntityPigmanGuard.class, 10, 1, 2));
-            this.spawnableMonsterList.add(new SpawnListEntry(EntityPigmanLord.class, 2, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityPigmanGuard.class, 5, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityPigmanLord.class, 1, 1, 2));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityEvil.class, 20, 1, 2));
-            this.spawnableMonsterList.add(new SpawnListEntry(EntityFireElemental.class, 10, 1, 2));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityFireElemental.class, 2, 1, 2));
         }
         if (ITFConfig.TagCreaturesV2.get())
             RegenAnimals();

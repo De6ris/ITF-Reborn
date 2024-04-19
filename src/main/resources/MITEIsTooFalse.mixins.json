@@ -107,6 +107,7 @@
     "network.Packet100OpenWindowMixin",
     "network.Packet8UpdateHealthMixin",
     "render.BaseRenderMixin",
+    "render.GuiEnchantmentMixin",
     "render.GuiIngameMixin",
     "render.RenderBlocksMixin",
     "render.RenderPlayerMixin",

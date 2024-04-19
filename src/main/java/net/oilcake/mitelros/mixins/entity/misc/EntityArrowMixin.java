@@ -1,11 +1,11 @@
 package net.oilcake.mitelros.mixins.entity.misc;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.entity.EntityBoneBodyguard;
 import net.oilcake.mitelros.entity.EntityStray;
 import net.oilcake.mitelros.entity.EntityWitherBodyguard;
 import net.oilcake.mitelros.item.Items;
-import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.util.Constant;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -62,7 +62,7 @@ public abstract class EntityArrowMixin extends Entity {
     public float SPSkeletonExtraDamage(ItemArrow itemArrow) {
         float dummy = 0.0F;
         if (ITFConfig.FinalChallenge.get())
-            dummy += Constant.CalculateCurrentDiff() / 12.5F;
+            dummy += Constant.calculateCurrentDifficulty() / 12.5F;
         if (this.shootingEntity.getClass() == EntityStray.class)
             dummy += 0.5F;
         if (this.shootingEntity.getClass() == EntityBoneBodyguard.class)

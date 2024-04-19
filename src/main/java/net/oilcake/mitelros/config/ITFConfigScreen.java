@@ -1,26 +1,24 @@
 package net.oilcake.mitelros.config;
 
-import com.google.common.collect.ImmutableList;
 import fi.dy.masa.malilib.config.interfaces.IConfigResettable;
-import fi.dy.masa.malilib.config.options.ConfigBase;
+import fi.dy.masa.malilib.gui.screen.GuiScreenCommented;
 import fi.dy.masa.malilib.gui.screen.ValueScreen;
 import net.minecraft.GuiButton;
 import net.minecraft.GuiScreen;
 import net.minecraft.GuiYesNoMITE;
 import net.minecraft.I18n;
 
-public class ITFConfigScreen extends GuiScreen {
+import static net.oilcake.mitelros.ITFStart.MOD_ID;
+
+public class ITFConfigScreen extends GuiScreenCommented {
 
     private GuiScreen parentScreen;
-    protected String screenTitle;
     private final ITFConfig configs;
-    private final ImmutableList<ConfigBase> values;
 
-    public ITFConfigScreen(GuiScreen parentScreen, String screenTitle, ITFConfig configs) {
+    public ITFConfigScreen(GuiScreen parentScreen) {
+        super(MOD_ID);
         this.parentScreen = parentScreen;
-        this.screenTitle = screenTitle;
-        this.configs = configs;
-        this.values = ImmutableList.copyOf(configs.getValues());
+        this.configs = ITFConfig.getInstance();
     }
 
     public void initGui() {
@@ -38,7 +36,7 @@ public class ITFConfigScreen extends GuiScreen {
         GuiYesNoMITE var3;
         switch (par1GuiButton.id) {
             case 0:
-                this.mc.displayGuiScreen(new ChallengeScreen(this, "挑战设置", this.configs.setValues(ITFConfig.challenge)));
+                this.mc.displayGuiScreen(new ChallengeScreen(this));
                 break;
             case 1:
                 this.mc.displayGuiScreen(new ValueScreen(this, "实验性玩法", this.configs.setValues(ITFConfig.experimental)));
@@ -59,16 +57,10 @@ public class ITFConfigScreen extends GuiScreen {
     public void confirmClicked(boolean par1, int par2) {
         if (par1) {
             if (par2 == 1) {
-                this.values.forEach(IConfigResettable::resetToDefault);
+                ITFConfig.values.forEach(IConfigResettable::resetToDefault);
                 this.configs.save();
             }
         }
         this.mc.displayGuiScreen(this);
-    }
-
-    public void drawScreen(int par1, int par2, float par3) {
-        this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 20, 16777215);
-        super.drawScreen(par1, par2, par3);
     }
 }

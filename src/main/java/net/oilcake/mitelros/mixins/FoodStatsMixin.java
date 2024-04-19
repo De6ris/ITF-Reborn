@@ -20,19 +20,19 @@ public class FoodStatsMixin implements ITFFoodStats {
 
     private float hungerWater;
 
-    @Inject(method = {"<init>(Lnet/minecraft/EntityPlayer;)V"}, at = {@At("RETURN")})
+    @Inject(method = "<init>(Lnet/minecraft/EntityPlayer;)V", at = @At("RETURN"))
     private void injectInit(CallbackInfo callbackInfo) {
         this.water = getWaterLimit();
     }
 
-    @Inject(method = {"readNBT(Lnet/minecraft/NBTTagCompound;)V"}, at = {@At("RETURN")})
+    @Inject(method = "readNBT(Lnet/minecraft/NBTTagCompound;)V", at = @At("RETURN"))
     public void injectReadNBT(NBTTagCompound par1NBTTagCompound, CallbackInfo callbackInfo) {
         this.water_for_nutrition_only = par1NBTTagCompound.getFloat("water_for_nutrition_only");
         this.hungerWater = par1NBTTagCompound.getFloat("hungerWater");
         this.water = par1NBTTagCompound.getInteger("water");
     }
 
-    @Inject(method = {"writeNBT(Lnet/minecraft/NBTTagCompound;)V"}, at = {@At("RETURN")})
+    @Inject(method = "writeNBT(Lnet/minecraft/NBTTagCompound;)V", at = @At("RETURN"))
     public void injectWriteNBT(NBTTagCompound par1NBTTagCompound, CallbackInfo callbackInfo) {
         par1NBTTagCompound.setInteger("water", this.water);
         par1NBTTagCompound.setFloat("hungerwater", this.hungerWater);

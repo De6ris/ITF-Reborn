@@ -2,8 +2,8 @@ package net.oilcake.mitelros.item;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.config.ITFConfig;
+import net.oilcake.mitelros.item.potion.PotionExtend;
 
 public class ItemBowlClay extends ItemVessel {
 

@@ -33,3 +33,5 @@ accessible field net/minecraft/EntitySkeleton frenzied_by_bone_lord_countdown I
 accessible method net/minecraft/ItemStack isItemStackEqual (Lnet/minecraft/ItemStack;ZZZZ)Z
 
 accessible method net/minecraft/BiomeGenBase setDisableRain ()Lnet/minecraft/BiomeGenBase;
+
+accessible field net/minecraft/BlockFurnace isActive Z

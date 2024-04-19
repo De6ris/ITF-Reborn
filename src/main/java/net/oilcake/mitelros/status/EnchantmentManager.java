@@ -87,15 +87,47 @@ public class EnchantmentManager {
         ItemStack holding = player.getHeldItemStack();
         if (holding != null && this.willRepair(holding) &&
                 (float) holding.getRemainingDurability() / holding.getMaxDamage() < 0.5F && player.getExperienceLevel() >= 10 + 15 * holding.getItem().getHardestMetalMaterial().min_harvest_level) {
-            player.addExperience(-holding.getMaxDamage() / 32, false, true);
+            player.addExperience(-holding.getMaxDamage() / 8, false, true);
             holding.setItemDamage(holding.getItemDamage() - holding.getMaxDamage() / 8);
         }
         ItemStack[] item_stack_to_repair = player.getWornItems();
         for (ItemStack itemStack : item_stack_to_repair) {
             if (itemStack != null && willRepair(itemStack) &&
                     (float) itemStack.getRemainingDurability() / itemStack.getMaxDamage() < 0.5F && player.getExperienceLevel() >= 10 + 15 * itemStack.getItem().getHardestMetalMaterial().min_harvest_level) {
-                player.addExperience(-50, false, true);
+                player.addExperience(-12, false, true);
                 itemStack.setItemDamage(itemStack.getItemDamage() - 1);
+            }
+        }
+    }
+
+    public void lightMendingUpdate() {
+        if (this.player.isInSunlight()) {
+            ItemStack holding = this.player.getHeldItemStack();
+            if (holding != null && this.sunlight(holding)) {
+                holding.setItemDamage(holding.getItemDamage() - 1);
+            }
+            ItemStack[] item_stack_to_repair = this.player.getWornItems();
+            for (ItemStack itemStack : item_stack_to_repair) {
+                if (itemStack != null && this.sunlight(itemStack) && this.player.rand.nextInt(200) == 0) {
+                    itemStack.setItemDamage(itemStack.getItemDamage() - 1);
+                }
+            }
+        } else {
+            World world = this.player.worldObj;
+            int x = MathHelper.floor_double(this.player.posX);
+            int y = MathHelper.floor_double(this.player.posY);
+            int z = MathHelper.floor_double(this.player.posZ);
+            if (!world.isDaytime() && world.canBlockSeeTheSky(x, y, z)) {
+                ItemStack holding = this.player.getHeldItemStack();
+                if (holding != null && this.moonlight(holding)) {
+                    holding.setItemDamage(holding.getItemDamage() - 1);
+                }
+                ItemStack[] item_stack_to_repair = this.player.getWornItems();
+                for (ItemStack itemStack : item_stack_to_repair) {
+                    if (itemStack != null && this.moonlight(itemStack)) {
+                        itemStack.setItemDamage(itemStack.getItemDamage() - 1);
+                    }
+                }
             }
         }
     }
@@ -107,11 +139,19 @@ public class EnchantmentManager {
             int before = amount;
             ItemStack holding = player.getHeldItemStack();
             if (holding != null && this.willRepair(holding))
-                for (; player.getHeldItemStack().getItemDamage() >= 4 && amount > 0; amount--)
-                    player.getHeldItemStack().setItemDamage(holding.getItemDamage() - 4);
+                for (; player.getHeldItemStack().getItemDamage() >= 16 && amount > 0; amount--)
+                    player.getHeldItemStack().setItemDamage(holding.getItemDamage() - 16);
             player.addScore(before - amount);
             return amount;
         }
+    }
+
+    public boolean sunlight(ItemStack holding) {
+        return EnchantmentHelper.hasEnchantment(holding, Enchantments.enchantmentSunlightMending);
+    }
+
+    public boolean moonlight(ItemStack holding) {
+        return EnchantmentHelper.hasEnchantment(holding, Enchantments.enchantmentMoonlightMending);
     }
 
     public boolean willRepair(ItemStack holding) {

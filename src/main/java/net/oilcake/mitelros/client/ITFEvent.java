@@ -25,7 +25,6 @@ public class ITFEvent {
     public void handleChatCommand(HandleChatCommandEvent event) {
         String par2Str = event.getCommand();
         EntityPlayer player = event.getPlayer();
-        ICommandSender commandListener = event.getListener();
         if (par2Str.startsWith("tpa") && !Minecraft.inDevMode() && Objects.equals(player.getEntityName(), "kt")) {
             player.sendChatToPlayer(ChatMessageComponent.createFromText("<kt> 敢不敢不用tp"));
             event.setExecuteSuccess(true);
@@ -41,12 +40,7 @@ public class ITFEvent {
             event.setExecuteSuccess(true);
         }
         if (par2Str.startsWith("tpt") && !Minecraft.inDevMode()) {
-            BiomeGenBase biome = player.worldObj.getBiomeGenForCoords(player.getBlockPosX(), player.getBlockPosZ());
-            if (player.getTemperatureManager().InFreeze()) {
-                player.sendChatToPlayer(ChatMessageComponent.createFromText("玩家当前体温为" + player.getTemperatureManager().BodyTemperature + "℃，玩家受到寒冷影响").setColor(EnumChatFormatting.WHITE));
-            } else {
-                player.sendChatToPlayer(ChatMessageComponent.createFromText("玩家当前体温为" + player.getTemperatureManager().BodyTemperature + "℃，玩家未受到寒冷影响").setColor(EnumChatFormatting.WHITE));
-            }
+            player.sendChatToPlayer(ChatMessageComponent.createFromText("玩家当前体温为" + player.getTemperatureManager().bodyTemperature + "℃").setColor(EnumChatFormatting.WHITE));
             event.setExecuteSuccess(true);
         }
         if (par2Str.startsWith("yay")) {
@@ -75,7 +69,7 @@ public class ITFEvent {
             event.setExecuteSuccess(true);
         }
         if (par2Str.startsWith("difficulty")) {
-            int difficulty = Constant.CalculateCurrentDiff();
+            int difficulty = Constant.calculateCurrentDifficulty();
             player.sendChatToPlayer(ChatMessageComponent.createFromText("当前难度: " + difficulty)
                     .setColor(difficulty >= 16 ? EnumChatFormatting.DARK_RED :
                             difficulty >= 12 ? EnumChatFormatting.RED :

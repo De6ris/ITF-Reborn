@@ -45,7 +45,7 @@ public class ItemBowMixin extends Item {
         if (material == Materials.tungsten) {
             TicksPull = 30;
         } else if (material == Materials.uru) {
-            TicksPull = 33;
+            TicksPull = 18;
         } else if (material == Material.mithril) {
             TicksPull = 27;
         } else if (material == Material.ancient_metal) {
@@ -75,7 +75,7 @@ public class ItemBowMixin extends Item {
         if (material == Materials.tungsten) {
             entity_arrow.setDamage(entity_arrow.getDamage() * 1.15D);
         } else if (material == Materials.uru) {
-            entity_arrow.setDamage(entity_arrow.getDamage() * 1.2D);
+            entity_arrow.setDamage(entity_arrow.getDamage() * 0.9D);
         } else if (material == Material.mithril) {
             entity_arrow.setDamage(entity_arrow.getDamage() * 1.1D);
         } else if (material == Material.ancient_metal) {

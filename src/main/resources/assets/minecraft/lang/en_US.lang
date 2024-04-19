@@ -78,12 +78,15 @@ enchantment.vanishing=Curse Of Vanishing
 enchantment.melting=Melting
 enchantment.absorb=Absorb
 enchantment.destroying=Destroying
-enchantment.callofnether=Call of Nether
+enchantment.temperature.callofnether=Call of Nether
+enchantment.temperature.callofpolar=Call of Polar
 enchantment.infinity=Infinity
 enchantment.arrogance=Curse Of Arrogance
 enchantment.sweeping=Sweeping
 enchantment.thresher=Thresher
-enchantment.mending=Mending
+enchantment.mending.all=Mending
+enchantment.mending.sunlight=Sunlight Mending
+enchantment.mending.moonlight=Moonlight Mending
 
 potion.dehydration=Dehydration
 

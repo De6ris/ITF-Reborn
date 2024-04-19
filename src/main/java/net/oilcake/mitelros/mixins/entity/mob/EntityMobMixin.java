@@ -2,9 +2,9 @@ package net.oilcake.mitelros.mixins.entity.mob;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFWorld;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.util.Constant;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -70,13 +70,13 @@ public class EntityMobMixin extends EntityCreature {
     @Inject(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityCreature;onUpdate()V", shift = At.Shift.AFTER))
     private void challenge(CallbackInfo ci) {
         if (!this.worldObj.isRemote && !this.modified_attribute && getHealth() > 0.0F && ITFConfig.FinalChallenge.get()) {
-            setEntityAttribute(SharedMonsterAttributes.maxHealth, (getMaxHealth() * (1.0F + Constant.CalculateCurrentDiff() / 16.0F)));
+            setEntityAttribute(SharedMonsterAttributes.maxHealth, (getMaxHealth() * (1.0F + Constant.calculateCurrentDifficulty() / 16.0F)));
             double attack_damage = getEntityAttributeValue(SharedMonsterAttributes.attackDamage);
             if (getHeldItemStack() != null && getHeldItemStack().getItem() instanceof net.minecraft.ItemTool) {
                 attack_damage -= getHeldItemStack().getItemAsTool().getMaterialDamageVsEntity();
                 attack_damage -= getHeldItemStack().getItemAsTool().getBaseDamageVsEntity();
             }
-            setEntityAttribute(SharedMonsterAttributes.attackDamage, attack_damage * (1.0F + Constant.CalculateCurrentDiff() / 32.0F));
+            setEntityAttribute(SharedMonsterAttributes.attackDamage, attack_damage * (1.0F + Constant.calculateCurrentDifficulty() / 32.0F));
             setHealth(getMaxHealth());
             this.modified_attribute = true;
         }
