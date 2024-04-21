@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.world;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.entity.EntityLich;
+import net.oilcake.mitelros.entity.boss.EntityLich;
 import net.oilcake.mitelros.item.Items;
 
 import java.util.Random;

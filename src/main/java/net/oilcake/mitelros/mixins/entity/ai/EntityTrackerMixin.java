@@ -4,6 +4,10 @@ import net.minecraft.Entity;
 import net.minecraft.EntityTracker;
 import net.minecraft.EntityTrackerEntry;
 import net.minecraft.ServerPlayer;
+import net.oilcake.mitelros.entity.misc.EntityWandFireBall;
+import net.oilcake.mitelros.entity.misc.EntityWandIceBall;
+import net.oilcake.mitelros.entity.misc.EntityWandShockWave;
+import net.oilcake.mitelros.entity.misc.EntityWandSlimeBall;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -46,11 +50,13 @@ public class EntityTrackerMixin {
       addEntityToTracker(par1Entity, 64, 10, true);
     } else if (par1Entity instanceof net.minecraft.EntityBrick) {
       addEntityToTracker(par1Entity, 64, 10, true);
-    } else if (par1Entity instanceof net.oilcake.mitelros.entity.EntityWandFireball) {
+    } else if (par1Entity instanceof EntityWandFireBall) {
       addEntityToTracker(par1Entity, 64, 10, true);
-    } else if (par1Entity instanceof net.oilcake.mitelros.entity.EntityWandIceBall) {
+    } else if (par1Entity instanceof EntityWandIceBall) {
       addEntityToTracker(par1Entity, 64, 10, true);
-    } else if (par1Entity instanceof net.oilcake.mitelros.entity.EntityWandShockWave) {
+    } else if (par1Entity instanceof EntityWandShockWave) {
+      addEntityToTracker(par1Entity, 64, 10, true);
+    } else if (par1Entity instanceof EntityWandSlimeBall) {
       addEntityToTracker(par1Entity, 64, 10, true);
     } else if (par1Entity instanceof net.minecraft.EntityWeb) {
       addEntityToTracker(par1Entity, 64, 10, true);

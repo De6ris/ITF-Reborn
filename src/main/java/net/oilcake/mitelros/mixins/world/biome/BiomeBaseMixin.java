@@ -3,7 +3,8 @@ package net.oilcake.mitelros.mixins.world.biome;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
-import net.oilcake.mitelros.entity.*;
+import net.oilcake.mitelros.entity.mob.EntityUnknown;
+import net.oilcake.mitelros.entity.mob.*;
 import net.oilcake.mitelros.world.BiomeBases;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
@@ -64,7 +65,7 @@ public class BiomeBaseMixin {
             this.spawnableMonsterList.add(new SpawnListEntry(EntityInfernalCreeper.class, 20, 1, 2));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityDemonSpider.class, 20, 1, 4));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityHellhound.class, 20, 1, 4));
-            this.spawnableMonsterList.add(new SpawnListEntry(EntityEvil.class, 10, 1, 4));
+            this.spawnableMonsterList.add(new SpawnListEntry(EntityEvil.class, 2, 1, 4));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityPigZombie.class, 10, 1, 2));
             this.spawnableMonsterList.add(new SpawnListEntry(EntitySpiderKing.class, 2, 1, 1));
 //            this.spawnableMonsterList.add(new SpawnListEntry(EntityGhast.class, 10, 1, 2));

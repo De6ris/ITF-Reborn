@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.client.render;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.entity.EntitySpirit;
+import net.oilcake.mitelros.entity.mob.EntitySpirit;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Random;

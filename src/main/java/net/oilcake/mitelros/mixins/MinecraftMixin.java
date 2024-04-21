@@ -5,6 +5,7 @@ import net.minecraft.ILogAgent;
 import net.minecraft.Minecraft;
 import net.minecraft.client.main.Main;
 import net.oilcake.mitelros.network.NoConsoleLogManager;
+import net.oilcake.mitelros.util.GuiInGameInfoHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,9 +24,15 @@ public class MinecraftMixin {
     }
 
     @Inject(method = "getVersionDescriptor", at = @At("HEAD"), cancellable = true)
-    private static void inject(boolean include_formatting, CallbackInfoReturnable<String> cir) {
+    private static void injectITFVersionDescriptor(boolean include_formatting, CallbackInfoReturnable<String> cir) {
         String red = include_formatting ? EnumChatFormatting.RED.toString() : "";
-        cir.setReturnValue("1.6.4-MITE is too false" + (Main.is_MITE_DS ? "-DS" : "") + (
-                Minecraft.inDevMode() ? (red + " DEV") : ""));
+        String difficultyText = GuiInGameInfoHandler.getDifficultyText();
+        if (!difficultyText.isEmpty()) {
+            cir.setReturnValue("1.6.4-MITE is too false " + (Main.is_MITE_DS ? "-DS" : "") +
+                    (difficultyText) + (Minecraft.inDevMode() ? (red + " DEV") : ""));
+        } else {
+            cir.setReturnValue("1.6.4-MITE is too false" + (Main.is_MITE_DS ? "-DS" : "") + (
+                    Minecraft.inDevMode() ? (red + " DEV") : ""));
+        }
     }
 }

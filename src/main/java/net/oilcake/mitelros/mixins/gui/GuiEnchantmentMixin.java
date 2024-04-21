@@ -1,4 +1,4 @@
-package net.oilcake.mitelros.mixins.render;
+package net.oilcake.mitelros.mixins.gui;
 
 import net.minecraft.GuiEnchantment;
 import org.spongepowered.asm.mixin.Mixin;

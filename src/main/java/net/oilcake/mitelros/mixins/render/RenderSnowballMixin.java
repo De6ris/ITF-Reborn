@@ -1,13 +1,17 @@
 package net.oilcake.mitelros.mixins.render;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.entity.EntityWandFireball;
-import net.oilcake.mitelros.entity.EntityWandIceBall;
-import net.oilcake.mitelros.entity.EntityWandShockWave;
+import net.oilcake.mitelros.entity.misc.EntityWandFireBall;
+import net.oilcake.mitelros.entity.misc.EntityWandIceBall;
+import net.oilcake.mitelros.entity.misc.EntityWandShockWave;
+import net.oilcake.mitelros.entity.misc.EntityWandSlimeBall;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(RenderSnowball.class)
 public class RenderSnowballMixin extends Render {
@@ -27,9 +31,11 @@ public class RenderSnowballMixin extends Render {
             this.field_94151_a = par1Entity.getModelItem();
         } else if (par1Entity instanceof EntityWandIceBall) {
             this.field_94151_a = par1Entity.getModelItem();
-        } else if (par1Entity instanceof EntityWandFireball) {
+        } else if (par1Entity instanceof EntityWandFireBall) {
             this.field_94151_a = par1Entity.getModelItem();
         } else if (par1Entity instanceof EntityWandShockWave) {
+            this.field_94151_a = par1Entity.getModelItem();
+        } else if (par1Entity instanceof EntityWandSlimeBall) {
             this.field_94151_a = par1Entity.getModelItem();
         } else if (par1Entity instanceof EntityGelatinousSphere) {
             this.field_94150_f = ((EntityGelatinousSphere) par1Entity).getModelSubtype();

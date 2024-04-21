@@ -2,9 +2,9 @@ package net.oilcake.mitelros.mixins.entity.misc;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
-import net.oilcake.mitelros.entity.EntityBoneBodyguard;
-import net.oilcake.mitelros.entity.EntityStray;
-import net.oilcake.mitelros.entity.EntityWitherBodyguard;
+import net.oilcake.mitelros.entity.mob.EntityBoneBodyguard;
+import net.oilcake.mitelros.entity.mob.EntityStray;
+import net.oilcake.mitelros.entity.mob.EntityWitherBodyguard;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.util.Constant;
 import org.spongepowered.asm.mixin.Mixin;

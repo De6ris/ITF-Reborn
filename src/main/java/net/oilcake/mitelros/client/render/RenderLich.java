@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.client.render;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.entity.EntityLich;
+import net.oilcake.mitelros.entity.boss.EntityLich;
 
 public class RenderLich extends RenderBiped {
   public RenderLich() {

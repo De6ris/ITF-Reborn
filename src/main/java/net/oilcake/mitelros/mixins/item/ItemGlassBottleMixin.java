@@ -1,4 +1,4 @@
-package net.oilcake.mitelros.mixins;
+package net.oilcake.mitelros.mixins.item;
 
 import net.minecraft.Item;
 import net.minecraft.ItemGlassBottle;

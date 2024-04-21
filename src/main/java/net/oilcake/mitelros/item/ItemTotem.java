@@ -3,7 +3,7 @@ package net.oilcake.mitelros.item;
 import net.minecraft.*;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.entity.EntityLongdeadSentry;
+import net.oilcake.mitelros.entity.misc.EntityLongdeadSentry;
 
 public class ItemTotem extends Item {
     public ItemTotem(int id, Material material, String texture) {
