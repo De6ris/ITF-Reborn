@@ -1,4 +1,4 @@
-package net.oilcake.mitelros.mixins;
+package net.oilcake.mitelros.mixins.block;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.block.BlockFlowerPotExtend;

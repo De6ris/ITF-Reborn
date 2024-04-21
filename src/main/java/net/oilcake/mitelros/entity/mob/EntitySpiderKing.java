@@ -1,7 +1,8 @@
-package net.oilcake.mitelros.entity;
+package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFSpider;
+import net.oilcake.mitelros.entity.mob.EntityClusterSpider;
 
 import java.util.Iterator;
 import java.util.List;

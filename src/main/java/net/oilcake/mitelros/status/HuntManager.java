@@ -4,7 +4,7 @@ import net.minecraft.Damage;
 import net.minecraft.Entity;
 import net.minecraft.EntityPlayer;
 import net.minecraft.EnumEntityFX;
-import net.oilcake.mitelros.entity.EntityUndeadGuard;
+import net.oilcake.mitelros.entity.misc.EntityUndeadGuard;
 import net.oilcake.mitelros.util.DamageSourceExtend;
 
 public class HuntManager {

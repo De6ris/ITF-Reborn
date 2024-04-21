@@ -3,7 +3,7 @@ package net.oilcake.mitelros.mixins.world;
 import net.minecraft.MapGenNetherBridge;
 import net.minecraft.MapGenStructure;
 import net.minecraft.SpawnListEntry;
-import net.oilcake.mitelros.entity.EntityWitherBoneLord;
+import net.oilcake.mitelros.entity.mob.EntityWitherBoneLord;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;

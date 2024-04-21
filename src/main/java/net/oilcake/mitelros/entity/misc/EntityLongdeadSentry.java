@@ -1,4 +1,4 @@
-package net.oilcake.mitelros.entity;
+package net.oilcake.mitelros.entity.misc;
 
 import net.minecraft.*;
 

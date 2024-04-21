@@ -2,6 +2,9 @@ package net.oilcake.mitelros.client;
 
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.*;
+import net.oilcake.mitelros.entity.boss.EntityLich;
+import net.oilcake.mitelros.entity.misc.*;
+import net.oilcake.mitelros.entity.mob.*;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.Blocks;
@@ -10,7 +13,6 @@ import net.oilcake.mitelros.block.observer.TileEntityObserver;
 import net.oilcake.mitelros.block.receiver.TileEntityReceiver;
 import net.oilcake.mitelros.client.render.*;
 import net.oilcake.mitelros.enchantment.Enchantments;
-import net.oilcake.mitelros.entity.*;
 import net.oilcake.mitelros.item.ItemGuideBook;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.network.PacketDecreaseWater;
@@ -138,8 +140,8 @@ public class ITFEvent {
         event.register(EntityLich.class, "EntityLich", 548, 13422277, 14008320);
         event.register(EntityLichShadow.class, "EntityLichShadow", 549, 13422277, 7699821);
         event.register(EntityStalkerCreeper.class, "EntityStalkerCreeper", 550, 10921638, 0);
-        event.register(EntityWandFireball.class, "EntityWandFireball", 551);
-        event.register(EntityWandIceBall.class, "EntityWandIceball", 552);
+        event.register(EntityWandFireBall.class, "EntityWandFireBall", 551);
+        event.register(EntityWandIceBall.class, "EntityWandIceBall", 552);
         event.register(EntityWandShockWave.class, "EntityWandShockWave", 553);
         event.register(EntityZombieLord.class, "EntityZombieLord?", 554, 44975, 7969893);
         event.register(EntityRetinueZombie.class, "EntityZombieRetinue", 555, 44975, 7969893);
@@ -151,6 +153,7 @@ public class ITFEvent {
         event.register(EntityCastleGuard.class, "EntityCastleGuard", 561, 0x565656, 0x999999);
         event.register(EntitySpirit.class, "EntitySpirit", 562, 0xFFFFFFF, 0xFFAD0000);
         event.register(EntityLongdeadSentry.class, "EntityLongdeadSentry", 563, 13422277, 7699821);
+        event.register(EntityWandSlimeBall.class, "EntityWandSlimeBall", 564);
         event.register(EntityUnknown.class, "null", 1895);
     }
 
@@ -166,11 +169,12 @@ public class ITFEvent {
         event.register(EntityLich.class, new RenderLich());
         event.register(EntityLichShadow.class, new RenderLichShadow());
         event.register(EntityStalkerCreeper.class, new RenderStalkerCreeper());
-        event.register(EntityWandFireball.class, new RenderSnowball(Item.fireballCharge));
+        event.register(EntityWandFireBall.class, new RenderSnowball(Item.fireballCharge));
         event.register(EntityWandIceBall.class, new RenderSnowball(Item.snowball));
         event.register(EntityWandShockWave.class, new RenderSnowball(Item.eyeOfEnder));
         event.register(EntityCastleGuard.class, new RenderCastleGuard());
         event.register(EntitySpirit.class, new RenderSpirit());
+        event.register(EntityWandSlimeBall.class, new RenderSnowball(Item.slimeBall));
         event.register(EntityUnknown.class, new RenderUnknown());
     }
 

@@ -485,6 +485,8 @@ public class Items extends Item {
 
     public static final ItemKnife stickKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.wood);
 
+    public static final ItemWand slimeWand = new ItemWand(IdUtil.getNextItemID(), Material.copper);
+
 
     public static void registerItems(ItemRegistryEvent event) {
         event.register("armor/nickel_helmet", nickelHelmet);
@@ -718,6 +720,7 @@ public class Items extends Item {
         event.register("ignition/rusted_iron", ignitionRustedIron);
         event.register("tools/flint_hoe", hoeFlint);
         event.register("tools/stick_knife", stickKnife);
+        event.register("wand/slime", slimeWand);
         Constant.initItemArray();
     }
 

@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.client.render;
 
 import net.minecraft.RenderCreeper;
-import net.oilcake.mitelros.entity.EntityStalkerCreeper;
+import net.oilcake.mitelros.entity.mob.EntityStalkerCreeper;
 
 public class RenderStalkerCreeper extends RenderCreeper {
   public RenderStalkerCreeper() {

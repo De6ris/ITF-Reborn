@@ -1,9 +1,10 @@
 package net.oilcake.mitelros.item;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.entity.EntityWandFireball;
-import net.oilcake.mitelros.entity.EntityWandIceBall;
-import net.oilcake.mitelros.entity.EntityWandShockWave;
+import net.oilcake.mitelros.entity.misc.EntityWandFireBall;
+import net.oilcake.mitelros.entity.misc.EntityWandIceBall;
+import net.oilcake.mitelros.entity.misc.EntityWandShockWave;
+import net.oilcake.mitelros.entity.misc.EntityWandSlimeBall;
 
 public class ItemWand extends ItemTool implements IDamageableItem {
     private Material reinforcement_material;
@@ -75,7 +76,7 @@ public class ItemWand extends ItemTool implements IDamageableItem {
             if (fraction_pulled >= 0.25F) {
                 if (this.itemID == Items.lavaWand.itemID) {
                     world.playSoundAtEntity(player, "mob.ghast.fireball", 1.0F, 1.0F);
-                    world.spawnEntityInWorld(new EntityWandFireball(world, player));
+                    world.spawnEntityInWorld(new EntityWandFireBall(world, player));
                 }
                 if (this.itemID == Items.freezeWand.itemID) {
                     world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
@@ -84,6 +85,10 @@ public class ItemWand extends ItemTool implements IDamageableItem {
                 if (this.itemID == Items.shockWand.itemID) {
                     world.playSoundAtEntity(player, "ambient.weather.thunder", 1.0F, 1.0F);
                     world.spawnEntityInWorld(new EntityWandShockWave(world, player));
+                }
+                if (this.itemID == Items.slimeWand.itemID) {
+                    world.playSoundAtEntity(player, "mob.slime.big1", 1.0F, 1.0F);
+                    world.spawnEntityInWorld(new EntityWandSlimeBall(world, player));
                 }
             }
             if (!player.isPlayerInCreative())
