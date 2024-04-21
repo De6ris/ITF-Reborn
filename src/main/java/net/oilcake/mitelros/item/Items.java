@@ -127,7 +127,7 @@ public class Items extends Item {
 
     public static final ItemBowl bowlChestnutSoup = (ItemBowl) (new ItemBowl(IdUtil.getNextItemID(), Materials.chestnut_soup, "lampchop_stew")).setFoodValue(12, 12, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("lampchopStew");
 
-    public static final ItemBowl bowlWaterSuspicious = (ItemBowl) (new ItemBowl(IdUtil.getNextItemID(), Materials.unsafe_water, "suspicious_water")).setUnlocalizedName("SuspiciousWater");
+    public static final ItemBowl bowlWaterSuspicious = (ItemBowl) (new ItemBowl(IdUtil.getNextItemID(), Materials.suspicious_water, "suspicious_water")).setUnlocalizedName("SuspiciousWater");
 
     public static final ItemBowl bowlWaterSwampland = (ItemBowl) (new ItemBowl(IdUtil.getNextItemID(), Materials.dangerous_water, "swampland_water")).setUnlocalizedName("SwamplandWater");
 
@@ -175,23 +175,23 @@ public class Items extends Item {
 
     public static final ItemBucketMilk tungstenBucketMilk = (ItemBucketMilk) (new ItemBucketMilk(IdUtil.getNextItemID(), Materials.tungsten)).setContainerItem(tungstenBucket);
 
-    public static final ItemBucket copperBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.copper, Materials.unsafe_water)).setContainerItem(bucketCopperEmpty);
+    public static final ItemBucket copperBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.copper, Materials.suspicious_water)).setContainerItem(bucketCopperEmpty);
 
-    public static final ItemBucket silverBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.silver, Materials.unsafe_water)).setContainerItem(bucketSilverEmpty);
+    public static final ItemBucket silverBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.silver, Materials.suspicious_water)).setContainerItem(bucketSilverEmpty);
 
-    public static final ItemBucket goldBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.gold, Materials.unsafe_water)).setContainerItem(bucketGoldEmpty);
+    public static final ItemBucket goldBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.gold, Materials.suspicious_water)).setContainerItem(bucketGoldEmpty);
 
-    public static final ItemBucket ironBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.iron, Materials.unsafe_water)).setContainerItem(bucketIronEmpty);
+    public static final ItemBucket ironBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.iron, Materials.suspicious_water)).setContainerItem(bucketIronEmpty);
 
-    public static final ItemBucket nickelBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.nickel, Materials.unsafe_water)).setContainerItem(nickelBucket);
+    public static final ItemBucket nickelBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.nickel, Materials.suspicious_water)).setContainerItem(nickelBucket);
 
-    public static final ItemBucket ancientmetalBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.ancient_metal, Materials.unsafe_water)).setContainerItem(bucketAncientMetalEmpty);
+    public static final ItemBucket ancientmetalBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.ancient_metal, Materials.suspicious_water)).setContainerItem(bucketAncientMetalEmpty);
 
-    public static final ItemBucket mithrilBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.mithril, Materials.unsafe_water)).setContainerItem(bucketMithrilEmpty);
+    public static final ItemBucket mithrilBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.mithril, Materials.suspicious_water)).setContainerItem(bucketMithrilEmpty);
 
-    public static final ItemBucket tungstenBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.tungsten, Materials.unsafe_water)).setContainerItem(tungstenBucket);
+    public static final ItemBucket tungstenBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Materials.tungsten, Materials.suspicious_water)).setContainerItem(tungstenBucket);
 
-    public static final ItemBucket adamantiumBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.adamantium, Materials.unsafe_water)).setContainerItem(bucketAdamantiumEmpty);
+    public static final ItemBucket adamantiumBucketWaterSuspicious = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.adamantium, Materials.suspicious_water)).setContainerItem(bucketAdamantiumEmpty);
 
     public static final ItemBucket copperBucketWaterDangerous = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.copper, Materials.dangerous_water)).setContainerItem(bucketCopperEmpty);
 
@@ -385,7 +385,7 @@ public class Items extends Item {
 
     public static final ItemBowlClay claybowlChestnutSoup = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Materials.chestnut_soup, "lampchop_stew")).setFoodValue(12, 12, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("lampchopStew");
 
-    public static final ItemBowlClay claybowlWaterSuspicious = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Materials.unsafe_water, "suspicious_water")).setUnlocalizedName("SuspiciousWater");
+    public static final ItemBowlClay claybowlWaterSuspicious = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Materials.suspicious_water, "suspicious_water")).setUnlocalizedName("SuspiciousWater");
 
     public static final ItemBowlClay claybowlWaterSwampland = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Materials.dangerous_water, "swampland_water")).setUnlocalizedName("SwamplandWater");
 
@@ -467,7 +467,7 @@ public class Items extends Item {
 
     public static final ItemBucket woodBucketWater = (ItemBucket) new ItemBucket(IdUtil.getNextItemID(), Materials.wood, Materials.water).setContainerItem(woodBucket);
 
-    public static final ItemBucket woodBucketWaterSuspicious = (ItemBucket) new ItemBucket(IdUtil.getNextItemID(), Materials.wood, Materials.unsafe_water).setContainerItem(woodBucket);
+    public static final ItemBucket woodBucketWaterSuspicious = (ItemBucket) new ItemBucket(IdUtil.getNextItemID(), Materials.wood, Materials.suspicious_water).setContainerItem(woodBucket);
 
     public static final ItemBucket woodBucketWaterDangerous = (ItemBucket) new ItemBucket(IdUtil.getNextItemID(), Materials.wood, Materials.dangerous_water).setContainerItem(woodBucket);
 

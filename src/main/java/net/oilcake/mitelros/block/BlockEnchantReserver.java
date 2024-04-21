@@ -20,43 +20,39 @@ public class BlockEnchantReserver extends Block implements ITileEntityProvider {
         setLightValue(0.75F);
     }
 
+    @Override
     public Icon getIcon(int side, int metadata) {
-        switch (side) {
-            case 1:
-                return this.TEXTURE_TOP;
-            case 0:
-                return this.TEXTURE_BOTTOM;
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-                return this.TEXTURE_SIDE;
-        }
-        return super.getIcon(side, metadata);
+        return switch (side) {
+            case 1 -> this.TEXTURE_TOP;
+            case 0 -> this.TEXTURE_BOTTOM;
+            case 2, 3, 4, 5 -> this.TEXTURE_SIDE;
+            default -> super.getIcon(side, metadata);
+        };
     }
 
+    @Override
     public void registerIcons(IconRegister mt) {
         this.TEXTURE_TOP = mt.registerIcon("enchant_reserver/top");
         this.TEXTURE_BOTTOM = mt.registerIcon("enchant_reserver/bottom");
         this.TEXTURE_SIDE = mt.registerIcon("enchant_reserver/side");
     }
 
-    public void getItemStacks(int id, CreativeTabs creative_tabs, List list) {
-        super.getItemStacks(id, creative_tabs, list);
-    }
-
+    @Override
     public TileEntity createNewTileEntity(World world) {
         return new TileEntityEnchantReserver();
     }
 
+    @Override
     public void addItemBlockMaterials(ItemBlock item_block) {
         item_block.addMaterial(Material.iron);
     }
 
+    @Override
     public boolean isPortable(World world, EntityLivingBase entity_living_base, int x, int y, int z) {
         return true;
     }
 
+    @Override
     public void breakBlock(World world, int x, int y, int z, int block_id, int metadata) {
         super.breakBlock(world, x, y, z, block_id, metadata);
         TileEntityEnchantReserver tileEntityEnchantReserver = (TileEntityEnchantReserver) world.getBlockTileEntity(x, y, z);
@@ -64,6 +60,7 @@ public class BlockEnchantReserver extends Block implements ITileEntityProvider {
         world.removeBlockTileEntity(x, y, z);
     }
 
+    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, EnumFace face, float offset_x, float offset_y, float offset_z) {
         if (!world.isAirOrPassableBlock(x, y + 1, z, false))
             return false;

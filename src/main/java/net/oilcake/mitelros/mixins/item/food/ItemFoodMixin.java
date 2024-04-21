@@ -18,16 +18,16 @@ import java.util.Random;
 public class ItemFoodMixin extends Item {
     @Inject(method = "<init>(ILnet/minecraft/Material;IIZZZLjava/lang/String;)V", at = @At("RETURN"))
     private void injectInit(int id, Material material, int satiation, int nutrition, boolean has_protein, boolean has_essential_fats, boolean has_phytonutrients, String texture, CallbackInfo callbackInfo) {
-        ((ITFItem) this).setWater(resetWaterVal(id, material));
+        ((ITFItem) this).setWater(resetWaterValue(id, material));
     }
 
     @Inject(method = "<init>(ILnet/minecraft/Material;IIIZZZLjava/lang/String;)V", at = @At("RETURN"))
     private void injectInit(int id, Material material, int satiation, int nutrition, int sugar_content, boolean has_protein, boolean has_essential_fats, boolean has_phytonutrients, String texture, CallbackInfo callbackInfo) {
-        ((ITFItem) this).setWater(resetWaterVal(id, material));
+        ((ITFItem) this).setWater(resetWaterValue(id, material));
     }
 
     @Unique
-    public int resetWaterVal(int id, Material material) {
+    public int resetWaterValue(int id, Material material) {
         if (material == Material.fruit)
             return ITFConfig.TagDryDilemma.get() ? 1 : 2;
         if (id == 135)

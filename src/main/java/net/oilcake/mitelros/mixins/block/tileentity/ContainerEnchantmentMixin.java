@@ -1,20 +1,28 @@
 package net.oilcake.mitelros.mixins.block.tileentity;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.network.PacketEnchantReserverInfo;
+import net.oilcake.mitelros.network.PacketEnchantmentInfo;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.ItemGoldenAppleLegend;
 import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.io.*;
+import java.util.List;
+import java.util.Random;
+
 @Mixin(ContainerEnchantment.class)
-public class ContainerEnchantmentMixin extends Container {
+public abstract class ContainerEnchantmentMixin extends Container {
     @Shadow
     public IInventory tableInventory;
     @Shadow
@@ -35,6 +43,70 @@ public class ContainerEnchantmentMixin extends Container {
         return false;
     }
 
+    @Shadow
+    private Random rand;
+
+    @Shadow
+    public int[] enchantLevels;
+
+    @Inject(method = "onCraftMatrixChanged", at = @At(value = "INVOKE", target = "Lnet/minecraft/ContainerEnchantment;detectAndSendChanges()V"))
+    private void sendPredicatePacket(IInventory par1IInventory, CallbackInfo ci) {
+        if (this.world.isRemote) return;
+        ItemStack itemStack = this.tableInventory.getStackInSlot(0);
+        if (itemStack == null || ItemPotion.isBottleOfWater(itemStack) || ItemAppleGold.isUnenchantedGoldenApple(itemStack)) {
+            return;
+        }
+        Block blockBeneath = this.world.getBlock(this.posX, this.posY - 1, this.posZ);
+        boolean predicated = (blockBeneath == Blocks.blockEnchantPredicator || blockBeneath == Blocks.blockMagicPedestal);
+        if (!predicated) return;
+        int[] result = this.predict(this.rand, itemStack, this.enchantLevels);
+        this.player.sendPacket(new PacketEnchantmentInfo(result));
+    }
+
+    @Unique
+    public int[] predict(Random random, ItemStack itemStack, int[] levels) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream;
+        try {
+            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(random);
+            objectOutputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        int[] results = new int[6];
+
+
+        Random copiedRandom;
+        for (int line = 0; line < 3; line++) {
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+            ObjectInputStream objectInputStream;
+            try {
+                objectInputStream = new ObjectInputStream(byteArrayInputStream);
+                copiedRandom = (Random) objectInputStream.readObject();
+                objectInputStream.close();
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            List enchantmentList = EnchantmentHelper.buildEnchantmentList(copiedRandom, itemStack, levels[line]);
+            boolean isBook = itemStack.itemID == Item.book.itemID;
+            if (enchantmentList == null) continue;
+
+            int onlyEnchantment = isBook ? copiedRandom.nextInt(enchantmentList.size()) : -1;
+
+            for (int curse = 0; curse < enchantmentList.size(); ++curse) {
+                EnchantmentData enchantmentData = (EnchantmentData) enchantmentList.get(curse);
+                if (isBook && curse != onlyEnchantment) continue;
+                results[line * 2] = enchantmentData.enchantmentobj.effectId;
+                results[line * 2 + 1] = enchantmentData.enchantmentLevel;
+                break;
+            }
+        }
+        return results;
+    }
+
     @Inject(method = "enchantItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemAppleGold;isUnenchantedGoldenApple(Lnet/minecraft/ItemStack;)Z"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
     private void itfApple(EntityPlayer par1EntityPlayer, int par2, CallbackInfoReturnable<Boolean> cir, ItemStack var3, int experience_cost) {
         if (ItemGoldenAppleLegend.isUnenchantedGoldenApple(var3)) {
@@ -47,7 +119,8 @@ public class ContainerEnchantmentMixin extends Container {
 
     @ModifyArg(method = "calcEnchantmentLevelsForSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/EnchantmentHelper;getEnchantmentLevelsAlteredByItemEnchantability(ILnet/minecraft/Item;)I"))
     private int enhance(int enchantment_levels) {
-        boolean enhanced = (this.world.getBlock(this.posX, this.posY - 1, this.posZ) == Blocks.blockEnchantEnhancer);
+        Block blockBeneath = this.world.getBlock(this.posX, this.posY - 1, this.posZ);
+        boolean enhanced = (blockBeneath == Blocks.blockEnchantEnhancer || blockBeneath == Blocks.blockMagicPedestal);
         return enchantment_levels * (enhanced ? 2 : 1);
     }
 }

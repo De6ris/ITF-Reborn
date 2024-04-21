@@ -22,6 +22,7 @@ public class DamageSourceExtend extends DamageSource {
     }
 
     public static DamageSourceExtend freeze = (new DamageSourceExtend("freeze")).setUnblockable();
+    public static DamageSourceExtend heat = (new DamageSourceExtend("heat")).setUnblockable();
 
     public static DamageSourceExtend thirsty = (new DamageSourceExtend("thirsty")).setUnblockable();
 

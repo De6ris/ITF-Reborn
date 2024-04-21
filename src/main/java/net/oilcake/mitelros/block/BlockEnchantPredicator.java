@@ -2,14 +2,13 @@ package net.oilcake.mitelros.block;
 
 import net.minecraft.*;
 
-public class BlockEnchantEnhancer extends Block {
+public class BlockEnchantPredicator extends Block {
     private Icon TEXTURE_TOP;
 
     private Icon TEXTURE_BOTTOM;
 
     private Icon TEXTURE_SIDE;
-
-    protected BlockEnchantEnhancer(int par1) {
+    protected BlockEnchantPredicator(int par1) {
         super(par1, Material.anvil, new BlockConstants());
         setCreativeTab(CreativeTabs.tabDecorations);
         setMaxStackSize(1);
@@ -29,9 +28,9 @@ public class BlockEnchantEnhancer extends Block {
 
     @Override
     public void registerIcons(IconRegister mt) {
-        this.TEXTURE_TOP = mt.registerIcon("enchant_enhancer/top");
-        this.TEXTURE_BOTTOM = mt.registerIcon("enchant_enhancer/bottom");
-        this.TEXTURE_SIDE = mt.registerIcon("enchant_enhancer/side");
+        this.TEXTURE_TOP = mt.registerIcon("enchant_predicator/top");
+        this.TEXTURE_BOTTOM = mt.registerIcon("enchant_predicator/bottom");
+        this.TEXTURE_SIDE = mt.registerIcon("enchant_predicator/side");
     }
 
 
@@ -39,4 +38,5 @@ public class BlockEnchantEnhancer extends Block {
     public boolean isPortable(World world, EntityLivingBase entity_living_base, int x, int y, int z) {
         return true;
     }
+
 }

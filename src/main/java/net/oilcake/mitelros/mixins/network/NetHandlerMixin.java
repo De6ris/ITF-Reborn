@@ -4,6 +4,7 @@ import net.minecraft.NetHandler;
 import net.oilcake.mitelros.api.ITFNetHandler;
 import net.oilcake.mitelros.network.PacketDecreaseWater;
 import net.oilcake.mitelros.network.PacketEnchantReserverInfo;
+import net.oilcake.mitelros.network.PacketEnchantmentInfo;
 import net.oilcake.mitelros.network.PacketUpdateNutrition;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -16,7 +17,9 @@ public class NetHandlerMixin implements ITFNetHandler {
     public void handleDecreaseWater(PacketDecreaseWater packet) {
     }
 
-    @Override
     public void handleUpdateNutrition(PacketUpdateNutrition packet) {
+    }
+
+    public void handleEnchantmentInfo(PacketEnchantmentInfo packet) {
     }
 }

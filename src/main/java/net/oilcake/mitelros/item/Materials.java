@@ -31,7 +31,7 @@ public class Materials extends Material {
 
     public static final Material lemonade;
 
-    public static final Material unsafe_water;
+    public static final Material suspicious_water;
 
     public static final Material dangerous_water;
 
@@ -66,7 +66,7 @@ public class Materials extends Material {
         custom_a = (Materials) (new Materials(EnumEquipmentMaterials.CUSTOM_A)).setMetal(false).setMinHarvestLevel(0);
         custom_b = (Materials) (new Materials(EnumEquipmentMaterials.CUSTOM_B)).setMetal(false).setMinHarvestLevel(0);
         lemonade = (new MaterialFood("lemonade")).setDrinkable();
-        unsafe_water = (new MaterialLiquid("suspicious_water", MapColor.waterColor)).setDrinkable();
+        suspicious_water = (new MaterialLiquid("suspicious_water", MapColor.waterColor)).setDrinkable();
         dangerous_water = (new MaterialLiquid("swampland_water", MapColor.waterColor)).setDrinkable();
         magical = (Materials) (new Materials(EnumEquipmentMaterials.MAGICAL)).setMetal(false).setMinHarvestLevel(0);
         ancient_metal_sacred = (Materials) (new Materials(EnumEquipmentMaterials.ANCIENT_METAL_SACRED)).setRequiresTool().setMetal(true).setMinHarvestLevel(3);

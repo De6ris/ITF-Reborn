@@ -66,7 +66,7 @@ public abstract class ItemBucketMixin extends ItemVessel {
 
     @Inject(method = "getBlockForContents", at = @At("HEAD"), cancellable = true)
     private void inject(CallbackInfoReturnable<Block> cir) {
-        if (this.contains(Materials.dangerous_water) || this.contains(Materials.unsafe_water)) {
+        if (this.contains(Materials.dangerous_water) || this.contains(Materials.suspicious_water)) {
             cir.setReturnValue(Block.waterMoving);
         }
     }
@@ -120,7 +120,7 @@ public abstract class ItemBucketMixin extends ItemVessel {
                                     } else if (player.onServer() && (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver)) {
                                         player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Material.water)));
                                     } else if (player.onServer()) {
-                                        player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Materials.unsafe_water)));
+                                        player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Materials.suspicious_water)));
                                     }
                                     return true;
                                 }
@@ -134,7 +134,7 @@ public abstract class ItemBucketMixin extends ItemVessel {
             if (contains(Material.stone))
                 return false;
             ItemStack item_stack = player.getHeldItemStack();
-            if (contains(Material.water) || contains(Materials.dangerous_water) || contains(Materials.unsafe_water)) {
+            if (contains(Material.water) || contains(Materials.dangerous_water) || contains(Materials.suspicious_water)) {
                 Block block = rc.getBlockHit();
                 int x = rc.block_hit_x;
                 int y = rc.block_hit_y;
@@ -185,7 +185,7 @@ public abstract class ItemBucketMixin extends ItemVessel {
 
     @ModifyExpressionValue(method = "tryPlaceContainedLiquid", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemBucket;getContents()Lnet/minecraft/Material;"))
     private Material inject(Material material_in_bucket) {
-        if (material_in_bucket == Material.water || material_in_bucket == Materials.unsafe_water || material_in_bucket == Materials.dangerous_water) {
+        if (material_in_bucket == Material.water || material_in_bucket == Materials.suspicious_water || material_in_bucket == Materials.dangerous_water) {
             return Material.water;
         }
         return material_in_bucket;
@@ -235,7 +235,7 @@ public abstract class ItemBucketMixin extends ItemVessel {
                 return Items.nickelBucketStone;
             if (vessel_material == Materials.tungsten)
                 return Items.tungstenBucketStone;
-        } else if (contents == Materials.unsafe_water) {
+        } else if (contents == Materials.suspicious_water) {
             if (vessel_material == Material.copper)
                 return Items.copperBucketWaterSuspicious;
             if (vessel_material == Material.silver)

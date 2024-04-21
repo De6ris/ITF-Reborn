@@ -238,7 +238,9 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         this.temperatureManager.freezingCoolDown = par1NBTTagCompound.getInteger("FreezingCooldown");
         this.temperatureManager.freezingWarning = par1NBTTagCompound.getInteger("FreezingWarning");
         this.temperatureManager.heatResistance = par1NBTTagCompound.getInteger("HeatResistance");
-        this.temperatureManager.bodyTemperature = par1NBTTagCompound.getFloat("BodyTemperature");
+        this.temperatureManager.heatWarning = par1NBTTagCompound.getInteger("HeatWarning");
+        float temperature = par1NBTTagCompound.getFloat("BodyTemperature");
+        this.temperatureManager.bodyTemperature = temperature == 0.0f ? 37.2F : temperature;// for upgrading saves
         this.drunkManager.setDrunk_duration(par1NBTTagCompound.getInteger("DrunkDuration"));
     }
 
@@ -251,6 +253,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         par1NBTTagCompound.setInteger("FreezingCooldown", this.temperatureManager.freezingCoolDown);
         par1NBTTagCompound.setInteger("FreezingWarning", this.temperatureManager.freezingWarning);
         par1NBTTagCompound.setInteger("HeatResistance", this.temperatureManager.heatResistance);
+        par1NBTTagCompound.setInteger("HeatWarning", this.temperatureManager.heatWarning);
         par1NBTTagCompound.setFloat("BodyTemperature", this.temperatureManager.bodyTemperature);
         par1NBTTagCompound.setInteger("DrunkDuration", this.drunkManager.getDrunk_duration());
     }

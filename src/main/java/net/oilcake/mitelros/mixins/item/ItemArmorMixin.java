@@ -1,15 +1,15 @@
 package net.oilcake.mitelros.mixins.item;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.QualityHandler;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -23,7 +23,7 @@ public abstract class ItemArmorMixin extends Item implements IDamageableItem {
     private boolean is_leather;
 
     @Shadow
-    private Material effective_material;
+    protected Material effective_material;
 
     @Shadow
     @Final
@@ -78,15 +78,13 @@ public abstract class ItemArmorMixin extends Item implements IDamageableItem {
         callbackInfo.setReturnValue(protection);
     }
 
-    @Inject(method = "getDamageFactor", at = @At("RETURN"), cancellable = true)
-    private void inject(ItemStack item_stack, EntityLivingBase owner, CallbackInfoReturnable<Float> cir) {
-        float returned = cir.getReturnValue();
-        if (!owner.isEntityPlayer() && ITFConfig.TagInstinctSurvival.get()) {
-            cir.setReturnValue(returned + 0.25F);
-            return;
-        }
-        if (ITFConfig.TagArmament.get()) {
-            cir.setReturnValue(returned * 2);
-        }
+    @ModifyConstant(method = "getDamageFactor", constant = @Constant(floatValue = 0.5f))
+    private float instinctSurvival(float constant) {
+        return ITFConfig.TagInstinctSurvival.get() ? 0.75F : 0.5F;
+    }
+
+    @ModifyReturnValue(method = "getDamageFactor", at = @At(value = "RETURN", ordinal = 2))
+    private float instinctSurvival_1(float original) {
+        return original < 0.5f ? 2 * original : 1.0f;
     }
 }

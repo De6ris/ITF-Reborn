@@ -139,9 +139,18 @@ public class Blocks {
             setResistance(20.0f).
             setStepSound(Block.soundStoneFootstep);
 
-    public static final Block blockSulphur = new BlockOre(getNextBlockID(),Materials.sulphur,1)
+    public static final Block blockSulphur = new BlockOre(getNextBlockID(), Materials.sulphur, 1)
             .setHardness(1.2F).
             setResistance(10.0F).
+            setStepSound(Block.soundStoneFootstep);
+
+    public static final Block blockEnchantPredicator = (new BlockEnchantPredicator(getNextBlockID()))
+            .setHardness(8.0F).
+            setResistance(20.0F).
+            setStepSound(Block.soundStoneFootstep);
+    public static final Block blockMagicPedestal = (new BlockMagicPedestal(getNextBlockID()))
+            .setHardness(8.0F).
+            setResistance(20.0F).
             setStepSound(Block.soundStoneFootstep);
 
     public static void registerBlocks(ItemRegistryEvent registryEvent) {
@@ -179,62 +188,63 @@ public class Blocks {
         registryEvent.registerItemBlock(blockSulphur, "sulphur");
         registryEvent.registerItemBlock(blockObserver, "block_observer");
         registryEvent.registerItemBlock(blockReceiver, "block_receiver");
+        registryEvent.registerItemBlock(blockEnchantPredicator, "block_enchant_predicator");
+        registryEvent.registerItemBlock(blockMagicPedestal, "block_magic_pedestal");
     }
 
     public static void registerRecipes(RecipeRegistryEvent register) {
+        shapedRecipe(register);
+        shapelessRecipe(register);
+        furnaceRecipe(register);
+        //TODO fix block recipe with subtype
+    }
+
+    public static void shapedRecipe(RecipeRegistryEvent register) {
         register.registerShapedRecipe(new ItemStack(blockSmokerIdle), true, " A ", "ABA", " A ",
-
-                Character.valueOf('A'), Block.wood,
-                Character.valueOf('B'), Block.furnaceIdle);
+                'A', Block.wood,
+                'B', Block.furnaceIdle);
         register.registerShapedRecipe(new ItemStack(fenceNickel, 16), true, "AAA", "AAA",
-
-                Character.valueOf('A'), Items.nickelIngot);
-        register.registerShapelessRecipe(new ItemStack(blockNickel), true, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot);
+                'A', Items.nickelIngot);
         register.registerShapedRecipe(new ItemStack(blockEnchantReserver), true, "CBC", "ABA", "CAC",
-
-                Character.valueOf('A'), Block.obsidian, Character.valueOf('B'), Item.diamond, Character.valueOf('C'), Item.ingotAncientMetal);
+                'A', Block.obsidian, 'B', Item.diamond, 'C', Item.ingotAncientMetal);
         register.registerShapedRecipe(new ItemStack(blockEnchantEnhancer), true, "CAC", "DBD", "AAA",
-
-                Character.valueOf('A'), Block.obsidian, Character.valueOf('B'), Item.diamond, Character.valueOf('C'), Item.ingotAncientMetal, Character.valueOf('D'),
+                'A', Block.obsidian, 'B', Item.diamond, 'C', Item.ingotAncientMetal, 'D',
                 Item.expBottle);
         register.registerShapedRecipe(new ItemStack(blastFurnaceStoneIdle), true, "AAA", "ABA", "CCC",
-
-                Character.valueOf('A'), Block.stone, Character.valueOf('B'), Block.furnaceIdle, Character.valueOf('C'), Item.ingotIron);
+                'A', Block.stone, 'B', Block.furnaceIdle, 'C', Item.ingotIron);
         register.registerShapedRecipe(new ItemStack(blastFurnaceObsidianIdle), true, "AAA", "ABA", "CCC",
-
-                Character.valueOf('A'), Block.obsidian, Character.valueOf('B'), Block.furnaceObsidianIdle, Character.valueOf('C'), Item.ingotMithril);
+                'A', Block.obsidian, 'B', Block.furnaceObsidianIdle, 'C', Item.ingotMithril);
         register.registerShapedRecipe(new ItemStack(blastFurnaceNetherrackIdle), true, "AAA", "ABA", "CCC",
-
-                Character.valueOf('A'), Block.netherrack, Character.valueOf('B'), Block.furnaceNetherrackIdle, Character.valueOf('C'), Item.ingotAdamantium);
+                'A', Block.netherrack, 'B', Block.furnaceNetherrackIdle, 'C', Item.ingotAdamantium);
         register.registerShapedRecipe(new ItemStack(anvilNickel), true, "AAA", " I ", "III",
-
-                Character.valueOf('A'), blockNickel,
-                Character.valueOf('I'), Items.nickelIngot);
+                'A', blockNickel,
+                'I', Items.nickelIngot);
         register.registerShapedRecipe(new ItemStack(anvilTungsten), true, "AAA", " I ", "III",
-
-                Character.valueOf('A'), blockTungsten,
-                Character.valueOf('I'), Items.tungstenIngot);
+                'A', blockTungsten,
+                'I', Items.tungstenIngot);
         register.registerShapedRecipe(new ItemStack(blockTungsten), true, "XXX", "XXX", "XXX",
-
-                Character.valueOf('X'), Items.tungstenIngot);
+                'X', Items.tungstenIngot);
         register.registerShapedRecipe(new ItemStack(fenceTungsten, 16), true, "XXX", "XXX",
-
-                Character.valueOf('X'), Items.tungstenIngot);
+                'X', Items.tungstenIngot);
         register.registerShapedRecipe(new ItemStack(azuriteCluster), true, "EE",
-
-                Character.valueOf('E'), Items.shardAzurite);
+                'E', Items.shardAzurite);
         register.registerShapedRecipe(new ItemStack(blockAzurite), true, "XXX", "XXX", "XXX",
+                'X', Items.shardAzurite);
+        register.registerShapedRecipe(new ItemStack(blockObserver), true, "XXX", "ABS", "XXX",
+                'X', Block.cobblestone, 'A', Item.netherQuartz,
+                'B', Item.redstone, 'S', Items.shardAzurite);
+        register.registerShapedRecipe(new ItemStack(blockReceiver), true, "XSX", "SBS", "XSX",
+                'X', Block.cobblestone, 'S', Items.shardAzurite,
+                'B', Item.redstone);
+        register.registerShapedRecipe(new ItemStack(blockEnchantPredicator), true, "XDX", "ABA", "OAO",
+                'A', Item.ingotAncientMetal, 'B', Item.book,
+                'D', Item.diamond, 'O', Block.obsidian,
+                'X', Item.expBottle);
+    }
 
-                Character.valueOf('X'), Items.shardAzurite);
-        register.registerShapedRecipe(new ItemStack(blockObserver),true, "XXX", "ABS", "XXX",
+    public static void shapelessRecipe(RecipeRegistryEvent register) {
+        register.registerShapelessRecipe(new ItemStack(blockNickel), true, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot);
 
-                Character.valueOf('X'), Block.cobblestone, Character.valueOf('A'), Item.netherQuartz,
-                Character.valueOf('B'), Item.redstone, Character.valueOf('S'), Items.shardAzurite);
-
-        register.registerShapedRecipe(new ItemStack(blockReceiver),true, "XSX", "SBS", "XSX",
-                Character.valueOf('X'), Block.cobblestone, Character.valueOf('S'), Items.shardAzurite,
-                Character.valueOf('B'), Item.redstone);
-        //TODO fix block recipe with subtype
         register.registerShapelessRecipe(new ItemStack(Items.glowberries, 1), true, new ItemStack(flowerextend, 1, 0));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 7), true, new ItemStack(flowerextend, 1, 1));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 4), true, new ItemStack(flowerextend, 1, 2));
@@ -243,10 +253,15 @@ public class Blocks {
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 7), true, new ItemStack(flowerextend, 1, 5));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 1), true, new ItemStack(flowerextend, 1, 6));
         register.registerShapelessRecipe(new ItemStack(Items.Agave, 1, 1), true, new ItemStack(flowerextend, 1, 7));
+
+        register.registerShapelessRecipe(new ItemStack(Blocks.blockMagicPedestal), true, new ItemStack(blockEnchantEnhancer), new ItemStack(blockEnchantPredicator), new ItemStack(Block.enchantmentTable));
 //        register.registerShapelessRecipe(new ItemStack(Items.glowberries, 1), true, new ItemStack(luminescentHerb, 1));
-        for(int i = 0; i <= 4; i++){
-            register.registerShapelessRecipe(new ItemStack(Item.stick,1),true, new ItemStack(Blocks.torchWoodIdle, i),new ItemStack(Blocks.torchWoodExtinguished, 4 - i));
+        for (int i = 0; i <= 4; i++) {
+            register.registerShapelessRecipe(new ItemStack(Item.stick, 1), true, new ItemStack(Blocks.torchWoodIdle, i), new ItemStack(Blocks.torchWoodExtinguished, 4 - i));
         }
+    }
+
+    public static void furnaceRecipe(RecipeRegistryEvent register) {
         FurnaceRecipes.smelting().addSmelting(oreTungsten.blockID, new ItemStack(Items.tungstenIngot));
         FurnaceRecipes.smelting().addSmelting(oreNickel.blockID, new ItemStack(Items.nickelIngot));
         FurnaceRecipes.smelting().addSmelting(oreUru.blockID, new ItemStack(Items.UruIngot));

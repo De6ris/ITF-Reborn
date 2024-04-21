@@ -28,7 +28,7 @@ public final class DispenseBehaviorEmptyBucketRedirect extends BehaviorDefaultDi
             } else if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) {
                 var10 = this.item_bucket.getPeerForContents(Material.water);
             } else {
-                var10 = this.item_bucket.getPeerForContents(Materials.unsafe_water);
+                var10 = this.item_bucket.getPeerForContents(Materials.suspicious_water);
             }
         } else {
             if (var8 != Material.lava)

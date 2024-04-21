@@ -20,7 +20,7 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
     private void injectCtor(CallbackInfo callback) {
         if (contains(Material.water)) {
             setWater(2);
-        } else if (contains(Materials.dangerous_water) || contains(Materials.unsafe_water) || contains(Material.milk)) {
+        } else if (contains(Materials.dangerous_water) || contains(Materials.suspicious_water) || contains(Material.milk)) {
             setWater(1);
         } else if (contains(Material.mashed_potato)) {
             setWater(0);
@@ -48,7 +48,7 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
                     player.addPotionEffect(new PotionEffect(Potion.poison.id, (int) (450.0D * (1.0D + rand)), 0));
                     player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
                 }
-                if (contains(Materials.unsafe_water)) {
+                if (contains(Materials.suspicious_water)) {
                     double rand = Math.random();
                     if (rand > 0.5D)
                         player.addPotionEffect(new PotionEffect(Potion.poison.id, (int) (450.0D * (1.0D + rand)), 0));
@@ -61,7 +61,7 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
                         player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
                     player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
                 }
-                if (contains(Materials.unsafe_water)) {
+                if (contains(Materials.suspicious_water)) {
                     double rand = Math.random();
                     if (rand > 0.8D)
                         player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
@@ -94,7 +94,7 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
                     } else if (player.onServer() && (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver)) {
                         player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Material.water)));
                     } else if (player.onServer()) {
-                        player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Materials.unsafe_water)));
+                        player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Materials.suspicious_water)));
                     }
                     return true;
                 }
@@ -106,7 +106,7 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
                     }
                     return true;
                 }
-                if (contains(Material.water) || contains(Materials.unsafe_water) || contains(Materials.dangerous_water)) {
+                if (contains(Material.water) || contains(Materials.suspicious_water) || contains(Materials.dangerous_water)) {
                     Block block = rc.getBlockHit();
                     int x = rc.block_hit_x;
                     int y = rc.block_hit_y;
@@ -140,7 +140,7 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
                 return Items.bowlChestnutSoup;
             if (contents == Materials.porkchop_stew)
                 return Items.bowlPorkchopStew;
-            if (contents == Materials.unsafe_water)
+            if (contents == Materials.suspicious_water)
                 return Items.bowlWaterSuspicious;
             if (contents == Materials.dangerous_water)
                 return Items.bowlWaterSwampland;

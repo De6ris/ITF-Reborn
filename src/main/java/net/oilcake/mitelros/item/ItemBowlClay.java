@@ -15,7 +15,7 @@ public class ItemBowlClay extends ItemVessel {
         setCreativeTab(CreativeTabs.tabMisc);
         if (contains(Material.water)) {
             setWater(2);
-        } else if (contains(Materials.dangerous_water) || contains(Materials.unsafe_water) || contains(Material.milk)) {
+        } else if (contains(Materials.dangerous_water) || contains(Materials.suspicious_water) || contains(Material.milk)) {
             setWater(1);
         } else if (contains(Material.mashed_potato)) {
             setWater(0);
@@ -43,8 +43,7 @@ public class ItemBowlClay extends ItemVessel {
     }
 
     public int getSimilarityToItem(Item item) {
-        if (item instanceof ItemBowlClay) {
-            ItemBowlClay item_bowl = (ItemBowlClay) item;
+        if (item instanceof ItemBowlClay item_bowl) {
             if (item_bowl.isEmpty() || isEmpty())
                 return 2;
         }
@@ -84,23 +83,26 @@ public class ItemBowlClay extends ItemVessel {
         return (contents instanceof net.minecraft.MaterialSoup || contents instanceof net.minecraft.MaterialStew);
     }
 
+    @Override
     public float getCompostingValue() {
         return (this == Items.claybowlMilk) ? 0.0F : super.getCompostingValue();
     }
 
+    @Override
     public Item getCompostingRemains(ItemStack item_stack) {
         return getEmptyVessel();
     }
 
+    @Override
     public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
         if (player.onServer()) {
-            if (((Boolean) ITFConfig.Realistic.get())) {
+            if (ITFConfig.Realistic.get()) {
                 if (contains(Materials.dangerous_water)) {
                     double rand = Math.random();
                     player.addPotionEffect(new PotionEffect(Potion.poison.id, (int) (450.0D * (1.0D + rand)), 0));
                     player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
                 }
-                if (contains(Materials.unsafe_water)) {
+                if (contains(Materials.suspicious_water)) {
                     double rand = Math.random();
                     if (rand > (ITFConfig.TagDigest.get() ? 1.0D : 0.5D))
                         player.addPotionEffect(new PotionEffect(Potion.poison.id, (int) (450.0D * (1.0D + rand)), 0));
@@ -113,7 +115,7 @@ public class ItemBowlClay extends ItemVessel {
                         player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
                     player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
                 }
-                if (contains(Materials.unsafe_water)) {
+                if (contains(Materials.suspicious_water)) {
                     double rand = Math.random();
                     if (rand > (ITFConfig.TagDigest.get() ? 1.0D : 0.8D))
                         player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
@@ -123,7 +125,7 @@ public class ItemBowlClay extends ItemVessel {
             if (contains(Material.milk))
                 player.clearActivePotions();
             if (!contains(Material.water) && !contains(Material.milk)) {
-                ((ITFPlayer)player).getFeastManager().update(this);
+                player.getFeastManager().update(this);
             }
             player.addFoodValue(this);
             if (isEatable(item_stack))
@@ -132,6 +134,7 @@ public class ItemBowlClay extends ItemVessel {
         super.onItemUseFinish(item_stack, world, player);
     }
 
+    @Override
     public boolean onItemRightClick(EntityPlayer player, float partial_tick, boolean ctrl_is_down) {
         RaycastCollision rc = player.getSelectedObject(partial_tick, true);
         BiomeGenBase biome = player.worldObj.getBiomeGenForCoords(player.getBlockPosX(), player.getBlockPosZ());
@@ -139,19 +142,19 @@ public class ItemBowlClay extends ItemVessel {
             if (isEmpty()) {
                 if (rc.getBlockHitMaterial() == Material.water || rc.getNeighborOfBlockHitMaterial() == Material.water) {
                     if (player.onServer() && (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland)) {
-                        player.convertOneOfHeldItem(new ItemStack((Item) getPeerForContents(Materials.dangerous_water)));
+                        player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Materials.dangerous_water)));
                     } else if (player.onServer() && (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver)) {
-                        player.convertOneOfHeldItem(new ItemStack((Item) getPeerForContents(Material.water)));
+                        player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Material.water)));
                     } else if (player.onServer()) {
-                        player.convertOneOfHeldItem(new ItemStack((Item) getPeerForContents(Materials.unsafe_water)));
+                        player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Materials.suspicious_water)));
                     }
                     return true;
                 }
             } else {
                 if (rc.getNeighborOfBlockHit() == Block.fire && canContentsDouseFire()) {
                     if (player.onServer()) {
-                        rc.world.douseFire(rc.neighbor_block_x, rc.neighbor_block_y, rc.neighbor_block_z, (Entity) null);
-                        player.convertOneOfHeldItem(new ItemStack((Item) getEmptyVessel()));
+                        rc.world.douseFire(rc.neighbor_block_x, rc.neighbor_block_y, rc.neighbor_block_z, null);
+                        player.convertOneOfHeldItem(new ItemStack(getEmptyVessel()));
                     }
                     return true;
                 }
@@ -168,7 +171,7 @@ public class ItemBowlClay extends ItemVessel {
                     }
                     if (block == Block.tilledField && face_hit == EnumFace.TOP && BlockFarmland.fertilize(rc.world, x, y, z, player.getHeldItemStack(), player)) {
                         if (player.onServer() && !player.inCreativeMode())
-                            player.convertOneOfHeldItem(new ItemStack((Item) getEmptyVessel()));
+                            player.convertOneOfHeldItem(new ItemStack(getEmptyVessel()));
                         return true;
                     }
                 }
@@ -210,7 +213,7 @@ public class ItemBowlClay extends ItemVessel {
                 return Items.claybowlChestnutSoup;
             if (contents == Materials.porkchop_stew)
                 return Items.claybowlPorkchopStew;
-            if (contents == Materials.unsafe_water)
+            if (contents == Materials.suspicious_water)
                 return Items.claybowlWaterSuspicious;
             if (contents == Materials.dangerous_water)
                 return Items.claybowlWaterSwampland;

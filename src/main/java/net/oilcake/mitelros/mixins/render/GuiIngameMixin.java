@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -88,13 +89,13 @@ public class GuiIngameMixin extends Gui {
         ci.cancel();
     }
 
-    @Redirect(method = "renderGameOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z"))
+    @Redirect(method = "renderGameOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z"), require = 0)
     private boolean disableDevInfo() {
         return false;
     }
 
     @Inject(method = "renderGameOverlay(FZII)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z", shift = At.Shift.BEFORE))
-    private void injectRenderPos(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
+    private void cornerInfo(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
         if ((ITFConfig.DisplayHud.get() && (!this.mc.gameSettings.showDebugInfo || this.mc.gameSettings.gui_mode != 0)) && Minecraft.getErrorMessage() == null) {
             EntityPlayer player = this.mc.thePlayer.getAsPlayer();
             if (GuiIngame.server_load >= 0) {
@@ -102,7 +103,6 @@ public class GuiIngameMixin extends Gui {
                 String text = GuiIngame.server_load + "%";
                 drawString(this.mc.fontRenderer, text, sr.getScaledWidth() - this.mc.fontRenderer.getStringWidth(text) - 2, 2, 14737632);
             }
-            String difficultyText = GuiInGameInfoHandler.getDifficultyText();
             StringBuilder var68 = (new StringBuilder()).append(MOD_ID);
             if (player.getHeldItemStack() != null && player.getHeldItemStack().getItem() == Item.compass) {
                 String pos = "平面坐标: (" + MathHelper.floor_double(this.mc.thePlayer.posX) + ", " + MathHelper.floor_double(this.mc.thePlayer.posZ) + ")";
@@ -112,17 +112,25 @@ public class GuiIngameMixin extends Gui {
                 String time = "时间: (" + this.mc.thePlayer.getWorld().getHourOfDay() + ":" + (this.mc.thePlayer.getWorld().getTotalWorldTime() % 1000L * 60L / 1000L) + ")";
                 var68.append(" ").append(time);
             }
+            String difficultyText = GuiInGameInfoHandler.getDifficultyText();
             if (!difficultyText.isEmpty()) {
                 var68.append(" ").append(difficultyText);
             }
-            var68.append(" ").append(GuiInGameInfoHandler.weather(this.mc));
-            var68.append(" ").append(GuiInGameInfoHandler.getTemperatureText(((ITFPlayer) this.mc.thePlayer).getTemperatureManager()));
+            var68.append(" ").append(GuiInGameInfoHandler.season(this.mc.theWorld.getDayOfWorld()));
+            var68.append(" ").append(GuiInGameInfoHandler.weather(this.mc.theWorld, this.mc.thePlayer.getBiome().isFreezing()));
+//            var68.append(" ").append(GuiInGameInfoHandler.getTemperatureText(((ITFPlayer) this.mc.thePlayer).getTemperatureManager()));
             drawString(this.mc.fontRenderer, var68.toString(), 2, 2, 14737632);
         }
     }
 
     @Inject(locals = LocalCapture.CAPTURE_FAILHARD, method = "func_110327_a(II)V", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/Profiler;endStartSection(Ljava/lang/String;)V", args = "ldc=air", shift = At.Shift.BEFORE))
-    private void injectRenderNutrition(int par1, int par2, CallbackInfo ci, boolean var3, int var4, int var5, FoodStats var7, int var8, AttributeInstance var10, int var11, int var12, int var13, float var14, float var15) {
+    private void nutritionBar(int par1, int par2, CallbackInfo ci, boolean var3, int var4, int var5, FoodStats var7, int var8, AttributeInstance var10, int var11, int var12, int var13, float var14, float var15) {
+        this.drawNutrientsBar(var12, var13);
+        this.drawTemperatureBar(var12, var13);
+    }
+
+    @Unique
+    private void drawNutrientsBar(int var12, int var13) {
         int protein = Math.max(this.mc.thePlayer.getProtein() - 800000, 0);
         int phytonutrients = Math.max(this.mc.thePlayer.getPhytonutrients() - 800000, 0);
         int var26 = var12 - 90;
@@ -154,18 +162,38 @@ public class GuiIngameMixin extends Gui {
         }
     }
 
+    @Unique
+    private void drawTemperatureBar(int var12, int var13) {
+        int var26 = var12 - 90;
+        int var25 = var13 + 24;
+        GL11.glPushMatrix();
+        GL11.glScalef(0.6F, 1.0F, 1.0F);
+        this.mc.getTextureManager().bindTexture(Constant.icons_itf);
+        drawTexturedModalRect(var26 - 205, var25, 0, 106, 182, 6);
+        float temperature = ((ITFPlayer) this.mc.thePlayer).getTemperatureManager().bodyTemperature;
+        double unit = ((ITFPlayer) this.mc.thePlayer).getTemperatureManager().getUnit();
+        float length = temperature * 3.138f;
+        if (length > 182.0f) length = 182.0f;
+        if (length < 0.0f) length = 1.0f;
+        drawTexturedModalRect(var26 - 205, var25, 0, 118, (int) length, 6);
+
+        GL11.glPopMatrix();
+    }
+
+    @Unique
     private boolean getNutrientsPriority(int protein, int phytonutrients) {
         return (protein > phytonutrients);
     }
 
+    @Unique
     private float getRateNutrient(long par1) {
         par1 *= par1;
         par1 /= 160000L;
         return (float) par1 / 160000.0F;
     }
 
-    @Redirect(method = {"func_110327_a(II)V"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/AttributeInstance;getAttributeValue()D"))
+    @Redirect(method = "func_110327_a(II)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/AttributeInstance;getAttributeValue()D"))
     private double redirectHealthLimit(AttributeInstance att) {
         return this.mc.thePlayer.getHealthLimit();
-    }
+    }// TODO what does it do
 }

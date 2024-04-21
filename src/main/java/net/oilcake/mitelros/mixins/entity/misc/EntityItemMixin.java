@@ -61,7 +61,7 @@ public abstract class EntityItemMixin extends Entity {
             } else if (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland) {
                 return Materials.dangerous_water;
             } else {
-                return Materials.unsafe_water;
+                return Materials.suspicious_water;
             }
         }
     }

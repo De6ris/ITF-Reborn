@@ -1,7 +1,9 @@
 package net.oilcake.mitelros.util;
 
+import net.minecraft.BiomeGenBase;
 import net.minecraft.Minecraft;
 import net.minecraft.WeatherEvent;
+import net.minecraft.World;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.config.ITFConfig;
@@ -19,8 +21,9 @@ public class GuiInGameInfoHandler {
             case "SOUTH" -> "南";
             default -> "null";
         };
-        String Biome = StringUtils.substringBefore(mc.thePlayer.getBiome().toString(), "@").substring(19) + " ";
-        return direction + " " + Biome + " " + weather(mc);
+        BiomeGenBase biome = mc.thePlayer.getBiome();
+        String biomeName = StringUtils.substringBefore(biome.toString(), "@").substring(19) + " ";
+        return direction + " " + biomeName + " " + weather(mc.theWorld, biome.isFreezing());
     }
 
     public static String getDifficultyText() {
@@ -39,22 +42,38 @@ public class GuiInGameInfoHandler {
 
     public static String getTemperatureText(TemperatureManager temperatureManager) {
         float temperature = temperatureManager.bodyTemperature;
-        int unit = temperatureManager.getUnit();
-        return String.format("体温: %.3f°C (你感到: %s%d)", temperature, unit > 0 ? "+" : "", unit);
+        double unit = temperatureManager.getUnit();
+        return String.format("体温: %.3f°C (你感到: %s%.2f)", temperature, unit > 0 ? "+" : "", unit);
     }
 
-    public static String weather(Minecraft mc) {
+    public static String season(int day) {
+        day %= 128;
+        if (day < 10) return "上春";
+        if (day < 21) return "花月";
+        if (day < 32) return "晚春";
+        if (day < 42) return "孟夏";
+        if (day < 53) return "仲夏";
+        if (day < 64) return "荷月";
+        if (day < 74) return "初秋";
+        if (day < 85) return "正秋";
+        if (day < 96) return "深秋";
+        if (day < 106) return "开冬";
+        if (day < 117) return "冬月";
+        return "严冬";
+    }
+
+    public static String weather(World world, boolean freezing) {
         String rainSnow;
-        if (!mc.thePlayer.getBiome().isFreezing() || ((ITFWorld) mc.thePlayer.worldObj).getWorldSeason() != 3) {
+        if (!freezing || ((ITFWorld) world).getWorldSeason() != 3) {
             rainSnow = "雨";
         } else {
             rainSnow = "雪";
         }
         String weather;
-        WeatherEvent event = mc.theWorld.getCurrentWeatherEvent();
-        Random R = new Random(mc.theWorld.getDayOfWorld());
+        WeatherEvent event = world.getCurrentWeatherEvent();
+        Random R = new Random(world.getDayOfWorld());
         if (event != null) {
-            if (mc.theWorld.getDayOfWorld() % 32 == 0) {
+            if (world.getDayOfWorld() % 32 == 0) {
                 weather = "雷暴";
             } else {
                 int ran2 = R.nextInt(3);
@@ -67,9 +86,9 @@ public class GuiInGameInfoHandler {
                 }
             }
         } else {
-            event = mc.theWorld.getNextWeatherEvent(false);
+            event = world.getNextWeatherEvent(false);
             if (event != null) {
-                if (event.start - mc.theWorld.getAdjustedTimeOfDay() < 2000L) {
+                if (event.start - world.getAdjustedTimeOfDay() < 2000L) {
                     weather = "有雨";
                 } else {
                     weather = "阴";

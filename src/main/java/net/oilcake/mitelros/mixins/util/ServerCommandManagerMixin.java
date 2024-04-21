@@ -13,7 +13,6 @@ public class ServerCommandManagerMixin extends CommandHandler {
     @Inject(method = "<init>()V", at = @At("RETURN"))
     private void injectInit(CallbackInfo callbackInfo) {
         registerCommand(new CommandWater());
-        registerCommand(new CommandTestFreeze());
         registerCommand(new CommandCurrentSituation());
         registerCommand(new CommandAddCurrentSituation());
         registerCommand(new CommandHunger());

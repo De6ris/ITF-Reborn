@@ -4,10 +4,11 @@ import net.minecraft.EnumQuality;
 import net.minecraft.Item;
 import net.minecraft.ItemArmor;
 import net.minecraft.ItemTool;
+import net.oilcake.mitelros.config.ITFConfig;
 
 public class QualityHandler {
     public static int getQualityAmplifier(EnumQuality quality) {
-        return switch (quality) {
+        return (ITFConfig.TagWorkOfHeaven.getBooleanValue() ? 2 : 1) * (switch (quality) {
             case wretched -> -3;
             case poor, average -> 0;
             case fine -> 3;
@@ -15,7 +16,7 @@ public class QualityHandler {
             case superb -> 9;
             case masterwork -> 12;
             case legendary -> 15;
-        };
+        });
     }
 
     public static String getQualityInfo(Item item, EnumQuality quality) {

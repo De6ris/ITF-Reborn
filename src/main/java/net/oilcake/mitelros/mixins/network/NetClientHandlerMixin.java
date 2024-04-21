@@ -1,20 +1,17 @@
 package net.oilcake.mitelros.mixins.network;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.api.ITFClientPlayer;
-import net.oilcake.mitelros.api.ITFFoodStats;
-import net.oilcake.mitelros.api.ITFNetHandler;
-import net.oilcake.mitelros.api.ITFPlayer;
+import net.oilcake.mitelros.api.*;
 import net.oilcake.mitelros.block.enchantreserver.GuiEnchantReserver;
 import net.oilcake.mitelros.entity.EntityWandFireball;
 import net.oilcake.mitelros.entity.EntityWandIceBall;
 import net.oilcake.mitelros.entity.EntityWandShockWave;
 import net.oilcake.mitelros.network.PacketEnchantReserverInfo;
+import net.oilcake.mitelros.network.PacketEnchantmentInfo;
 import net.oilcake.mitelros.network.PacketUpdateNutrition;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.SoftOverride;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -94,13 +91,19 @@ public abstract class NetClientHandlerMixin extends NetHandler implements ITFNet
     }
 
     @Override
-    @Unique
     public void handleUpdateNutrition(PacketUpdateNutrition packet) {
         ITFClientPlayer clientPlayer = this.mc.thePlayer;
         clientPlayer.setPhytonutrients(packet.getPhytonutrients());
         clientPlayer.setProtein(packet.getProtein());
         ((ITFFoodStats) this.mc.thePlayer.getFoodStats()).setSatiationWater(packet.getWater(), false);
         ((ITFPlayer) this.mc.thePlayer).getTemperatureManager().bodyTemperature = packet.getTemp();
+    }
+
+    @Override
+    public void handleEnchantmentInfo(PacketEnchantmentInfo packet) {
+        GuiScreen openingGUI = this.mc.currentScreen;
+        if (openingGUI instanceof GuiEnchantment guiEnchantment)
+            ((ITFGui) guiEnchantment).setEnchantmentInfo(packet.getInfo());
     }
 
     @Shadow
