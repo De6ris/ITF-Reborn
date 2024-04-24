@@ -4,10 +4,11 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.network.PacketDecreaseWater;
+import net.oilcake.mitelros.network.C2SDecreaseWater;
 import net.oilcake.mitelros.util.DamageSourceExtend;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -50,7 +51,7 @@ public class FoodStatsMixin implements ITFFoodStats {
 
     public void setSatiationWater(int water, boolean check_limit) {
         if (check_limit) {
-            this.water = Math.min(water, getWaterValueLimit());
+            this.water = Math.min(water, getWaterLimit());
         } else {
             this.water = water;
         }
@@ -72,7 +73,7 @@ public class FoodStatsMixin implements ITFFoodStats {
             water *= this.global_water_rate;
             this.hungerWater = Math.min(this.hungerWater + water, 40.0F);
             if (this.player.worldObj.isRemote && this.hungerWater > 0.2F) {
-                (Minecraft.getMinecraft()).thePlayer.sendQueue.addToSendQueue(new PacketDecreaseWater(this.hungerWater));
+                (Minecraft.getMinecraft()).thePlayer.sendQueue.addToSendQueue(new C2SDecreaseWater(this.hungerWater));
                 this.hungerWater = 0.0F;
             }
         }
@@ -84,10 +85,6 @@ public class FoodStatsMixin implements ITFFoodStats {
         } else {
             decreaseWater(hungerWater);
         }
-    }
-
-    public int getWaterValueLimit() {
-        return getWaterLimit();
     }
 
     public int getWaterLimit() {
@@ -168,8 +165,10 @@ public class FoodStatsMixin implements ITFFoodStats {
     @Shadow
     private float starve_progress;
 
+    @Unique
     private float dehydration_progress;
 
+    @Unique
     private float malnourished_progress;
 
     @Shadow

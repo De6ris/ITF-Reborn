@@ -5,6 +5,8 @@ import net.minecraft.*;
 import net.oilcake.mitelros.entity.boss.EntityLich;
 import net.oilcake.mitelros.entity.misc.*;
 import net.oilcake.mitelros.entity.mob.*;
+import net.oilcake.mitelros.network.S2CEnchantmentInfo;
+import net.oilcake.mitelros.network.S2CUpdateNutrition;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.Blocks;
@@ -15,8 +17,8 @@ import net.oilcake.mitelros.client.render.*;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.item.ItemGuideBook;
 import net.oilcake.mitelros.item.Items;
-import net.oilcake.mitelros.network.PacketDecreaseWater;
-import net.oilcake.mitelros.network.PacketEnchantReserverInfo;
+import net.oilcake.mitelros.network.C2SDecreaseWater;
+import net.oilcake.mitelros.network.S2CEnchantReserverInfo;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.reload.event.*;
 
@@ -104,8 +106,10 @@ public class ITFEvent {
 
     @Subscribe
     public void onPacketRegister(PacketRegisterEvent event) {
-        event.register(true, true, PacketEnchantReserverInfo.class);
-        event.register(false, true, PacketDecreaseWater.class);
+        event.register(true, false, S2CEnchantReserverInfo.class);
+        event.register(false, true, C2SDecreaseWater.class);
+        event.register(true, false, S2CEnchantmentInfo.class);
+        event.register(true, false, S2CUpdateNutrition.class);
     }
 
     @Subscribe

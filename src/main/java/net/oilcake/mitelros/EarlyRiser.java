@@ -16,6 +16,7 @@ public class EarlyRiser implements PreLaunchEntrypoint {
         EnumExtends.EQUIPMENT_MATERIAL.addEnum("VIBRANIUM", () -> new Object[]{4.0F, 0, EnumQuality.poor, "vibranium"});
         EnumExtends.EQUIPMENT_MATERIAL.addEnum("MAGICAL", () -> new Object[]{0.125F, 100, EnumQuality.wretched, "magical"});
         EnumExtends.EQUIPMENT_MATERIAL.addEnum("ANCIENT_METAL_SACRED", () -> new Object[]{16.0F, 60, EnumQuality.masterwork, "ancient_metal_sacred"});
+        EnumExtends.EQUIPMENT_MATERIAL.addEnum("ICE_CHUNK", () -> new Object[]{1.0F, 10, EnumQuality.fine, "ice_chunk"});
     }
 
 }

@@ -48,7 +48,7 @@ public class DamageSourceExtend extends DamageSource {
     public ChatMessageComponent getDeathMessage(EntityLivingBase par1EntityLivingBase) {
         EntityLivingBase var2 = par1EntityLivingBase.func_94060_bK();
         String var3 = par1EntityLivingBase.getEntityName() + " " + Translator.get("death.extend.attack." + this.damageType);
-        return ChatMessageComponent.createFromTranslationWithSubstitutions(var3, new Object[0]);
+        return ChatMessageComponent.createFromTranslationWithSubstitutions(var3);
     }
 
     public boolean isFreezing() {

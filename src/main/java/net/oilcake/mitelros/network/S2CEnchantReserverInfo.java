@@ -8,13 +8,13 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class PacketEnchantReserverInfo extends Packet {
+public class S2CEnchantReserverInfo extends Packet {
     private int EXP;
 
-    public PacketEnchantReserverInfo() {
+    public S2CEnchantReserverInfo() {
     }
 
-    public PacketEnchantReserverInfo(int exp) {
+    public S2CEnchantReserverInfo(int exp) {
         this.EXP = exp;
     }
 

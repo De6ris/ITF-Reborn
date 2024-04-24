@@ -8,13 +8,13 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class PacketUpdateNutrition extends Packet {
+public class S2CUpdateNutrition extends Packet {
     private int protein;
     private int phytonutrients;
     private int water;
     private float temp;
 
-    public PacketUpdateNutrition(int phytonutrients, int protein, int water, float temp) {
+    public S2CUpdateNutrition(int phytonutrients, int protein, int water, float temp) {
         this.phytonutrients = phytonutrients;
         this.protein = protein;
         this.water = water;

@@ -8,10 +8,10 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class PacketDecreaseWater extends Packet {
+public class C2SDecreaseWater extends Packet {
     public float hungerWater;
 
-    public PacketDecreaseWater(float hungerWater) {
+    public C2SDecreaseWater(float hungerWater) {
         this.hungerWater = hungerWater;
     }
 

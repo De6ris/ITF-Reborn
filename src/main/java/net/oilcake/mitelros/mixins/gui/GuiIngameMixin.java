@@ -5,7 +5,6 @@ import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.status.TemperatureManager;
 import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.GuiInGameInfoHandler;
 import org.lwjgl.opengl.GL11;
@@ -19,7 +18,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import static net.oilcake.mitelros.ITFStart.MOD_ID;
+import static net.oilcake.mitelros.ITFStart.MOD_ID_Simple;
+import static net.oilcake.mitelros.ITFStart.MOD_Version;
 
 @Mixin(GuiIngame.class)
 public class GuiIngameMixin extends Gui {
@@ -104,7 +104,7 @@ public class GuiIngameMixin extends Gui {
                 drawString(this.mc.fontRenderer, text, sr.getScaledWidth() - this.mc.fontRenderer.getStringWidth(text) - 2, 2, 14737632);
             }
 
-            StringBuilder firstRow = (new StringBuilder()).append(MOD_ID);
+            StringBuilder firstRow = (new StringBuilder()).append(MOD_ID_Simple).append(" ").append(MOD_Version);
             String difficultyText = GuiInGameInfoHandler.getDifficultyText();
             if (!difficultyText.isEmpty()) {
                 firstRow.append(" ").append(difficultyText);

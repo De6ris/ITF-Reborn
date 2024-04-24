@@ -49,7 +49,7 @@ public class Materials extends Material {
 
     public static final Material peeledSugarcane;
 
-
+    public static final Materials ice_chunk;
 
     static {
         nickel = (Materials) (new Materials(EnumEquipmentMaterials.NICKEL)).setRequiresTool().setMetal(false).setMinHarvestLevel(3);
@@ -75,6 +75,7 @@ public class Materials extends Material {
         crystal = new Material("crystal").setDurability(4.0F);
         sulphur = new Material("sulphur").setDurability(2.0F);
         peeledSugarcane = new MaterialFood("peeledSugarcane");
+        ice_chunk = (Materials) (new Materials(EnumEquipmentMaterials.ICE_CHUNK)).setMetal(false).setMinHarvestLevel(0);
     }
 
 

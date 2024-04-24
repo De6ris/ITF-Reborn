@@ -2,8 +2,7 @@ package net.oilcake.mitelros.mixins.block.tileentity;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Materials;
-import net.oilcake.mitelros.network.PacketEnchantReserverInfo;
-import net.oilcake.mitelros.network.PacketEnchantmentInfo;
+import net.oilcake.mitelros.network.S2CEnchantmentInfo;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.ItemGoldenAppleLegend;
@@ -62,7 +61,7 @@ public abstract class ContainerEnchantmentMixin extends Container {
         boolean extended = itemStack.getMaterialForRepairs() == Materials.uru;
         int[] result = this.predict(this.rand, itemStack, this.enchantLevels, extended);
         System.out.println(extended + "extended");
-        this.player.sendPacket(new PacketEnchantmentInfo(result));
+        this.player.sendPacket(new S2CEnchantmentInfo(result));
     }
 
     @Unique

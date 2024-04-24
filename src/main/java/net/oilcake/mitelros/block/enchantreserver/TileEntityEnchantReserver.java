@@ -42,14 +42,14 @@ public class TileEntityEnchantReserver extends TileEntity implements ISidedInven
 
     private int EXP;
 
-    private int last_EXP = -999999;
+    private int last_EXP = -1;
 
     public int getEXP() {
         return this.EXP;
     }
 
-    public int setEXP(int exp) {
-        return this.EXP = exp;
+    public void setEXP(int exp) {
+        this.EXP = exp;
     }
 
     public int getMAXEXP() {

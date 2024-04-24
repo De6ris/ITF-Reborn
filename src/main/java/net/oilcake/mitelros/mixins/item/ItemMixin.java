@@ -6,8 +6,10 @@ import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.xiaoyu233.fml.util.ReflectHelper;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -27,16 +29,15 @@ public abstract class ItemMixin implements ITFItem {
 
     @Shadow
     protected List materials;
-    @Shadow
-    public static Item blazeRod;
-    @Shadow
-    public static Item wheat;
 
+    @Shadow
+    @Final
+    public int itemID;
+    @Unique
     private int water;
 
+    @Unique
     private String extraInfo;
-
-    private Item item;
 
 
     @Redirect(method = "<init>(ILjava/lang/String;I)V", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
@@ -125,8 +126,13 @@ public abstract class ItemMixin implements ITFItem {
     }
 
     @Inject(method = "<clinit>", at = @At("TAIL"))
-    private static void inject(CallbackInfo ci) {
-        blazeRod.setReachBonus(0.5F);
+    private static void reachBonus(CallbackInfo ci) {
+        Item.blazeRod.setReachBonus(0.5F);
+    }
+
+    @ModifyReturnValue(method = "preventsHandDamage", at = @At("RETURN"))
+    private boolean reachBonus(boolean original) {
+        return original || this.itemID == Item.blazeRod.itemID || this.itemID == Items.enderRod.itemID;
     }
 
 }

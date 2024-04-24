@@ -2,24 +2,24 @@ package net.oilcake.mitelros.mixins.network;
 
 import net.minecraft.NetHandler;
 import net.oilcake.mitelros.api.ITFNetHandler;
-import net.oilcake.mitelros.network.PacketDecreaseWater;
-import net.oilcake.mitelros.network.PacketEnchantReserverInfo;
-import net.oilcake.mitelros.network.PacketEnchantmentInfo;
-import net.oilcake.mitelros.network.PacketUpdateNutrition;
+import net.oilcake.mitelros.network.C2SDecreaseWater;
+import net.oilcake.mitelros.network.S2CEnchantReserverInfo;
+import net.oilcake.mitelros.network.S2CEnchantmentInfo;
+import net.oilcake.mitelros.network.S2CUpdateNutrition;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(NetHandler.class)
 public class NetHandlerMixin implements ITFNetHandler {
 
-    public void processEnchantReserverInfo(PacketEnchantReserverInfo packet) {
+    public void processEnchantReserverInfo(S2CEnchantReserverInfo packet) {
     }
 
-    public void handleDecreaseWater(PacketDecreaseWater packet) {
+    public void handleDecreaseWater(C2SDecreaseWater packet) {
     }
 
-    public void handleUpdateNutrition(PacketUpdateNutrition packet) {
+    public void handleUpdateNutrition(S2CUpdateNutrition packet) {
     }
 
-    public void handleEnchantmentInfo(PacketEnchantmentInfo packet) {
+    public void handleEnchantmentInfo(S2CEnchantmentInfo packet) {
     }
 }

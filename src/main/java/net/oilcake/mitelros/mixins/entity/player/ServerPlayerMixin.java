@@ -7,7 +7,7 @@ import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.ContainerEnchantReserver;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.config.ITFConfig;
-import net.oilcake.mitelros.network.PacketUpdateNutrition;
+import net.oilcake.mitelros.network.S2CUpdateNutrition;
 import net.oilcake.mitelros.status.EnchantmentManager;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.util.ReflectHelper;
@@ -89,7 +89,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
         int water = this.getWater();
         float temperature = this.getTemperatureManager().bodyTemperature;
         if (water != this.last_water || this.phytonutrients != this.last_phytonutrients || this.protein != this.last_protein || temperature != this.last_temperature) {
-            this.playerNetServerHandler.sendPacketToPlayer(new PacketUpdateNutrition(phytonutrients, protein, water, temperature));
+            this.playerNetServerHandler.sendPacketToPlayer(new S2CUpdateNutrition(phytonutrients, protein, water, temperature));
             this.last_water = water;
             this.last_phytonutrients = this.phytonutrients;
             this.last_protein = this.protein;

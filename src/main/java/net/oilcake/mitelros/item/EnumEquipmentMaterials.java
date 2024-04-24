@@ -13,4 +13,5 @@ public class EnumEquipmentMaterials {
     public static final EnumEquipmentMaterial VIBRANIUM = ClassTinkerers.getEnum(EnumEquipmentMaterial.class, "VIBRANIUM");
     public static final EnumEquipmentMaterial MAGICAL = ClassTinkerers.getEnum(EnumEquipmentMaterial.class, "MAGICAL");
     public static final EnumEquipmentMaterial ANCIENT_METAL_SACRED = ClassTinkerers.getEnum(EnumEquipmentMaterial.class, "ANCIENT_METAL_SACRED");
+    public static final EnumEquipmentMaterial ICE_CHUNK = ClassTinkerers.getEnum(EnumEquipmentMaterial.class, "ICE_CHUNK");
 }

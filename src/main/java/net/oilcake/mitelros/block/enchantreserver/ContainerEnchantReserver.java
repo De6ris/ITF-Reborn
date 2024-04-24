@@ -4,7 +4,7 @@ import net.minecraft.Container;
 import net.minecraft.EntityPlayer;
 import net.minecraft.ItemStack;
 import net.minecraft.Slot;
-import net.oilcake.mitelros.network.PacketEnchantReserverInfo;
+import net.oilcake.mitelros.network.S2CEnchantReserverInfo;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public class ContainerEnchantReserver extends Container {
 
     void updateInfo() {
         if (!this.world.isRemote)
-            this.player.sendPacket(new PacketEnchantReserverInfo(this.tileEntityEnchantReserver.getEXP()));
+            this.player.sendPacket(new S2CEnchantReserverInfo(this.tileEntityEnchantReserver.getEXP()));
     }
 
     public boolean canInteractWith(EntityPlayer player) {

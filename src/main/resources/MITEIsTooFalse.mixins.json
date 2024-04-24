@@ -121,6 +121,7 @@
     "util.ItemInWorldManagerMixin",
     "util.PlayerAbilitiesMixin",
     "util.PotionHelperMixin",
+    "util.ReferenceFileWriterMixin",
     "util.ServerCommandManagerMixin",
     "util.SlotFurnaceMixin",
     "world.BiomeDecoratorMixin",

@@ -355,8 +355,6 @@ item.shards/diamond.name=钻石碎片
 item.shards/emerald.name=绿宝石碎片
 item.shards/quartz.name=下界石英碎片
 item.azurite.name=碧蓝水晶
-item.lapis_lazuli.name=青金石
-item.dyePowder.blue.name=蓝色染料
 
 item.records/record_damnation.name=音乐唱片
 item.records/record_connected.name=音乐唱片
@@ -405,6 +403,7 @@ entity.EntityLongdeadSentry.name=古尸哨兵
 
 death.extend.attack.thirsty=干枯了
 death.extend.attack.freeze=冻死了
+death.extend.attack.heat=热死了
 death.extend.attack.malnourished=营养不良而死
 death.extend.attack.sacrificed=赴死如归
 

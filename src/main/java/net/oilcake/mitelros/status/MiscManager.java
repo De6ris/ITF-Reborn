@@ -193,7 +193,7 @@ public class MiscManager {
 
     public void broadcast() {
         player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey(MOD_ID + "挂载成功,当前版本:").setColor(EnumChatFormatting.BLUE)
-                .appendComponent(ChatMessageComponent.createFromText(ITFStart.Version).setColor(EnumChatFormatting.YELLOW))
+                .appendComponent(ChatMessageComponent.createFromText(ITFStart.MOD_Version).setColor(EnumChatFormatting.YELLOW))
                 .appendComponent(ChatMessageComponent.createFromTranslationKey(",作者:Lee074,Huix,Kalsey,由Debris移植到高版本FML,现由Debris和Xy_Lose共同维护")));
         int difficulty = Constant.calculateCurrentDifficulty();
         if (difficulty != 0) {

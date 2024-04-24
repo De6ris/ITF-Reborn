@@ -355,8 +355,6 @@ item.shards/diamond.name=Diamond Shard
 item.shards/emerald.name=Emerald Shard
 item.shards/quartz.name=Nether Quartz Shard
 item.azurite.name=Azurite
-item.lapis_lazuli.name=Lapis Lazuli
-item.dyePowder.blue.name=Blue Dye
 
 item.records/record_damnation.name=Music Disc
 item.records/record_connected.name=Music Disc
@@ -405,6 +403,7 @@ entity.EntityUndeadGuard.name=Undead Guard
 
 death.extend.attack.thirsty=Dried Up
 death.extend.attack.freeze=Froze Fully
+death.extend.attack.heat=Died from the heat
 death.extend.attack.malnourished=Dead Because of Malnourished
 death.extend.attack.sacrificed=Burned out the life
 
