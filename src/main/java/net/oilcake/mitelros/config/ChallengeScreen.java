@@ -13,7 +13,7 @@ import net.minecraft.I18n;
 
 public class ChallengeScreen extends GuiScreenCommented {
 
-    private GuiScreen parentScreen;
+    private final GuiScreen parentScreen;
     private final SimpleConfigs configs;
 
     public ChallengeScreen(GuiScreen parentScreen) {

@@ -40,7 +40,7 @@ public class Blocks {
     public static final Block blastFurnaceObsidianBurning = (new BlockBlastFurnace(getNextBlockID(), Material.obsidian, true))
             .setHardness(38.4F).
             setResistance(40.0F).
-            setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);
+            setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);// TODO 4091 - 3840 = 251, furnaceHardenedClayBurning
 
     public static final Block blastFurnaceNetherrackBurning = (new BlockBlastFurnace(getNextBlockID(), Material.netherrack, true))
             .setHardness(153.6F).
@@ -63,7 +63,8 @@ public class Blocks {
     public static final Block blockEnchantReserver = (new BlockEnchantReserver(getNextBlockID()))
             .setHardness(8.0F).
             setResistance(20.0F).
-            setStepSound(Block.soundStoneFootstep);
+            setStepSound(Block.soundStoneFootstep)
+            .setLightValue(0.0F);// TODO 4086 - 3840 = 246, spark
 
     public static final Block blockNickel = (new BlockOreBlockExtend(getNextBlockID(), Materials.nickel)).setStepSound(Block.soundMetalFootstep);
 
@@ -89,7 +90,7 @@ public class Blocks {
 
     public static final BlockAnvil anvilTungsten = new AnvilBlock(getNextBlockID(), Materials.tungsten);
 
-    public static final BlockFlowerExtend flowerextend = (BlockFlowerExtend) (new BlockFlowerExtend(getNextBlockID()));
+    public static final BlockFlowerExtend flowerextend = new BlockFlowerExtend(getNextBlockID());
 
     public static final Block blockEnchantEnhancer = (new BlockEnchantEnhancer(getNextBlockID()))
             .setHardness(8.0F).
@@ -147,11 +148,13 @@ public class Blocks {
     public static final Block blockEnchantPredicator = (new BlockEnchantPredicator(getNextBlockID()))
             .setHardness(8.0F).
             setResistance(20.0F).
-            setStepSound(Block.soundStoneFootstep);
-    public static final Block blockMagicPedestal = (new BlockMagicPedestal(getNextBlockID()))
-            .setHardness(8.0F).
-            setResistance(20.0F).
-            setStepSound(Block.soundStoneFootstep);
+            setStepSound(Block.soundStoneFootstep)
+            .setLightValue(0.0F);// TODO 4063 - 3840 = 223, furnaceObsidianBurning
+
+    public static final Block magicTable = new BlockMagicTable(getNextBlockID(), Material.diamond)
+            .setHardness(2.4F).
+            setResistance(20.0F)
+            .setLightValue(1.0F);
 
     public static void registerBlocks(ItemRegistryEvent registryEvent) {
         registryEvent.registerAnvil(anvilNickel, "nickel_anvil");
@@ -189,7 +192,7 @@ public class Blocks {
         registryEvent.registerItemBlock(blockObserver, "block_observer");
         registryEvent.registerItemBlock(blockReceiver, "block_receiver");
         registryEvent.registerItemBlock(blockEnchantPredicator, "block_enchant_predicator");
-        registryEvent.registerItemBlock(blockMagicPedestal, "block_magic_pedestal");
+        registryEvent.registerItemBlock(magicTable, "magic_table");
     }
 
     public static void registerRecipes(RecipeRegistryEvent register) {
@@ -208,7 +211,7 @@ public class Blocks {
         register.registerShapedRecipe(new ItemStack(blockEnchantReserver), true, "CBC", "ABA", "CAC",
                 'A', Block.obsidian, 'B', Item.diamond, 'C', Item.ingotAncientMetal);
         register.registerShapedRecipe(new ItemStack(blockEnchantEnhancer), true, "CAC", "DBD", "AAA",
-                'A', Block.obsidian, 'B', Item.diamond, 'C', Item.ingotAncientMetal, 'D',
+                'A', Block.obsidian, 'B', Item.diamond, 'C', Item.ingotMithril, 'D',
                 Item.expBottle);
         register.registerShapedRecipe(new ItemStack(blastFurnaceStoneIdle), true, "AAA", "ABA", "CCC",
                 'A', Block.stone, 'B', Block.furnaceIdle, 'C', Item.ingotIron);
@@ -222,14 +225,10 @@ public class Blocks {
         register.registerShapedRecipe(new ItemStack(anvilTungsten), true, "AAA", " I ", "III",
                 'A', blockTungsten,
                 'I', Items.tungstenIngot);
-        register.registerShapedRecipe(new ItemStack(blockTungsten), true, "XXX", "XXX", "XXX",
-                'X', Items.tungstenIngot);
         register.registerShapedRecipe(new ItemStack(fenceTungsten, 16), true, "XXX", "XXX",
                 'X', Items.tungstenIngot);
         register.registerShapedRecipe(new ItemStack(azuriteCluster), true, "EE",
                 'E', Items.shardAzurite);
-        register.registerShapedRecipe(new ItemStack(blockAzurite), true, "XXX", "XXX", "XXX",
-                'X', Items.shardAzurite);
         register.registerShapedRecipe(new ItemStack(blockObserver), true, "XXX", "ABS", "XXX",
                 'X', Block.cobblestone, 'A', Item.netherQuartz,
                 'B', Item.redstone, 'S', Items.shardAzurite);
@@ -237,14 +236,16 @@ public class Blocks {
                 'X', Block.cobblestone, 'S', Items.shardAzurite,
                 'B', Item.redstone);
         register.registerShapedRecipe(new ItemStack(blockEnchantPredicator), true, "XDX", "ABA", "OAO",
-                'A', Item.ingotAncientMetal, 'B', Item.book,
+                'A', Item.ingotMithril, 'B', Items.forgingnote,
                 'D', Item.diamond, 'O', Block.obsidian,
                 'X', Item.expBottle);
+        register.registerShapedRecipe(new ItemStack(magicTable), true, "MBM", "HTP", "MEM",
+                'M', Item.ingotMithril, 'T', Block.enchantmentTable,
+                'H', blockEnchantEnhancer, 'P', blockEnchantPredicator,
+                'B', Items.forgingnote, 'E', Item.eyeOfEnder);
     }
 
     public static void shapelessRecipe(RecipeRegistryEvent register) {
-        register.registerShapelessRecipe(new ItemStack(blockNickel), true, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot, Items.nickelIngot);
-
         register.registerShapelessRecipe(new ItemStack(Items.glowberries, 1), true, new ItemStack(flowerextend, 1, 0));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 7), true, new ItemStack(flowerextend, 1, 1));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 4), true, new ItemStack(flowerextend, 1, 2));
@@ -254,17 +255,25 @@ public class Blocks {
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 1), true, new ItemStack(flowerextend, 1, 6));
         register.registerShapelessRecipe(new ItemStack(Items.Agave, 1, 1), true, new ItemStack(flowerextend, 1, 7));
 
-        register.registerShapelessRecipe(new ItemStack(Blocks.blockMagicPedestal), true, new ItemStack(blockEnchantEnhancer), new ItemStack(blockEnchantPredicator), new ItemStack(Block.enchantmentTable));
 //        register.registerShapelessRecipe(new ItemStack(Items.glowberries, 1), true, new ItemStack(luminescentHerb, 1));
         for (int i = 0; i <= 4; i++) {
             register.registerShapelessRecipe(new ItemStack(Item.stick, 1), true, new ItemStack(Blocks.torchWoodIdle, i), new ItemStack(Blocks.torchWoodExtinguished, 4 - i));
         }
+
+        nineToOne(register, new ItemStack(blockNickel), Items.nickelIngot);
+        nineToOne(register, new ItemStack(blockTungsten), Items.tungstenIngot);
+        nineToOne(register, new ItemStack(blockAzurite), Items.shardAzurite);
     }
 
     public static void furnaceRecipe(RecipeRegistryEvent register) {
         FurnaceRecipes.smelting().addSmelting(oreTungsten.blockID, new ItemStack(Items.tungstenIngot));
         FurnaceRecipes.smelting().addSmelting(oreNickel.blockID, new ItemStack(Items.nickelIngot));
         FurnaceRecipes.smelting().addSmelting(oreUru.blockID, new ItemStack(Items.UruIngot));
+    }
+
+    public static void nineToOne(RecipeRegistryEvent register, ItemStack itemStack, Item item) {
+        register.registerShapedRecipe(itemStack, true, "XXX", "XXX", "XXX",
+                'X', item);
     }
 
 }

@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.mixins.block.tileentity;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.network.PacketEnchantReserverInfo;
 import net.oilcake.mitelros.network.PacketEnchantmentInfo;
 import net.oilcake.mitelros.util.AchievementExtend;
@@ -56,15 +57,16 @@ public abstract class ContainerEnchantmentMixin extends Container {
         if (itemStack == null || ItemPotion.isBottleOfWater(itemStack) || ItemAppleGold.isUnenchantedGoldenApple(itemStack)) {
             return;
         }
-        Block blockBeneath = this.world.getBlock(this.posX, this.posY - 1, this.posZ);
-        boolean predicated = (blockBeneath == Blocks.blockEnchantPredicator || blockBeneath == Blocks.blockMagicPedestal);
+        boolean predicated = (this.world.getBlock(this.posX, this.posY - 1, this.posZ) == Blocks.blockEnchantPredicator) || this.world.getBlock(this.posX, this.posY, this.posZ) == Blocks.magicTable;
         if (!predicated) return;
-        int[] result = this.predict(this.rand, itemStack, this.enchantLevels);
+        boolean extended = itemStack.getMaterialForRepairs() == Materials.uru;
+        int[] result = this.predict(this.rand, itemStack, this.enchantLevels, extended);
+        System.out.println(extended + "extended");
         this.player.sendPacket(new PacketEnchantmentInfo(result));
     }
 
     @Unique
-    public int[] predict(Random random, ItemStack itemStack, int[] levels) {
+    public int[] predict(Random random, ItemStack itemStack, int[] levels, boolean extended) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream objectOutputStream;
         try {
@@ -74,9 +76,10 @@ public abstract class ContainerEnchantmentMixin extends Container {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        int[] results = new int[6];
-
+        int[] results = new int[12];
+        for (int i = 0; i < 12; i++) {
+            results[i] = -1;
+        }
 
         Random copiedRandom;
         for (int line = 0; line < 3; line++) {
@@ -91,17 +94,18 @@ public abstract class ContainerEnchantmentMixin extends Container {
             }
 
             List enchantmentList = EnchantmentHelper.buildEnchantmentList(copiedRandom, itemStack, levels[line]);
-            boolean isBook = itemStack.itemID == Item.book.itemID;
             if (enchantmentList == null) continue;
 
+            boolean isBook = itemStack.itemID == Item.book.itemID;
             int onlyEnchantment = isBook ? copiedRandom.nextInt(enchantmentList.size()) : -1;
+            if (isBook) {
+                enchantmentList = List.of(enchantmentList.get(onlyEnchantment));
+            }
 
-            for (int curse = 0; curse < enchantmentList.size(); ++curse) {
-                EnchantmentData enchantmentData = (EnchantmentData) enchantmentList.get(curse);
-                if (isBook && curse != onlyEnchantment) continue;
-                results[line * 2] = enchantmentData.enchantmentobj.effectId;
-                results[line * 2 + 1] = enchantmentData.enchantmentLevel;
-                break;
+            for (int index = 0; (index < enchantmentList.size()) && (index < (extended ? 2 : 1)); ++index) {
+                EnchantmentData enchantmentData = (EnchantmentData) enchantmentList.get(index);
+                results[line * 4 + 2 * index] = enchantmentData.enchantmentobj.effectId;
+                results[line * 4 + 2 * index + 1] = enchantmentData.enchantmentLevel;
             }
         }
         return results;
@@ -119,8 +123,7 @@ public abstract class ContainerEnchantmentMixin extends Container {
 
     @ModifyArg(method = "calcEnchantmentLevelsForSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/EnchantmentHelper;getEnchantmentLevelsAlteredByItemEnchantability(ILnet/minecraft/Item;)I"))
     private int enhance(int enchantment_levels) {
-        Block blockBeneath = this.world.getBlock(this.posX, this.posY - 1, this.posZ);
-        boolean enhanced = (blockBeneath == Blocks.blockEnchantEnhancer || blockBeneath == Blocks.blockMagicPedestal);
+        boolean enhanced = (this.world.getBlock(this.posX, this.posY - 1, this.posZ) == Blocks.blockEnchantEnhancer || this.world.getBlock(this.posX, this.posY, this.posZ) == Blocks.magicTable);
         return enchantment_levels * (enhanced ? 2 : 1);
     }
 }

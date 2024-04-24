@@ -86,7 +86,7 @@ public abstract class ItemStackMixin {
         }
     }
 
-    @ModifyArg(method = "tryDamageItem(Lnet/minecraft/DamageSource;ILnet/minecraft/EntityLivingBase;)Lnet/minecraft/ItemDamageResult;", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemStack;tryDamageItem(Lnet/minecraft/World;IZ)Lnet/minecraft/ItemDamageResult;", ordinal = 1), index = 1)
+    @ModifyArg(method = "tryDamageItem(Lnet/minecraft/DamageSource;ILnet/minecraft/EntityLivingBase;)Lnet/minecraft/ItemDamageResult;", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemStack;tryDamageItem(Lnet/minecraft/World;IZ)Lnet/minecraft/ItemDamageResult;", ordinal = 0), index = 1)
     private int corrosion(int damage) {
         return (int) ((ITFConfig.TagCorrosion.getIntegerValue() * 0.3f + 1.0f ) * damage);
     }

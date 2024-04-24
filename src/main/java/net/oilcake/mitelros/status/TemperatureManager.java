@@ -2,7 +2,6 @@ package net.oilcake.mitelros.status;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.util.AchievementExtend;
-import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.item.Items;
@@ -46,9 +45,9 @@ public class TemperatureManager {
     }
 
     public double getUnit() {
-        int freezeUnit = this.calculateFreezeUnit();
-        int heatUnit = this.calculateHeatUnit();
-        double commonFactor = this.commonFactor();
+        int freezeUnit = this.findFreezeSource();
+        int heatUnit = this.findHeatSource();
+        double commonFactor = this.calculateCommonFactor();
         return (commonFactor + heatUnit - freezeUnit) * (ITFConfig.TagExtremeClimate.get() ? 3.0d : 1.0d);
     }
 
@@ -63,26 +62,23 @@ public class TemperatureManager {
             }
         } else {
             this.freezingCoolDown += freezeLevel;
-        }
-
-        if (this.freezingCoolDown > 6400 + this.calcArmorHeat() * 200) {
-            this.player.addPotionEffect(new PotionEffect(PotionExtend.freeze.id, 20 + (this.freezingCoolDown >> 3), this.player.isInRain() ? freezeLevel : (freezeLevel - 1)));
-            this.freezingCoolDown = 0;
+            if (this.freezingCoolDown > 6400 + this.calcArmorHeat() * 200) {
+                this.player.addPotionEffect(new PotionEffect(PotionExtend.freeze.id, 20 + (this.freezingCoolDown >> 3), this.player.isInRain() ? freezeLevel : (freezeLevel - 1)));
+                this.freezingCoolDown = 0;
+            }
         }
 
         if (freezeLevel >= 4) {
             this.freezingWarning++;
             this.player.triggerAchievement(AchievementExtend.hypothermia);
+            if (this.freezingWarning > 500) {
+                this.player.addPotionEffect(new PotionEffect(PotionExtend.freeze.id, 20 + (this.freezingWarning >> 3), this.player.isInRain() ? freezeLevel : (freezeLevel - 1)));
+                this.player.attackEntityFrom(new Damage(DamageSourceExtend.freeze, 4.0F));
+                this.freezingWarning = 0;
+            }
         } else if (this.freezingWarning > 0) {
             this.freezingWarning -= 1;
         }
-
-        if (this.freezingWarning > 500) {
-            this.player.addPotionEffect(new PotionEffect(PotionExtend.freeze.id, 20 + (this.freezingWarning >> 3), this.player.isInRain() ? freezeLevel : (freezeLevel - 1)));
-            this.player.attackEntityFrom(new Damage(DamageSourceExtend.freeze, 4.0F));
-            this.freezingWarning = 0;
-        }
-
     }
 
 
@@ -97,37 +93,45 @@ public class TemperatureManager {
             }
         } else {
             this.heatResistance += heatLevel;
+            if ((this.heatResistance > 6400 - this.calcArmorHeat() * 200)) {
+                this.player.addPotionEffect(new PotionEffect(Potion.confusion.id, 20 + (this.heatResistance >> 3), 1));
+                this.heatResistance = 0;
+            }
         }
 
-        if ((this.heatResistance > 6400 - this.calcArmorHeat() * 200)) {
-            this.player.addPotionEffect(new PotionEffect(Potion.confusion.id, 20 + (this.heatResistance >> 3), 1));
-            this.heatResistance = 0;
-        }
-
-        if (heatLevel >= 3) {
+        if (heatLevel >= 4) {
             this.heatWarning++;
             this.player.triggerAchievement(AchievementExtend.hyperthermia);
+            if (this.heatWarning > 500) {
+                this.player.attackEntityFrom(new Damage(DamageSourceExtend.heat, 4.0F));
+                this.player.decreaseWaterServerSide(1.0F);
+                this.player.addPotionEffect(new PotionEffect(Potion.confusion.id, 20 + (this.heatWarning >> 3), 1));
+                this.heatWarning = 0;
+            }
         } else if (this.heatWarning > 0) {
             this.heatWarning -= 1;
         }
-
-        if (this.heatWarning > 500) {
-            this.player.attackEntityFrom(new Damage(DamageSourceExtend.heat, 4.0F));
-            this.player.decreaseWaterServerSide(1.0F);
-            this.player.addPotionEffect(new PotionEffect(Potion.confusion.id, 20 + (this.heatWarning >> 3), 1));
-            this.heatWarning = 0;
-        }
-
     }
 
 
-    private double commonFactor() {
+    private double calculateCommonFactor() {
         double result = 0.0d;
-
         World world = this.player.worldObj;
+        int dimensionId = world.getDimensionId();
+        if (this.player.isBurning()) result += 16;
+        switch (dimensionId) {
+            case -1 -> {
+                return result + 32;
+            }
+            case 1 -> {
+                return result - 2;
+            }
+            case -2 -> {
+                return result + heightFactor(this.player.getBlockPosY(), 128) + (ITFConfig.TagDeadGeothermy.get() ? -2 : 0);
+            }
+        }
 
         boolean isOutdoors = this.player.isOutdoors();
-
         boolean isRaining = world.isPrecipitating(false);
         if (isRaining) {
             float rainStrength = world.getRainStrength(1.0f);
@@ -137,11 +141,9 @@ public class TemperatureManager {
         int time = world.getTimeOfDay();
         result += sunshine(time) * (isOutdoors ? 2.0f : 1.0f);
 
-        if (this.player.isBurning()) result += 32;
         result += seasonFactor(world.getDayOfWorld());
         result += biomeFactor(world.getBiomeGenForCoords(this.player.getBlockPosX(), this.player.getBlockPosZ()));
-        result += heightFactor(this.player.getBlockPosY());
-        result += dimensionFactor(world);
+        result += heightFactor(this.player.getBlockPosY(), 64);
 
         return result;
     }
@@ -150,8 +152,8 @@ public class TemperatureManager {
         return Math.sin(0.000261799387799 * (time - 6000));
     }
 
-    public static double heightFactor(int y) {
-        return y == 64 ? 0.0d : (y > 64 ? -1 : 1) * (64 - y) * (64 - y) * 0.001d;
+    public static double heightFactor(int y, int balance) {
+        return y == balance ? 0.0d : (y > balance ? -1 : 1) * (balance - y) * (balance - y) * 0.001d;
     }
 
     public static double biomeFactor(BiomeGenBase biome) {
@@ -159,27 +161,18 @@ public class TemperatureManager {
     }
 
     public static double seasonFactor(int day) {
-        return 3.0d * Math.sin(0.0490873852123 * (day - 16));
-    }
-
-    public static int dimensionFactor(World world) {
-        return switch (world.provider.dimensionId) {
-            case 1 -> -2;
-            case -1 -> 32;
-            case -2 -> ITFConfig.TagDeadGeothermy.get() ? -2 : 0;
-            default -> 0;
-        };
+        return Math.sin(0.0490873852123 * (day - 16));
     }
 
 
-    public int calculateFreezeUnit() {
+    public int findFreezeSource() {
         World world = this.player.worldObj;
         int freeze = 0;
         if (this.player.getDrunkManager().isDrunk()) {
             freeze += 1;
         }
         if (this.player.isInWater()) {
-            freeze += 16;
+            freeze += 8;
         } else {
             int x = this.player.getBlockPosX();
             int y = this.player.getBlockPosY();
@@ -206,7 +199,7 @@ public class TemperatureManager {
         return freeze;
     }
 
-    public int calculateHeatUnit() {
+    public int findHeatSource() {
         World world = this.player.worldObj;
         int heat = 0;
         int x = this.player.getBlockPosX();
@@ -221,7 +214,7 @@ public class TemperatureManager {
                     int decay = Math.abs(dx) + Math.abs(dz);
                     int blockId = block.blockID;
                     if (blockId == Block.lavaMoving.blockID || blockId == Block.lavaStill.blockID) {
-                        hottest = Math.max(hottest, 64 - 4 * decay);
+                        hottest = Math.max(hottest, 32 - 2 * decay);
                     }
                     if (decay > 4) continue;
                     if (block instanceof BlockFurnace furnace && furnace.isActive) {

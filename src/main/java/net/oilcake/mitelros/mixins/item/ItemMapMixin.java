@@ -15,6 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ItemMapMixin {
     @Inject(method = "updateMapData", at = @At(value = "INVOKE", target = "Lnet/minecraft/World;getChunkFromBlockCoords(II)Lnet/minecraft/Chunk;"))
     private void mapFix(World par1World, Entity par2Entity, MapData par3MapData, CallbackInfo ci, @Local LocalRef<int[]> var24) {
-        var24.set(new int[4096]);
+        var24.set(new int[4096]);// TODO fml integration
     }
 }

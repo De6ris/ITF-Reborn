@@ -10,25 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@Mixin({World.class})
+@Mixin(World.class)
 public abstract class WorldMixin implements ITFWorld {
+
     @Shadow
     public abstract World getWorld();
-
-    private static final double pi = Math.acos(-1.0D);
 
     @Mutable
     @Shadow
     @Final
     public WorldProvider provider;
-
-    private static final int SPRING = 0;
-
-    private static final int SUMMER = 1;
-
-    private static final int AUTUMN = 2;
-
-    private static final int WINTER = 3;
 
     public WorldMixin(WorldProvider provider) {
         this.provider = provider;
@@ -57,8 +48,8 @@ public abstract class WorldMixin implements ITFWorld {
         Random random = new Random(getWorldCreationTime() + (getDimensionId() * 938473) + day);
         random.nextInt();
         for (int i = 0; i < 3 && random.nextInt(4) <= 0; i++) {
-            int duration_static = 6000 * (((Boolean) ITFConfig.TagEternalRaining.get()) ? 6 : 1);
-            int duration_random = random.nextInt(12000) * (((Boolean) ITFConfig.TagEternalRaining.get()) ? 2 : 1);
+            int duration_static = 6000 * (ITFConfig.TagEternalRaining.get() ? 6 : 1);
+            int duration_random = random.nextInt(12000) * (ITFConfig.TagEternalRaining.get() ? 2 : 1);
             int duration = duration_random + duration_static;
             duration = (int) (duration * getRainDurationModify(getWorldSeason()));
             WeatherEvent event = new WeatherEvent(first_tick_of_day + random.nextInt(24000), duration);
@@ -74,19 +65,19 @@ public abstract class WorldMixin implements ITFWorld {
     }
 
     @Shadow
-    public static final boolean isBloodMoon(long unadjusted_tick, boolean exclusively_at_night) {
+    public static boolean isBloodMoon(long unadjusted_tick, boolean exclusively_at_night) {
         return exclusively_at_night;
     }
 
 
     @Shadow
-    public static final boolean isBlueMoon(long unadjusted_tick, boolean exclusively_at_night) {
+    public static boolean isBlueMoon(long unadjusted_tick, boolean exclusively_at_night) {
         return exclusively_at_night;
     }
 
 
     @Shadow
-    public static final boolean isHarvestMoon(long unadjusted_tick, boolean exclusively_at_night) {
+    public static boolean isHarvestMoon(long unadjusted_tick, boolean exclusively_at_night) {
         return exclusively_at_night;
     }
 
@@ -96,17 +87,17 @@ public abstract class WorldMixin implements ITFWorld {
     }
 
     @Shadow
-    private long getWorldCreationTime() {
+    public long getWorldCreationTime() {
         return 0L;
     }
 
     @Shadow
-    private String getDimensionName() {
+    public String getDimensionName() {
         return null;
     }
 
     @Shadow
-    private boolean isOverworld() {
+    public boolean isOverworld() {
         return false;
     }
 
@@ -116,6 +107,7 @@ public abstract class WorldMixin implements ITFWorld {
         return 0;
     }
 
+    @Unique
     public int getWorldSeason() {
         return getSeasonType(getDayOfWorld());
     }
@@ -124,6 +116,7 @@ public abstract class WorldMixin implements ITFWorld {
         return day % 128 / 32;
     }
 
+    @Unique
     public float getRainDurationModify(int Season) {
         switch (Season) {
             case 0:
@@ -139,10 +132,9 @@ public abstract class WorldMixin implements ITFWorld {
         return 1.0F;
     }
 
+    @Unique
     public float getSeasonGrowthModifier() {
-        int day_in_row = getDayOfWorld();
-        float growModifier = (float) Math.sin((day_in_row - 16) / 64.0D * pi);
-        return growModifier;
+        return (float) Math.sin(0.0490873852123 * (this.getDayOfWorld() - 16));
     }
 
     /**

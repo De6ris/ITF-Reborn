@@ -15,7 +15,7 @@ import java.util.Arrays;
 @Mixin(GuiEnchantment.class)
 public abstract class GuiEnchantmentMixin extends GuiContainer implements ITFGui {
     @Unique
-    private int[] info = new int[6];
+    private int[] info = new int[12];
 
     public GuiEnchantmentMixin(Container par1Container) {
         super(par1Container);
@@ -26,9 +26,9 @@ public abstract class GuiEnchantmentMixin extends GuiContainer implements ITFGui
         if (this.info[0] == 0) return;
         if (!this.inventorySlots.getSlot(0).getHasStack()) return;
         for (int line = 0; line < 3; line++) {
-            int enchantmentId = this.info[2 * line];
-            int enchantmentLevel = this.info[2 * line + 1];
-            String var13 = Enchantment.get(enchantmentId).toString() + enchantmentLevel + "...?";
+            String var13 = this.readInfo(this.info, line);
+            if (var13 == null) return;
+            var13 += "...?";
             int var4 = (this.width - this.xSize) / 2;
             int var5 = (this.height - this.ySize) / 2;
             int var18 = par2 - (var4 + 60);
@@ -37,6 +37,15 @@ public abstract class GuiEnchantmentMixin extends GuiContainer implements ITFGui
                 this.drawCreativeTabHoveringText(EnumChatFormatting.AQUA + var13, par2, par3);
             }
         }
+    }
+
+    @Unique
+    public String readInfo(int[] info, int line) {
+        if (info[4 * line] == -1) return null;
+        String enchant1 = Enchantment.get(info[4 * line]).toString() + info[4 * line + 1];
+        if (info[4 * line + 2] == -1) return enchant1;
+        String enchant2 = Enchantment.get(info[4 * line + 2]).toString() + info[4 * line + 3];
+        return enchant1 + ", " + enchant2;
     }
 
     @Override

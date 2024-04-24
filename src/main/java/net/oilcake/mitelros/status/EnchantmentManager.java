@@ -103,13 +103,13 @@ public class EnchantmentManager {
     public void lightMendingUpdate() {
         if (this.player.isInSunlight()) {
             ItemStack holding = this.player.getHeldItemStack();
-            if (holding != null && this.sunlight(holding)) {
+            if (holding != null && holding.getItemDamage() > 0 && this.sunlight(holding)) {
                 holding.setItemDamage(holding.getItemDamage() - 1);
             }
-            ItemStack[] item_stack_to_repair = this.player.getWornItems();
-            for (ItemStack itemStack : item_stack_to_repair) {
-                if (itemStack != null && this.sunlight(itemStack) && this.player.rand.nextInt(200) == 0) {
-                    itemStack.setItemDamage(itemStack.getItemDamage() - 1);
+            ItemStack[] armors = this.player.getWornItems();
+            for (ItemStack armor : armors) {
+                if (armor != null && armor.getItemDamage() > 0 && this.sunlight(armor) && this.player.rand.nextInt(200) == 0) {
+                    armor.setItemDamage(armor.getItemDamage() - 1);
                 }
             }
         } else {
@@ -119,13 +119,13 @@ public class EnchantmentManager {
             int z = MathHelper.floor_double(this.player.posZ);
             if (!world.isDaytime() && world.canBlockSeeTheSky(x, y, z)) {
                 ItemStack holding = this.player.getHeldItemStack();
-                if (holding != null && this.moonlight(holding)) {
-                    holding.setItemDamage(holding.getItemDamage() - 1);
+                if (holding != null && holding.getItemDamage() > 0 && this.moonlight(holding)) {
+                    holding.setItemDamage(holding.getItemDamage() - 2);
                 }
-                ItemStack[] item_stack_to_repair = this.player.getWornItems();
-                for (ItemStack itemStack : item_stack_to_repair) {
-                    if (itemStack != null && this.moonlight(itemStack)) {
-                        itemStack.setItemDamage(itemStack.getItemDamage() - 1);
+                ItemStack[] armors = this.player.getWornItems();
+                for (ItemStack armor : armors) {
+                    if (armor != null && armor.getItemDamage() > 1 && this.moonlight(armor) && this.player.rand.nextInt(200) == 0) {
+                        armor.setItemDamage(armor.getItemDamage() - 2);
                     }
                 }
             }

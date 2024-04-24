@@ -1,56 +1,20 @@
 package net.oilcake.mitelros.mixins.block;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFWorld;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-@Mixin({BlockStem.class})
+@Mixin(BlockStem.class)
 public abstract class BlockStemMixin extends BlockGrowingPlant {
-  public BlockStemMixin(int block_id) {
-    super(block_id);
-  }
-  
-  @Overwrite
-  public float getGrowthRate(World par1World, int par2, int par3, int par4) {
-    Block block_below = Block.blocksList[par1World.getBlockId(par2, par3 - 1, par4)];
-    int block_below_metadata = par1World.getBlockMetadata(par2, par3 - 1, par4);
-    if (block_below == Block.tilledField && BlockFarmland.getWetness(block_below_metadata) == 0)
-      return 0.0F; 
-    float var5 = 1.0F + ((ITFWorld)par1World).getSeasonGrowthModifier();
-    int var6 = par1World.getBlockId(par2, par3, par4 - 1);
-    int var7 = par1World.getBlockId(par2, par3, par4 + 1);
-    int var8 = par1World.getBlockId(par2 - 1, par3, par4);
-    int var9 = par1World.getBlockId(par2 + 1, par3, par4);
-    int var10 = par1World.getBlockId(par2 - 1, par3, par4 - 1);
-    int var11 = par1World.getBlockId(par2 + 1, par3, par4 - 1);
-    int var12 = par1World.getBlockId(par2 + 1, par3, par4 + 1);
-    int var13 = par1World.getBlockId(par2 - 1, par3, par4 + 1);
-    boolean var14 = (var8 == this.blockID || var9 == this.blockID);
-    boolean var15 = (var6 == this.blockID || var7 == this.blockID);
-    boolean var16 = (var10 == this.blockID || var11 == this.blockID || var12 == this.blockID || var13 == this.blockID);
-    for (int var17 = par2 - 1; var17 <= par2 + 1; var17++) {
-      for (int var18 = par4 - 1; var18 <= par4 + 1; var18++) {
-        int var19 = par1World.getBlockId(var17, par3 - 1, var18);
-        float var20 = 0.0F;
-        if (var19 == Block.tilledField.blockID) {
-          var20 = 1.0F;
-          if (par1World.getBlockMetadata(var17, par3 - 1, var18) > 0)
-            var20 = 3.0F; 
-        } 
-        if (var17 != par2 || var18 != par4)
-          var20 /= 4.0F; 
-        var5 += var20;
-      } 
-    } 
-    if (var16 || (var14 && var15))
-      var5 /= 2.0F; 
-    if (block_below == Block.tilledField && BlockFarmland.isFertilized(block_below_metadata))
-      var5 *= 1.5F; 
-    BiomeGenBase biome = par1World.getBiomeGenForCoords(par2, par4);
-    var5 *= getTemperatureGrowthRateModifier(biome.temperature);
-    var5 *= getHumidityGrowthRateModifier(biome.isHighHumidity());
-    var5 *= getGlobalGrowthRateModifierFromMITE();
-    return var5;
-  }
+    public BlockStemMixin(int block_id) {
+        super(block_id);
+    }
+
+    @ModifyConstant(method = "getGrowthRate", constant = @Constant(floatValue = 1.0f, ordinal = 0))
+    private float seasonGrowth(float constant, @Local(argsOnly = true) World par1World) {
+        return constant + ((ITFWorld) par1World).getSeasonGrowthModifier();
+    }
 }

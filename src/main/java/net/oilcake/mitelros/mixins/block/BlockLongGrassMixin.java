@@ -1,27 +1,24 @@
 package net.oilcake.mitelros.mixins.block;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.BlockTallGrass;
 import net.minecraft.IBlockAccess;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.util.SeasonColorizer;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin({BlockTallGrass.class})
+@Mixin(BlockTallGrass.class)
 public class BlockLongGrassMixin {
-  @Overwrite
-  public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
-    int var5 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-    if (var5 == 0)
-      return 16777215; 
-    int OriColor = par1IBlockAccess.getBiomeGenForCoords(par2, par4).getBiomeGrassColor();
-    int MixedColor = SeasonColorizer.getSeasonColorizerModifierRed(par1IBlockAccess.getWorld(), OriColor >> 16);
-    int FinalColor = 0xFFFF & OriColor;
-    FinalColor += MixedColor << 16;
-    if (ITFConfig.SeasonColor.get()) {
-      return FinalColor;
-    } else {
-      return OriColor;
+    @ModifyExpressionValue(method = "colorMultiplier", at = @At(value = "INVOKE", target = "Lnet/minecraft/BiomeGenBase;getBiomeGrassColor()I"))
+    private int itfSeasonColor(int original, @Local(argsOnly = true) IBlockAccess par1IBlockAccess) {
+        if (!ITFConfig.SeasonColor.get()) {
+            return original;
+        }
+        int mixedColor = SeasonColorizer.getSeasonColorizerModifierRed(par1IBlockAccess.getWorld(), original >> 16);
+        int finalColor = 0xFFFF & original;
+        finalColor += mixedColor << 16;
+        return finalColor;
     }
-  }
 }

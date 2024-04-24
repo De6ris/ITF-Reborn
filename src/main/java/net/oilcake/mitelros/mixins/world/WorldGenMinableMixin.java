@@ -24,7 +24,7 @@ public abstract class WorldGenMinableMixin {
     public abstract int getMaxVeinHeight(World world);
 
     @Inject(method = "getMinVeinHeight", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"), cancellable = true)
-    private void inject(World world, CallbackInfoReturnable<Integer> cir) {
+    private void itfMinVeinHeight(World world, CallbackInfoReturnable<Integer> cir) {
         Block block = Block.blocksList[this.minableBlockId];
         if (block == Blocks.oreNickel)
             cir.setReturnValue(0);
@@ -35,7 +35,7 @@ public abstract class WorldGenMinableMixin {
     }
 
     @Inject(method = "getMaxVeinHeight", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"), cancellable = true)
-    private void inject_1(World world, CallbackInfoReturnable<Integer> cir) {
+    private void itfMaxVeinHeight(World world, CallbackInfoReturnable<Integer> cir) {
         Block block = Block.blocksList[this.minableBlockId];
         if (block == Blocks.oreNickel)
             cir.setReturnValue(48);
@@ -48,29 +48,22 @@ public abstract class WorldGenMinableMixin {
     @Inject(method = "getRandomVeinHeight", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"), cancellable = true)
     private void inject_2(World world, Random rand, CallbackInfoReturnable<Integer> cir) {
         Block block = Block.blocksList[this.minableBlockId];
-        float relative_height = 0;
-        if (block == Blocks.oreNickel) {
-            do {
-                relative_height = rand.nextFloat();
-            } while (relative_height >= rand.nextFloat());
-        } else if (block == Blocks.oreTungsten) {
-            do {
-                relative_height = rand.nextFloat();
-            } while (relative_height >= rand.nextFloat());
-        } else if (block == Blocks.blockAzurite) {
-            do {
-                relative_height = rand.nextFloat();
-            } while (!(relative_height < rand.nextFloat()));
-        }
         if (world.isUnderworld()) {
             if (world.underworld_y_offset != 0) {
                 if (block == Blocks.oreTungsten) {
                     cir.setReturnValue(rand.nextInt(16 + world.underworld_y_offset));
+                    return;
                 }
             }
         }
-        int min_height = this.getMinVeinHeight(world);
-        int height_range = this.getMaxVeinHeight(world) - min_height + 1;
-        cir.setReturnValue(min_height + (int) (relative_height * (float) height_range));
+        float relative_height = 0;
+        if (block == Blocks.oreNickel || block == Blocks.oreTungsten || block == Blocks.blockAzurite) {
+            do {
+                relative_height = rand.nextFloat();
+            } while (relative_height >= rand.nextFloat());
+            int min_height = this.getMinVeinHeight(world);
+            int height_range = this.getMaxVeinHeight(world) - min_height + 1;
+            cir.setReturnValue(min_height + (int) (relative_height * (float) height_range));
+        }
     }
 }

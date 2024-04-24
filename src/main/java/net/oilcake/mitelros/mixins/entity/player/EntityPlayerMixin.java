@@ -131,14 +131,17 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         }
     }
 
+    @Unique
     public int getWater() {
         return ((ITFFoodStats) this.foodStats).getWater();
     }
 
+    @Unique
     public int addWater(int water) {
         return ((ITFFoodStats) this.foodStats).addWater(water);
     }
 
+    @Unique
     public void decreaseWaterServerSide(float hungerWater) {
         if (!this.capabilities.isCreativeMode && !this.capabilities.disableDamage)
             ((ITFFoodStats) this.foodStats).decreaseWaterServerSide(hungerWater);
@@ -161,7 +164,9 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @Shadow
     public float vision_dimming;
 
+    @Unique
     private MiscManager miscManager = new MiscManager(ReflectHelper.dyCast(this));
+    @Unique
     private EnchantmentManager enchantmentManager = new EnchantmentManager(ReflectHelper.dyCast(this));
 
     public MiscManager getMiscManager() {
@@ -170,6 +175,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     private WaterManager waterManager = new WaterManager(ReflectHelper.dyCast(this));
 
+    @Unique
     private TemperatureManager temperatureManager = new TemperatureManager(ReflectHelper.dyCast(this));
 
     public TemperatureManager getTemperatureManager() {
@@ -241,6 +247,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         this.temperatureManager.heatWarning = par1NBTTagCompound.getInteger("HeatWarning");
         float temperature = par1NBTTagCompound.getFloat("BodyTemperature");
         this.temperatureManager.bodyTemperature = temperature == 0.0f ? 37.2F : temperature;// for upgrading saves
+//        this.temperatureManager.bodyTemperature = par1NBTTagCompound.getFloat("BodyTemperature");
         this.drunkManager.setDrunk_duration(par1NBTTagCompound.getInteger("DrunkDuration"));
     }
 

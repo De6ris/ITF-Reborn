@@ -21,15 +21,15 @@ public class PacketEnchantmentInfo extends Packet {
 
     @Override
     public void readPacketData(DataInput dataInput) throws IOException {
-        for (int i = 0; i < 6; i++) {
-            this.info[i] = dataInput.readShort();
+        for (int i = 0; i < 12; i++) {
+            this.info[i] = dataInput.readByte();
         }
     }
 
     @Override
     public void writePacketData(DataOutput dataOutput) throws IOException {
-        for (int i = 0; i < 6; i++) {
-            dataOutput.writeShort(this.info[i]);
+        for (int i = 0; i < 12; i++) {
+            dataOutput.writeByte(this.info[i]);
         }
     }
 

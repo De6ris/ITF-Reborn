@@ -1,4 +1,4 @@
-package net.oilcake.mitelros.mixins.render;
+package net.oilcake.mitelros.mixins.gui;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
@@ -103,23 +103,27 @@ public class GuiIngameMixin extends Gui {
                 String text = GuiIngame.server_load + "%";
                 drawString(this.mc.fontRenderer, text, sr.getScaledWidth() - this.mc.fontRenderer.getStringWidth(text) - 2, 2, 14737632);
             }
-            StringBuilder var68 = (new StringBuilder()).append(MOD_ID);
+
+            StringBuilder firstRow = (new StringBuilder()).append(MOD_ID);
+            String difficultyText = GuiInGameInfoHandler.getDifficultyText();
+            if (!difficultyText.isEmpty()) {
+                firstRow.append(" ").append(difficultyText);
+            }
+            firstRow.append(" ").append(GuiInGameInfoHandler.season(this.mc.theWorld.getDayOfWorld()));
+            firstRow.append(" ").append(GuiInGameInfoHandler.weather(this.mc.theWorld, this.mc.thePlayer.getBiome().isFreezing()));
+            drawString(this.mc.fontRenderer, firstRow.toString(), 2, 2, 14737632);
+
+            StringBuilder secondRow = new StringBuilder();
+            secondRow.append(GuiInGameInfoHandler.getTemperatureText(((ITFPlayer) this.mc.thePlayer).getTemperatureManager()));
             if (player.getHeldItemStack() != null && player.getHeldItemStack().getItem() == Item.compass) {
                 String pos = "平面坐标: (" + MathHelper.floor_double(this.mc.thePlayer.posX) + ", " + MathHelper.floor_double(this.mc.thePlayer.posZ) + ")";
-                var68.append(" ").append(pos);
+                secondRow.append(" ").append(pos);
             }
             if (player.getHeldItemStack() != null && player.getHeldItemStack().getItem() == Item.pocketSundial) {
                 String time = "时间: (" + this.mc.thePlayer.getWorld().getHourOfDay() + ":" + (this.mc.thePlayer.getWorld().getTotalWorldTime() % 1000L * 60L / 1000L) + ")";
-                var68.append(" ").append(time);
+                secondRow.append(" ").append(time);
             }
-            String difficultyText = GuiInGameInfoHandler.getDifficultyText();
-            if (!difficultyText.isEmpty()) {
-                var68.append(" ").append(difficultyText);
-            }
-            var68.append(" ").append(GuiInGameInfoHandler.season(this.mc.theWorld.getDayOfWorld()));
-            var68.append(" ").append(GuiInGameInfoHandler.weather(this.mc.theWorld, this.mc.thePlayer.getBiome().isFreezing()));
-//            var68.append(" ").append(GuiInGameInfoHandler.getTemperatureText(((ITFPlayer) this.mc.thePlayer).getTemperatureManager()));
-            drawString(this.mc.fontRenderer, var68.toString(), 2, 2, 14737632);
+            drawString(this.mc.fontRenderer, secondRow.toString(), 2, 12, 14737632);
         }
     }
 
