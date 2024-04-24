@@ -14,6 +14,9 @@ public class S2CUpdateNutrition extends Packet {
     private int water;
     private float temp;
 
+    public S2CUpdateNutrition() {
+    }
+
     public S2CUpdateNutrition(int phytonutrients, int protein, int water, float temp) {
         this.phytonutrients = phytonutrients;
         this.protein = protein;

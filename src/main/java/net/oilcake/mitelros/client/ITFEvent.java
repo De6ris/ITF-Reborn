@@ -106,10 +106,10 @@ public class ITFEvent {
 
     @Subscribe
     public void onPacketRegister(PacketRegisterEvent event) {
-        event.register(true, false, S2CEnchantReserverInfo.class);
-        event.register(false, true, C2SDecreaseWater.class);
-        event.register(true, false, S2CEnchantmentInfo.class);
-        event.register(true, false, S2CUpdateNutrition.class);
+        event.register(true, false, S2CEnchantReserverInfo.class);//134
+        event.register(false, true, C2SDecreaseWater.class);//135
+        event.register(true, false, S2CEnchantmentInfo.class);//136
+        event.register(true, false, S2CUpdateNutrition.class);//137
     }
 
     @Subscribe

@@ -11,6 +11,9 @@ import java.io.IOException;
 public class C2SDecreaseWater extends Packet {
     public float hungerWater;
 
+    public C2SDecreaseWater() {
+    }
+
     public C2SDecreaseWater(float hungerWater) {
         this.hungerWater = hungerWater;
     }

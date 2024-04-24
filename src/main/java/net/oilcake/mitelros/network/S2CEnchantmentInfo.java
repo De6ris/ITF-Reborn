@@ -9,7 +9,10 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class S2CEnchantmentInfo extends Packet {
-    private final int[] info;
+    private int[] info;
+
+    public S2CEnchantmentInfo() {
+    }
 
     public S2CEnchantmentInfo(int[] info) {
         this.info = info;
