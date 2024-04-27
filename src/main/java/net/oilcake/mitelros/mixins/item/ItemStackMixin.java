@@ -35,10 +35,6 @@ public abstract class ItemStackMixin {
     @Shadow
     public int itemID;
 
-    public int getWater() {
-        return ((ITFItem) getItem()).getWater();
-    }
-
     @Redirect(method = "getTooltip(Lnet/minecraft/EntityPlayer;ZLnet/minecraft/Slot;)Ljava/util/List;", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemStack;getEnchantmentTagList()Lnet/minecraft/NBTTagList;"))
     private NBTTagList removeOriginallyEnchantmentInfo0(ItemStack instance) {
         return null;
@@ -88,7 +84,7 @@ public abstract class ItemStackMixin {
 
     @ModifyArg(method = "tryDamageItem(Lnet/minecraft/DamageSource;ILnet/minecraft/EntityLivingBase;)Lnet/minecraft/ItemDamageResult;", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemStack;tryDamageItem(Lnet/minecraft/World;IZ)Lnet/minecraft/ItemDamageResult;", ordinal = 0), index = 1)
     private int corrosion(int damage) {
-        return (int) ((ITFConfig.TagCorrosion.getIntegerValue() * 0.3f + 1.0f ) * damage);
+        return (int) ((ITFConfig.TagCorrosion.getIntegerValue() * 0.3f + 1.0f) * damage);
     }
 
     @Shadow

@@ -8,6 +8,7 @@ public class AchievementExtend {
     public static Achievement FragofMine;
 
     public static Achievement BravetheCold;
+    public static Achievement BravetheHeat;
 
     public static Achievement Arbalistic;
 
@@ -68,6 +69,7 @@ public class AchievementExtend {
         stormStriker = (new Achievement(getNextAchievementID(), "StormStriker", 9, 16, new ItemStack(Block.skull, 1, 3), AchievementList.theEnd2)).registerAchievement().setSpecial();
         cheatdeath = (new Achievement(getNextAchievementID(), "DeathCheater", -3, 14, Items.totemOfFecund, AchievementList.potion)).registerAchievement();
         pull = (new Achievement(getNextAchievementID(), "Pull", -3, -5, Item.manure, mashedCactus)).registerAchievement();
+        BravetheHeat = (new Achievement(getNextAchievementID(), "WearAllIceArmor", 11, -4, Items.iceHelmet, AchievementList.wearLeather)).registerAchievement();
     }
 
     private static int getNextAchievementID() {

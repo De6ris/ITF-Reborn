@@ -1,7 +1,6 @@
 package net.oilcake.mitelros.item;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 

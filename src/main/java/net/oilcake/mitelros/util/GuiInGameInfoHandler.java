@@ -1,29 +1,58 @@
 package net.oilcake.mitelros.util;
 
-import net.minecraft.BiomeGenBase;
-import net.minecraft.Minecraft;
-import net.minecraft.WeatherEvent;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.status.TemperatureManager;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Random;
 
+import static net.oilcake.mitelros.ITFStart.MOD_ID_Simple;
+
 public class GuiInGameInfoHandler {
-    public static String GAInfo(Minecraft mc) {
-        String direction = switch (mc.thePlayer.getDirectionFromYaw().toString()) {
-            case "EAST" -> "东";
-            case "WEST" -> "西";
-            case "NORTH" -> "北";
-            case "SOUTH" -> "南";
-            default -> "null";
-        };
-        BiomeGenBase biome = mc.thePlayer.getBiome();
-        String biomeName = StringUtils.substringBefore(biome.toString(), "@").substring(19) + " ";
-        return direction + " " + biomeName + " " + weather(mc.theWorld, biome.isFreezing());
+    public static void drawInfo(Gui gui, Minecraft mc) {
+        EntityPlayer player = mc.thePlayer.getAsPlayer();
+        if (GuiIngame.server_load >= 0) {
+            ScaledResolution sr = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+            String text = GuiIngame.server_load + "%";
+            gui.drawString(mc.fontRenderer, text, sr.getScaledWidth() - mc.fontRenderer.getStringWidth(text) - 2, 2, 14737632);
+        }
+        StringBuilder firstRow = new StringBuilder();
+
+        if (ITFConfig.MODText.getBooleanValue()) {
+            firstRow.append(MOD_ID_Simple).append(" ");
+        }
+
+        if (ITFConfig.DifficultyInfo.getBooleanValue()) {
+            String difficultyText = GuiInGameInfoHandler.getDifficultyText();
+            if (!difficultyText.isEmpty()) {
+                firstRow.append(difficultyText).append(" ");
+            }
+        }
+        if (ITFConfig.SeasonText.getBooleanValue()) {
+            firstRow.append(GuiInGameInfoHandler.season(mc.theWorld.getDayOfWorld())).append(" ");
+        }
+        if (ITFConfig.WeatherText.getBooleanValue()) {
+            firstRow.append(GuiInGameInfoHandler.weather(mc.theWorld, mc.thePlayer.getBiome().isFreezing())).append(" ");
+        }
+
+        StringBuilder secondRow = new StringBuilder();
+        if (ITFConfig.CoordinateText.getBooleanValue() && player.getHeldItemStack() != null && player.getHeldItemStack().getItem() == Item.compass) {
+            String pos = "平面坐标: (" + MathHelper.floor_double(mc.thePlayer.posX) + ", " + MathHelper.floor_double(mc.thePlayer.posZ) + ")";
+            secondRow.append(pos).append(" ");
+        }
+        if (ITFConfig.TimeText.getBooleanValue() && player.getHeldItemStack() != null && player.getHeldItemStack().getItem() == Item.pocketSundial) {
+            String time = "时间: (" + mc.thePlayer.getWorld().getHourOfDay() + ":" + (mc.thePlayer.getWorld().getTotalWorldTime() % 1000L * 60L / 1000L) + ")";
+            secondRow.append(time).append(" ");
+        }
+        if (ITFConfig.TemperatureText.getBooleanValue()) {
+            secondRow.append(GuiInGameInfoHandler.getTemperatureText(((ITFPlayer) mc.thePlayer).getTemperatureManager())).append(" ");
+        }
+        int baseYLevel = ITFConfig.InfoYLevel.getIntegerValue();
+        gui.drawString(mc.fontRenderer, firstRow.toString(), 2, 2 + baseYLevel * 10, 14737632);
+        gui.drawString(mc.fontRenderer, secondRow.toString(), 2, 12 + baseYLevel * 10, 14737632);
+
     }
 
     public static String getPlainDifficultyText() {

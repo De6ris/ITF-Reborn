@@ -80,7 +80,7 @@ public class GuiEnchantReserver extends GuiContainer implements ICrafting {
         if (tileEntityEnchantReserver.getEXP() < this.tileEntityEnchantReserver.getLaunchEXP()) {
             this.fontRenderer.drawString(tileEntityEnchantReserver.getEXP() + "/" + this.tileEntityEnchantReserver.getLaunchEXP(), this.width / 2 + 8, this.height / 2 - 70, color);
         } else {
-            this.fontRenderer.drawString(exp + "/" + maxExp, this.width / 2 + 8, this.height / 2 - 70, color);
+            this.fontRenderer.drawString(exp + "/" + maxExp, this.width / 2 + 8, this.height / 2 - 70, 14737632);
         }
 
     }

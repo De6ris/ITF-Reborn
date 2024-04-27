@@ -1,8 +1,8 @@
 package net.oilcake.mitelros.block;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.api.ITFDoor;
-import net.oilcake.mitelros.api.ITFPane;
+import net.oilcake.mitelros.block.api.ITFDoor;
+import net.oilcake.mitelros.block.api.ITFPane;
 import net.oilcake.mitelros.block.observer.BlockObserver;
 import net.oilcake.mitelros.block.receiver.BlockReceiver;
 import net.oilcake.mitelros.item.Items;

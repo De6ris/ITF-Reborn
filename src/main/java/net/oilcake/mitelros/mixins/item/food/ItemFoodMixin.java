@@ -16,30 +16,36 @@ import java.util.Random;
 
 @Mixin(ItemFood.class)
 public class ItemFoodMixin extends Item {
-    @Inject(method = "<init>(ILnet/minecraft/Material;IIZZZLjava/lang/String;)V", at = @At("RETURN"))
-    private void injectInit(int id, Material material, int satiation, int nutrition, boolean has_protein, boolean has_essential_fats, boolean has_phytonutrients, String texture, CallbackInfo callbackInfo) {
-        ((ITFItem) this).setWater(resetWaterValue(id, material));
-    }
-
     @Inject(method = "<init>(ILnet/minecraft/Material;IIIZZZLjava/lang/String;)V", at = @At("RETURN"))
     private void injectInit(int id, Material material, int satiation, int nutrition, int sugar_content, boolean has_protein, boolean has_essential_fats, boolean has_phytonutrients, String texture, CallbackInfo callbackInfo) {
-        ((ITFItem) this).setWater(resetWaterValue(id, material));
+        int water = this.itfFoodWater(id, material);
+        if (water != 0) {
+            ((ITFItem) this).setFoodWater(water);
+        }
+        int temperature = this.itfFoodTemperature(material);
+        if (temperature != 0) {
+            ((ITFItem) this).setFoodTemperature(temperature);
+        }
     }
 
     @Unique
-    public int resetWaterValue(int id, Material material) {
-        if (material == Material.fruit)
+    private int itfFoodWater(int id, Material material) {
+        if (material == Material.fruit | id == 135)
             return ITFConfig.TagDryDilemma.get() ? 1 : 2;
-        if (id == 135)
-            return ITFConfig.TagDryDilemma.get() ? 1 : 2;
-        if (material == (Materials.glowberries) || material == (Materials.peeledSugarcane))
+        if (material == (Materials.glowberries) || material == Materials.peeledSugarcane || material == Materials.agave || material == Materials.mashedCactus)
             return 1;
-        if (material == Material.cheese || id == 88)
+        if (material == Material.cheese || id == 88 || material == Material.bread || material == Material.desert)
             return -1;
-        if (material == Material.bread || material == Material.desert)
-            return -1;
-        if (material == Materials.agave)
-            return 1;
+        if (material == Materials.ice_sucker || material == Materials.melon_ice || material == Materials.chocolate_smoothie)
+            return 2;
+        return 0;
+    }
+
+    @Unique
+    private int itfFoodTemperature(Material material) {
+        if (material == Material.fruit) return -1;
+        if (material == Materials.ice_sucker || material == Materials.melon_ice || material == Materials.chocolate_smoothie)
+            return -2;
         return 0;
     }
 
@@ -64,11 +70,12 @@ public class ItemFoodMixin extends Item {
         }
         if (ReflectHelper.dyCast(this) instanceof ItemMeat meat) {
             int outcome = rand.nextInt(ITFConfig.Realistic.get() ? 1 : 4);
-            if (!meat.is_cooked) {
+            if (meat.is_cooked) {
+                player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
+                player.getTemperatureManager().bodyTemperature += 2;
+            } else {
                 if (outcome == (ITFConfig.TagDigest.get() ? 4 : 0))
                     player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (240.0D * (1.0D + rand.nextDouble())), 0));
-            } else {
-                player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
             }
         }
     }

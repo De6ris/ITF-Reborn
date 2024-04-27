@@ -9,9 +9,12 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class S2CEnchantmentInfo extends Packet {
-    private int[] info;
+    private int[] info = new int[12];
 
     public S2CEnchantmentInfo() {
+        for (int i = 0; i < 12; i++) {
+            this.info[i] = -1;
+        }
     }
 
     public S2CEnchantmentInfo(int[] info) {

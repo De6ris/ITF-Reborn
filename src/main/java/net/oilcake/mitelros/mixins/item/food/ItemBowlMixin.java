@@ -1,5 +1,6 @@
 package net.oilcake.mitelros.mixins.item.food;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.config.ITFConfig;
@@ -7,10 +8,10 @@ import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -18,24 +19,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
     @Inject(method = "<init>(ILnet/minecraft/Material;Ljava/lang/String;)V", at = @At("RETURN"))
     private void injectCtor(CallbackInfo callback) {
-        if (contains(Material.water)) {
-            setWater(2);
+        if (contains(Material.water) || contains(Material.cereal) || contains(Material.ice_cream) || contains(Material.cream_of_mushroom_soup)) {
+            setFoodWater(2);
         } else if (contains(Materials.dangerous_water) || contains(Materials.suspicious_water) || contains(Material.milk)) {
-            setWater(1);
-        } else if (contains(Material.mashed_potato)) {
-            setWater(0);
-        } else if (contains(Material.cereal)) {
-            setWater(2);
-        } else if (contains(Material.ice_cream)) {
-            setWater(2);
-        } else if (contains(Material.cream_of_mushroom_soup)) {
-            setWater(2);
+            setFoodWater(1);
+        } else if (contains(Material.mashed_potato) || contains(Materials.salad)) {
+            setFoodWater(0);
         } else if (contains(Materials.beetroot)) {
-            setWater(6);
-        } else if (contains(Materials.salad)) {
-            setWater(0);
-        } else if (!isEmpty()) {
-            setWater(4);
+            setFoodWater(6);
+        } else if (!this.isEmpty()) {
+            setFoodWater(4);
+        }
+
+        if (contains(Material.water) || contains(Materials.dangerous_water) || contains(Materials.suspicious_water) || contains(Material.milk)) {
+            this.setFoodTemperature(-2);
+        } else if (contains(Materials.ice_cream) || contains(Materials.sorbet)) {
+            this.setFoodTemperature(-4);
+        } else if (contains(Materials.porkchop_stew) || contains(Material.beef_stew)) {
+            this.setFoodTemperature(4);
         }
     }
 
@@ -78,53 +79,14 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
         super(id, vessel_material, contents_material, standard_volume, max_stack_size_empty, max_stack_size_full, texture);
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public boolean onItemRightClick(EntityPlayer player, float partial_tick, boolean ctrl_is_down) {
-        RaycastCollision rc = player.getSelectedObject(partial_tick, true);
+    @ModifyArg(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;convertOneOfHeldItem(Lnet/minecraft/ItemStack;)V", ordinal = 0))
+    private ItemStack itfWaterBowl(ItemStack created_item_stack, @Local(argsOnly = true) EntityPlayer player) {
         BiomeGenBase biome = player.worldObj.getBiomeGenForCoords(player.getBlockPosX(), player.getBlockPosZ());
-        if (rc != null && rc.isBlock())
-            if (isEmpty()) {
-                if (rc.getBlockHitMaterial() == Material.water || rc.getNeighborOfBlockHitMaterial() == Material.water) {
-                    if (player.onServer() && (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland)) {
-                        player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Materials.dangerous_water)));
-                    } else if (player.onServer() && (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver)) {
-                        player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Material.water)));
-                    } else if (player.onServer()) {
-                        player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Materials.suspicious_water)));
-                    }
-                    return true;
-                }
-            } else {
-                if (rc.getNeighborOfBlockHit() == Block.fire && canContentsDouseFire()) {
-                    if (player.onServer()) {
-                        rc.world.douseFire(rc.neighbor_block_x, rc.neighbor_block_y, rc.neighbor_block_z, null);
-                        player.convertOneOfHeldItem(new ItemStack(getEmptyVessel()));
-                    }
-                    return true;
-                }
-                if (contains(Material.water) || contains(Materials.suspicious_water) || contains(Materials.dangerous_water)) {
-                    Block block = rc.getBlockHit();
-                    int x = rc.block_hit_x;
-                    int y = rc.block_hit_y;
-                    int z = rc.block_hit_z;
-                    EnumFace face_hit = rc.face_hit;
-                    if (block instanceof net.minecraft.BlockCrops || block instanceof net.minecraft.BlockStem || block == Block.mushroomBrown) {
-                        y--;
-                        block = rc.world.getBlock(x, y, z);
-                        face_hit = EnumFace.TOP;
-                    }
-                    if (block == Block.tilledField && face_hit == EnumFace.TOP && BlockFarmland.fertilize(rc.world, x, y, z, player.getHeldItemStack(), player)) {
-                        if (player.onServer() && !player.inCreativeMode())
-                            player.convertOneOfHeldItem(new ItemStack(getEmptyVessel()));
-                        return true;
-                    }
-                }
-            }
-        return false;
+        Material material;
+        if (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland) material = Materials.dangerous_water;
+        else if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) material = Material.water;
+        else material = Materials.suspicious_water;
+        return new ItemStack(getPeerForContents(material));
     }
 
     @Inject(method = "getPeer", at = @At("HEAD"), cancellable = true)

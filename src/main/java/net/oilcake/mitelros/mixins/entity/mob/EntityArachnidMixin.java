@@ -5,7 +5,6 @@ import net.minecraft.EntityMob;
 import net.minecraft.NBTTagCompound;
 import net.minecraft.World;
 import net.oilcake.mitelros.api.ITFSpider;
-import net.oilcake.mitelros.status.FrenziedManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,10 +12,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityArachnid.class)
-public class EntityArachnidMixin extends EntityMob implements ITFSpider {
-
+public abstract class EntityArachnidMixin extends EntityMob implements ITFSpider {
     @Unique
-    private FrenziedManager frenziedManager = new FrenziedManager();
+    private int counter;
 
     public EntityArachnidMixin(World par1World) {
         super(par1World);
@@ -24,26 +22,27 @@ public class EntityArachnidMixin extends EntityMob implements ITFSpider {
 
     @Inject(method = "readEntityFromNBT", at = @At("RETURN"))
     public void injectReadNBT(NBTTagCompound par1NBTTagCompound, CallbackInfo callbackInfo) {
-        par1NBTTagCompound.setInteger("frenzied_counter", this.frenziedManager.getCounter());
+        par1NBTTagCompound.setInteger("frenzied_counter", this.counter);
     }
 
     @Inject(method = "writeEntityToNBT", at = @At("RETURN"))
     public void injectWriteNBT(NBTTagCompound par1NBTTagCompound, CallbackInfo callbackInfo) {
-        par1NBTTagCompound.setInteger("frenzied_counter", this.frenziedManager.getCounter());
+        par1NBTTagCompound.setInteger("frenzied_counter", this.counter);
     }
 
     @Inject(method = "onUpdate()V", at = @At("TAIL"))
     public void injectUpdate(CallbackInfo callbackInfo) {
-        this.frenziedManager.update();
+        if (this.counter > 0)
+            this.counter--;
     }
 
     @Override
-    public FrenziedManager getFrenziedManager() {
-        return this.frenziedManager;
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 
-    @Override
+    @Override// TODO bad override
     public boolean isFrenzied() {
-        return (super.isFrenzied() || this.frenziedManager.getCounter() > 0);
+        return (super.isFrenzied() || this.counter > 0);
     }
 }

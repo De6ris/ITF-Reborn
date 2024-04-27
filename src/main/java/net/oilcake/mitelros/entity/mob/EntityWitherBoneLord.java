@@ -1,7 +1,6 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.entity.mob.EntityWitherBodyguard;
 import net.oilcake.mitelros.item.Items;
 
 import java.util.ArrayList;

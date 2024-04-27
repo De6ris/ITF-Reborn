@@ -18,9 +18,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import static net.oilcake.mitelros.ITFStart.MOD_ID_Simple;
-import static net.oilcake.mitelros.ITFStart.MOD_Version;
-
 @Mixin(GuiIngame.class)
 public class GuiIngameMixin extends Gui {
     @Shadow
@@ -96,34 +93,9 @@ public class GuiIngameMixin extends Gui {
 
     @Inject(method = "renderGameOverlay(FZII)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z", shift = At.Shift.BEFORE))
     private void cornerInfo(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
-        if ((ITFConfig.DisplayHud.get() && (!this.mc.gameSettings.showDebugInfo || this.mc.gameSettings.gui_mode != 0)) && Minecraft.getErrorMessage() == null) {
-            EntityPlayer player = this.mc.thePlayer.getAsPlayer();
-            if (GuiIngame.server_load >= 0) {
-                ScaledResolution sr = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
-                String text = GuiIngame.server_load + "%";
-                drawString(this.mc.fontRenderer, text, sr.getScaledWidth() - this.mc.fontRenderer.getStringWidth(text) - 2, 2, 14737632);
-            }
-
-            StringBuilder firstRow = (new StringBuilder()).append(MOD_ID_Simple).append(" ").append(MOD_Version);
-            String difficultyText = GuiInGameInfoHandler.getDifficultyText();
-            if (!difficultyText.isEmpty()) {
-                firstRow.append(" ").append(difficultyText);
-            }
-            firstRow.append(" ").append(GuiInGameInfoHandler.season(this.mc.theWorld.getDayOfWorld()));
-            firstRow.append(" ").append(GuiInGameInfoHandler.weather(this.mc.theWorld, this.mc.thePlayer.getBiome().isFreezing()));
-            drawString(this.mc.fontRenderer, firstRow.toString(), 2, 2, 14737632);
-
-            StringBuilder secondRow = new StringBuilder();
-            secondRow.append(GuiInGameInfoHandler.getTemperatureText(((ITFPlayer) this.mc.thePlayer).getTemperatureManager()));
-            if (player.getHeldItemStack() != null && player.getHeldItemStack().getItem() == Item.compass) {
-                String pos = "平面坐标: (" + MathHelper.floor_double(this.mc.thePlayer.posX) + ", " + MathHelper.floor_double(this.mc.thePlayer.posZ) + ")";
-                secondRow.append(" ").append(pos);
-            }
-            if (player.getHeldItemStack() != null && player.getHeldItemStack().getItem() == Item.pocketSundial) {
-                String time = "时间: (" + this.mc.thePlayer.getWorld().getHourOfDay() + ":" + (this.mc.thePlayer.getWorld().getTotalWorldTime() % 1000L * 60L / 1000L) + ")";
-                secondRow.append(" ").append(time);
-            }
-            drawString(this.mc.fontRenderer, secondRow.toString(), 2, 12, 14737632);
+        if (!ITFConfig.DisplayHud.getBooleanValue()) return;
+        if (((!this.mc.gameSettings.showDebugInfo || this.mc.gameSettings.gui_mode != 0)) && Minecraft.getErrorMessage() == null) {
+            GuiInGameInfoHandler.drawInfo(this, this.mc);
         }
     }
 
@@ -139,7 +111,7 @@ public class GuiIngameMixin extends Gui {
         int phytonutrients = Math.max(this.mc.thePlayer.getPhytonutrients() - 800000, 0);
         int var26 = var12 - 90;
         int var25 = var13 + 32;
-        if (getNutrientsPriority(protein, phytonutrients)) {
+        if (protein > phytonutrients) {
             GL11.glPushMatrix();
             GL11.glScalef(0.6F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(Constant.icons_itf);
@@ -182,11 +154,6 @@ public class GuiIngameMixin extends Gui {
         drawTexturedModalRect(var26 - 205, var25, 0, 118, (int) length, 6);
 
         GL11.glPopMatrix();
-    }
-
-    @Unique
-    private boolean getNutrientsPriority(int protein, int phytonutrients) {
-        return (protein > phytonutrients);
     }
 
     @Unique

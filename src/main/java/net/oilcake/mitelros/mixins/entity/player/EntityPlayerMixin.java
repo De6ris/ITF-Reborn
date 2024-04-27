@@ -84,7 +84,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         ci.cancel();
     }
 
-    @Override
+    @Override // TODO bad override
     public boolean isOnLadder() {
         if (ITFConfig.Realistic.get() && (getHealth() <= 5.0F || this.capabilities.getWalkSpeed() < 0.05F || !hasFoodEnergy())) {
             return this.miscManager.itfLadder();
@@ -245,9 +245,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         this.temperatureManager.freezingWarning = par1NBTTagCompound.getInteger("FreezingWarning");
         this.temperatureManager.heatResistance = par1NBTTagCompound.getInteger("HeatResistance");
         this.temperatureManager.heatWarning = par1NBTTagCompound.getInteger("HeatWarning");
-        float temperature = par1NBTTagCompound.getFloat("BodyTemperature");
-        this.temperatureManager.bodyTemperature = temperature == 0.0f ? 37.2F : temperature;// for upgrading saves
-//        this.temperatureManager.bodyTemperature = par1NBTTagCompound.getFloat("BodyTemperature");
+        this.temperatureManager.bodyTemperature = par1NBTTagCompound.getFloat("BodyTemperature");
         this.drunkManager.setDrunk_duration(par1NBTTagCompound.getInteger("DrunkDuration"));
     }
 
@@ -266,8 +264,9 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     }
 
     @Inject(method = "checkForArmorAchievements", at = @At("HEAD"))
-    private void itfArmorAchievements(CallbackInfo ci) {
+    private void itfArmorAchievements(CallbackInfo ci) {// TODO [Optional] add itf metal to wearAllPlateArmor check
         this.miscManager.wolfFurCheck();
+        this.miscManager.iceChunkCheck();
     }
 
     @Inject(method = "attackEntityFrom", at = @At("HEAD"), cancellable = true)
@@ -312,7 +311,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @ModifyReturnValue(method = "getCraftingExperienceCost", at = @At("RETURN"))
     private int moreEXPNeeded(int original) {
         return original * 2;
-    }
+    }// quality item
 
     @Shadow
     public ItemStack[] getWornItems() {

@@ -9,7 +9,7 @@ public abstract class ItemKnifeMixin extends ItemDagger {
         super(par1, material);
     }
 
-    @Override
+    @Override// TODO bad override
     public boolean onItemRightClick(EntityPlayer player, float partial_tick, boolean ctrl_is_down) {
         RaycastCollision rc = player.getSelectedObject(partial_tick, false);
         if (rc == null)

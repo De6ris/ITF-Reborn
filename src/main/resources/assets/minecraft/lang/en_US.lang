@@ -2,6 +2,8 @@ achievement.MinePieces=Punch too hard
 achievement.MinePieces.desc=Smash the ore block.
 achievement.WearAllWolfArmor=Famous brand
 achievement.WearAllWolfArmor.desc=And beat cold.
+achievement.WearAllIceArmor=Be cool
+achievement.WearAllIceArmor.desc=And beat heat.
 achievement.BuildTungstenBow=Arbalistic
 achievement.BuildTungstenBow.desc=Obtain the strongest bow.
 achievement.getWitherSkull=SPOOKYYYYY
@@ -61,6 +63,8 @@ item.tooltip.water.add=Water+%d
 item.tooltip.water.minus=Water%d
 item.tooltip.water.agave=40% Water+1
 item.tooltip.reach.add=Reach+%d
+item.tooltip.temperature.add=Temperature+%d
+item.tooltip.temperature.minus=Temperature%d
 
 item.armor/nickel_helmet.name=Nickel Helmet
 item.armor/nickel_chestplate.name=Nickel Chestplate
@@ -75,6 +79,10 @@ item.armor/wolf_helmet.name=Wolf Boarder Helmet
 item.armor/wolf_jacket.name=Wolf Boarder Coat
 item.armor/wolf_leggings.name=Wolf Boarder Leggings
 item.armor/wolf_boots.name=Wolf Boarder Boots
+item.armor/ice_helmet.name=Ice Helmet
+item.armor/ice_chestplate.name=Ice Chestplate
+item.armor/ice_leggings.name=Ice Leggings
+item.armor/ice_boots.name=Ice Boots
 
 enchantment.vanishing=Curse Of Vanishing
 enchantment.melting=Melting
@@ -314,6 +322,9 @@ item.buckets/wood/water_suspicious.name=Wood Bucket of Suspicious Water
 item.buckets/wood/water_swampland.name=Wood Bucket of Swampland Water
 
 item.food/mashed_cactus.name=Mashed Cactus
+item.food/ice_sucker.name=Ice Sucker
+item.food/melon_ice.name=Melon Ice
+item.food/chocolate_smoothie.name=Chocolate Smoothie
 item.food/lemon.name=Lemon
 item.food/lemon_pie.name=Lemon Pie
 item.food/horse_meat.name=Raw Horse Meat
@@ -325,9 +336,9 @@ item.food/agave.name=Agave
 item.food/beetroot.name=Beetroot
 item.food/beetroot_seeds.name=Beetroot seeds
 item.food/peeled_sugarcane.name=Peeled Sugarcane
-item.pulque.name=Pulque
-item.ale.name=Ale
-item.forging_note.name=Forging Note
+item.misc/pulque.name=Pulque
+item.misc/ale.name=Ale
+item.misc/forging_note.name=Forging Note
 item.totem/totem_of_fecund.name=Totem of Abundance
 item.totem/totem_of_knowledge.name=Totem of Erudition
 item.totem/totem_of_destroy.name=Totem of Destruction
@@ -335,9 +346,10 @@ item.totem/totem_of_preserve.name=Totem of Preservation
 item.totem/totem_of_hunting.name=Totem of The Hunt
 item.totem/totem_of_sentry.name=Totem of Sentry
 item.totem/totem_of_unknown.name=Totem of UNKNOWN
-item.wither_branch.name=Wither Branch
-item.sulphur_sphere.name=Sulphur
-item.enderRod.name=Ender Rod
+item.misc/wither_branch.name=Wither Branch
+item.misc/sulphur_sphere.name=Sulphur
+item.misc/enderRod.name=Ender Rod
+item.misc/ice_chunk.name=Ice Chunk
 
 item.ignition/wood.name=Ignition
 item.ignition/rusted_iron.name=Rusted Iron Fire Starter
@@ -354,7 +366,7 @@ item.ignition/adamantium.name=Adamantium Fire Starter
 item.shards/diamond.name=Diamond Shard
 item.shards/emerald.name=Emerald Shard
 item.shards/quartz.name=Nether Quartz Shard
-item.azurite.name=Azurite
+item.misc/azurite.name=Azurite
 
 item.records/record_damnation.name=Music Disc
 item.records/record_connected.name=Music Disc
@@ -366,8 +378,8 @@ item.potion/experimental_potion.name=Experimental Potion
 item.potion/suspicious_potion.name=Natural Water Bottle
 item.potion/stretch_potion.name=Stretch Potion
 
-item.wolf_fur.name=Wolf Fur
-item.ancient_metal_armor_piece.name=Gilding Ancient Metal Armor Piece
+item.misc/wolf_fur.name=Wolf Fur
+item.misc/ancient_metal_armor_piece.name=Gilding Ancient Metal Armor Piece
 
 item.arrows/magical_arrow.name=Magical Arrow
 

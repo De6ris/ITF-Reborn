@@ -3,19 +3,15 @@ package net.oilcake.mitelros.mixins.gui;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFGui;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 @Mixin(GuiEnchantment.class)
 public abstract class GuiEnchantmentMixin extends GuiContainer implements ITFGui {
     @Unique
-    private int[] info = new int[12];
+    private int[] info = null;
 
     public GuiEnchantmentMixin(Container par1Container) {
         super(par1Container);
@@ -23,11 +19,11 @@ public abstract class GuiEnchantmentMixin extends GuiContainer implements ITFGui
 
     @Inject(method = "drawGuiContainerBackgroundLayer", at = @At("TAIL"))
     private void addInfo(float par1, int par2, int par3, CallbackInfo ci) {
-        if (this.info[0] == 0) return;
+        if (this.info == null) return;
         if (!this.inventorySlots.getSlot(0).getHasStack()) return;
         for (int line = 0; line < 3; line++) {
             String var13 = this.readInfo(this.info, line);
-            if (var13 == null) return;
+            if (var13 == null) continue;
             var13 += "...?";
             int var4 = (this.width - this.xSize) / 2;
             int var5 = (this.height - this.ySize) / 2;

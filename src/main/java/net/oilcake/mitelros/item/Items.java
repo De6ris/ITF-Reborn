@@ -2,11 +2,10 @@ package net.oilcake.mitelros.item;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
-import net.oilcake.mitelros.api.ItemRockExtend;
 import net.oilcake.mitelros.block.Blocks;
+import net.oilcake.mitelros.item.api.*;
 import net.oilcake.mitelros.item.potion.ItemPotionExperimental;
 import net.oilcake.mitelros.item.potion.ItemPotionSuspicious;
-import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.reload.event.ItemRegistryEvent;
 import net.xiaoyu233.fml.reload.event.RecipeRegistryEvent;
 import net.xiaoyu233.fml.util.IdUtil;
@@ -31,41 +30,41 @@ public class Items extends Item {
 
     public static final ItemArmor nickelBootsChain = new ItemBoots(IdUtil.getNextItemID(), Materials.nickel, true);
 
-    public static final ItemNugget nickelNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemNugget nickelNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemAxe nickelAxe = ReflectHelper.createInstance(ItemAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemAxe nickelAxe = ReflectHelper.createInstance(ItemAxe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemBattleAxe nickelBattleAxe = ReflectHelper.createInstance(ItemBattleAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemBattleAxe nickelBattleAxe = ReflectHelper.createInstance(ItemBattleAxe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemDagger nickelDagger = ReflectHelper.createInstance(ItemDagger.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemDagger nickelDagger = ReflectHelper.createInstance(ItemDagger.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final Item nickelIngot = ReflectHelper.createInstance(ItemIngot.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel).setXPReward(15);
+    public static final Item nickelIngot = ReflectHelper.createInstance(ItemIngot.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel).setXPReward(15);
 
-    public static final ItemPickaxe nickelPickaxe = ReflectHelper.createInstance(ItemPickaxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemPickaxe nickelPickaxe = ReflectHelper.createInstance(ItemPickaxe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemShovel nickelShovel = ReflectHelper.createInstance(ItemShovel.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemShovel nickelShovel = ReflectHelper.createInstance(ItemShovel.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemSword nickelSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemSword nickelSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemWarHammer nickelWarHammer = ReflectHelper.createInstance(ItemWarHammer.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemWarHammer nickelWarHammer = ReflectHelper.createInstance(ItemWarHammer.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemHatchet nickelHatchet = ReflectHelper.createInstance(ItemHatchet.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemHatchet nickelHatchet = ReflectHelper.createInstance(ItemHatchet.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemHoe nickelHoe = ReflectHelper.createInstance(ItemHoe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemHoe nickelHoe = ReflectHelper.createInstance(ItemHoe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemKnife nickelKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemKnife nickelKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemMattock nickelMattock = ReflectHelper.createInstance(ItemMattock.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemMattock nickelMattock = ReflectHelper.createInstance(ItemMattock.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemScythe nickelScythe = ReflectHelper.createInstance(ItemScythe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemScythe nickelScythe = ReflectHelper.createInstance(ItemScythe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemShears nickelShears = ReflectHelper.createInstance(ItemShears.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemShears nickelShears = new ItemShears(IdUtil.getNextItemID(), Materials.nickel);
 
     public static final Item doorNickel = new ItemDoor(IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemChain nickelChain = ReflectHelper.createInstance(ItemChain.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemChain nickelChain = ReflectHelper.createInstance(ItemChain.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.nickel);
 
-    public static final ItemCoin nickelCoin = ReflectHelper.createInstance(ItemCoin.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.nickel);
+    public static final ItemCoin nickelCoin = new ItemCoin(IdUtil.getNextItemID(), Materials.nickel);
 
     public static final ItemArrow arrowNickel = new ItemArrow(IdUtil.getNextItemID(), Materials.nickel);
 
@@ -85,41 +84,41 @@ public class Items extends Item {
 
     public static final ItemArmor tungstenBootsChain = new ItemBoots(IdUtil.getNextItemID(), Materials.tungsten, true);
 
-    public static final ItemNugget tungstenNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemNugget tungstenNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemAxe tungstenAxe = ReflectHelper.createInstance(ItemAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemAxe tungstenAxe = ReflectHelper.createInstance(ItemAxe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemBattleAxe tungstenBattleAxe = ReflectHelper.createInstance(ItemBattleAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemBattleAxe tungstenBattleAxe = ReflectHelper.createInstance(ItemBattleAxe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemDagger tungstenDagger = ReflectHelper.createInstance(ItemDagger.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemDagger tungstenDagger = ReflectHelper.createInstance(ItemDagger.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final Item tungstenIngot = ReflectHelper.createInstance(ItemIngot.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten).setXPReward(75);
+    public static final Item tungstenIngot = ReflectHelper.createInstance(ItemIngot.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten).setXPReward(75);
 
-    public static final ItemPickaxe tungstenPickaxe = ReflectHelper.createInstance(ItemPickaxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemPickaxe tungstenPickaxe = ReflectHelper.createInstance(ItemPickaxe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemShovel tungstenShovel = ReflectHelper.createInstance(ItemShovel.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemShovel tungstenShovel = ReflectHelper.createInstance(ItemShovel.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemSword tungstenSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemSword tungstenSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemWarHammer tungstenWarHammer = ReflectHelper.createInstance(ItemWarHammer.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemWarHammer tungstenWarHammer = ReflectHelper.createInstance(ItemWarHammer.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemHatchet tungstenHatchet = ReflectHelper.createInstance(ItemHatchet.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemHatchet tungstenHatchet = ReflectHelper.createInstance(ItemHatchet.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemHoe tungstenHoe = ReflectHelper.createInstance(ItemHoe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemHoe tungstenHoe = ReflectHelper.createInstance(ItemHoe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemKnife tungstenKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemKnife tungstenKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemMattock tungstenMattock = ReflectHelper.createInstance(ItemMattock.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemMattock tungstenMattock = ReflectHelper.createInstance(ItemMattock.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemScythe tungstenScythe = ReflectHelper.createInstance(ItemScythe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemScythe tungstenScythe = ReflectHelper.createInstance(ItemScythe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemShears tungstenShears = ReflectHelper.createInstance(ItemShears.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemShears tungstenShears = new ItemShears(IdUtil.getNextItemID(), Materials.tungsten);
 
     public static final Item doorTungsten = new ItemDoor(IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemChain tungstenChain = ReflectHelper.createInstance(ItemChain.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemChain tungstenChain = ReflectHelper.createInstance(ItemChain.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.tungsten);
 
-    public static final ItemCoin tungstenCoin = ReflectHelper.createInstance(ItemCoin.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.tungsten);
+    public static final ItemCoin tungstenCoin = new ItemCoin(IdUtil.getNextItemID(), Materials.tungsten);
 
     public static final ItemArrow arrowTungsten = new ItemArrow(IdUtil.getNextItemID(), Materials.tungsten);
 
@@ -149,7 +148,7 @@ public class Items extends Item {
 
     public static final ItemPieces pieceAdamantium = new ItemPieces(IdUtil.getNextItemID(), Materials.orePieces, "pieceAdamantium");
 
-    public static final ItemFood mashedCactus = (ItemFood) ((ITFItem) (new ItemFood(IdUtil.getNextItemID(), Materials.mashedCactus, 2, 0, 250, false, true, false, "mashedCactus"))).setWater(1).setMaxStackSize(8);
+    public static final ItemFood mashedCactus = (ItemFood) (new ItemFood(IdUtil.getNextItemID(), Materials.mashedCactus, 2, 0, 250, false, true, false, "mashedCactus")).setMaxStackSize(8);
 
     public static final ItemFood lemon = (new ItemFood(IdUtil.getNextItemID(), Material.fruit, 2, 1, 1000, false, false, true, "lemon")).setPlantProduct();
 
@@ -211,7 +210,7 @@ public class Items extends Item {
 
     public static final ItemBucket adamantiumBucketWaterDangerous = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.adamantium, Materials.dangerous_water)).setContainerItem(bucketAdamantiumEmpty);
 
-    public static final Item wolf_fur = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.wolf_fur).setCraftingDifficultyAsComponent(100.0F).setUnlocalizedName("small_leather").setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
+    public static final Item wolf_fur = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.wolf_fur).setCraftingDifficultyAsComponent(100.0F).setUnlocalizedName("small_leather").setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
 
     public static final Item horse_meat = new ItemMeat(IdUtil.getNextItemID(), 6, 6, true, false, "horse_meat");
 
@@ -283,7 +282,7 @@ public class Items extends Item {
 
     public static final ItemArmor VibraniumBoots = new ItemBoots(IdUtil.getNextItemID(), Materials.vibranium, false);
 
-    public static final ItemSword VibraniumSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.vibranium);
+    public static final ItemSword VibraniumSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.vibranium);
 
     public static final ItemArmor helmetCustom_a = new ItemHelmet(IdUtil.getNextItemID(), Materials.custom_a, false);
 
@@ -301,7 +300,7 @@ public class Items extends Item {
 
     public static final ItemArmor BootsAncientmetalsacred = new ItemBoots(IdUtil.getNextItemID(), Materials.ancient_metal_sacred, false);
 
-    public static final Item AncientmetalArmorPiece = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.ancient_metal_sacred).setCraftingDifficultyAsComponent(800.0F).setUnlocalizedName("ancient_metal_sacred_piece").setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
+    public static final Item AncientmetalArmorPiece = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.ancient_metal_sacred).setCraftingDifficultyAsComponent(800.0F).setUnlocalizedName("ancient_metal_sacred_piece").setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
 
     public static final ItemFood Agave = (ItemFood) (new ItemFood(IdUtil.getNextItemID(), Materials.agave, 1, 0, false, false, false, "agave")).setMaxStackSize(16).setAlwaysEdible();
 
@@ -319,19 +318,19 @@ public class Items extends Item {
 
     public static final ItemArmor UruBoots = new ItemBoots(IdUtil.getNextItemID(), Materials.uru, false);
 
-    public static final ItemNugget UruNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
+    public static final ItemNugget UruNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.uru);
 
-    public static final ItemBattleAxe UruBattleAxe = ReflectHelper.createInstance(ItemBattleAxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
+    public static final ItemBattleAxe UruBattleAxe = ReflectHelper.createInstance(ItemBattleAxe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.uru);
 
-    public static final Item UruIngot = ReflectHelper.createInstance(ItemIngot.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru).setXPReward(150);
+    public static final Item UruIngot = ReflectHelper.createInstance(ItemIngot.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.uru).setXPReward(150);
 
-    public static final ItemSword UruSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
+    public static final ItemSword UruSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.uru);
 
-    public static final ItemWarHammer UruWarHammer = ReflectHelper.createInstance(ItemWarHammer.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
+    public static final ItemWarHammer UruWarHammer = ReflectHelper.createInstance(ItemWarHammer.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.uru);
 
-    public static final ItemMattock UruMattock = ReflectHelper.createInstance(ItemMattock.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
+    public static final ItemMattock UruMattock = ReflectHelper.createInstance(ItemMattock.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.uru);
 
-    public static final ItemScythe UruScythe = ReflectHelper.createInstance(ItemScythe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
+    public static final ItemScythe UruScythe = ReflectHelper.createInstance(ItemScythe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.uru);
 
     public static final ItemPieces pieceUru = new ItemPieces(IdUtil.getNextItemID(), Materials.orePieces, "pieceAdamantium");
 
@@ -445,11 +444,11 @@ public class Items extends Item {
 
     public static final Item totemOfHunting = (new ItemTotem(IdUtil.getNextItemID(), Materials.nickel, "totem")).setMaxStackSize(1);
 
-    public static final ItemClub UruMorningStar = ReflectHelper.createInstance(ItemClub.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
+    public static final ItemClub UruMorningStar = ReflectHelper.createInstance(ItemClub.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.uru);
 
-    public static final ItemPickaxe UruPickaxe = ReflectHelper.createInstance(ItemPickaxe.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.uru);
+    public static final ItemPickaxe UruPickaxe = ReflectHelper.createInstance(ItemPickaxe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.uru);
 
-    public static final ItemRockExtend shardAzurite = (ItemRockExtend) (new ItemRockExtend(IdUtil.getNextItemID(), Materials.crystal, "azurite")).setXPReward(1);
+    public static final ITFRock shardAzurite = (ITFRock) (new ITFRock(IdUtil.getNextItemID(), Materials.crystal, "azurite")).setXPReward(1);
 
     public static final Item detectorEmerald = new ItemDetector(IdUtil.getNextItemID(), Material.emerald, "emerald").setUnlocalizedName("detector");
 
@@ -473,7 +472,7 @@ public class Items extends Item {
 
     public static final ItemBucketMilk woodBucketMilk = (ItemBucketMilk) new ItemBucketMilk(IdUtil.getNextItemID(), Materials.wood).setContainerItem(woodBucket);
 
-    public static final ItemHoe hoeFlint = createInstance(ItemHoe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.flint);
+    public static final ItemHoe hoeFlint = ReflectHelper.createInstance(ItemHoe.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.flint);
 
     public static final ItemFood peeledSugarcane = (new ItemFood(IdUtil.getNextItemID(), Materials.peeledSugarcane, 0, 1, 1000, false, false, true, "peeledSugarcane")).setPlantProduct();
 
@@ -483,10 +482,20 @@ public class Items extends Item {
 
     public static final ItemIgnition ignitionRustedIron = new ItemIgnition(IdUtil.getNextItemID(), Material.rusted_iron);
 
-    public static final ItemKnife stickKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, Integer.valueOf(IdUtil.getNextItemID()), Materials.wood);
+    public static final ItemKnife stickKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.wood);
 
     public static final ItemWand slimeWand = new ItemWand(IdUtil.getNextItemID(), Material.copper);
+    public static final Item iceChunk = new ItemStandard(IdUtil.getNextItemID(), Materials.ice_chunk, "ice_chunk").setCraftingDifficultyAsComponent(50.0F);
+    public static final ItemArmor iceHelmet = new ItemHelmet(IdUtil.getNextItemID(), Materials.ice_chunk, false);
 
+    public static final ItemArmor iceChestplate = new ItemCuirass(IdUtil.getNextItemID(), Materials.ice_chunk, false);
+
+    public static final ItemArmor iceLeggings = new ItemLeggings(IdUtil.getNextItemID(), Materials.ice_chunk, false);
+
+    public static final ItemArmor iceBoots = new ItemBoots(IdUtil.getNextItemID(), Materials.ice_chunk, false);
+    public static final ItemFood ice_sucker = (ItemFood) (new ItemFood(IdUtil.getNextItemID(), Materials.ice_sucker, 0, 0, false, false, false, "ice_sucker")).setMaxStackSize(8).setAlwaysEdible();
+    public static final ItemFood melon_ice = (ItemFood) (new ItemFood(IdUtil.getNextItemID(), Materials.melon_ice, 1, 1, 1000, false, false, true, "melon_ice")).setMaxStackSize(8);
+    public static final ItemFood chocolate_smoothie = (ItemFood) (new ItemFood(IdUtil.getNextItemID(), Materials.chocolate_smoothie, 4, 2, 1000, false, false, true, "chocolate_smoothie")).setMaxStackSize(4);
 
     public static void registerItems(ItemRegistryEvent event) {
         event.register("armor/nickel_helmet", nickelHelmet);
@@ -590,7 +599,7 @@ public class Items extends Item {
         event.register("buckets/tungsten/water_swampland", tungstenBucketWaterDangerous);
         event.register("buckets/adamantium/water_swampland", adamantiumBucketWaterDangerous);
         event.register("buckets/ancient_metal/water_swampland", ancientmetalBucketWaterDangerous);
-        event.register("wolf_fur", wolf_fur);
+        event.register("misc/wolf_fur", wolf_fur);
         event.register("food/horse_meat", horse_meat);
         event.register("food/horse_meat_cooked", horse_meat_cooked);
         event.register("armor/wolf_helmet", wolfHelmet);
@@ -620,7 +629,7 @@ public class Items extends Item {
         event.register("shards/diamond", shardDiamond);
         event.register("shards/emerald", shardEmerald);
         event.register("shards/quartz", shardNetherQuartz);
-        event.register("azurite", shardAzurite);
+        event.register("misc/azurite", shardAzurite);
         event.register("records/record_damnation", recordDamnation);
         event.register("records/record_connected", recordConnected);
         event.register("tools/vibranium_sword", VibraniumSword);
@@ -640,15 +649,15 @@ public class Items extends Item {
         event.register("armor/ancient_metal_sacred_chestplate", ChestplateAncientmetalsacred);
         event.register("armor/ancient_metal_sacred_leggings", LeggingsAncientmetalsacred);
         event.register("armor/ancient_metal_sacred_boots", BootsAncientmetalsacred);
-        event.register("ancient_metal_armor_piece", AncientmetalArmorPiece);
+        event.register("misc/ancient_metal_armor_piece", AncientmetalArmorPiece);
         event.register("food/agave", Agave);
-        event.register("pulque", Pulque);
-        event.register("ale", Ale);
+        event.register("misc/pulque", Pulque);
+        event.register("misc/ale", Ale);
         event.register("armor/uru_helmet", UruHelmet);
         event.register("armor/uru_chestplate", UruChestplate);
         event.register("armor/uru_leggings", UruLeggings);
         event.register("armor/uru_boots", UruBoots);
-        event.register("forging_note", forgingnote);
+        event.register("misc/forging_note", forgingnote);
         event.register("ingots/uru", UruIngot);
         event.register("nuggets/uru", UruNugget);
         event.register("tools/uru_battle_axe", UruBattleAxe);
@@ -701,12 +710,12 @@ public class Items extends Item {
         event.register("ignition/mithril", ignitionMithril);
         event.register("ignition/tungsten", ignitionTungsten);
         event.register("ignition/adamantium", ignitionAdamantium);
-        event.register("wither_branch", wither_branch);
+        event.register("misc/wither_branch", wither_branch);
         event.register("tools/detector", detectorDiamond);
         event.register("tools/detector_emerald", detectorEmerald);
-        event.register("sulphur_sphere", sulphur);
+        event.register("misc/sulphur_sphere", sulphur);
         event.register("bows/uru/", bowUru).setUnlocalizedName("uru_bow");
-        event.register("enderRod", enderRod).setUnlocalizedName("enderRod");
+        event.register("misc/enderRod", enderRod);
         event.register("tools/rusted_iron_club", morningStarRustedIron);
         event.register("buckets/wood/empty", woodBucket);
         event.register("buckets/wood/water", woodBucketWater);
@@ -720,137 +729,78 @@ public class Items extends Item {
         event.register("ignition/rusted_iron", ignitionRustedIron);
         event.register("tools/flint_hoe", hoeFlint);
         event.register("tools/stick_knife", stickKnife);
-        event.register("wand/slime", slimeWand);
-        Constant.initItemArray();
+        event.register("wand/slime", slimeWand);//4483
+        event.register("misc/ice_chunk", iceChunk);
+        event.register("armor/ice_helmet", iceHelmet);
+        event.register("armor/ice_chestplate", iceChestplate);
+        event.register("armor/ice_leggings", iceLeggings);
+        event.register("armor/ice_boots", iceBoots);
+        event.register("food/ice_sucker", ice_sucker);
+        event.register("food/melon_ice", melon_ice);
+        event.register("food/chocolate_smoothie", chocolate_smoothie);
+        for (int i = 0; i < 128 - (chocolate_smoothie.itemID - slimeWand.itemID); i++) {
+            IdUtil.getNextItemID();
+        }
     }
 
     public static void registerBasicToolRecipes(RecipeRegistryEvent register, Material material) {
         Item item = Item.getMatchingItem(ItemIngot.class, material);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemSword.class, material)), true, "A", "A", "S",
-
-                Character.valueOf('A'), item,
-                Character.valueOf('S'), Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemHoe.class, material)), true, "AA", "S ", "S ",
-
-                Character.valueOf('A'), item,
-                Character.valueOf('S'), Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemAxe.class, material)), true, "AA", "SA", "S ",
-
-                Character.valueOf('A'), item,
-                Character.valueOf('S'), Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemShovel.class, material)), true, "A", "S", "S",
-
-                Character.valueOf('A'), item,
-                Character.valueOf('S'), Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemPickaxe.class, material)), true, "AAA", " S ", " S ",
-
-                Character.valueOf('A'), item,
-                Character.valueOf('S'), Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemFishingRod.class, material)), true, "  S", " SG", "SAG",
-
-                Character.valueOf('A'), getMatchingItem(ItemNugget.class, item.getExclusiveMaterial()),
-                Character.valueOf('S'), Item.stick,
-                Character.valueOf('G'), Item.silk);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemShears.class, material)), true, "A ", " A",
-
-                Character.valueOf('A'), item);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemSword.class, material)), true, "A", "A", "S", 'A', item, 'S', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemHoe.class, material)), true, "AA", "S ", "S ", 'A', item, 'S', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemAxe.class, material)), true, "AA", "SA", "S ", 'A', item, 'S', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemShovel.class, material)), true, "A", "S", "S", 'A', item, 'S', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemPickaxe.class, material)), true, "AAA", " S ", " S ", 'A', item, 'S', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemFishingRod.class, material)), true, "  S", " SG", "SAG", 'A', getMatchingItem(ItemNugget.class, item.getExclusiveMaterial()), 'S', Item.stick, 'G', Item.silk);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemShears.class, material)), true, "A ", " A", 'A', item);
         registerArmorRecipe(register, item, material);
     }
 
-    public static void registerMITEToolRecipe(RecipeRegistryEvent register, Material material) {
-        Item item = Item.getMatchingItem(ItemIngot.class, material);
-        Item item_nugget = getMatchingItem(ItemNugget.class, item.getExclusiveMaterial());
+    public static void registerMITEToolRecipeForITFMaterial(RecipeRegistryEvent register, Material material) {
+        Item item_ingot = Item.getMatchingItem(ItemIngot.class, material);
+        Item item_nugget = getMatchingItem(ItemNugget.class, item_ingot.getExclusiveMaterial());
         Item item_chain = Item.getMatchingItem(ItemChain.class, material);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemArrow.class, material)), true, "C", "B", "A",
-
-                Character.valueOf('A'), Item.feather,
-                Character.valueOf('B'), Item.stick,
-                Character.valueOf('C'), item_nugget);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemChain.class, material)), true, " A ", "A A", " A ",
-
-                Character.valueOf('A'), item_nugget);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemArrow.class, material)), true, "C", "B", "A", 'A', Item.feather, 'B', Item.stick, 'C', item_nugget);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemChain.class, material)), true, " A ", "A A", " A ", 'A', item_nugget);
         registerArmorRecipe(register, item_chain, material);
-        register.registerShapedRecipe(new ItemStack(ItemBucket.getPeer(material, null)), true, "A A", " A ",
-
-                Character.valueOf('A'), item);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemScythe.class, material)), true, "SA ", "S A", "S  ",
-
-                Character.valueOf('A'), item,
-                Character.valueOf('S'), Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemMattock.class, material)), true, "AAA", " SA", " S ",
-
-                Character.valueOf('A'), item,
-                Character.valueOf('S'), Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemHatchet.class, material)), true, " BA", " B ",
-
-                Character.valueOf('A'), item,
-                Character.valueOf('B'), Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemWarHammer.class, material)), true, "AAA", "ABA", " B ",
-
-                Character.valueOf('A'), item,
-                Character.valueOf('B'), Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemDagger.class, material)), true, " A ", " B ",
-
-                Character.valueOf('A'), item,
-                Character.valueOf('B'), Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemBattleAxe.class, material)), true, "A A", "ABA", " B ",
-
-                Character.valueOf('A'), item,
-                Character.valueOf('B'), Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemDoor.class, material)), true, "AA", "AA", "AA",
-
-                Character.valueOf('A'), item);
+        register.registerShapedRecipe(new ItemStack(ItemBucket.getPeer(material, null)), true, "A A", " A ", 'A', item_ingot);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemScythe.class, material)), true, "SA ", "S A", "S  ", 'A', item_ingot, 'S', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemMattock.class, material)), true, "AAA", " SA", " S ", 'A', item_ingot, 'S', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemHatchet.class, material)), true, " BA", " B ", 'A', item_ingot, 'B', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemWarHammer.class, material)), true, "AAA", "ABA", " B ", 'A', item_ingot, 'B', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemDagger.class, material)), true, " A ", " B ", 'A', item_ingot, 'B', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemBattleAxe.class, material)), true, "A A", "ABA", " B ", 'A', item_ingot, 'B', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemDoor.class, material)), true, "AA", "AA", "AA", 'A', item_ingot);
     }
 
     public static void registerITFToolRecipe(RecipeRegistryEvent register) {
-        Material[] materials = {Material.copper, Material.silver, Material.gold, Material.iron, Materials.nickel, Material.ancient_metal, Material.mithril, Materials.tungsten, Material.adamantium};
-        for (int i = 0; i < materials.length; i++) {
-            Item item = Item.getMatchingItem(ItemIngot.class, materials[i]);
-            Item item_nugget = getMatchingItem(ItemNugget.class, materials[i]);
-            register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemMorningStar.class, materials[i]), 1), true, "###", "#*#", " # ",
+        Material[] materials = new Material[]{Material.copper, Material.silver, Material.gold, Material.iron, Materials.nickel, Material.ancient_metal, Material.mithril, Materials.tungsten, Material.adamantium};
 
-                    Character.valueOf('#'), item_nugget,
-                    Character.valueOf('*'), item);
-            register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemIgnition.class, materials[i])), true, "C ", " F",
-
-                    Character.valueOf('C'), item_nugget,
-                    Character.valueOf('F'), flint);
+        for (Material material : materials) {
+            Item item = Item.getMatchingItem(ItemIngot.class, material);
+            Item item_nugget = getMatchingItem(ItemNugget.class, material);
+            register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemMorningStar.class, material), 1), true, "###", "#*#", " # ", '#', item_nugget, '*', item);
+            register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemIgnition.class, material)), true, "C ", " F", 'C', item_nugget, 'F', flint);
         }
+
     }
 
     public static void registerArmorRecipe(RecipeRegistryEvent register, Item item, Material material) {
         if (item instanceof ItemChain) {
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemHelmet.class, material, true)), true, "AAA", "A A",
-
-                    Character.valueOf('A'), item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemCuirass.class, material, true)), true, "A A", "AAA", "AAA",
-
-                    Character.valueOf('A'), item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemLeggings.class, material, true)), true, "AAA", "A A", "A A",
-
-                    Character.valueOf('A'), item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemBoots.class, material, true)), true, "A A", "A A",
-
-                    Character.valueOf('A'), item);
+            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemHelmet.class, material, true)), true, "AAA", "A A", 'A', item);
+            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemCuirass.class, material, true)), true, "A A", "AAA", "AAA", 'A', item);
+            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemLeggings.class, material, true)), true, "AAA", "A A", "A A", 'A', item);
+            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemBoots.class, material, true)), true, "A A", "A A", 'A', item);
         } else {
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemHelmet.class, material, false)), true, "AAA", "A A",
-
-                    Character.valueOf('A'), item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemCuirass.class, material, false)), true, "A A", "AAA", "AAA",
-
-                    Character.valueOf('A'), item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemLeggings.class, material, false)), true, "AAA", "A A", "A A",
-
-                    Character.valueOf('A'), item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemBoots.class, material, false)), true, "A A", "A A",
-
-                    Character.valueOf('A'), item);
+            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemHelmet.class, material, false)), true, "AAA", "A A", 'A', item);
+            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemCuirass.class, material, false)), true, "A A", "AAA", "AAA", 'A', item);
+            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemLeggings.class, material, false)), true, "AAA", "A A", "A A", 'A', item);
+            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemBoots.class, material, false)), true, "A A", "A A", 'A', item);
         }
     }
 
     public static void registerFullMetalToolRecipe(RecipeRegistryEvent register, Material material) {
         registerBasicToolRecipes(register, material);
-        registerMITEToolRecipe(register, material);
+        registerMITEToolRecipeForITFMaterial(register, material);
     }
 
     public static void registerRecipes(RecipeRegistryEvent register) {
@@ -860,80 +810,25 @@ public class Items extends Item {
         register.registerShapelessRecipe(new ItemStack(tungstenIngot, 9), true, Blocks.blockTungsten);
         register.registerShapelessRecipe(new ItemStack(tungstenNugget, 9), true, tungstenIngot);
         registerArmorRecipe(register, wolf_fur, Materials.wolf_fur);
+        registerArmorRecipe(register, iceChunk, Materials.ice_chunk);
         registerITFToolRecipe(register);
         registerFullMetalToolRecipe(register, Materials.nickel);
         registerFullMetalToolRecipe(register, Materials.tungsten);
-        register.registerShapedRecipe(new ItemStack(bowTungsten, 1), true, "#C ", "#EC", "#C ",
-
-                Character.valueOf('#'), silk,
-                Character.valueOf('E'), tungstenIngot,
-                Character.valueOf('C'), stick);
-        register.registerShapedRecipe(new ItemStack(ignitionWood, 1), true, "SW", "WW",
-
-                Character.valueOf('S'), silk,
-                Character.valueOf('W'), stick);
-        register.registerShapedRecipe(new ItemStack(ignitionWood, 1), true, "SW", "WW",
-
-                Character.valueOf('S'), sinew,
-                Character.valueOf('W'), stick);
-        register.registerShapedRecipe(new ItemStack(detectorEmerald, 1), true, "FAF", "ANA", "FAF",
-
-                Character.valueOf('A'), Item.goldNugget,
-                Character.valueOf('F'), Item.ancientMetalNugget,
-                Character.valueOf('N'), Item.emerald);
-        register.registerShapedRecipe(new ItemStack(detectorDiamond, 1), true, "FAF", "ANA", "FAF",
-
-                Character.valueOf('A'), Item.goldNugget,
-                Character.valueOf('F'), Item.ancientMetalNugget,
-                Character.valueOf('N'), Item.diamond);
-
-        register.registerShapedRecipe(new ItemStack(woodBucket, 1), true, "W W", " W ",
-
-                Character.valueOf('W'), Block.wood);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "SP", "S ",
-
-                Character.valueOf('F'), Item.flint,
-                Character.valueOf('S'), Item.stick,
-                Character.valueOf('P'), Items.sinew);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "S ", "SP",
-
-                Character.valueOf('F'), Item.flint,
-                Character.valueOf('S'), Item.stick,
-                Character.valueOf('P'), Items.sinew);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", " S", "PS",
-
-                Character.valueOf('F'), Item.flint,
-                Character.valueOf('S'), Item.stick,
-                Character.valueOf('P'), Items.sinew);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "PS", " S",
-
-                Character.valueOf('F'), Item.flint,
-                Character.valueOf('S'), Item.stick,
-                Character.valueOf('P'), Items.sinew);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "PS", " S",
-
-                Character.valueOf('F'), Item.flint,
-                Character.valueOf('S'), Item.stick,
-                Character.valueOf('P'), Item.silk);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", " S", "PS",
-
-                Character.valueOf('F'), Item.flint,
-                Character.valueOf('S'), Item.stick,
-                Character.valueOf('P'), Item.silk);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "SP", "S ",
-
-                Character.valueOf('F'), Item.flint,
-                Character.valueOf('S'), Item.stick,
-                Character.valueOf('P'), Item.silk);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "S ", "SP",
-
-                Character.valueOf('F'), Item.flint,
-                Character.valueOf('S'), Item.stick,
-                Character.valueOf('P'), Item.silk);
-        register.registerShapedRecipe(new ItemStack(stickKnife, 1), true, "S", "S",
-
-                Character.valueOf('S'), Item.stick);
-
+        register.registerShapedRecipe(new ItemStack(bowTungsten, 1), true, "#C ", "#EC", "#C ", '#', silk, 'E', tungstenIngot, 'C', stick);
+        register.registerShapedRecipe(new ItemStack(ignitionWood, 1), true, "SW", "WW", 'S', silk, 'W', stick);
+        register.registerShapedRecipe(new ItemStack(ignitionWood, 1), true, "SW", "WW", 'S', sinew, 'W', stick);
+        register.registerShapedRecipe(new ItemStack(detectorEmerald, 1), true, "FAF", "ANA", "FAF", 'A', Item.goldNugget, 'F', Item.ancientMetalNugget, 'N', Item.emerald);
+        register.registerShapedRecipe(new ItemStack(detectorDiamond, 1), true, "FAF", "ANA", "FAF", 'A', Item.goldNugget, 'F', Item.ancientMetalNugget, 'N', Item.diamond);
+        register.registerShapedRecipe(new ItemStack(woodBucket, 1), true, "W W", " W ", 'W', Block.wood);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "SP", "S ", 'F', Item.flint, 'S', Item.stick, 'P', sinew);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "S ", "SP", 'F', Item.flint, 'S', Item.stick, 'P', sinew);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", " S", "PS", 'F', Item.flint, 'S', Item.stick, 'P', sinew);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "PS", " S", 'F', Item.flint, 'S', Item.stick, 'P', sinew);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "PS", " S", 'F', Item.flint, 'S', Item.stick, 'P', Item.silk);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", " S", "PS", 'F', Item.flint, 'S', Item.stick, 'P', Item.silk);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "SP", "S ", 'F', Item.flint, 'S', Item.stick, 'P', Item.silk);
+        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "S ", "SP", 'F', Item.flint, 'S', Item.stick, 'P', Item.silk);
+        register.registerShapedRecipe(new ItemStack(stickKnife, 1), true, "S", "S", 'S', Item.stick);
         register.registerShapelessRecipe(new ItemStack(totemOfUnknown, 1), true, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon);
         register.registerShapelessRecipe(new ItemStack(peeledSugarcane, 2), false, Item.reed, Item.reed);
         register.registerShapelessRecipe(new ItemStack(sulphur, 9), true, new ItemStack(Blocks.blockSulphur, 1));
@@ -963,13 +858,14 @@ public class Items extends Item {
         register.registerShapelessRecipe(new ItemStack(tungstenIngot, 1), true, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget);
         register.registerShapelessRecipe(new ItemStack(UruIngot, 1), true, UruNugget, UruNugget, UruNugget, UruNugget, UruNugget, UruNugget, UruNugget, UruNugget, UruNugget);
         register.registerShapelessRecipe(new ItemStack(Item.leather, 1), true, wolf_fur, wolf_fur, wolf_fur, wolf_fur);
+        register.registerShapelessRecipe(new ItemStack(Block.ice, 1), true, iceChunk, iceChunk, iceChunk, iceChunk);
         register.registerShapelessRecipe(new ItemStack(seedsBeetroot, 1), false, beetroot, beetroot);
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 1), false, beetroot);
-        register.registerShapelessRecipe(new ItemStack(Pulque, 1), true, new Object[]{Item.sugar, Agave, new ItemStack(Item.potion, 1, 0)});//.resetDifficulty(3200);
-        register.registerShapelessRecipe(new ItemStack(Ale, 1), true, new Object[]{Item.sugar, Item.wheat, new ItemStack(Item.potion, 1, 0)});//.resetDifficulty(3200);
+        register.registerShapelessRecipe(new ItemStack(Pulque, 1), true, Item.sugar, Agave, new ItemStack(Item.potion, 1, 0));//.resetDifficulty(3200);
+        register.registerShapelessRecipe(new ItemStack(Ale, 1), true, Item.sugar, Item.wheat, new ItemStack(Item.potion, 1, 0));//.resetDifficulty(3200);
         register.registerShapelessRecipe(new ItemStack(claybowlRaw, 1), false, Item.clay);
-        register.registerShapelessRecipe(new ItemStack(tungstenBucket, 1), false, new Object[]{tungstenBucketStone});//.resetDifficulty(100);
-        register.registerShapelessRecipe(new ItemStack(nickelBucket, 1), false, new Object[]{nickelBucketStone});//.resetDifficulty(100);
+        register.registerShapelessRecipe(new ItemStack(tungstenBucket, 1), false, tungstenBucketStone);//.resetDifficulty(100);
+        register.registerShapelessRecipe(new ItemStack(nickelBucket, 1), false, nickelBucketStone);//.resetDifficulty(100);
         int i;
         for (i = 1; i <= 9; i++) {
             register.registerShapelessRecipe(new ItemStack(Item.glassBottle, i), false, new ItemStack(suspiciousPotion, i));
@@ -1005,8 +901,8 @@ public class Items extends Item {
         register.registerShapelessRecipe(new ItemStack(claybowlSalmonSoup, 1), true, Item.fishLargeCooked, beetroot, Block.mushroomBrown, claybowlWater);
         register.registerShapelessRecipe(new ItemStack(claybowlLemonade, 1), true, Item.sugar, lemon, claybowlWater);
         register.registerShapelessRecipe(new ItemStack(experimentalPotion, 1), true, Item.blazePowder, Item.netherStalkSeeds, new ItemStack(Item.potion, 1, 0), new ItemStack(Item.appleGold, 1, 0));
-        register.registerShapelessRecipe(new ItemStack(Item.cheese, 1), false, new Object[]{new ItemStack(claybowlMilk, 4)});//.resetDifficulty(6400);
-        register.registerShapelessRecipe(new ItemStack(Item.cheese, 2), false, new Object[]{new ItemStack(claybowlMilk, 8)});//.resetDifficulty(6400);
+        register.registerShapelessRecipe(new ItemStack(Item.cheese, 1), false, new ItemStack(claybowlMilk, 4));//.resetDifficulty(6400);
+        register.registerShapelessRecipe(new ItemStack(Item.cheese, 2), false, new ItemStack(claybowlMilk, 8));//.resetDifficulty(6400);
         for (i = 1; i <= 9; i++) {
             register.registerShapelessRecipe(new ItemStack(claybowlEmpty, i), false, new ItemStack(claybowlWaterSuspicious, i));
             register.registerShapelessRecipe(new ItemStack(claybowlEmpty, i), false, new ItemStack(claybowlWaterSwampland, i));
@@ -1016,18 +912,18 @@ public class Items extends Item {
             register.registerShapelessRecipe(new ItemStack(Item.cake), false, Item.flour, Item.sugar, Item.egg, milk_buckets[n]);
             int i1;
             for (i1 = 1; i1 <= 9; i1++) {
-                register.registerShapelessRecipe(new ItemStack(Item.cheese, i1), false, new Object[]{new ItemStack(milk_buckets[n], i1)});//.resetDifficulty(6400);
+                register.registerShapelessRecipe(new ItemStack(Item.cheese, i1), false, new ItemStack(milk_buckets[n], i1));//.resetDifficulty(6400);
             }
             for (i1 = 1; i1 <= 4; i1++) {
-                register.registerShapelessRecipe(new ItemStack(Item.bowlMilk, i1), true, new Object[]{milk_buckets[n], new ItemStack(Item.bowlEmpty, i1)});//.resetDifficulty(25);
+                register.registerShapelessRecipe(new ItemStack(Item.bowlMilk, i1), true, milk_buckets[n], new ItemStack(Item.bowlEmpty, i1));//.resetDifficulty(25);
             }
             for (i1 = 1; i1 <= 4; i1++) {
-                register.registerShapelessRecipe(new ItemStack(claybowlMilk, i1), true, new Object[]{milk_buckets[n], new ItemStack(claybowlEmpty, i1)});//.resetDifficulty(25);
+                register.registerShapelessRecipe(new ItemStack(claybowlMilk, i1), true, milk_buckets[n], new ItemStack(claybowlEmpty, i1));//.resetDifficulty(25);
             }
-            register.registerShapelessRecipe(new ItemStack(milk_buckets[n]), true, new Object[]{milk_buckets[n]
-                    .getEmptyVessel(), Item.bowlMilk, Item.bowlMilk, Item.bowlMilk, Item.bowlMilk});//.resetDifficulty(25);
-            register.registerShapelessRecipe(new ItemStack(milk_buckets[n]), true, new Object[]{milk_buckets[n]
-                    .getEmptyVessel(), claybowlMilk, claybowlMilk, claybowlMilk, claybowlMilk});//.resetDifficulty(25);
+            register.registerShapelessRecipe(new ItemStack(milk_buckets[n]), true, milk_buckets[n]
+                    .getEmptyVessel(), Item.bowlMilk, Item.bowlMilk, Item.bowlMilk, Item.bowlMilk);//.resetDifficulty(25);
+            register.registerShapelessRecipe(new ItemStack(milk_buckets[n]), true, milk_buckets[n]
+                    .getEmptyVessel(), claybowlMilk, claybowlMilk, claybowlMilk, claybowlMilk);//.resetDifficulty(25);
         }
         register.registerShapelessRecipe(new ItemStack(Item.dough, 1), false, Item.flour, Item.bowlWater);
         register.registerShapelessRecipe(new ItemStack(Item.dough, 1), false, Item.flour, claybowlWater);
@@ -1037,41 +933,49 @@ public class Items extends Item {
             for (i1 = 1; i1 <= 4; i1++) {
                 register.registerShapelessRecipe(new ItemStack(Item.dough, i1), false, water_buckets[j], new ItemStack(Item.flour, i1));
                 register.registerShapelessRecipe(new ItemStack(Item.cookie, i1 * 4), false, water_buckets[j], new ItemStack(Item.flour, i1), new ItemStack(Item.chocolate, i1));
-                register.registerShapelessRecipe(new ItemStack(Item.bowlWater, i1), true, new Object[]{water_buckets[j], new ItemStack(Item.bowlEmpty, i1)});//.resetDifficulty(25);
-                register.registerShapelessRecipe(new ItemStack(claybowlWater, i1), true, new Object[]{water_buckets[j], new ItemStack(claybowlEmpty, i1)});//.resetDifficulty(25);
+                register.registerShapelessRecipe(new ItemStack(Item.bowlWater, i1), true, water_buckets[j], new ItemStack(Item.bowlEmpty, i1));//.resetDifficulty(25);
+                register.registerShapelessRecipe(new ItemStack(claybowlWater, i1), true, water_buckets[j], new ItemStack(claybowlEmpty, i1));//.resetDifficulty(25);
             }
             for (i1 = 1; i1 <= 2; i1++) {
                 register.registerShapelessRecipe(new ItemStack(Item.cookie, i1 * 4), false, water_buckets[j], new ItemStack(Item.flour, i1), new ItemStack(Item.dyePowder, i1, 3), new ItemStack(Item.sugar, i1));
             }
-            register.registerShapelessRecipe(new ItemStack(water_buckets[j]), true, new Object[]{water_buckets[j].getEmptyVessel(), new ItemStack(Item.bowlWater, 4)});//.resetDifficulty(25);
-            register.registerShapelessRecipe(new ItemStack(water_buckets[j]), true, new Object[]{water_buckets[j].getEmptyVessel(), new ItemStack(claybowlWater, 4)});//.resetDifficulty(25);
+            register.registerShapelessRecipe(new ItemStack(water_buckets[j]), true, water_buckets[j].getEmptyVessel(), new ItemStack(Item.bowlWater, 4));//.resetDifficulty(25);
+            register.registerShapelessRecipe(new ItemStack(water_buckets[j]), true, water_buckets[j].getEmptyVessel(), new ItemStack(claybowlWater, 4));//.resetDifficulty(25);
         }
         ItemBucket[] sus_water_buckets = {copperBucketWaterSuspicious, silverBucketWaterSuspicious, goldBucketWaterSuspicious, ironBucketWaterSuspicious, ancientmetalBucketWaterSuspicious, mithrilBucketWaterSuspicious, adamantiumBucketWaterSuspicious, nickelBucketWaterSuspicious, tungstenBucketWaterSuspicious};
         for (int k = 0; k < sus_water_buckets.length; k++) {
             for (int i1 = 1; i1 <= 4; i1++) {
-                register.registerShapelessRecipe(new ItemStack(bowlWaterSuspicious, i1), true, new Object[]{sus_water_buckets[k], new ItemStack(Item.bowlEmpty, i1)});//.resetDifficulty(25);
-                register.registerShapelessRecipe(new ItemStack(claybowlWaterSuspicious, i1), true, new Object[]{sus_water_buckets[k], new ItemStack(claybowlEmpty, i1)});//.resetDifficulty(25);
+                register.registerShapelessRecipe(new ItemStack(bowlWaterSuspicious, i1), true, sus_water_buckets[k], new ItemStack(Item.bowlEmpty, i1));//.resetDifficulty(25);
+                register.registerShapelessRecipe(new ItemStack(claybowlWaterSuspicious, i1), true, sus_water_buckets[k], new ItemStack(claybowlEmpty, i1));//.resetDifficulty(25);
             }
-            register.registerShapelessRecipe(new ItemStack(sus_water_buckets[k]), true, new Object[]{sus_water_buckets[k].getEmptyVessel(), new ItemStack(bowlWaterSuspicious, 4)});//.resetDifficulty(25);
-            register.registerShapelessRecipe(new ItemStack(sus_water_buckets[k]), true, new Object[]{sus_water_buckets[k].getEmptyVessel(), new ItemStack(claybowlWaterSuspicious, 4)});//.resetDifficulty(25);
+            register.registerShapelessRecipe(new ItemStack(sus_water_buckets[k]), true, sus_water_buckets[k].getEmptyVessel(), new ItemStack(bowlWaterSuspicious, 4));//.resetDifficulty(25);
+            register.registerShapelessRecipe(new ItemStack(sus_water_buckets[k]), true, sus_water_buckets[k].getEmptyVessel(), new ItemStack(claybowlWaterSuspicious, 4));//.resetDifficulty(25);
         }
         ItemBucket[] smp_water_buckets = {copperBucketWaterDangerous, silverBucketWaterDangerous, goldBucketWaterDangerous, ironBucketWaterDangerous, ancientmetalBucketWaterDangerous, mithrilBucketWaterDangerous, adamantiumBucketWaterDangerous, nickelBucketWaterDangerous, tungstenBucketWaterDangerous};
         for (int m = 0; m < smp_water_buckets.length; m++) {
             for (int i1 = 1; i1 <= 4; i1++) {
-                register.registerShapelessRecipe(new ItemStack(bowlWaterSwampland, i1), true, new Object[]{smp_water_buckets[m], new ItemStack(Item.bowlEmpty, i1)});//.resetDifficulty(25);
-                register.registerShapelessRecipe(new ItemStack(claybowlWaterSwampland, i1), true, new Object[]{smp_water_buckets[m], new ItemStack(claybowlEmpty, i1)});//.resetDifficulty(25);
+                register.registerShapelessRecipe(new ItemStack(bowlWaterSwampland, i1), true, smp_water_buckets[m], new ItemStack(Item.bowlEmpty, i1));//.resetDifficulty(25);
+                register.registerShapelessRecipe(new ItemStack(claybowlWaterSwampland, i1), true, smp_water_buckets[m], new ItemStack(claybowlEmpty, i1));//.resetDifficulty(25);
             }
-            register.registerShapelessRecipe(new ItemStack(smp_water_buckets[m]), true, new Object[]{smp_water_buckets[m].getEmptyVessel(), new ItemStack(bowlWaterSwampland, 4)});//.resetDifficulty(25);
-            register.registerShapelessRecipe(new ItemStack(smp_water_buckets[m]), true, new Object[]{smp_water_buckets[m].getEmptyVessel(), new ItemStack(claybowlWaterSwampland, 4)});//.resetDifficulty(25);
+            register.registerShapelessRecipe(new ItemStack(smp_water_buckets[m]), true, smp_water_buckets[m].getEmptyVessel(), new ItemStack(bowlWaterSwampland, 4));//.resetDifficulty(25);
+            register.registerShapelessRecipe(new ItemStack(smp_water_buckets[m]), true, smp_water_buckets[m].getEmptyVessel(), new ItemStack(claybowlWaterSwampland, 4));//.resetDifficulty(25);
         }
         register.registerShapelessRecipe(new ItemStack(Item.cake), false, Item.flour, Item.sugar, Item.egg, claybowlMilk);
         ItemCoin[] coins = {nickelCoin, tungstenCoin};
         for (ItemCoin coin : coins) {
             for (int plank_subtype = 1; plank_subtype <= 9; plank_subtype++) {
-                register.registerShapelessRecipe(new ItemStack(coin.getNuggetPeer(), plank_subtype), true, new Object[]{new ItemStack(coin, plank_subtype)});//.resetDifficulty(25); TODO what is resetDifficulty
+                register.registerShapelessRecipe(new ItemStack(coin.getNuggetPeer(), plank_subtype), true, new ItemStack(coin, plank_subtype));//.resetDifficulty(25); TODO what is resetDifficulty
             }
             register.registerShapelessRecipe(new ItemStack(coin), true, new ItemStack(coin.getNuggetPeer()));
         }
+        registerFurnaceRecipes();
+        register.registerShapedRecipe(new ItemStack(ice_sucker), true, "AB", "BB", 'A', Item.stick, 'B', Item.snowball);
+        register.registerShapedRecipe(new ItemStack(melon_ice), true, "AB", "BC", 'A', Item.stick, 'B', Item.snowball, 'C', Item.melon);
+        register.registerShapedRecipe(new ItemStack(chocolate_smoothie), true, "AAA", "BBB", 'A', iceChunk, 'B', new ItemStack(Item.dyePowder, 1, 3));
+    }
+
+
+    private static void registerFurnaceRecipes() {
         FurnaceRecipes.smelting().addSmelting(pieceAdamantium.itemID, new ItemStack(adamantiumNugget));
         FurnaceRecipes.smelting().addSmelting(pieceCopper.itemID, new ItemStack(copperNugget));
         FurnaceRecipes.smelting().addSmelting(pieceGold.itemID, new ItemStack(goldNugget));

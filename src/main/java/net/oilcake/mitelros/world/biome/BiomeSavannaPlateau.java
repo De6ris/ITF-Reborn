@@ -10,9 +10,9 @@ import java.util.Random;
 public class BiomeSavannaPlateau extends BiomeGenBase {
     public BiomeSavannaPlateau(int par1) {
         super(par1);
-        ((ITFBiomeDecorator) this.theBiomeDecorator).setTreesPerChunk(1);
-        ((ITFBiomeDecorator) this.theBiomeDecorator).setFlowersPerChunk(3);
-        ((ITFBiomeDecorator) this.theBiomeDecorator).setGrassPerChunk(10);
+        this.theBiomeDecorator.treesPerChunk = 1;
+        this.theBiomeDecorator.flowersPerChunk = 3;
+        this.theBiomeDecorator.grassPerChunk = 10;
         ((ITFBiomeDecorator) this.theBiomeDecorator).setFlowersExtendPerChunk(1);
         setBiomeName("SavannaPlateau");
         setColor(16421912);

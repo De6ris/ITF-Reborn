@@ -2,7 +2,10 @@ package net.oilcake.mitelros.mixins.network;
 
 import net.minecraft.NetHandler;
 import net.oilcake.mitelros.api.ITFNetHandler;
-import net.oilcake.mitelros.network.*;
+import net.oilcake.mitelros.network.C2SDecreaseWater;
+import net.oilcake.mitelros.network.S2CEnchantReserverInfo;
+import net.oilcake.mitelros.network.S2CEnchantmentInfo;
+import net.oilcake.mitelros.network.S2CUpdateNutrition;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(NetHandler.class)

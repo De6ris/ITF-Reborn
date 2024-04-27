@@ -12,7 +12,7 @@ public abstract class EnchantmentArrowRecoveryMixin extends Enchantment {
         super(id, rarity, difficulty);
     }
 
-    @Override
+    @Override// TODO bad override
     public boolean canApplyTogether(Enchantment par1Enchantment) {
         return (super.canApplyTogether(par1Enchantment) && par1Enchantment.effectId != Enchantments.enchantmentInfinity.effectId);
     }

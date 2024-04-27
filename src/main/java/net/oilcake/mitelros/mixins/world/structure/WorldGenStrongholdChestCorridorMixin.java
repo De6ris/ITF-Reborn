@@ -1,4 +1,4 @@
-package net.oilcake.mitelros.mixins.world;
+package net.oilcake.mitelros.mixins.world.structure;
 
 import net.minecraft.ComponentStrongholdChestCorridor;
 import net.minecraft.Item;

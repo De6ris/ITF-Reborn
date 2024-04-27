@@ -6,10 +6,12 @@ accessible method net/minecraft/Block setTextureName (Ljava/lang/String;)Lnet/mi
 accessible method net/minecraft/Block setStepSound (Lnet/minecraft/StepSound;)Lnet/minecraft/Block;
 
 accessible method net/minecraft/Damage getResponsibleEntity ()Lnet/minecraft/Entity;
+accessible method net/minecraft/DamageSource setFireAspect (Z)Lnet/minecraft/DamageSource;
+accessible field net/minecraft/EntityDamageResult entity_was_destroyed Z
 
 accessible method net/minecraft/EntityLivingBase tryDamageArmor (Lnet/minecraft/DamageSource;FLnet/minecraft/EntityDamageResult;)V
-
 accessible field net/minecraft/Entity rand Ljava/util/Random;
+accessible field net/minecraft/EntitySkeleton frenzied_by_bone_lord_countdown I
 
 accessible field net/minecraft/Material durability F
 accessible field net/minecraft/Material name Ljava/lang/String;
@@ -17,18 +19,11 @@ accessible field net/minecraft/Material min_harvest_level I
 
 accessible method net/minecraft/EnumInsulinResistanceLevel getColor ()Lnet/minecraft/EnumChatFormatting;
 
-accessible method net/minecraft/SlotCrafting getNumCraftingResults (Lnet/minecraft/EntityPlayer;)I
-
 accessible method net/minecraft/CraftingManager addRecipe (Lnet/minecraft/ItemStack;Z[Ljava/lang/Object;)Lnet/minecraft/ShapedRecipes;
 accessible method net/minecraft/CraftingManager addShapelessRecipe (Lnet/minecraft/ItemStack;Z[Ljava/lang/Object;)Lnet/minecraft/ShapelessRecipes;
-
-accessible method net/minecraft/DamageSource setFireAspect (Z)Lnet/minecraft/DamageSource;
+accessible method net/minecraft/SlotCrafting getNumCraftingResults (Lnet/minecraft/EntityPlayer;)I
 
 accessible method net/minecraft/World chunkExistsAndIsNotEmptyFromBlockCoords (II)Z
-
-extendable class net/minecraft/BlockDoor
-
-accessible field net/minecraft/EntitySkeleton frenzied_by_bone_lord_countdown I
 
 accessible method net/minecraft/ItemStack isItemStackEqual (Lnet/minecraft/ItemStack;ZZZZ)Z
 
@@ -36,4 +31,9 @@ accessible method net/minecraft/BiomeGenBase setDisableRain ()Lnet/minecraft/Bio
 
 accessible field net/minecraft/BlockFurnace isActive Z
 
-accessible field net/minecraft/EntityDamageResult entity_was_destroyed Z
+accessible field net/minecraft/BiomeDecorator flowersPerChunk I
+accessible field net/minecraft/BiomeDecorator grassPerChunk I
+accessible field net/minecraft/BiomeDecorator treesPerChunk I
+
+extendable class net/minecraft/BlockDoor
+accessible class net/minecraft/ContainerRepairINNER2

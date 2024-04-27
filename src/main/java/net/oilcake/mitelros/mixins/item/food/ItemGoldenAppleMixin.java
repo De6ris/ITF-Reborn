@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ItemGoldenAppleMixin extends ItemFood {
     @Inject(method = "<init>(IIILjava/lang/String;)V", at = @At("RETURN"))
     public void injectCtor(CallbackInfo callbackInfo) {
-        ((ITFItem) this).setWater(-3);
+        ((ITFItem) this).setFoodWater(-3);
         setPotionEffect("+0+1+2-3+13&4-4");
     }
 

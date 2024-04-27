@@ -30,20 +30,20 @@ public class EntityRevenantMixin extends EntityZombie {
         setEntityAttribute(SharedMonsterAttributes.maxHealth, ITFConfig.TagFallenInMine.get() > 1 ? 45.0D : 30.0D);
     }
 
-    @Override
+    @Override// TODO bad override
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.spawnSums = par1NBTTagCompound.getByte("num_troops_summoned");
     }
 
-    @Override
+    @Override// TODO bad override
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeEntityToNBT(par1NBTTagCompound);
         if (this.spawnSums > 0)
             par1NBTTagCompound.setByte("num_troops_summoned", (byte) this.spawnSums);
     }
 
-    @Override
+    @Override// TODO bad override
     public void onUpdate() {
         super.onUpdate();
         if (!(getWorld()).isRemote) {

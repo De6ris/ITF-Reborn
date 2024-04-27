@@ -10,7 +10,7 @@ public class ItemPotionSuspicious extends Item {
         setMaxStackSize(1);
         setCraftingDifficultyAsComponent(25.0F);
         setCreativeTab(CreativeTabs.tabMisc);
-        ((ITFItem) this).setWater(1);
+        ((ITFItem) this).setFoodWater(1);
     }
 
     public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
@@ -28,7 +28,7 @@ public class ItemPotionSuspicious extends Item {
                 player.getFoodStats().addNutrition(1);
                 player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("欢迎来到Double随机等于0的欧皇大殿").setColor(EnumChatFormatting.AQUA));
             }
-            player.addWater(((ITFItem) this).getWater());
+            player.addWater(((ITFItem) this).getFoodWater());
         }
         super.onItemUseFinish(item_stack, world, player);
     }

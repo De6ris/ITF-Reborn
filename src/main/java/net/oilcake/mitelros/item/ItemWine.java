@@ -13,7 +13,7 @@ public class ItemWine extends Item {
         setMaxStackSize(1);
         setCraftingDifficultyAsComponent(512.0F);
         setCreativeTab(CreativeTabs.tabMisc);
-        ((ITFItem) this).setWater(2);
+        ((ITFItem) this).setFoodWater(2);
     }
 
     public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
@@ -22,7 +22,7 @@ public class ItemWine extends Item {
             ((ITFPlayer) player).getDrunkManager().setHasdrunked(true);
             player.addPotionEffect(new PotionEffect(Potion.confusion.id, 400, 0));
             player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 2560, 0));
-            ((ITFPlayer) player).addWater(((ITFItem) this).getWater());
+            ((ITFPlayer) player).addWater(((ITFItem) this).getFoodWater());
         }
         super.onItemUseFinish(item_stack, world, player);
     }

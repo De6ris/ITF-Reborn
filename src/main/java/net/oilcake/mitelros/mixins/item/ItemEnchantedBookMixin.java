@@ -3,12 +3,16 @@ package net.oilcake.mitelros.mixins.item;
 import net.minecraft.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
 import java.util.*;
 
 @Mixin(ItemEnchantedBook.class)
-public class ItemEnchantedBookMixin extends Item {
+public abstract class ItemEnchantedBookMixin extends Item {
+
+    @Shadow
+    public abstract void addEnchantment(ItemStack par1ItemStack, EnchantmentData par2EnchantmentData);
 
     /**
      * @author
@@ -20,9 +24,9 @@ public class ItemEnchantedBookMixin extends Item {
         List var4 = buildEnchantmentList(par1Random, 50);
         for (int var7 = 0; var7 < var4.size(); ++var7) {
             EnchantmentData var8 = (EnchantmentData) var4.get(var7);
-            var6.addEnchantment(var8.enchantmentobj, var8.enchantmentLevel);
+            this.addEnchantment(var6, var8);
         }
-        return new WeightedRandomChestContent(var6, par2, par3, par4);
+        return new WeightedRandomChestContent(var6, par2, par3, par4 * 2);
     }
 
 
@@ -73,7 +77,7 @@ public class ItemEnchantedBookMixin extends Item {
             Enchantment enchantment = enchantment_data.enchantmentobj;
             Iterator iterator = map.keySet().iterator();
             while (iterator.hasNext()) {
-                int id = (Integer) iterator.next();
+                int id = (int) iterator.next();
                 if (!enchantment.canApplyTogether(Enchantment.get(id))) {
                     iterator.remove();
                 }
@@ -81,6 +85,7 @@ public class ItemEnchantedBookMixin extends Item {
         }
     }
 
+    @Unique
     private static Map mapEnchantmentData(int enchantment_levels) {
         HashMap map = new HashMap();
         for (int i = 0; i < Enchantment.enchantmentsList.length; ++i) {

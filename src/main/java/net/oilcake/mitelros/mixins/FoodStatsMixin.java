@@ -15,10 +15,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(FoodStats.class)
 public class FoodStatsMixin implements ITFFoodStats {
+    @Unique
     private float water_for_nutrition_only;
 
+    @Unique
     private int water;
 
+    @Unique
     private float hungerWater;
 
     @Inject(method = "<init>(Lnet/minecraft/EntityPlayer;)V", at = @At("RETURN"))
@@ -46,7 +49,8 @@ public class FoodStatsMixin implements ITFFoodStats {
 
     @Inject(method = "addFoodValue", at = @At("HEAD"))
     private void inject(Item item, CallbackInfo ci) {
-        this.addWater(((ITFItem) item).getWater());
+        this.addWater(((ITFItem) item).getFoodWater());
+        this.player.getTemperatureManager().bodyTemperature += ((ITFItem) item).getFoodTemperature();
     }
 
     public void setSatiationWater(int water, boolean check_limit) {

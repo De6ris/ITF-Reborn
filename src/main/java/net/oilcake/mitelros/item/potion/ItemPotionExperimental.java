@@ -10,7 +10,7 @@ public class ItemPotionExperimental extends Item {
         setMaxStackSize(1);
         setCraftingDifficultyAsComponent(25.0F);
         setCreativeTab(CreativeTabs.tabMisc);
-        ((ITFItem) this).setWater(3);
+        ((ITFItem) this).setFoodWater(3);
     }
 
     public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
@@ -24,7 +24,7 @@ public class ItemPotionExperimental extends Item {
                 player.addPotionEffect(new PotionEffect(Potion.resistance.id, 800, 0));
             if (rand > 0.9D)
                 player.addPotionEffect(new PotionEffect(Potion.poison.id, 400, 0));
-            ((ITFPlayer) player).addWater(((ITFItem) this).getWater());
+            ((ITFPlayer) player).addWater(((ITFItem) this).getFoodWater());
         }
         super.onItemUseFinish(item_stack, world, player);
     }

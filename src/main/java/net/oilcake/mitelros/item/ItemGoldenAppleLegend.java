@@ -10,7 +10,7 @@ public class ItemGoldenAppleLegend extends ItemFood {
         super(id, Material.fruit, satiation, nutrition, 1000, false, false, true, texture);
         addMaterial(Material.gold);
         setPlantProduct();
-        ((ITFItem) this).setWater(-8);
+        ((ITFItem) this).setFoodWater(-8);
     }
 
     public boolean hasEffect(ItemStack par1ItemStack) {

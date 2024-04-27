@@ -33,18 +33,6 @@ public abstract class BiomeDecoratorMixin implements ITFBiomeDecorator {
     protected int flowersExtendPerChunk;
 
     @Shadow
-    protected int waterlilyPerChunk;
-
-    @Shadow
-    protected int treesPerChunk;
-
-    @Shadow
-    protected int grassPerChunk;
-
-    @Shadow
-    protected int flowersPerChunk;
-
-    @Shadow
     protected Random randomGenerator;
 
     @Shadow
@@ -69,11 +57,10 @@ public abstract class BiomeDecoratorMixin implements ITFBiomeDecorator {
     private void itfOre(CallbackInfo ci) {
         if (this.currentWorld.isOverworld()) {
             genMinable(10, this.azuriteGen, true);
-//            genMinable(2, this.tungstenGen);
             genMinable(30, this.nickelGen, true);
         } else if (this.currentWorld.isUnderworld()) {
-            genMinable(10, this.tungstenGen, true);
             genMinable(30, this.nickelGen, true);
+            genMinable(5, this.tungstenGen, true);
         }
     }
 
@@ -90,29 +77,10 @@ public abstract class BiomeDecoratorMixin implements ITFBiomeDecorator {
     }
 
     @Shadow
-    protected void genMinable(int frequency, WorldGenMinable world_gen_minable) {
-    }
-
-    @Shadow protected abstract void genMinable(int frequency, WorldGenMinable world_gen_minable, boolean vein_size_increases_with_depth);
+    protected abstract void genMinable(int frequency, WorldGenMinable world_gen_minable, boolean vein_size_increases_with_depth);
 
     @Override
-    public void setWaterlilyPerChunk(int waterlilyPerChunk) {
-        this.waterlilyPerChunk = waterlilyPerChunk;
-    }
-
-    public void setTreesPerChunk(int treesPerChunk) {
-        this.treesPerChunk = treesPerChunk;
-    }
-
-    public void setFlowersPerChunk(int flowersPerChunk) {
-        this.flowersPerChunk = flowersPerChunk;
-    }
-
-    public void setGrassPerChunk(int grassPerChunk) {
-        this.grassPerChunk = grassPerChunk;
-    }
-
-    public void setFlowersExtendPerChunk(int flowersPerChunk) {
-        this.flowersExtendPerChunk = flowersPerChunk;
+    public void setFlowersExtendPerChunk(int flowersExtendPerChunk) {
+        this.flowersExtendPerChunk = flowersExtendPerChunk;
     }
 }

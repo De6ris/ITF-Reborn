@@ -2,12 +2,12 @@ package net.oilcake.mitelros.status;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.ITFStart;
-import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.ItemTotem;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
+import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.CurseExtend;
 import net.oilcake.mitelros.util.QualityHandler;
@@ -171,7 +171,7 @@ public class MiscManager {
         this.player.triggerAchievement(AchievementExtend.cheatdeath);
     }
 
-    public void wolfFurCheck() { // TODO [Optional] add itf metal to wearAllPlateArmor check
+    public void wolfFurCheck() {
         boolean wearing_full_suit_wolf_fur = true;
         for (int i = 0; i < 4; ++i) {
             if (player.inventory.armorInventory[i] != null && player.inventory.armorInventory[i].getItem() instanceof ItemArmor armor) {
@@ -187,6 +187,24 @@ public class MiscManager {
         }
         if (wearing_full_suit_wolf_fur) {
             player.triggerAchievement(AchievementExtend.BravetheCold);
+        }
+    }
+    public void iceChunkCheck() {
+        boolean wearing_full_suit_ice_chunk = true;
+        for (int i = 0; i < 4; ++i) {
+            if (player.inventory.armorInventory[i] != null && player.inventory.armorInventory[i].getItem() instanceof ItemArmor armor) {
+                Material material = armor.getArmorMaterial();
+                if (material != Materials.ice_chunk) {
+                    wearing_full_suit_ice_chunk = false;
+                    break;
+                }
+            } else {
+                wearing_full_suit_ice_chunk = false;
+                break;
+            }
+        }
+        if (wearing_full_suit_ice_chunk) {
+            player.triggerAchievement(AchievementExtend.BravetheHeat);
         }
     }
 

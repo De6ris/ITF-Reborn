@@ -2,7 +2,6 @@ package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFSpider;
-import net.oilcake.mitelros.entity.mob.EntityClusterSpider;
 
 import java.util.Iterator;
 import java.util.List;
@@ -88,7 +87,7 @@ public class EntitySpiderKing extends EntityArachnid {
                 while (i.hasNext()) {
                     EntityArachnid spiders = i.next();
                     if (spiders != this) {
-                        ((ITFSpider) spiders).getFrenziedManager().setCounter(200);
+                        ((ITFSpider) spiders).setCounter(200);
                         if (spiders.getHealthFraction() < 1.0F) {
                             spiders.healByPercentage(0.2F);
                             spiders.entityFX(EnumEntityFX.repair);

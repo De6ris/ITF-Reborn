@@ -3,9 +3,12 @@ package net.oilcake.mitelros.api;
 import net.minecraft.Item;
 
 public interface ITFItem {
-    int getWater();
+    int getFoodWater();
 
-    Item setWater(int water);
+    void setFoodWater(int water);
+
+    int getFoodTemperature();
+    void setFoodTemperature(int temperature);
 
     Item setExtraInfo(String info);
 

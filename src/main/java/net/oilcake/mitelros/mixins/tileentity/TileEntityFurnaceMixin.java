@@ -1,4 +1,4 @@
-package net.oilcake.mitelros.mixins.block.tileentity;
+package net.oilcake.mitelros.mixins.tileentity;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFurnace;
@@ -10,6 +10,7 @@ import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -40,6 +41,7 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
     @Shadow
     public int heat_level = 0;
 
+    @Unique
     private boolean activated = false;
 
     @Inject(method = "getHeatLevelRequired", at = @At("HEAD"), cancellable = true)
@@ -59,30 +61,27 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
 
     @Inject(method = "canSmelt", at = @At("HEAD"), cancellable = true)
     private void canSmelt(int heat_level, CallbackInfoReturnable<Boolean> cir) {
-        if (this.furnaceItemStacks[0] == null) {
-            cir.setReturnValue(false);
-            return;
-        }
+        if (this.checkSmelt(heat_level)) cir.setReturnValue(false);
+    }
+
+    @Unique
+    private boolean checkSmelt(int heat_level) {
         if (this.getInputItemStack().getItem() instanceof ItemFood && this.isBlastFurnace()) {
-            cir.setReturnValue(false);
-            return;
+            return false;
         }
         if (this.getInputItemStack().getItem() instanceof ItemArmor && !this.isBlastFurnace()) {
-            cir.setReturnValue(false);
-            return;
+            return false;
         }
         if (this.getInputItemStack().getItem() instanceof ItemTool && !this.isBlastFurnace()) {
-            cir.setReturnValue(false);
-            return;
+            return false;
         }
         if (!(this.getInputItemStack().getItem() instanceof ItemFood) && this.isSmoker()) {
-            cir.setReturnValue(false);
-            return;
+            return false;
         }
         if (heat_level > getHeatLevelRequired((this.getInputItemStack().getItem()).itemID) + 1) {
-            cir.setReturnValue(false);
-            System.out.println("bad heat level" + heat_level  + "and" + getHeatLevelRequired((this.getInputItemStack().getItem()).itemID));
+            return false;
         }
+        return true;
     }
 
     @Override

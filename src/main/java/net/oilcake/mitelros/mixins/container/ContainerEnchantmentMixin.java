@@ -1,12 +1,12 @@
-package net.oilcake.mitelros.mixins.block.tileentity;
+package net.oilcake.mitelros.mixins.container;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.item.Materials;
-import net.oilcake.mitelros.network.S2CEnchantmentInfo;
-import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.ItemGoldenAppleLegend;
 import net.oilcake.mitelros.item.Items;
+import net.oilcake.mitelros.item.Materials;
+import net.oilcake.mitelros.network.S2CEnchantmentInfo;
+import net.oilcake.mitelros.util.AchievementExtend;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -60,7 +60,6 @@ public abstract class ContainerEnchantmentMixin extends Container {
         if (!predicated) return;
         boolean extended = itemStack.getMaterialForRepairs() == Materials.uru;
         int[] result = this.predict(this.rand, itemStack, this.enchantLevels, extended);
-        System.out.println(extended + "extended");
         this.player.sendPacket(new S2CEnchantmentInfo(result));
     }
 

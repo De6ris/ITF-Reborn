@@ -60,6 +60,14 @@ public class ITFConfig extends SimpleConfigs {
     /* other */
     public static final ConfigBoolean SeasonColor = new ConfigBoolean("季节植被颜色", true);
     public static final ConfigBoolean DisplayHud = new ConfigBoolean("信息显示", true);
+    public static final ConfigInteger InfoYLevel = new ConfigInteger("信息渲染高度", 0, 0, 10, "此值为x时信息显示从第x行开始");
+    public static final ConfigBoolean SeasonText = new ConfigBoolean("季节信息", true);
+    public static final ConfigBoolean MODText = new ConfigBoolean("模组名", true);
+    public static final ConfigBoolean DifficultyInfo = new ConfigBoolean("难度信息", true);
+    public static final ConfigBoolean WeatherText = new ConfigBoolean("天气信息", true);
+    public static final ConfigBoolean TemperatureText = new ConfigBoolean("温度信息", true);
+    public static final ConfigBoolean CoordinateText = new ConfigBoolean("位置信息", true, "拥有指南针时显示坐标");
+    public static final ConfigBoolean TimeText = new ConfigBoolean("时间信息", true, "拥有钟时显示时间");
 
     public static List<ConfigBase> challenge;
     public static List<ConfigBase> spite;
@@ -88,7 +96,7 @@ public class ITFConfig extends SimpleConfigs {
 
         experimental = List.of(TagCreaturesV2, TagSpawningV2, TagBenchingV2, FinalChallenge, Realistic, TagMovingV2, TagTemperature);
 
-        others = List.of(SeasonColor, DisplayHud);
+        others = List.of(SeasonColor, DisplayHud, InfoYLevel, SeasonText, MODText, DifficultyInfo, WeatherText, TemperatureText, CoordinateText, TimeText);
 
         values = new ArrayList<>();
         values.addAll(challenge);

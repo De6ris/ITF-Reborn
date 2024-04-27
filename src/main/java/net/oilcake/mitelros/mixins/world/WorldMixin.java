@@ -5,9 +5,9 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.config.ITFConfig;
 import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 @Mixin(World.class)
@@ -33,72 +33,13 @@ public abstract class WorldMixin implements ITFWorld {
         return explosion;
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public final List generateWeatherEvents(int day) {
-        if (!isOverworld())
-            Debug.setErrorMessage("generateWeatherEvents: called for " + getDimensionName());
-        List<WeatherEvent> events = new ArrayList();
-        if (day < 2)
-            return events;
-        long first_tick_of_day = ((day - 1) * 24000 - 6000);
-        Random random = new Random(getWorldCreationTime() + (getDimensionId() * 938473) + day);
-        random.nextInt();
-        for (int i = 0; i < 3 && random.nextInt(4) <= 0; i++) {
-            int duration_static = 6000 * (ITFConfig.TagEternalRaining.get() ? 6 : 1);
-            int duration_random = random.nextInt(12000) * (ITFConfig.TagEternalRaining.get() ? 2 : 1);
-            int duration = duration_random + duration_static;
-            duration = (int) (duration * getRainDurationModify(getWorldSeason()));
-            WeatherEvent event = new WeatherEvent(first_tick_of_day + random.nextInt(24000), duration);
-            if (!isHarvestMoon(event.start, true) && !isHarvestMoon(event.end, true) && !isHarvestMoon(event.start + 6000L, true) && !isHarvestMoon(event.end - 6000L, true) && !isBloodMoon(event.start, false) && !isBloodMoon(event.end, false) && !isBlueMoon(event.start, false) && !isBlueMoon(event.end, false))
-                events.add(event);
-        }
-        if (isBloodMoon(first_tick_of_day + 6000L, false)) {
-            WeatherEvent event = new WeatherEvent(first_tick_of_day + 5000L, 14000);
-            event.setStorm(event.start, event.end);
-            events.add(event);
-        }
-        return events;
-    }
-
-    @Shadow
-    public static boolean isBloodMoon(long unadjusted_tick, boolean exclusively_at_night) {
-        return exclusively_at_night;
-    }
-
-
-    @Shadow
-    public static boolean isBlueMoon(long unadjusted_tick, boolean exclusively_at_night) {
-        return exclusively_at_night;
-    }
-
-
-    @Shadow
-    public static boolean isHarvestMoon(long unadjusted_tick, boolean exclusively_at_night) {
-        return exclusively_at_night;
-    }
-
-    @Shadow
-    public final int getDimensionId() {
-        return this.provider.dimensionId;
-    }
-
-    @Shadow
-    public long getWorldCreationTime() {
-        return 0L;
-    }
-
-    @Shadow
-    public String getDimensionName() {
-        return null;
-    }
-
-    @Shadow
-    public boolean isOverworld() {
-        return false;
+    @Redirect(method = "generateWeatherEvents(I)Ljava/util/List;", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I", ordinal = 2))
+    private int itfRain(Random instance, int i) {
+        int duration_static = 6000 * (ITFConfig.TagEternalRaining.get() ? 6 : 1);
+        int duration_random = instance.nextInt(12000) * (ITFConfig.TagEternalRaining.get() ? 2 : 1);
+        int duration = duration_random + duration_static;
+        duration = (int) (duration * getRainDurationModify(getWorldSeason()));
+        return duration - 6000;
     }
 
     @Shadow
@@ -109,11 +50,7 @@ public abstract class WorldMixin implements ITFWorld {
 
     @Unique
     public int getWorldSeason() {
-        return getSeasonType(getDayOfWorld());
-    }
-
-    public int getSeasonType(int day) {
-        return day % 128 / 32;
+        return (this.getDayOfWorld() % 128) / 32;
     }
 
     @Unique
@@ -137,52 +74,19 @@ public abstract class WorldMixin implements ITFWorld {
         return (float) Math.sin(0.0490873852123 * (this.getDayOfWorld() - 16));
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public final boolean canSnowAt(int par1, int par2, int par3) {
-        BiomeGenBase var4 = getBiomeGenForCoords(par1, par3);
-        float var5 = var4.getFloatTemperature();
-        if (var5 > ((getWorldSeason() == 3) ? 1.0F : 0.15F))
-            return false;
-        if (par2 >= 0 && par2 < 256 && getSavedLightValue(EnumSkyBlock.Block, par1, par2, par3) < 10) {
-            int var6 = getBlockId(par1, par2 - 1, par3);
-            int var7 = getBlockId(par1, par2, par3);
-            Block block_below = Block.getBlock(var6);
-            Block block = Block.getBlock(var7);
-            if (block_below == Block.tilledField && block != Block.pumpkinStem)
-                return true;
-            if (var7 == 0 && Block.snow.isLegalAt(getWorld(), par1, par2, par3, 0) && var6 != Block.ice.blockID)
-                return true;
-        }
-        return false;
+    @ModifyConstant(method = "canSnowAt", constant = @Constant(floatValue = 0.15F))
+    private float itfSnow(float constant) {
+        return (this.getWorldSeason() == 3) ? 1.0F : 0.15F;
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public boolean isFreezing(int x, int z) {
-        return ((getBiomeGenForCoords(x, z)).temperature <= ((getWorldSeason() == 3) ? 1.0F : 0.15F));
-    }
-
-    @Shadow
-    @Final
-    public int getSavedLightValue(EnumSkyBlock block, int par1, int par2, int par3) {
-        return 0;
+    @Inject(method = "isFreezing", at = @At("HEAD"), cancellable = true)
+    private void itfFreezing(int x, int z, CallbackInfoReturnable<Boolean> cir) {
+        if (getBiomeGenForCoords(x, z).temperature <= ((getWorldSeason() == 3) ? 1.0F : 0.15F))
+            cir.setReturnValue(true);
     }
 
     @Shadow
     public BiomeGenBase getBiomeGenForCoords(int par1, int par3) {
         return null;
-    }
-
-    @Shadow
-    @Final
-    public int getBlockId(int par1, int par2, int par3) {
-        return 0;
     }
 }

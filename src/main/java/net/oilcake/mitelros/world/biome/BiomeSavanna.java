@@ -11,9 +11,9 @@ public class BiomeSavanna extends BiomeGenBase {
     public BiomeSavanna(int par1) {
         super(par1);
         this.spawnableCreatureList.add(new SpawnListEntry(EntityHorse.class, 5, 1, 2));
-        ((ITFBiomeDecorator) this.theBiomeDecorator).setTreesPerChunk(0);
-        ((ITFBiomeDecorator) this.theBiomeDecorator).setFlowersPerChunk(3);
-        ((ITFBiomeDecorator) this.theBiomeDecorator).setGrassPerChunk(10);
+        this.theBiomeDecorator.treesPerChunk = 0;
+        this.theBiomeDecorator.flowersPerChunk = 3;
+        this.theBiomeDecorator.grassPerChunk = 10;
         ((ITFBiomeDecorator) this.theBiomeDecorator).setFlowersExtendPerChunk(1);
         setBiomeName("Savanna");
         setColor(16421912);

@@ -30,8 +30,10 @@ public abstract class ItemArmorMixin extends Item implements IDamageableItem {
     private boolean is_chain_mail;
 
     @Inject(method = "<init>(ILnet/minecraft/Material;IZ)V", at = @At("RETURN"))
-    public void injectCtor(CallbackInfo callbackInfo) {
-        this.is_leather = (this.effective_material == Material.leather || this.effective_material == Materials.wolf_fur);
+    public void injectCtor(CallbackInfo callbackInfo) {// for fixing with materials
+        if (this.effective_material == Materials.wolf_fur || this.effective_material == Materials.ice_chunk) {
+            this.is_leather = true;
+        }
         setCraftingDifficultyAsComponent(this.effective_material.durability * 100.0F * getNumComponentsForDurability());
     }
 
@@ -53,29 +55,34 @@ public abstract class ItemArmorMixin extends Item implements IDamageableItem {
         callbackInfo.setReturnValue(a <= 0 ? 1 : a);
     }
 
-    @Inject(method = "getMaterialProtection", at = @At(value = "RETURN"), cancellable = true)
-    private void InjectNewProtection(CallbackInfoReturnable<Integer> callbackInfo) {
-        int protection = callbackInfo.getReturnValue();
-        if (protection == 0) {
-            if (this.effective_material == Materials.wolf_fur) {
-                protection = 3;
-            } else if (this.effective_material == Materials.vibranium) {
-                protection = 6;
-            } else if (this.effective_material == Materials.nickel) {
-                protection = 8;
-            } else if (this.effective_material == Materials.tungsten || this.effective_material == Materials.ancient_metal_sacred) {
-                protection = 9;
-            } else if (this.effective_material == Materials.uru) {
-                protection = 10;
-            }
-            if (this.is_chain_mail) {
-                protection -= 2;
-            }
+    @Inject(method = "getMaterialProtection", at = @At("HEAD"), cancellable = true)
+    private void itfMaterials(CallbackInfoReturnable<Integer> cir) {
+        int protection = this.itfMaterials();
+        if (protection != 0) cir.setReturnValue(protection);
+    }
+
+    @Unique
+    private int itfMaterials() {
+        int protection;
+        if (this.effective_material == Materials.wolf_fur) {
+            protection = 3;
+        } else if (this.effective_material == Materials.ice_chunk) {
+            protection = 2;
+        } else if (this.effective_material == Materials.vibranium) {
+            protection = 6;
+        } else if (this.effective_material == Materials.nickel) {
+            protection = 8;
+        } else if (this.effective_material == Materials.tungsten || this.effective_material == Materials.ancient_metal_sacred) {
+            protection = 9;
+        } else if (this.effective_material == Materials.uru) {
+            protection = 10;
+        } else {
+            return 0;
         }
-        if (protection < 0) {
-            protection = 0;
+        if (this.is_chain_mail) {
+            protection -= 2;
         }
-        callbackInfo.setReturnValue(protection);
+        return protection;
     }
 
     @ModifyConstant(method = "getDamageFactor", constant = @Constant(floatValue = 0.5f))

@@ -2,20 +2,15 @@ package net.oilcake.mitelros.mixins.util;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.*;
+import net.minecraft.Enchantment;
+import net.minecraft.EnchantmentHelper;
+import net.minecraft.Item;
 import net.oilcake.mitelros.api.ITFEnchantment;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 @Mixin(EnchantmentHelper.class)
 public class EnchantmentHelperMixin {

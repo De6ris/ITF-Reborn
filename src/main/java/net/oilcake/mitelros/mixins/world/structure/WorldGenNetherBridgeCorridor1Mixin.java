@@ -1,4 +1,4 @@
-package net.oilcake.mitelros.mixins.world;
+package net.oilcake.mitelros.mixins.world.structure;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;

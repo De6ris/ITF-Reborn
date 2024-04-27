@@ -16,8 +16,8 @@ public class BiomeWindsweptPlateau extends BiomeGenBase {
         removeEntityFromSpawnableLists(EntityPig.class);
         this.spawnableMonsterList.add(new SpawnListEntry(EntityStray.class, 100, 1, 4));
         this.spawnableCreatureList.add(new SpawnListEntry(EntityDireWolf.class, 20, 3, 6));
-        ((ITFBiomeDecorator) this.theBiomeDecorator).setFlowersPerChunk(-999);
-        ((ITFBiomeDecorator) this.theBiomeDecorator).setGrassPerChunk(1);
+        this.theBiomeDecorator.flowersPerChunk = -999;
+        this.theBiomeDecorator.grassPerChunk = 1;
         ((ITFBiomeDecorator) this.theBiomeDecorator).setFlowersExtendPerChunk(-999);
         this.topBlock = (byte) Block.grass.blockID;
         this.fillerBlock = (byte) Block.cobblestone.blockID;

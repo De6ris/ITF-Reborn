@@ -1,11 +1,12 @@
 package net.oilcake.mitelros.status;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.util.AchievementExtend;
+import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.potion.PotionExtend;
+import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.DamageSourceExtend;
 
 public class TemperatureManager {
@@ -112,7 +113,7 @@ public class TemperatureManager {
             this.player.triggerAchievement(AchievementExtend.hyperthermia);
             if (this.heatWarning > 500) {
                 this.player.attackEntityFrom(new Damage(DamageSourceExtend.heat, 2.0F));
-                this.player.decreaseWaterServerSide(1.0F);
+                ((ITFFoodStats) this.player.getFoodStats()).addWater(-1);
                 this.player.addPotionEffect(new PotionEffect(Potion.confusion.id, 20 + (this.heatWarning >> 3), 1));
                 this.heatWarning = 0;
             }
@@ -255,22 +256,25 @@ public class TemperatureManager {
             heat -= 1;
             if (helmet.itemID == Items.wolfHelmet.itemID) heat += 3;
             else if (helmet.itemID == Item.helmetLeather.itemID) heat += 2;
-//            else if (helmet.itemID == Items.)
+            else if (helmet.itemID == Items.iceHelmet.itemID) heat -= 1;
         }
         if (cuirass != null) {
             heat -= 1;
             if (cuirass.itemID == Items.wolfChestplate.itemID) heat += 3;
             else if (cuirass.itemID == Item.plateLeather.itemID) heat += 2;
+            else if (cuirass.itemID == Items.iceChestplate.itemID) heat -= 1;
         }
         if (leggings != null) {
             heat -= 1;
             if (leggings.itemID == Items.wolfLeggings.itemID) heat += 3;
             else if (leggings.itemID == Item.legsLeather.itemID) heat += 2;
+            else if (leggings.itemID == Items.iceLeggings.itemID) heat -= 1;
         }
         if (boots != null) {
             heat -= 1;
             if (boots.itemID == Items.wolfBoots.itemID) heat += 3;
             else if (boots.itemID == Item.bootsLeather.itemID) heat += 2;
+            else if (boots.itemID == Items.iceBoots.itemID) heat -= 1;
         }
         return heat;
     }

@@ -2,7 +2,6 @@ package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
-import net.oilcake.mitelros.entity.mob.EntityPigmanGuard;
 import net.oilcake.mitelros.item.Items;
 
 import java.util.ArrayList;

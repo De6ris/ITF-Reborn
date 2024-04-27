@@ -48,16 +48,12 @@ public abstract class WorldGenMinableMixin {
     @Inject(method = "getRandomVeinHeight", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"), cancellable = true)
     private void inject_2(World world, Random rand, CallbackInfoReturnable<Integer> cir) {
         Block block = Block.blocksList[this.minableBlockId];
-        if (world.isUnderworld()) {
-            if (world.underworld_y_offset != 0) {
-                if (block == Blocks.oreTungsten) {
-                    cir.setReturnValue(rand.nextInt(16 + world.underworld_y_offset));
-                    return;
-                }
-            }
+        if (world.isUnderworld() && block == Blocks.oreTungsten) {
+            cir.setReturnValue(rand.nextInt(142));
+            return;
         }
-        float relative_height = 0;
-        if (block == Blocks.oreNickel || block == Blocks.oreTungsten || block == Blocks.blockAzurite) {
+        float relative_height;
+        if (block == Blocks.oreNickel || block == Blocks.blockAzurite) {
             do {
                 relative_height = rand.nextFloat();
             } while (relative_height >= rand.nextFloat());

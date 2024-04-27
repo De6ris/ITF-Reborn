@@ -22,11 +22,21 @@ public class EnchantmentTemperature extends Enchantment {
         }
     }
 
+    @Override
+    public boolean canApplyTogether(Enchantment par1Enchantment) {
+        return !(par1Enchantment instanceof EnchantmentTemperature);
+    }
+
     public boolean canEnchantItem(Item item) {
         return item instanceof net.minecraft.ItemCuirass;
     }
 
     public boolean isOnCreativeTab(CreativeTabs creativeModeTab) {
         return (creativeModeTab == CreativeTabs.tabCombat);
+    }
+
+    @Override
+    public boolean isTreasure() {
+        return true;
     }
 }

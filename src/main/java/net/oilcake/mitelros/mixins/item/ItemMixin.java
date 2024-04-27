@@ -35,6 +35,8 @@ public abstract class ItemMixin implements ITFItem {
     public int itemID;
     @Unique
     private int water;
+    @Unique
+    private int temperature;
 
     @Unique
     private String extraInfo;
@@ -54,16 +56,16 @@ public abstract class ItemMixin implements ITFItem {
     }
 
     @Inject(method = "addInformation", at = @At(value = "INVOKE", target = "Lnet/minecraft/Item;getNutrition()I"))
-    private void waterInfo(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
-        int water = this.getWater();
-        if (this.water == 0) return;
-//        if (item_stack == Items.Agave && this.water < 0) {
-//            info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.agave"));
-//        }
+    private void itfFoodInfo(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
         if (this.water < 0) {
-            info.add(EnumChatFormatting.YELLOW + Translator.getFormatted("item.tooltip.water.minus", new Object[]{water}));
-        } else {
-            info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.add", new Object[]{water}));
+            info.add(EnumChatFormatting.YELLOW + Translator.getFormatted("item.tooltip.water.minus", this.water));
+        } else if (this.water > 0) {
+            info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.add", this.water));
+        }
+        if (this.temperature > 0) {
+            info.add(EnumChatFormatting.GOLD + Translator.getFormatted("item.tooltip.temperature.add", this.temperature));
+        } else if (this.temperature < 0) {
+            info.add(EnumChatFormatting.GREEN + Translator.getFormatted("item.tooltip.temperature.minus", this.temperature));
         }
     }
 
@@ -77,13 +79,22 @@ public abstract class ItemMixin implements ITFItem {
         }
     }
 
-    public int getWater() {
+    public int getFoodWater() {
         return this.water;
     }
 
-    public Item setWater(int water) {
+    public void setFoodWater(int water) {
         this.water = water;
-        return ReflectHelper.dyCast(this);
+    }
+
+    @Override
+    public int getFoodTemperature() {
+        return this.temperature;
+    }
+
+    @Override
+    public void setFoodTemperature(int temperature) {
+        this.temperature = temperature;
     }
 
     @Override
@@ -97,24 +108,24 @@ public abstract class ItemMixin implements ITFItem {
         return ReflectHelper.dyCast(this);
     }
 
-    @ModifyReturnValue(method = "getRepairItem", at = @At("RETURN"))
-    private Item reSet(Item original) {
-        if (original != null) {
-            return original;
-        } else {
-            Material material_for_repairs = this.getMaterialForRepairs();
-            if (material_for_repairs == Materials.wolf_fur)
-                return Items.wolf_fur;
-            if (material_for_repairs == Materials.nickel)
-                return Items.nickelNugget;
-            if (material_for_repairs == Materials.tungsten)
-                return Items.tungstenNugget;
-            if (material_for_repairs == Materials.ancient_metal_sacred)
-                return Items.AncientmetalArmorPiece;
-            if (material_for_repairs == Materials.uru)
-                return Items.UruNugget;
-            return null;
-        }
+    @Inject(method = "getRepairItem", at = @At("HEAD"), cancellable = true)
+    private void itfRepairItem(CallbackInfoReturnable<Item> cir) {
+        Material material_for_repairs = this.getMaterialForRepairs();
+        Item repairItem = itfRepairItem(material_for_repairs);
+        if (repairItem != null) cir.setReturnValue(repairItem);
+    }
+
+    @Unique
+    private static Item itfRepairItem(Material material_for_repairs) {
+        if (material_for_repairs == Materials.nickel)
+            return Items.nickelNugget;
+        if (material_for_repairs == Materials.tungsten)
+            return Items.tungstenNugget;
+        if (material_for_repairs == Materials.ancient_metal_sacred)
+            return Items.AncientmetalArmorPiece;
+        if (material_for_repairs == Materials.uru)
+            return Items.UruNugget;
+        return null;
     }
 
     @Redirect(method = "getExclusiveMaterial", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))

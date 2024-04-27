@@ -28,6 +28,11 @@ public class EnchantmentMending extends Enchantment {
         return (item instanceof net.minecraft.ItemTool || item instanceof net.minecraft.ItemArmor);
     }
 
+    @Override
+    public boolean canApplyTogether(Enchantment par1Enchantment) {
+        return !(par1Enchantment instanceof EnchantmentMending);
+    }
+
     public boolean isOnCreativeTab(CreativeTabs creativeModeTab) {
         return (creativeModeTab == CreativeTabs.tabTools);
     }
