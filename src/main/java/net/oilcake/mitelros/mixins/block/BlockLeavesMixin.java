@@ -5,11 +5,8 @@ import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.util.SeasonColorizer;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Random;
 
@@ -37,17 +34,8 @@ public class BlockLeavesMixin extends BlockLeavesBase {
         return (new Random()).nextInt(2) == 0 ? par2 : Items.lemon.itemID;
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
-        int var5 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-        if ((var5 & 0x3) == 1)
-            return ColorizerFoliage.getFoliageColorPine();
-        if ((var5 & 0x3) == 2)
-            return ColorizerFoliage.getFoliageColorBirch();
+    @Inject(method = "colorMultiplier", at = @At("HEAD"), cancellable = true)
+    public void colorMultiplierITF(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, CallbackInfoReturnable<Integer> cir) {
         int var6 = 0;
         int var7 = 0;
         int var8 = 0;
@@ -71,6 +59,6 @@ public class BlockLeavesMixin extends BlockLeavesBase {
                 }
             }
         }
-        return (var6 / 9 & 0xFF) << 16 | (var7 / 9 & 0xFF) << 8 | var8 / 9 & 0xFF;
+        cir.setReturnValue((var6 / 9 & 0xFF) << 16 | (var7 / 9 & 0xFF) << 8 | var8 / 9 & 0xFF);
     }
 }

@@ -5,6 +5,9 @@ import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,15 +27,11 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
     public void setProfession(int par1) {
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public EntityLivingData onSpawnWithEgg(EntityLivingData par1EntityLivingData) {
+    @Inject(method = "onSpawnWithEgg", at = @At("HEAD"), cancellable = true)
+    public void onSpawnWithEggITF(EntityLivingData par1EntityLivingData, CallbackInfoReturnable<EntityLivingData> cir) {
         par1EntityLivingData = super.onSpawnWithEgg(par1EntityLivingData);
         setProfession(1 + this.worldObj.rand.nextInt(14));
-        return par1EntityLivingData;
+        cir.setReturnValue(par1EntityLivingData);
     }
 
     /**

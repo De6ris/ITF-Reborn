@@ -3,6 +3,7 @@ package net.oilcake.mitelros.mixins.item;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
+import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.xiaoyu233.fml.util.ReflectHelper;
@@ -57,11 +58,13 @@ public abstract class ItemMixin implements ITFItem {
 
     @Inject(method = "addInformation", at = @At(value = "INVOKE", target = "Lnet/minecraft/Item;getNutrition()I"))
     private void itfFoodInfo(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
-        if (this.water < 0) {
-            info.add(EnumChatFormatting.YELLOW + Translator.getFormatted("item.tooltip.water.minus", this.water));
+        if (item_stack.getItem() == Items.Agave) {
+            info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.agave", "40%"));
         } else if (this.water > 0) {
             info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.add", this.water));
-        }
+        } else if (this.water < 0) {
+            info.add(EnumChatFormatting.YELLOW + Translator.getFormatted("item.tooltip.water.minus", this.water));
+            }
         if (this.temperature > 0) {
             info.add(EnumChatFormatting.GOLD + Translator.getFormatted("item.tooltip.temperature.add", this.temperature));
         } else if (this.temperature < 0) {

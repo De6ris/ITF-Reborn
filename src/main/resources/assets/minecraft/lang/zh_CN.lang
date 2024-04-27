@@ -61,7 +61,7 @@ generator.default_1_1=旧巨型生物群系
 
 item.tooltip.water.add=水分+%d
 item.tooltip.water.minus=水分%d
-item.tooltip.water.agave=40%水分+1
+item.tooltip.water.agave=%d水分+1
 item.tooltip.reach.add=触及距离+%d
 item.tooltip.temperature.add=体温+%d
 item.tooltip.temperature.minus=体温%d

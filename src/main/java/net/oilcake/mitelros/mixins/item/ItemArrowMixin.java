@@ -33,18 +33,25 @@ public abstract class ItemArrowMixin extends Item {
                 Materials.nickel, Materials.tungsten, Materials.magical};
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public void addInformation(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot) {
-        if (extended_info) {
-            info.add("");
-            info.add(EnumChatFormatting.BLUE + Translator.getFormatted("item.tooltip.missileDamage", new Object[]{Integer.valueOf((int) getMaterialDamageVsEntity())}));
-            info.add(EnumChatFormatting.GRAY + Translator.getFormatted("item.tooltip.missileRecovery", new Object[]{Integer.valueOf((int) (getChanceOfRecovery() * 100.0F))}));
-            if (this.arrowhead_material == Materials.nickel)
-                info.add(EnumChatFormatting.LIGHT_GRAY + Translator.getFormatted("itemtool.tooltip.slimeresistance", new Object[0]));
+//    /**
+//     * @author
+//     * @reason
+//     */
+//    @Overwrite
+//    public void addInformation(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot) {
+//        if (extended_info) {
+//            info.add("");
+//            info.add(EnumChatFormatting.BLUE + Translator.getFormatted("item.tooltip.missileDamage", new Object[]{Integer.valueOf((int) getMaterialDamageVsEntity())}));
+//            info.add(EnumChatFormatting.GRAY + Translator.getFormatted("item.tooltip.missileRecovery", new Object[]{Integer.valueOf((int) (getChanceOfRecovery() * 100.0F))}));
+//            if (this.arrowhead_material == Materials.nickel)
+//                info.add(EnumChatFormatting.LIGHT_GRAY + Translator.getFormatted("itemtool.tooltip.slimeresistance", new Object[0]));
+//        }
+//    }
+
+    @Inject(method = "addInformation", at = @At("TAIL"))
+    private void addInformationITF(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
+        if (extended_info || this.arrowhead_material == Materials.nickel) {
+            info.add(EnumChatFormatting.LIGHT_GRAY + Translator.getFormatted("itemtool.tooltip.slimeresistance", new Object[0]));
         }
     }
 

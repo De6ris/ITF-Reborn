@@ -4,8 +4,10 @@ import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Random;
 
@@ -93,37 +95,30 @@ public class WorldGenDungeonsMixin extends WorldGenerator {
   public boolean generate(World world, Random random, int i, int i1, int i2) {
     return false;
   }
-  
-  @Overwrite
-  private String pickMobSpawner(World world, Random par1Random, int y) {
-    int danger;
-    if (world.isUnderworld())
-      return (par1Random.nextInt(6) == 0) ? "LongdeadGuardian" : "Longdead"; 
-    if (((Boolean) ITFConfig.TagMiracleDisaster.get())) {
+
+  @Inject(method = "pickMobSpawner", at = @At("HEAD"), cancellable = true)
+  private void pickMobSpawnerITF(World world, Random par1Random, int y, CallbackInfoReturnable<String> cir) {
+
+      int danger;
+    if ((ITFConfig.TagMiracleDisaster.get())) {
       danger = par1Random.nextInt(7);
-    } else {
-      if (par1Random.nextInt(2) == 0) {
-        danger = par1Random.nextInt(4);
-      } else {
-        danger = (int)Math.max(1.0F - y / 64.0F, 0.0F) * 4 + par1Random.nextInt(3) - par1Random.nextInt(3);
-      } 
-      if (danger < 0)
-        danger = par1Random.nextInt(4); 
-    } 
-    switch (danger) {
-      case 0:
-        return "Zombie";
-      case 1:
-        return "Ghoul";
-      case 2:
-        return "Skeleton";
-      case 3:
-        return "Spider";
-      case 4:
-        return "Wight";
-      case 5:
-        return "DemonSpider";
-    } 
-    return "Hellhound";
+
+      switch (danger) {
+        case 0:
+          cir.setReturnValue("Zombie");
+        case 1:
+          cir.setReturnValue("Ghoul");
+        case 2:
+          cir.setReturnValue("Skeleton");
+        case 3:
+          cir.setReturnValue("Spider");
+        case 4:
+          cir.setReturnValue("Wight");
+        case 5:
+          cir.setReturnValue("DemonSpider");
+        default:
+          cir.setReturnValue("Hellhound");
+      }
+    }
   }
 }

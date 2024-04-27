@@ -39,8 +39,10 @@ public abstract class ItemArmorMixin extends Item implements IDamageableItem {
 
     @Inject(method = "addInformation", at = @At("TAIL"))
     private void inject(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
-        if (extended_info && item_stack != null && item_stack.getMaterialForRepairs() == Materials.nickel)
-            info.add(EnumChatFormatting.LIGHT_GRAY + Translator.getFormatted("itemarmor.tooltip.slimeresistance", new Object[0]));
+        if (extended_info) {
+            if (item_stack != null && item_stack.getMaterialForRepairs() == Materials.nickel)
+                info.add(EnumChatFormatting.LIGHT_GRAY + Translator.getFormatted("itemarmor.tooltip.slimeresistance", new Object[0]));
+        }
     }
 
     @Inject(method = "getMultipliedProtection", at = @At("RETURN"), cancellable = true)
