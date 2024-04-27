@@ -208,7 +208,7 @@ public class Items extends Item {
 
     public static final ItemBucket adamantiumBucketWaterDangerous = (ItemBucket) (new ItemBucket(IdUtil.getNextItemID(), Material.adamantium, Materials.dangerous_water)).setContainerItem(bucketAdamantiumEmpty);
 
-    public static final Item wolf_fur = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.wolf_fur).setCraftingDifficultyAsComponent(100.0F).setUnlocalizedName("small_leather").setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
+    public static final Item wolf_fur = new ItemStandard(IdUtil.getNextItemID(), Materials.wolf_fur, "wolf_fur");
 
     public static final Item horse_meat = new ItemMeat(IdUtil.getNextItemID(), 6, 6, true, false, "horse_meat");
 

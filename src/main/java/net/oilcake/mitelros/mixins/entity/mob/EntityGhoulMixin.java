@@ -18,7 +18,7 @@ public class EntityGhoulMixin extends EntityAnimalWatcher {
 
     @Inject(method = "onSpawnWithEgg", at = @At("HEAD"))
     private void setCanPickUpLoot(EntityLivingData par1EntityLivingData, CallbackInfoReturnable<EntityLivingData> cir) {
-        if (ITFConfig.TagPillage.getBooleanValue()) {
+        if (ITFConfig.TagPillager.getBooleanValue()) {
             this.setCanPickUpLoot(true);
         }
     }

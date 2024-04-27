@@ -6,6 +6,7 @@ import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.AchievementExtend;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -16,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(EntityItem.class)
 public abstract class EntityItemMixin extends Entity {
-
+    @Unique
     private boolean isExploded;
 
     public EntityItemMixin(World par1World) {
