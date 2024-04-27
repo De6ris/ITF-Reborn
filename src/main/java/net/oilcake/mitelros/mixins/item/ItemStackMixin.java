@@ -3,7 +3,6 @@ package net.oilcake.mitelros.mixins.item;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFEnchantment;
-import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.QualityHandler;

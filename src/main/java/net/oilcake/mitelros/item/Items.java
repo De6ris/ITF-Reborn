@@ -3,15 +3,13 @@ package net.oilcake.mitelros.item;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.block.Blocks;
-import net.oilcake.mitelros.item.api.*;
+import net.oilcake.mitelros.item.api.ITFRock;
 import net.oilcake.mitelros.item.potion.ItemPotionExperimental;
 import net.oilcake.mitelros.item.potion.ItemPotionSuspicious;
 import net.xiaoyu233.fml.reload.event.ItemRegistryEvent;
 import net.xiaoyu233.fml.reload.event.RecipeRegistryEvent;
 import net.xiaoyu233.fml.util.IdUtil;
 import net.xiaoyu233.fml.util.ReflectHelper;
-
-import static net.xiaoyu233.fml.util.ReflectHelper.createInstance;
 
 public class Items extends Item {
     public static final ItemArmor nickelHelmet = new ItemHelmet(IdUtil.getNextItemID(), Materials.nickel, false);

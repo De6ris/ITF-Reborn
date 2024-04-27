@@ -6,16 +6,14 @@ import net.oilcake.mitelros.entity.mob.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TimeZone;
 
-@Mixin({WorldServer.class})
-public class WorldServerMixin extends World {
-    private Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
-
+@Mixin(WorldServer.class)
+public abstract class WorldServerMixin extends World {
     public WorldServerMixin(ISaveHandler par1ISaveHandler, String par2Str, WorldProvider par3WorldProvider, WorldSettings par4WorldSettings, Profiler par5Profiler, ILogAgent par6ILogAgent, long world_creation_time, long total_world_time) {
         super(par1ISaveHandler, par2Str, par3WorldProvider, par4WorldSettings, par5Profiler, par6ILogAgent, world_creation_time, total_world_time);
     }
@@ -25,7 +23,7 @@ public class WorldServerMixin extends World {
      * @reason
      */
     @Overwrite
-    public Class getSuitableCreature(EnumCreatureType creature_type, int x, int y, int z) {
+    public Class getSuitableCreature(EnumCreatureType creature_type, int x, int y, int z) {// TODO hard to rewrite
         boolean check_depth = isOverworld();
         boolean is_blood_moon_up = isBloodMoon(true);
         boolean is_freezing_biome = getBiomeGenForCoords(x, z).isFreezing();
@@ -46,7 +44,7 @@ public class WorldServerMixin extends World {
                     if (this.rand.nextInt(40) >= y && this.rand.nextFloat() < 0.5F)
                         return EntityInfernalCreeper.class;
                     if (y <= 40)
-                        return ((Boolean) ITFConfig.TagInvisibleFollower.get()) ? EntityStalkerCreeper.class : entity_class;
+                        return ITFConfig.TagInvisibleFollower.get() ? EntityStalkerCreeper.class : entity_class;
                     return entity_class;
                 }
             } else if (entity_class == EntitySlime.class) {
@@ -66,8 +64,6 @@ public class WorldServerMixin extends World {
                     return entity_class;
             } else if (entity_class == EntityRevenant.class) {
                 if (!check_depth || y <= 44 || can_spawn_revenants_on_surface) {
-                    if (this.calendar.get(2) + 1 == 4 && this.calendar.get(5) == 1)
-                        return EntityZombieLord.class;
                     return entity_class;
                 }
             } else {
@@ -125,7 +121,7 @@ public class WorldServerMixin extends World {
                             if (!hasSkylight() || this.rand.nextInt(4) != 0 || !isOutdoors(x, y, z))
                                 return entity_class;
                         } else if (entity_class == EntityWoodSpider.class) {
-                            if ((canBlockSeeTheSky(x, y, z) || blockTypeIsAbove((Block) Block.leaves, x, y, z) || blockTypeIsAbove((Block) Block.wood, x, y, z)) && blockTypeIsNearTo(Block.wood.blockID, x, y, z, 5, 2) && blockTypeIsNearTo(Block.leaves.blockID, x, y + 5, z, 5, 5))
+                            if ((canBlockSeeTheSky(x, y, z) || blockTypeIsAbove(Block.leaves, x, y, z) || blockTypeIsAbove(Block.wood, x, y, z)) && blockTypeIsNearTo(Block.wood.blockID, x, y, z, 5, 2) && blockTypeIsNearTo(Block.leaves.blockID, x, y + 5, z, 5, 5))
                                 return entity_class;
                         } else {
                             if (entity_class != EntityBlackWidowSpider.class) {
@@ -151,98 +147,14 @@ public class WorldServerMixin extends World {
         return null;
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    protected void tickBlocksAndAmbiance() {
-        super.tickBlocksAndAmbiance();
-        int var1 = 0;
-        int var2 = 0;
-        Iterator<ChunkCoordIntPair> var3 = this.activeChunkSet.iterator();
-        boolean perform_random_block_ticks = shouldRandomBlockTicksBePerformed();
-        boolean is_blood_moon = isBloodMoon24HourPeriod();
-        for (int rarity_of_lightning = is_blood_moon ? (((Boolean) ITFConfig.TagUnstableConvection.get()) ? 5000 : 20000) : (((Boolean) ITFConfig.TagUnstableConvection.get()) ? 25000 : 100000); var3.hasNext(); this.theProfiler.endSection()) {
-            ChunkCoordIntPair var4 = var3.next();
-            int var5 = var4.chunkXPos * 16;
-            int var6 = var4.chunkZPos * 16;
-            this.theProfiler.startSection("getChunk");
-            Chunk var7 = getChunkFromChunkCoords(var4.chunkXPos, var4.chunkZPos);
-            moodSoundAndLightCheck(var5, var6, var7);
-            this.theProfiler.endStartSection("tickChunk");
-            var7.updateSkylight(false);
-            var7.performPendingSandFallsIfPossible();
-            this.theProfiler.endStartSection("thunder");
-            if (this.rand.nextInt(rarity_of_lightning) == 0 && isPrecipitating(true) && isThundering(true)) {
-                this.updateLCG = this.updateLCG * 3 + 1013904223;
-                int var8 = this.updateLCG >> 2;
-                int i = var5 + (var8 & 0xF);
-                int j = var6 + (var8 >> 8 & 0xF);
-                int var11 = getPrecipitationHeight(i, j);
-                if (canLightningStrikeAt(i, var11, j))
-                    addWeatherEffect((Entity) new EntityLightningBolt(this, i, var11, j));
-            }
-            this.theProfiler.endStartSection("iceandsnow");
-            if (this.rand.nextInt(16) == 0) {
-                this.updateLCG = this.updateLCG * 3 + 1013904223;
-                int var8 = this.updateLCG >> 2;
-                int i = var8 & 0xF;
-                int j = var8 >> 8 & 0xF;
-                int var11 = getPrecipitationHeight(i + var5, j + var6);
-                if (isBlockFreezableNaturally(i + var5, var11 - 1, j + var6))
-                    setBlock(i + var5, var11 - 1, j + var6, Block.ice.blockID);
-                if (isPrecipitating(true) && canSnowAt(i + var5, var11, j + var6))
-                    placeSnowfallAt(i + var5, var11, j + var6);
-                if (isPrecipitating(true)) {
-                    BiomeGenBase var12 = getBiomeGenForCoords(i + var5, j + var6);
-                    if (var12.canSpawnLightningBolt(is_blood_moon)) {
-                        int var13 = getBlockId(i + var5, var11 - 1, j + var6);
-                        if (var13 != 0)
-                            Block.blocksList[var13].fillWithRain(this, i + var5, var11 - 1, j + var6);
-                    }
-                }
-            }
-            this.theProfiler.endStartSection("tickTiles");
-            ExtendedBlockStorage[] var19 = var7.getBlockStorageArray();
-            int var9 = var19.length;
-            for (int var10 = 0; var10 < var9; var10++) {
-                ExtendedBlockStorage var21 = var19[var10];
-                if (var21 != null && var21.getNeedsRandomTick()) {
-                    int y_location = var21.getYLocation();
-                    for (int var20 = 0; var20 < 3; var20++) {
-                        this.updateLCG = this.updateLCG * 3 + 1013904223;
-                        int var13 = this.updateLCG >> 2;
-                        int var14 = var13 & 0xF;
-                        int var15 = var13 >> 8 & 0xF;
-                        int var16 = var13 >> 16 & 0xF;
-                        int var17 = var21.getExtBlockID(var14, var16, var15);
-                        var2++;
-                        Block var18 = Block.blocksList[var17];
-                        if (var18 != null && var18.getTickRandomly()) {
-                            var1++;
-                            if (perform_random_block_ticks)
-                                var18.updateTick(this, var14 + var5, var16 + y_location, var15 + var6, this.rand);
-                        }
-                    }
-                }
-            }
-            if (var7.last_total_world_time == 0L) {
-                var7.last_total_world_time = getTotalWorldTime();
-            } else {
-                var7.last_total_world_time++;
-            }
-        }
+    @ModifyConstant(method = "tickBlocksAndAmbiance", constant = @Constant(intValue = 20000))
+    private int moreThunder(int constant) {
+        return ITFConfig.TagUnstableConvection.get() ? 5000 : 20000;
     }
 
-    @Shadow
-    private boolean shouldRandomBlockTicksBePerformed() {
-        return false;
-    }
-
-    @Shadow
-    public boolean placeSnowfallAt(int x, int y, int z) {
-        return false;
+    @ModifyConstant(method = "tickBlocksAndAmbiance", constant = @Constant(intValue = 100000))
+    private int moreThunder1(int constant) {
+        return ITFConfig.TagUnstableConvection.get() ? 25000 : 100000;
     }
 
     @Shadow

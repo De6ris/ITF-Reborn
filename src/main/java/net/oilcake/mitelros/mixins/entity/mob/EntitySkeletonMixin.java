@@ -4,15 +4,12 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFSkeleton;
 import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Calendar;
 
 @Mixin(EntitySkeleton.class)
 public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAttackMob, ITFSkeleton {
@@ -25,15 +22,8 @@ public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAt
 
     @Shadow
     private EntityAIAttackOnCollide aiAttackOnCollide;
-
-    @Shadow
-    public int forced_skeleton_type;
-
+    @Unique
     protected boolean isWizard;
-
-    public boolean getWizard() {
-        return this.isWizard;
-    }
 
     public void setWizard(boolean isWizard) {
         this.isWizard = isWizard;
@@ -65,6 +55,11 @@ public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAt
         }
     }
 
+    @Inject(method = "attackEntityWithRangedAttack", at = @At("TAIL"))
+    private void consumeArrow(EntityLivingBase par1EntityLivingBase, float par2, CallbackInfo ci) {
+        this.num_arrows--;
+    }
+
     @Inject(method = "writeEntityToNBT", at = @At("TAIL"))
     public void writeArrows(NBTTagCompound par1NBTTagCompound, CallbackInfo ci) {
         par1NBTTagCompound.setByte("num_arrows", (byte) this.num_arrows);
@@ -78,58 +73,38 @@ public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAt
         return instance.getHeldItemStack();
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public EntityLivingData onSpawnWithEgg(EntityLivingData par1EntityLivingData) {
-        par1EntityLivingData = super.onSpawnWithEgg(par1EntityLivingData);
-        int skeleton_type = (this.forced_skeleton_type >= 0) ? this.forced_skeleton_type : getRandomSkeletonType(this.worldObj);
-        if (skeleton_type == 1) {// TODO only changed == 1 stuff
-            if (isBoneLord()) {
-                setCurrentItemOrArmor(1, (new ItemStack(Items.tungstenBoots)).randomizeForMob(this, false));
-                setCurrentItemOrArmor(2, (new ItemStack(Items.tungstenLeggings)).randomizeForMob(this, false));
-                setCurrentItemOrArmor(3, (new ItemStack(Items.tungstenChestplate)).randomizeForMob(this, false));
-                setCurrentItemOrArmor(4, (new ItemStack(Items.tungstenHelmet)).randomizeForMob(this, false));
-                getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(8.0D);
-            } else {
-                setCurrentItemOrArmor(1, (new ItemStack(Items.tungstenBootsChain)).randomizeForMob(this, false));
-                setCurrentItemOrArmor(2, (new ItemStack(Items.tungstenLeggingsChain)).randomizeForMob(this, false));
-                setCurrentItemOrArmor(3, (new ItemStack(Items.tungstenChestplateChain)).randomizeForMob(this, false));
-                setCurrentItemOrArmor(4, (new ItemStack(Items.tungstenHelmetChain)).randomizeForMob(this, false));
-                getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(6.0D);
-            }
-            if (this.rand.nextInt(24) == 0) {
-                this.isWizard = true;
-                setCurrentItemOrArmor(0, (new ItemStack(Items.lavaWand)).randomizeForMob(this, false));
-                this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityPlayer.class, 9.0F, 1.0D, 1.0D));
-                this.tasks.addTask(4, this.aiArrowAttack);
-            } else {
-                setCurrentItemOrArmor(0, (new ItemStack(Items.tungstenSword)).randomizeForMob(this, false));
-                this.tasks.addTask(4, this.aiAttackOnCollide);
-            }
-            setSkeletonType(1);
+    @Redirect(method = "onSpawnWithEgg", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityAITasks;addTask(ILnet/minecraft/EntityAIBase;)V", ordinal = 0))
+    private void cancel(EntityAITasks instance, int par1, EntityAIBase par2EntityAIBase) {
+    }
+
+    @Redirect(method = "onSpawnWithEgg", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntitySkeleton;setCurrentItemOrArmor(ILnet/minecraft/ItemStack;)V", ordinal = 0))
+    private void cancel(EntitySkeleton instance, int par1, ItemStack par2ItemStack) {
+    }
+
+    @Redirect(method = "onSpawnWithEgg", at = @At(value = "INVOKE", target = "Lnet/minecraft/AttributeInstance;setAttribute(D)V"))
+    private void cancel(AttributeInstance instance, double v) {
+        if (isBoneLord()) {
+            setCurrentItemOrArmor(1, (new ItemStack(Items.tungstenBoots)).randomizeForMob(this, false));
+            setCurrentItemOrArmor(2, (new ItemStack(Items.tungstenLeggings)).randomizeForMob(this, false));
+            setCurrentItemOrArmor(3, (new ItemStack(Items.tungstenChestplate)).randomizeForMob(this, false));
+            setCurrentItemOrArmor(4, (new ItemStack(Items.tungstenHelmet)).randomizeForMob(this, false));
+            instance.setAttribute(8.0D);
         } else {
-            if (skeleton_type == 2) {
-                setSkeletonType(2);
-                this.tasks.addTask(4, this.aiAttackOnCollide);
-            } else if (skeleton_type == 0) {
-                this.tasks.addTask(4, this.aiArrowAttack);
-            } else {
-                Minecraft.setErrorMessage("onSpawnWithEgg: Unrecognized skeleton type " + skeleton_type);
-            }
-            addRandomEquipment();
+            setCurrentItemOrArmor(1, (new ItemStack(Items.tungstenBootsChain)).randomizeForMob(this, false));
+            setCurrentItemOrArmor(2, (new ItemStack(Items.tungstenLeggingsChain)).randomizeForMob(this, false));
+            setCurrentItemOrArmor(3, (new ItemStack(Items.tungstenChestplateChain)).randomizeForMob(this, false));
+            setCurrentItemOrArmor(4, (new ItemStack(Items.tungstenHelmetChain)).randomizeForMob(this, false));
+            instance.setAttribute(6.0D);
         }
-        setCanPickUpLoot(true);
-        if (getCurrentItemOrArmor(4) == null) {
-            Calendar var2 = this.worldObj.getCurrentDate();
-            if (var2.get(2) + 1 == 10 && var2.get(5) == 31 && this.rand.nextFloat() < 0.25F) {
-                setCurrentItemOrArmor(4, new ItemStack((this.rand.nextFloat() < 0.1F) ? Block.pumpkinLantern : Block.pumpkin));
-                this.equipmentDropChances[4] = 0.0F;
-            }
+        if (this.rand.nextInt(24) == 0) {
+            this.isWizard = true;
+            setCurrentItemOrArmor(0, (new ItemStack(Items.lavaWand)).randomizeForMob(this, false));
+            this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityPlayer.class, 9.0F, 1.0D, 1.0D));
+            this.tasks.addTask(4, this.aiArrowAttack);
+        } else {
+            setCurrentItemOrArmor(0, (new ItemStack(Items.tungstenSword)).randomizeForMob(this, false));
+            this.tasks.addTask(4, this.aiAttackOnCollide);
         }
-        return par1EntityLivingData;
     }
 
     @Shadow
@@ -139,11 +114,6 @@ public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAt
 
     @Shadow
     public void setSkeletonType(int par1) {
-    }
-
-    @Shadow
-    public int getRandomSkeletonType(World world) {
-        return -1;
     }
 
     @Shadow

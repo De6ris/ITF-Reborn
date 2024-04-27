@@ -1,4 +1,4 @@
-package net.oilcake.mitelros.mixins;
+package net.oilcake.mitelros.mixins.util;
 
 import net.minecraft.ILogAgent;
 import net.minecraft.Minecraft;

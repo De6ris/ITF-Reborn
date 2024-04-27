@@ -1,4 +1,4 @@
-package net.oilcake.mitelros.mixins;
+package net.oilcake.mitelros.mixins.util;
 
 import net.minecraft.SoundsMITE;
 import org.spongepowered.asm.mixin.Mixin;

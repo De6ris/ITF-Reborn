@@ -4,18 +4,22 @@ import net.minecraft.EntityAnimalWatcher;
 import net.minecraft.EntityGhoul;
 import net.minecraft.EntityLivingData;
 import net.minecraft.World;
+import net.oilcake.mitelros.config.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({EntityGhoul.class})
+@Mixin(EntityGhoul.class)
 public class EntityGhoulMixin extends EntityAnimalWatcher {
-  public EntityGhoulMixin(World world) {
-    super(world);
-  }
-  
-  @Overwrite
-  public EntityLivingData onSpawnWithEgg(EntityLivingData par1EntityLivingData) {
-    setCanPickUpLoot(true);
-    return super.onSpawnWithEgg(par1EntityLivingData);
-  }
+    public EntityGhoulMixin(World world) {
+        super(world);
+    }
+
+    @Inject(method = "onSpawnWithEgg", at = @At("HEAD"))
+    private void setCanPickUpLoot(EntityLivingData par1EntityLivingData, CallbackInfoReturnable<EntityLivingData> cir) {
+        if (ITFConfig.TagPillage.getBooleanValue()) {
+            this.setCanPickUpLoot(true);
+        }
+    }
 }

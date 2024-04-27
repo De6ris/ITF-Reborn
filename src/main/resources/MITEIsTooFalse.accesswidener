@@ -37,3 +37,4 @@ accessible field net/minecraft/BiomeDecorator treesPerChunk I
 
 extendable class net/minecraft/BlockDoor
 accessible class net/minecraft/ContainerRepairINNER2
+accessible class net/minecraft/ComponentNetherBridgePiece

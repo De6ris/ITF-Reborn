@@ -1,16 +1,17 @@
 package net.oilcake.mitelros.mixins.entity.slime;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.DamageSource;
 import net.minecraft.EntityPudding;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin({EntityPudding.class})
+@Mixin(EntityPudding.class)
 public class EntityPuddingMixin {
-  @Overwrite
-  public boolean isImmuneTo(DamageSource damage_source) {
-    boolean temp = (!damage_source.isExplosion() && !damage_source.hasFireAspect() && !damage_source.isLavaDamage() && !damage_source.hasMagicAspect() && !damage_source.isSnowball());
-    return (damage_source.getItemAttackedWith() != null) ? ((temp && damage_source.getItemAttackedWith().getMaterialForRepairs() != Materials.nickel)) : temp;
-  }
+    @ModifyReturnValue(method = "isImmuneTo", at = @At("RETURN"))
+    private boolean nickelDamage(boolean original, @Local(argsOnly = true) DamageSource damage_source) {
+        return (damage_source.getItemAttackedWith() != null) ? ((original && damage_source.getItemAttackedWith().getMaterialForRepairs() != Materials.nickel)) : original;
+    }
 }

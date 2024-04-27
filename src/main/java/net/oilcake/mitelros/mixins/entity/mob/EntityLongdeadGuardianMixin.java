@@ -2,22 +2,23 @@ package net.oilcake.mitelros.mixins.entity.mob;
 
 import net.minecraft.*;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin({EntityLongdeadGuardian.class})
+@Mixin(EntityLongdeadGuardian.class)
 public class EntityLongdeadGuardianMixin extends EntityLongdead {
-  ItemStack stowed_item_stack;
-  
-  public EntityLongdeadGuardianMixin(World world) {
-    super(world);
-  }
-  
-  @Overwrite
-  public void addRandomWeapon() {
-    super.addRandomWeapon();
-    if (getHeldItem() instanceof net.minecraft.ItemBow)
-      this.stowed_item_stack = (new ItemStack(Item.daggerAncientMetal)).randomizeForMob((EntityLiving)this, true); 
-    if (getHeldItem() instanceof net.minecraft.ItemSword)
-      this.stowed_item_stack = (new ItemStack((Item)Item.bowAncientMetal)).randomizeForMob((EntityLiving)this, true); 
-  }
+    @Shadow
+    ItemStack stowed_item_stack;
+
+    public EntityLongdeadGuardianMixin(World world) {
+        super(world);
+    }
+
+    @Inject(method = "addRandomWeapon", at = @At("TAIL"))
+    private void addSword(CallbackInfo ci) {
+        if (getHeldItem() instanceof ItemSword)
+            this.stowed_item_stack = (new ItemStack(Item.bowAncientMetal)).randomizeForMob(this, true);
+    }
 }

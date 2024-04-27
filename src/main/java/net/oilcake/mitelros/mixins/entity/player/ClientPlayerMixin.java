@@ -30,7 +30,7 @@ public abstract class ClientPlayerMixin extends AbstractClientPlayer implements 
      * @reason
      */
     @Overwrite
-    private float getBenchAndToolsModifier(Container container) {
+    private float getBenchAndToolsModifier(Container container) {// TODO hard to rewrite
         if (!(container instanceof ContainerWorkbench container_workbench))
             return 0.0F;
         SlotCrafting slot_crafting = (SlotCrafting) container_workbench.getSlot(0);
