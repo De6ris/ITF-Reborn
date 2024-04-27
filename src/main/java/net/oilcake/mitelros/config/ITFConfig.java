@@ -37,7 +37,7 @@ public class ITFConfig extends SimpleConfigs {
     public static final ConfigBooleanChallenge TagDemonDescend = new ConfigBooleanChallenge("恶魔降临", "僵尸猪人领主血量提升50%，攻击力提升25%，概率手持钨钉头锤，且会召唤猪人守卫支援", 2);
     public static final ConfigBooleanChallenge TagDimensionInvade = new ConfigBooleanChallenge("维度入侵", "除了末地之外的任何维度都会生成其他维度的敌对生物", 4);
     public static final ConfigInteger TagCorrosion = new ConfigInteger("瘴气", 0, 0, 3, "每级使玩家的物品耐久度消耗提升30%");
-    public static final ConfigBooleanChallenge TagPillage = new ConfigBooleanChallenge("掠夺者", "允许部分怪物捡起战利品", 1);
+    public static final ConfigBooleanChallenge TagPillager = new ConfigBooleanChallenge("掠夺者", "允许部分怪物捡起物品", 1);
 
 
     // luck
@@ -87,7 +87,7 @@ public class ITFConfig extends SimpleConfigs {
 
     public static void init() {
         spite = List.of(TagUnstableConvection, TagExtremeClimate, TagDryDilemma, TagHeatStroke, TagDeadGeothermy, TagRejection, TagEternalRaining, TagApocalypse, TagDimensionInvade, TagCorrosion);
-        enemy = List.of(TagMiracleDisaster, TagInvisibleFollower, TagUnderAlliance, TagPseudoVision, TagInstinctSurvival, TagFallenInMine, TagBattleSuffer, TagWorshipDark, TagDemonDescend, TagPillage);
+        enemy = List.of(TagMiracleDisaster, TagInvisibleFollower, TagUnderAlliance, TagPseudoVision, TagInstinctSurvival, TagFallenInMine, TagBattleSuffer, TagWorshipDark, TagDemonDescend, TagPillager);
         luck = List.of(TagDistortion, TagDigest, TagArmament, TagWorkOfHeaven);
 
         challenge = new ArrayList<>();

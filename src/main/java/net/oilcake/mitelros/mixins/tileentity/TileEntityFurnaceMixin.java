@@ -59,9 +59,9 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
             cir.setReturnValue(2);
     }
 
-    @Inject(method = "canSmelt", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "canSmelt", at = @At(value = "INVOKE", target = "Lnet/minecraft/TileEntityFurnace;getFurnaceBlock()Lnet/minecraft/BlockFurnace;"), cancellable = true)
     private void canSmelt(int heat_level, CallbackInfoReturnable<Boolean> cir) {
-        if (this.checkSmelt(heat_level)) cir.setReturnValue(false);
+        if (!this.checkSmelt(heat_level)) cir.setReturnValue(false);
     }
 
     @Unique
