@@ -35,8 +35,14 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
             this.setFoodTemperature(-2);
         } else if (contains(Materials.ice_cream) || contains(Materials.sorbet)) {
             this.setFoodTemperature(-4);
-        } else if (contains(Materials.porkchop_stew) || contains(Material.beef_stew)) {
+        } else if (contains(Materials.porkchop_stew) || contains(Materials.chestnut_soup)
+                || contains(Material.beef_stew) || contains(Material.chicken_soup)
+                || contains(Materials.beetroot) || contains(Material.vegetable_soup)
+                || contains(Materials.fish_soup) || contains(Material.mushroom_stew)
+                || contains(Material.cream_of_mushroom_soup) || contains(Material.cream_of_vegetable_soup)) {
             this.setFoodTemperature(4);
+        } else if (contains(Material.porridge) || contains(Materials.cereal)) {
+            this.setFoodTemperature(2);
         }
     }
 

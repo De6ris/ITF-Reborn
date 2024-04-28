@@ -1,46 +1,18 @@
 package net.oilcake.mitelros.item;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 
-public class ItemBowlClay extends ItemVessel {
-
-    private int water;
-
+public class ItemBowlClay extends ItemBowl {
     public ItemBowlClay(int id, Material contents, String texture) {
-        super(id, Material.hardened_clay, contents, 1, 4, 4, "hardened_clay_bowls/" + texture);
-        setCraftingDifficultyAsComponent(25.0F);
-        setCreativeTab(CreativeTabs.tabMisc);
-        if (contains(Material.water)) {
-            setWater(2);
-        } else if (contains(Materials.dangerous_water) || contains(Materials.suspicious_water) || contains(Material.milk)) {
-            setWater(1);
-        } else if (contains(Material.mashed_potato)) {
-            setWater(0);
-        } else if (contains(Material.cereal)) {
-            setWater(2);
-        } else if (contains(Material.ice_cream)) {
-            setWater(2);
-        } else if (contains(Material.cream_of_mushroom_soup)) {
-            setWater(2);
-        } else if (contains(Materials.beetroot)) {
-            setWater(6);
-        } else if (contains(Materials.salad)) {
-            setWater(0);
-        } else if (!isEmpty()) {
-            setWater(4);
-        }
+        super(id, contents, texture);
+        this.setMaterial(Material.hardened_clay);
+        this.setTextureName("hardened_clay_bowls/" + texture);
     }
 
-    public int getMaxItemUseDuration(ItemStack par1ItemStack) {
-        return 32;
-    }
-
-    public EnumItemInUseAction getItemInUseAction(ItemStack item_stack, EntityPlayer player) {
-        return !isIngestable(item_stack) ? null : super.getItemInUseAction(item_stack, player);
-    }
-
+    @Override
     public int getSimilarityToItem(Item item) {
         if (item instanceof ItemBowlClay item_bowl) {
             if (item_bowl.isEmpty() || isEmpty())
@@ -49,30 +21,9 @@ public class ItemBowlClay extends ItemVessel {
         return super.getSimilarityToItem(item);
     }
 
-    public ItemBowlClay setAnimalProduct() {
-        super.setAnimalProduct();
-        return this;
-    }
-
-    public ItemBowlClay setPlantProduct() {
-        super.setPlantProduct();
-        return this;
-    }
-
+    @Override
     public int getBurnTime(ItemStack item_stack) {
         return 0;
-    }
-
-    public ItemVessel getPeerForContents(Material contents) {
-        return getPeer(getVesselMaterial(), contents);
-    }
-
-    public ItemVessel getPeerForVesselMaterial(Material vessel_material) {
-        return getPeer(vessel_material, getContents());
-    }
-
-    public boolean hasIngestionPriority(ItemStack item_stack, boolean ctrl_is_down) {
-        return !contains(Material.water);
     }
 
     public static boolean isSoupOrStew(Item item) {
@@ -85,52 +36,6 @@ public class ItemBowlClay extends ItemVessel {
     @Override
     public float getCompostingValue() {
         return (this == Items.claybowlMilk) ? 0.0F : super.getCompostingValue();
-    }
-
-    @Override
-    public Item getCompostingRemains(ItemStack item_stack) {
-        return getEmptyVessel();
-    }
-
-    @Override
-    public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
-        if (player.onServer()) {
-            if (ITFConfig.Realistic.get()) {
-                if (contains(Materials.dangerous_water)) {
-                    double rand = Math.random();
-                    player.addPotionEffect(new PotionEffect(Potion.poison.id, (int) (450.0D * (1.0D + rand)), 0));
-                    player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
-                }
-                if (contains(Materials.suspicious_water)) {
-                    double rand = Math.random();
-                    if (rand > (ITFConfig.TagDigest.get() ? 1.0D : 0.5D))
-                        player.addPotionEffect(new PotionEffect(Potion.poison.id, (int) (450.0D * (1.0D + rand)), 0));
-                    player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
-                }
-            } else {
-                if (contains(Materials.dangerous_water)) {
-                    double rand = Math.random();
-                    if (rand > (ITFConfig.TagDigest.get() ? 1.0D : 0.2D))
-                        player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
-                    player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
-                }
-                if (contains(Materials.suspicious_water)) {
-                    double rand = Math.random();
-                    if (rand > (ITFConfig.TagDigest.get() ? 1.0D : 0.8D))
-                        player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
-                    player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
-                }
-            }
-            if (contains(Material.milk))
-                player.clearActivePotions();
-            if (!contains(Material.water) && !contains(Material.milk)) {
-                player.getFeastManager().update(this);
-            }
-            player.addFoodValue(this);
-            if (isEatable(item_stack))
-                world.playSoundAtEntity(player, "random.burp", 0.5F, player.rand.nextFloat() * 0.1F + 0.9F);
-        }
-        super.onItemUseFinish(item_stack, world, player);
     }
 
     @Override
@@ -178,6 +83,11 @@ public class ItemBowlClay extends ItemVessel {
         return false;
     }
 
+    @Override
+    public ItemVessel getPeerForContents(Material contents) {
+        return ItemBowlClay.getPeer(this.getVesselMaterial(), contents);
+    }
+
     public static ItemVessel getPeer(Material vessel_material, Material contents) {
         if (vessel_material == Material.hardened_clay) {
             if (contents == null)
@@ -218,14 +128,5 @@ public class ItemBowlClay extends ItemVessel {
                 return Items.claybowlWaterSwampland;
         }
         return null;
-    }
-
-    public int getWater() {
-        return this.water;
-    }
-
-    public Item setWater(int water) {
-        this.water = water;
-        return this;
     }
 }
