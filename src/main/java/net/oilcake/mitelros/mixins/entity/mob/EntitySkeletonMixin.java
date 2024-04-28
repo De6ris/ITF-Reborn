@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAttackMob, ITFSkeleton {
 
     @Unique
-    private int num_arrows;
+    private int numArrows;
 
     @Shadow
     private EntityAIArrowAttack aiArrowAttack;
@@ -29,6 +29,11 @@ public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAt
         this.isWizard = isWizard;
     }
 
+    @Override
+    public void setNumArrows(int arrowNum) {
+        this.numArrows = arrowNum;
+    }
+
     public EntitySkeletonMixin(World par1World) {
         super(par1World);
         this.isWizard = false;
@@ -36,18 +41,18 @@ public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAt
 
     @Inject(method = "<init>(Lnet/minecraft/World;)V", at = @At("RETURN"))
     public void injectCtor(CallbackInfo callbackInfo) {
-        this.num_arrows = this.rand.nextInt(3) + (isLongdead() ? 6 : 2) + (isLongdeadGuardian() ? 2 : 0);
+        this.numArrows = this.rand.nextInt(3) + (isLongdead() ? 6 : 2) + (isLongdeadGuardian() ? 2 : 0);
         this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityWolf.class, 10.0F, 1.0D, 1.2D));
     }
 
     @Inject(method = "readEntityFromNBT", at = @At("TAIL"))
     private void readArrows(NBTTagCompound par1NBTTagCompound, CallbackInfo ci) {
-        this.num_arrows = par1NBTTagCompound.getByte("num_arrows");
+        this.numArrows = par1NBTTagCompound.getByte("num_arrows");
     }
 
     @Inject(method = "onLivingUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityMob;onLivingUpdate()V"))
     public void itfUpdate(CallbackInfo ci) {
-        if (this.num_arrows == 0 && getHeldItemStack() != null && getHeldItemStack().getItem() instanceof net.minecraft.ItemBow)
+        if (this.numArrows == 0 && getHeldItemStack() != null && getHeldItemStack().getItem() instanceof ItemBow)
             setHeldItemStack(null);
         if (getHeldItemStack() == null && getSkeletonType() == 0) {
             setSkeletonType(2);
@@ -57,17 +62,17 @@ public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAt
 
     @Inject(method = "attackEntityWithRangedAttack", at = @At("TAIL"))
     private void consumeArrow(EntityLivingBase par1EntityLivingBase, float par2, CallbackInfo ci) {
-        this.num_arrows--;
+        this.numArrows--;
     }
 
     @Inject(method = "writeEntityToNBT", at = @At("TAIL"))
     public void writeArrows(NBTTagCompound par1NBTTagCompound, CallbackInfo ci) {
-        par1NBTTagCompound.setByte("num_arrows", (byte) this.num_arrows);
+        par1NBTTagCompound.setByte("num_arrows", (byte) this.numArrows);
     }
 
     @Redirect(method = "setCombatTask", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntitySkeleton;getHeldItemStack()Lnet/minecraft/ItemStack;"))
     private ItemStack redirect(EntitySkeleton instance) {
-        if (this.num_arrows == 0) {
+        if (this.numArrows == 0) {
             return null;
         }
         return instance.getHeldItemStack();
@@ -154,7 +159,7 @@ public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAt
     private void itfDropArrow(boolean recently_hit_by_player, DamageSource damage_source, CallbackInfo ci) {
         if (this.getSkeletonType() != 2) {
             int looting = damage_source.getLootingModifier();
-            int j = Math.min(this.num_arrows, this.rand.nextInt(2 + looting));
+            int j = Math.min(this.numArrows, this.rand.nextInt(2 + looting));
             if (j > 0 && !recently_hit_by_player) {
                 j -= this.rand.nextInt(j + 1);
             }

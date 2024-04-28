@@ -72,7 +72,7 @@ public class ItemFoodMixin extends Item {
             int outcome = rand.nextInt(ITFConfig.Realistic.get() ? 1 : 4);
             if (meat.is_cooked) {
                 player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
-                player.getTemperatureManager().bodyTemperature += 2;
+                player.addPotionEffect(new PotionEffect(PotionExtend.warm.id, 1280, 0));
             } else {
                 if (outcome == (ITFConfig.TagDigest.get() ? 4 : 0))
                     player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (240.0D * (1.0D + rand.nextDouble())), 0));

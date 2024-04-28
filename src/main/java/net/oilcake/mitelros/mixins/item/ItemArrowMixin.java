@@ -32,7 +32,7 @@ public abstract class ItemArrowMixin extends Item {
 
     @Inject(method = "addInformation", at = @At("TAIL"))
     private void addInformationITF(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
-        if (extended_info || this.arrowhead_material == Materials.nickel) {
+        if (extended_info && this.arrowhead_material == Materials.nickel) {
             info.add(EnumChatFormatting.LIGHT_GRAY + Translator.getFormatted("itemtool.tooltip.slimeresistance", new Object[0]));
         }
     }

@@ -54,8 +54,12 @@ potion.extend.dehydration=Dehydration
 potion.extend.thirsty=Thirsty
 potion.extend.stunning=Stunned
 potion.extend.stretch=Stretch
+potion.extend.warm=Warm
+potion.extend.cool=Cool
+potion.extend.frost_resistance=Frost Resistance
 
 potion.extend.stretch.postfix=Stretch Potion
+potion.extend.frost_resistance.postfix=Frost Resistance Potion
 
 generator.default_1_1=Large Biomes(Old)
 
@@ -63,8 +67,8 @@ item.tooltip.water.add=Water+%d
 item.tooltip.water.minus=Water%d
 item.tooltip.water.agave=40% Water+1
 item.tooltip.reach.add=Reach+%d
-item.tooltip.temperature.add=Temperature+%d
-item.tooltip.temperature.minus=Temperature%d
+item.tooltip.temperature.add=Warm%d
+item.tooltip.temperature.minus=Cool%d
 
 item.armor/nickel_helmet.name=Nickel Helmet
 item.armor/nickel_chestplate.name=Nickel Chestplate
@@ -275,6 +279,7 @@ item.hardened_clay_bowls/pumpkin_soup.name=Pumpkin Soup
 item.hardened_clay_bowls/salmon_soup.name=Salmon Soup
 item.hardened_clay_bowls/sorbet.name=Sorbet
 item.hardened_clay_bowls/vegetable_soup.name=Vegetable Soup
+item.bowl_hot_water.name=A Bowl Of Hot Water
 
 item.pieces/copper.name=Copper Orepiece
 item.pieces/silver.name=Silver Orepiece
@@ -348,8 +353,10 @@ item.totem/totem_of_sentry.name=Totem of Sentry
 item.totem/totem_of_unknown.name=Totem of UNKNOWN
 item.misc/wither_branch.name=Wither Branch
 item.misc/sulphur_sphere.name=Sulphur
-item.misc/enderRod.name=Ender Rod
+item.misc/ender_rod.name=Ender Rod
 item.misc/ice_chunk.name=Ice Chunk
+item.misc/frost_rod.name=Frost Rod
+item.misc/frost_powder.name=Frost Powder
 
 item.ignition/wood.name=Ignition
 item.ignition/rusted_iron.name=Rusted Iron Fire Starter
@@ -376,7 +383,6 @@ item.tools/detector_emerald.name=Detector
 
 item.potion/experimental_potion.name=Experimental Potion
 item.potion/suspicious_potion.name=Natural Water Bottle
-item.potion/stretch_potion.name=Stretch Potion
 
 item.misc/wolf_fur.name=Wolf Fur
 item.misc/ancient_metal_armor_piece.name=Gilding Ancient Metal Armor Piece

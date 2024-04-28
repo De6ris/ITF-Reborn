@@ -54,8 +54,12 @@ potion.extend.dehydration=腹泻
 potion.extend.thirsty=干渴
 potion.extend.stunning=晕眩
 potion.extend.stretch=延展
+potion.extend.warm=温暖
+potion.extend.cool=凉爽
+potion.extend.frost_resistance=抗寒
 
 potion.extend.stretch.postfix=延展药水
+potion.extend.frost_resistance.postfix=抗寒药水
 
 generator.default_1_1=旧巨型生物群系
 
@@ -63,8 +67,8 @@ item.tooltip.water.add=水分+%d
 item.tooltip.water.minus=水分%d
 item.tooltip.water.agave=%d水分+1
 item.tooltip.reach.add=触及距离+%d
-item.tooltip.temperature.add=体温+%d
-item.tooltip.temperature.minus=体温%d
+item.tooltip.temperature.add=温暖%d
+item.tooltip.temperature.minus=凉爽%d
 
 item.armor/nickel_helmet.name=镍头盔
 item.armor/nickel_chestplate.name=镍胸甲
@@ -275,6 +279,7 @@ item.hardened_clay_bowls/pumpkin_soup.name=南瓜汤
 item.hardened_clay_bowls/salmon_soup.name=鱼汤
 item.hardened_clay_bowls/sorbet.name=水果冰糕
 item.hardened_clay_bowls/vegetable_soup.name=蔬菜汤
+item.bowl_hot_water.name=一碗热水
 
 item.pieces/copper.name=铜矿石碎块
 item.pieces/silver.name=银矿石碎块
@@ -348,8 +353,10 @@ item.totem/totem_of_sentry.name=哨兵图腾
 item.totem/totem_of_unknown.name=不可名状图腾
 item.misc/wither_branch.name=凋零残叶
 item.misc/sulphur_sphere.name=硫磺
-item.misc/enderRod.name=末影棒
+item.misc/ender_rod.name=末影棒
 item.misc/ice_chunk.name=碎冰块
+item.misc/frost_rod.name=寒霜棒
+item.misc/frost_powder.name=寒霜粉
 
 item.ignition/wood.name=引火器
 item.ignition/rusted_iron.name=锈铁打火石
@@ -376,7 +383,6 @@ item.tools/detector_emerald.name=雷达
 
 item.potion/experimental_potion.name=实验的药水
 item.potion/suspicious_potion.name=自然水瓶
-item.potion/stretch_potion.name=延展药水
 
 item.misc/wolf_fur.name=狼的毛皮
 item.misc/ancient_metal_armor_piece.name=镶金远古金属铠甲残片

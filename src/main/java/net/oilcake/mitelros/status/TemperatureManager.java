@@ -61,7 +61,10 @@ public class TemperatureManager {
     }
 
     private void checkFreeze() {
-        boolean invincible = this.player.inCreativeMode() || EnchantmentHelper.hasEnchantment(this.player.getCuirass(), Enchantments.enchantmentCallOfNether) || this.calcArmorHeat() == 8;
+        boolean invincible = this.player.inCreativeMode() ||
+                EnchantmentHelper.hasEnchantment(this.player.getCuirass(), Enchantments.enchantmentCallOfNether) ||
+                this.calcArmorHeat() == 8 ||
+                this.player.isPotionActive(PotionExtend.frost_resistance);
 
         int freezeLevel = invincible ? -1 : (int) ((normalTemperature - this.bodyTemperature) / 3.0F);
 
@@ -92,7 +95,10 @@ public class TemperatureManager {
 
 
     private void checkHeat() {
-        boolean invincible = this.player.inCreativeMode() || EnchantmentHelper.hasEnchantment(this.player.getCuirass(), Enchantments.enchantmentCallOfPolar) || this.calcArmorHeat() == -8;
+        boolean invincible = this.player.inCreativeMode() ||
+                EnchantmentHelper.hasEnchantment(this.player.getCuirass(), Enchantments.enchantmentCallOfPolar) ||
+                this.calcArmorHeat() == -8 ||
+                this.player.isPotionActive(Potion.fireResistance);
 
         int heatLevel = invincible ? -1 : (int) ((this.bodyTemperature - normalTemperature) / 3.0F);
 
@@ -127,16 +133,15 @@ public class TemperatureManager {
         double result = 0.0d;
         World world = this.player.worldObj;
         int dimensionId = world.getDimensionId();
-        if (this.player.isBurning()) result += 16;
         switch (dimensionId) {
             case -1 -> {
                 return result + 32;
             }
             case 1 -> {
-                return result - 2;
+                return result - 4;
             }
             case -2 -> {
-                return result + heightFactor(this.player.getBlockPosY(), 128) + (ITFConfig.TagDeadGeothermy.get() ? -2 : 0);
+                return result + heightFactor(this.player.getBlockPosY(), 128) + (ITFConfig.TagDeadGeothermy.get() ? -4 : 0);
             }
         }
 
@@ -144,7 +149,7 @@ public class TemperatureManager {
         boolean isRaining = world.isPrecipitating(false);
         if (isRaining) {
             float rainStrength = world.getRainStrength(1.0f);
-            result -= rainStrength * (isOutdoors ? 2.0f : 1.0f);
+            result -= rainStrength * (isOutdoors ? 8.0f : 4.0f);
         }
 
         int time = world.getTimeOfDay();
@@ -152,8 +157,11 @@ public class TemperatureManager {
 
         result += seasonFactor(world.getDayOfWorld());
         result += biomeFactor(world.getBiomeGenForCoords(this.player.getBlockPosX(), this.player.getBlockPosZ()));
-        result += heightFactor(this.player.getBlockPosY(), 64);
+        if (this.player.getBlockPosY() > 64) result += heightFactor(this.player.getBlockPosY(), 64);
         result += this.calcArmorHeat() * 0.1f;
+        int potionEffect = (this.player.isPotionActive(PotionExtend.warm) ? this.player.getActivePotionEffect(PotionExtend.warm).getAmplifier() + 1 : 0)
+                - (this.player.isPotionActive(PotionExtend.cool) ? this.player.getActivePotionEffect(PotionExtend.cool).getAmplifier() + 1 : 0);
+        if (potionEffect * (normalTemperature - this.bodyTemperature) > 0) result += potionEffect * 4;
         return result;
     }
 
@@ -217,6 +225,7 @@ public class TemperatureManager {
     public int findHeatSource() {
         World world = this.player.worldObj;
         int heat = 0;
+        if (this.player.isBurning()) heat += 16;
         int x = this.player.getBlockPosX();
         int y = this.player.getBlockPosY();
         int z = this.player.getBlockPosZ();

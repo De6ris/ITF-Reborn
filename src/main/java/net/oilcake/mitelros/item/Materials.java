@@ -53,6 +53,8 @@ public class Materials extends Material {
     public static final Material ice_sucker;
     public static final Material melon_ice;
     public static final Material chocolate_smoothie;
+    public static final Material frost;
+    public static final Material hot_water;
 
     static {
         nickel = (Materials) (new Materials(EnumEquipmentMaterials.NICKEL)).setRequiresTool().setMetal(false).setMinHarvestLevel(3);
@@ -82,6 +84,8 @@ public class Materials extends Material {
         ice_sucker = new MaterialFood("ice_sucker");
         melon_ice = new MaterialFood("melon_ice");
         chocolate_smoothie = new MaterialFood("chocolate_smoothie");
+        frost = new Material("frost");
+        hot_water = new MaterialFood("hot_water");
     }
 
 

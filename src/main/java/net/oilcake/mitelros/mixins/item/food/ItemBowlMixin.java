@@ -19,9 +19,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
     @Inject(method = "<init>(ILnet/minecraft/Material;Ljava/lang/String;)V", at = @At("RETURN"))
     private void injectCtor(CallbackInfo callback) {
-        if (contains(Material.water) || contains(Material.cereal) || contains(Material.ice_cream) || contains(Material.cream_of_mushroom_soup)) {
+        if (contains(Material.water) || contains(Material.cereal) || contains(Material.ice_cream) || contains(Material.milk)) {
             setFoodWater(2);
-        } else if (contains(Materials.dangerous_water) || contains(Materials.suspicious_water) || contains(Material.milk)) {
+        } else if (contains(Materials.dangerous_water) || contains(Materials.suspicious_water)) {
             setFoodWater(1);
         } else if (contains(Material.mashed_potato) || contains(Materials.salad)) {
             setFoodWater(0);
@@ -31,17 +31,19 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
             setFoodWater(4);
         }
 
-        if (contains(Material.water) || contains(Materials.dangerous_water) || contains(Materials.suspicious_water) || contains(Material.milk)) {
-            this.setFoodTemperature(-2);
+        if (contains(Material.water) || contains(Materials.dangerous_water)
+                || contains(Materials.suspicious_water) || contains(Material.milk)
+                || contains(Materials.lemonade)) {
+            this.setFoodTemperature(-1);
         } else if (contains(Materials.ice_cream) || contains(Materials.sorbet)) {
-            this.setFoodTemperature(-4);
+            this.setFoodTemperature(-2);
         } else if (contains(Materials.porkchop_stew) || contains(Materials.chestnut_soup)
                 || contains(Material.beef_stew) || contains(Material.chicken_soup)
                 || contains(Materials.beetroot) || contains(Material.vegetable_soup)
                 || contains(Materials.fish_soup) || contains(Material.mushroom_stew)
                 || contains(Material.cream_of_mushroom_soup) || contains(Material.cream_of_vegetable_soup)) {
-            this.setFoodTemperature(4);
-        } else if (contains(Material.porridge) || contains(Materials.cereal)) {
+            this.setFoodTemperature(3);
+        } else if (contains(Materials.hot_water) || contains(Material.porridge) || contains(Materials.cereal)) {
             this.setFoodTemperature(2);
         }
     }
@@ -92,7 +94,7 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
         if (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland) material = Materials.dangerous_water;
         else if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) material = Material.water;
         else material = Materials.suspicious_water;
-        return new ItemStack(getPeerForContents(material));
+        return new ItemStack(this.getPeerForContents(material));
     }
 
     @Inject(method = "getPeer", at = @At("HEAD"), cancellable = true)

@@ -4,6 +4,7 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.api.ITFPlayer;
+import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.network.C2SDecreaseWater;
 import net.oilcake.mitelros.util.DamageSourceExtend;
 import org.spongepowered.asm.mixin.Mixin;
@@ -50,7 +51,12 @@ public class FoodStatsMixin implements ITFFoodStats {
     @Inject(method = "addFoodValue", at = @At("HEAD"))
     private void inject(Item item, CallbackInfo ci) {
         this.addWater(((ITFItem) item).getFoodWater());
-        this.player.getTemperatureManager().bodyTemperature += ((ITFItem) item).getFoodTemperature();
+        int temperature = ((ITFItem) item).getFoodTemperature();
+        if (temperature > 0) {
+            player.addPotionEffect(new PotionEffect(PotionExtend.warm.id, 1280, temperature - 1));
+        } else if (temperature < 0) {
+            player.addPotionEffect(new PotionEffect(PotionExtend.cool.id, 1280, -temperature - 1));
+        }
     }
 
     public void setSatiationWater(int water, boolean check_limit) {

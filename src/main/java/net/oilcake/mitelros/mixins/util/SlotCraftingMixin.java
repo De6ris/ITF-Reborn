@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.mixins.util;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.item.ItemBowlClay;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.util.AchievementExtend;
 import org.spongepowered.asm.mixin.Mixin;
@@ -9,12 +10,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static net.minecraft.AchievementList.fineDining;
+
 @Mixin(SlotCrafting.class)
-public abstract class SlotResultMixin extends Slot {
+public abstract class SlotCraftingMixin extends Slot {
     @Shadow
     private EntityPlayer thePlayer;
 
-    public SlotResultMixin(IInventory inventory, int slot_index, int display_x, int display_y) {
+    public SlotCraftingMixin(IInventory inventory, int slot_index, int display_x, int display_y) {
         super(inventory, slot_index, display_x, display_y);
     }
 
@@ -38,5 +41,8 @@ public abstract class SlotResultMixin extends Slot {
             this.thePlayer.addStat(AchievementExtend.cheersforMinecraft, 1);
         if (item == Items.experimentalPotion)
             this.thePlayer.addStat(AchievementExtend.nochoice, 1);
+        if (item instanceof ItemBowlClay && (item == Items.claybowlSalad || ItemBowlClay.isSoupOrStew(item))) {
+            this.thePlayer.triggerAchievement(fineDining);
+        }
     }
 }

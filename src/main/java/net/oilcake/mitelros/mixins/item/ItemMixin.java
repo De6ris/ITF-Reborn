@@ -64,11 +64,14 @@ public abstract class ItemMixin implements ITFItem {
             info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.add", this.water));
         } else if (this.water < 0) {
             info.add(EnumChatFormatting.YELLOW + Translator.getFormatted("item.tooltip.water.minus", this.water));
-            }
+        }
+        if (ReflectHelper.dyCast(this) instanceof ItemMeat meat && meat.is_cooked) {
+            info.add(EnumChatFormatting.GOLD + Translator.getFormatted("item.tooltip.temperature.add", 1));
+        }
         if (this.temperature > 0) {
             info.add(EnumChatFormatting.GOLD + Translator.getFormatted("item.tooltip.temperature.add", this.temperature));
         } else if (this.temperature < 0) {
-            info.add(EnumChatFormatting.GREEN + Translator.getFormatted("item.tooltip.temperature.minus", this.temperature));
+            info.add(EnumChatFormatting.GREEN + Translator.getFormatted("item.tooltip.temperature.minus", -this.temperature));
         }
     }
 

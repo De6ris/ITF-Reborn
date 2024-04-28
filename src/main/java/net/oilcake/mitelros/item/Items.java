@@ -344,13 +344,13 @@ public class Items extends Item {
 
     public static final ItemStandard claybowlRaw = (ItemStandard) (new ItemStandard(IdUtil.getNextItemID(), Material.clay, "bowlclayRaw")).setMaxStackSize(4);
 
-    public static final ItemBowlClay claybowlEmpty = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), null, "VANILLA")).setUnlocalizedName("bowlclay").useVanillaTexture("bowlclay").setMaxStackSize(4);
+    public static final ItemBowlClay claybowlEmpty = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), null, "VANILLA")).setMaxStackSize(4);
 
     public static final ItemBowlClay claybowlMushroomStew = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.mushroom_stew, "mushroom_stew")).setFoodValue(2, 4, false, false, false).setPlantProduct().setUnlocalizedName("mushroomStew");
 
-    public static final ItemBowlClay claybowlMilk = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.milk, "bowl_milk")).setFoodValue(0, 1, true, false, false).setAnimalProduct().setContainerItem(claybowlEmpty).setAlwaysEdible().setUnlocalizedName("bowlMilk");
+    public static final ItemBowlClay claybowlMilk = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.milk, "bowl_milk")).setFoodValue(0, 1, true, false, false).setAnimalProduct().setAlwaysEdible().setUnlocalizedName("bowlMilk");
 
-    public static final ItemBowlClay claybowlWater = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.water, "bowl_water")).setContainerItem(claybowlEmpty).setUnlocalizedName("bowlWater");
+    public static final ItemBowlClay claybowlWater = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.water, "bowl_water")).setUnlocalizedName("bowlWater");
 
     public static final ItemBowlClay claybowlBeefStew = (ItemBowlClay) (new ItemBowlClay(IdUtil.getNextItemID(), Material.beef_stew, "beef_stew")).setFoodValue(16, 16, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beefStew");
 
@@ -456,7 +456,7 @@ public class Items extends Item {
 
     public static final ItemBow bowUru = new ItemBow(IdUtil.getNextItemID(), Materials.uru);
 
-    public static final Item enderRod = ((ITFItem) (new ItemBrewingMisc(IdUtil.getNextItemID(), Material.ender_pearl, "enderRod")).setPotionEffectExtend("+0+1-2+3+13&4-4").setReachBonus(0.5F)).setExtraInfo("似乎能提升触及距离, 还能酿药?");
+    public static final Item enderRod = ((ITFItem) (new ItemBrewingMisc(IdUtil.getNextItemID(), Material.ender_pearl, "ender_rod")).setPotionEffectExtend("+8+9+10+11&4-4+13").setReachBonus(0.5F)).setExtraInfo("似乎能提升触及距离, 还能酿药?");
 
     public static final ItemMorningStar morningStarRustedIron = new ItemMorningStar(IdUtil.getNextItemID(), Material.rusted_iron);
 
@@ -491,9 +491,20 @@ public class Items extends Item {
     public static final ItemArmor iceLeggings = new ItemLeggings(IdUtil.getNextItemID(), Materials.ice_chunk, false);
 
     public static final ItemArmor iceBoots = new ItemBoots(IdUtil.getNextItemID(), Materials.ice_chunk, false);
+
     public static final ItemFood ice_sucker = (ItemFood) (new ItemFood(IdUtil.getNextItemID(), Materials.ice_sucker, 0, 0, false, false, false, "ice_sucker")).setMaxStackSize(8).setAlwaysEdible();
+
     public static final ItemFood melon_ice = (ItemFood) (new ItemFood(IdUtil.getNextItemID(), Materials.melon_ice, 1, 1, 1000, false, false, true, "melon_ice")).setMaxStackSize(8);
+
     public static final ItemFood chocolate_smoothie = (ItemFood) (new ItemFood(IdUtil.getNextItemID(), Materials.chocolate_smoothie, 4, 2, 1000, false, false, true, "chocolate_smoothie")).setMaxStackSize(4);
+
+    public static final Item frostRod = ((ITFItem) (new ItemStandard(IdUtil.getNextItemID(), Materials.frost, "frost_rod")).setReachBonus(0.5F)).setExtraInfo("似乎能提升触及距离, 还能搓成粉?");
+
+    public static final Item frostPowder = new ItemBrewingMisc(IdUtil.getNextItemID(), Materials.frost, "frost_powder").setPotionEffectExtend("+8+9+10-11&4-4+13");
+
+    public static final ItemBowlClay clayBowlHotWater = new ItemBowlClay(IdUtil.getNextItemID(), Materials.hot_water, "bowl_hot_water");
+
+    public static final ItemBowl bowlHotWater = new ItemBowl(IdUtil.getNextItemID(), Materials.hot_water, "bowl_water");
 
     public static void registerItems(ItemRegistryEvent event) {
         event.register("armor/nickel_helmet", nickelHelmet);
@@ -713,7 +724,7 @@ public class Items extends Item {
         event.register("tools/detector_emerald", detectorEmerald);
         event.register("misc/sulphur_sphere", sulphur);
         event.register("bows/uru/", bowUru).setUnlocalizedName("uru_bow");
-        event.register("misc/enderRod", enderRod);
+        event.register("misc/ender_rod", enderRod);
         event.register("tools/rusted_iron_club", morningStarRustedIron);
         event.register("buckets/wood/empty", woodBucket);
         event.register("buckets/wood/water", woodBucketWater);
@@ -736,7 +747,11 @@ public class Items extends Item {
         event.register("food/ice_sucker", ice_sucker);
         event.register("food/melon_ice", melon_ice);
         event.register("food/chocolate_smoothie", chocolate_smoothie);
-        for (int i = 0; i < 128 - (chocolate_smoothie.itemID - slimeWand.itemID); i++) {
+        event.register("misc/frost_rod", frostRod);
+        event.register("misc/frost_powder", frostPowder);
+        event.register("hardened_clay_bowls/hot_water", clayBowlHotWater).setUnlocalizedName("bowl_hot_water");
+        event.register("bowls/hot_water", bowlHotWater).setUnlocalizedName("bowl_hot_water");
+        for (int i = 0; i < 128 - (bowlHotWater.itemID - slimeWand.itemID); i++) {
             IdUtil.getNextItemID();
         }
     }
@@ -807,6 +822,7 @@ public class Items extends Item {
         register.registerShapelessRecipe(new ItemStack(nickelNugget, 9), true, nickelIngot);
         register.registerShapelessRecipe(new ItemStack(tungstenIngot, 9), true, Blocks.blockTungsten);
         register.registerShapelessRecipe(new ItemStack(tungstenNugget, 9), true, tungstenIngot);
+        register.registerShapelessRecipe(new ItemStack(frostPowder, 2), true, frostRod);
         registerArmorRecipe(register, wolf_fur, Materials.wolf_fur);
         registerArmorRecipe(register, iceChunk, Materials.ice_chunk);
         registerITFToolRecipe(register);
@@ -990,6 +1006,8 @@ public class Items extends Item {
         FurnaceRecipes.smelting().addSmelting(suspiciousPotion.itemID, new ItemStack(potion, 1, 0));
         FurnaceRecipes.smelting().addSmelting(horse_meat.itemID, new ItemStack(horse_meat_cooked));
         FurnaceRecipes.smelting().addSmelting(claybowlRaw.itemID, new ItemStack(claybowlEmpty));
+        FurnaceRecipes.smelting().addSmelting(bowlWater.itemID, new ItemStack(bowlHotWater));
+        FurnaceRecipes.smelting().addSmelting(claybowlWater.itemID, new ItemStack(clayBowlHotWater));
         Class[] tools = {
                 ItemSword.class, ItemAxe.class, ItemPickaxe.class, ItemHoe.class, ItemShovel.class, ItemWarHammer.class, ItemBattleAxe.class, ItemScythe.class, ItemDagger.class, ItemKnife.class,
                 ItemMorningStar.class, ItemHatchet.class, ItemShears.class, ItemMattock.class, ItemHelmet.class, ItemBoots.class, ItemLeggings.class, ItemCuirass.class};
