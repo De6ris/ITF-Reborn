@@ -14,8 +14,6 @@ public class ITFStart implements ModInitializer {
     @Override
     public void onInitialize() {
         MITEEvents.MITE_EVENT_BUS.register(new ITFEvent());
-        ITFConfig.init();
-        ITFConfig.getInstance().load();
         ModsScreen.getInstance().addConfig(ITFConfig.getInstance());
     }
 }

@@ -11,6 +11,7 @@ import fi.dy.masa.malilib.config.options.ConfigInteger;
 import fi.dy.masa.malilib.util.JsonUtils;
 import net.minecraft.GuiScreen;
 import net.oilcake.mitelros.ITFStart;
+import net.oilcake.mitelros.util.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,11 +69,18 @@ public class ITFConfig extends SimpleConfigs {
     public static final ConfigBoolean CoordinateText = new ConfigBoolean("位置信息", true, "拥有指南针时显示坐标");
     public static final ConfigBoolean TimeText = new ConfigBoolean("时间信息", true, "拥有钟时显示时间");
 
+    //misc
+    public static final ConfigBoolean FixID = new ConfigBoolean("固定ID", false, "(整合包作者需考虑)固定物品ID以及方块ID");
+    public static final ConfigInteger ItemIDStart = new ConfigInteger("物品ID起始点", 4000, 4000, 10000, "明显需要重启, 且有崩档风险, 操作前请备份!");
+    public static final ConfigInteger BlockIDStart = new ConfigInteger("方块ID起始点", 4095, 255, 4095, "明显需要重启, 且有崩档风险, 操作前请备份!");
+
     public static List<ConfigBase> challenge;
     public static List<ConfigBase> spite;
     public static List<ConfigBase> enemy;
     public static List<ConfigBase> luck;
     public static List<ConfigBase> others;
+    public static List<ConfigBase> info;
+    public static List<ConfigBase> misc;
     public static List<ConfigBase> experimental;
     public static List<ConfigBase> values;
 
@@ -81,7 +89,6 @@ public class ITFConfig extends SimpleConfigs {
     }
 
     public static ITFConfig Instance;
-    public static int ultimateDifficulty;
 
     public static void init() {
         spite = List.of(TagUnstableConvection, TagExtremeClimate, TagDryDilemma, TagHeatStroke, TagDeadGeothermy, TagRejection, TagEternalRaining, TagApocalypse, TagDimensionInvade, TagCorrosion);
@@ -93,9 +100,17 @@ public class ITFConfig extends SimpleConfigs {
         challenge.addAll(enemy);
         challenge.addAll(luck);
 
+
         experimental = List.of(TagCreaturesV2, TagBenchingV2, FinalChallenge, Realistic, TagMovingV2, TagTemperature);
 
-        others = List.of(DisplayHud, InfoYLevel, SeasonText, MODText, DifficultyInfo, WeatherText, TemperatureText, CoordinateText, TimeText);
+
+        info = List.of(DisplayHud, InfoYLevel, SeasonText, MODText, DifficultyInfo, WeatherText, TemperatureText, CoordinateText, TimeText);
+        misc = List.of(FixID, ItemIDStart, BlockIDStart);
+
+        others = new ArrayList<>();
+        others.addAll(info);
+        others.addAll(misc);
+
 
         values = new ArrayList<>();
         values.addAll(challenge);
@@ -104,7 +119,7 @@ public class ITFConfig extends SimpleConfigs {
 
         Instance = new ITFConfig(ITFStart.MOD_ID, null, values);
 
-        ultimateDifficulty = calculateUltimateDifficulty();
+        Constant.ultimateDifficulty = calculateUltimateDifficulty();
     }
 
     private static int calculateUltimateDifficulty() {
@@ -145,7 +160,9 @@ public class ITFConfig extends SimpleConfigs {
         ConfigUtils.writeConfigBase(challenge, "疯狂劲敌", enemy);
         ConfigUtils.writeConfigBase(challenge, "天赐福星", luck);
         ConfigUtils.writeConfigBase(root, "实验性玩法", experimental);
-        ConfigUtils.writeConfigBase(root, "其他配置项", others);
+        JsonObject other = JsonUtils.getNestedObject(root, "其它", true);
+        ConfigUtils.writeConfigBase(other, "信息显示", info);
+        ConfigUtils.writeConfigBase(other, "杂项", misc);
         JsonUtils.writeJsonToFile(root, this.getOptionsFile());
     }
 
@@ -162,7 +179,13 @@ public class ITFConfig extends SimpleConfigs {
                 ConfigUtils.readConfigBase(challenge, "疯狂劲敌", enemy);
                 ConfigUtils.readConfigBase(challenge, "天赐福星", luck);
                 ConfigUtils.readConfigBase(root, "实验性玩法", experimental);
-                ConfigUtils.readConfigBase(root, "其他配置项", others);
+                JsonObject other = JsonUtils.getNestedObject(root, "其它", true);
+                ConfigUtils.readConfigBase(other, "信息显示", info);
+                ConfigUtils.readConfigBase(other, "杂项", misc);
+            }
+            if (FixID.getBooleanValue()) {
+                Constant.nextItemID = ItemIDStart.get();
+                Constant.nextBlockID = BlockIDStart.get();
             }
         }
     }

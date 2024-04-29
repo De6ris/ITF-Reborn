@@ -42,7 +42,7 @@ public class ITFConfigScreen extends GuiScreenCommented {
                 this.mc.displayGuiScreen(new ValueScreen(this, "实验性玩法", this.configs.setValues(ITFConfig.experimental)));
                 break;
             case 2:
-                this.mc.displayGuiScreen(new ValueScreen(this, "其他配置项", this.configs.setValues(ITFConfig.others)));
+                this.mc.displayGuiScreen(new OtherScreen(this));
                 break;
             case 3:
                 var3 = new GuiYesNoMITE(this, "真的要重置全部设置吗?", this.configs.getName(), "是", "否", 1);

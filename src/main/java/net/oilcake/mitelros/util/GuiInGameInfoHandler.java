@@ -63,7 +63,7 @@ public class GuiInGameInfoHandler {
         if (difficulty == 0) {
             return "";
         }
-        if (ITFConfig.FinalChallenge.get() && difficulty == ITFConfig.ultimateDifficulty) {
+        if (ITFConfig.FinalChallenge.get() && difficulty == Constant.ultimateDifficulty) {
             return "终极难度";
         }
         return ("挑战难度: " + difficulty);
@@ -77,7 +77,7 @@ public class GuiInGameInfoHandler {
         if (difficulty == 0) {
             return "";
         }
-        if (ITFConfig.FinalChallenge.get() && difficulty == ITFConfig.ultimateDifficulty) {
+        if (ITFConfig.FinalChallenge.get() && difficulty == Constant.ultimateDifficulty) {
             return "§4终极难度§r";
         }
         return difficulty >= 16 ? ("§c挑战难度: §4" + difficulty + "§f") : (difficulty >= 12 ? ("挑战难度: §c" + difficulty + "§f") : (difficulty >= 8 ? ("挑战难度: §6" + difficulty + "§f") : (difficulty >= 4 ? ("挑战难度: §a" + difficulty + "§f") : ("挑战难度: " + difficulty + "§f"))));

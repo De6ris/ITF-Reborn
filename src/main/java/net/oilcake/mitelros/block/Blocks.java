@@ -5,16 +5,19 @@ import net.oilcake.mitelros.block.api.ITFDoor;
 import net.oilcake.mitelros.block.api.ITFPane;
 import net.oilcake.mitelros.block.observer.BlockObserver;
 import net.oilcake.mitelros.block.receiver.BlockReceiver;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
+import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.api.block.AnvilBlock;
 import net.xiaoyu233.fml.reload.event.ItemRegistryEvent;
 import net.xiaoyu233.fml.reload.event.RecipeRegistryEvent;
 import net.xiaoyu233.fml.util.IdUtil;
 
 public class Blocks {
-    public static int getNextBlockID() {
-        return IdUtil.getNextBlockID();
+    private static int getNextBlockID() {
+        if (!ITFConfig.FixID.getBooleanValue()) return IdUtil.getNextBlockID();
+        return Constant.nextBlockID--;
     }
 
     public static final Block blastFurnaceStoneIdle = (new BlockBlastFurnace(getNextBlockID(), Material.stone, false)).setCreativeTab(CreativeTabs.tabDecorations)
@@ -193,7 +196,7 @@ public class Blocks {
         registryEvent.registerItemBlock(blockReceiver, "block_receiver");
         registryEvent.registerItemBlock(blockEnchantPredicator, "block_enchant_predicator");
         registryEvent.registerItemBlock(magicTable, "magic_table");
-        for (int i = 0; i < 32- (magicTable.blockID - blockEnchantPredicator.blockID); i++) {
+        for (int i = 0; i < 32 - (magicTable.blockID - blockEnchantPredicator.blockID); i++) {
             getNextBlockID();
         }// for future updates
     }

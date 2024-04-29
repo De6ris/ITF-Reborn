@@ -2,11 +2,14 @@ package net.oilcake.mitelros;
 
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import net.minecraft.EnumQuality;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.xiaoyu233.fml.util.EnumExtends;
 
 public class EarlyRiser implements PreLaunchEntrypoint {
     @Override
     public void onPreLaunch() {
+        ITFConfig.init();
+        ITFConfig.getInstance().load();
         EnumExtends.EQUIPMENT_MATERIAL.addEnum("NICKEL", () -> new Object[]{8.0F, 30, EnumQuality.masterwork, "nickel"});
         EnumExtends.EQUIPMENT_MATERIAL.addEnum("TUNGSTEN", () -> new Object[]{128.0F, 50, EnumQuality.legendary, "tungsten"});
         EnumExtends.EQUIPMENT_MATERIAL.addEnum("URU", () -> new Object[]{192.0F, 100, EnumQuality.legendary, "uru"});

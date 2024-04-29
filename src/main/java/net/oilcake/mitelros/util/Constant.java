@@ -11,6 +11,9 @@ public class Constant {
     public static int nextPotionID = 24;
     public static int nextBiomeID = 27;
     public static int nextCurseID = 17;
+    public static int ultimateDifficulty;
+    public static int nextItemID;
+    public static int nextBlockID;
 
     public static int getNextBiomeID() {
         return nextBiomeID++;
