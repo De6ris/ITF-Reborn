@@ -271,7 +271,7 @@ public class Blocks {
     public static void furnaceRecipe(RecipeRegistryEvent register) {
         FurnaceRecipes.smelting().addSmelting(oreTungsten.blockID, new ItemStack(Items.tungstenIngot));
         FurnaceRecipes.smelting().addSmelting(oreNickel.blockID, new ItemStack(Items.nickelIngot));
-        FurnaceRecipes.smelting().addSmelting(oreUru.blockID, new ItemStack(Items.UruIngot));
+        FurnaceRecipes.smelting().addSmelting(oreUru.blockID, new ItemStack(Items.uruIngot));
     }
 
     public static void nineToOne(RecipeRegistryEvent register, ItemStack itemStack, Item item) {

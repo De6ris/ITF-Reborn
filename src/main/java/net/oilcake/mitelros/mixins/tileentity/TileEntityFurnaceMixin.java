@@ -110,8 +110,8 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
      * @author
      * @reason
      */
-    @Overwrite
-    public void updateEntity() {// TODO hard to rewrite
+    @Overwrite// Wont fix because change too much TODO
+    public void updateEntity() {
         if (!this.worldObj.isRemote && !isBurning() && this.activated && this.furnaceItemStacks[1] == null) {
             this.activated = false;
         }

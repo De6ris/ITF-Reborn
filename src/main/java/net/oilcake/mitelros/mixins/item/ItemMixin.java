@@ -3,7 +3,6 @@ package net.oilcake.mitelros.mixins.item;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
-import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.xiaoyu233.fml.util.ReflectHelper;
@@ -130,7 +129,7 @@ public abstract class ItemMixin implements ITFItem {
         if (material_for_repairs == Materials.ancient_metal_sacred)
             return Items.AncientmetalArmorPiece;
         if (material_for_repairs == Materials.uru)
-            return Items.UruNugget;
+            return Items.uruNugget;
         return null;
     }
 

@@ -14,7 +14,11 @@ public class GenLayerHillsMixin extends GenLayer {
         super(par1);
     }
 
-    @Overwrite
+    /**
+     * @author
+     * @reason
+     */
+    @Overwrite// TODO hard to rewrite
     public int[] getInts(int par1, int par2, int par3, int par4, int z) {
         int[] var5 = this.parent.getInts(par1 - 1, par2 - 1, par3 + 2, par4 + 2, z);
         int[] var6 = IntCache.getIntCache(par3 * par4);

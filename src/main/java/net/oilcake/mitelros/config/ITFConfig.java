@@ -51,7 +51,6 @@ public class ITFConfig extends SimpleConfigs {
     /* experimentalConfig */
     public static final ConfigBoolean TagTemperature = new ConfigBoolean("新温度机制", true);
     public static final ConfigBoolean TagCreaturesV2 = new ConfigBoolean("新动物生成机制");
-    public static final ConfigBoolean TagSpawningV2 = new ConfigBoolean("新动物生成频率");
     public static final ConfigBoolean TagBenchingV2 = new ConfigBoolean("工作站废料回收");
     public static final ConfigBoolean FinalChallenge = new ConfigBoolean("终极挑战模式");
     public static final ConfigBoolean Realistic = new ConfigBoolean("真实状态模拟");
@@ -59,7 +58,6 @@ public class ITFConfig extends SimpleConfigs {
 
 
     /* other */
-    public static final ConfigBoolean SeasonColor = new ConfigBoolean("季节植被颜色", true);
     public static final ConfigBoolean DisplayHud = new ConfigBoolean("信息显示", true);
     public static final ConfigInteger InfoYLevel = new ConfigInteger("信息渲染高度", 0, 0, 10, "此值为x时信息显示从第x行开始");
     public static final ConfigBoolean SeasonText = new ConfigBoolean("季节信息", true);
@@ -95,9 +93,9 @@ public class ITFConfig extends SimpleConfigs {
         challenge.addAll(enemy);
         challenge.addAll(luck);
 
-        experimental = List.of(TagCreaturesV2, TagSpawningV2, TagBenchingV2, FinalChallenge, Realistic, TagMovingV2, TagTemperature);
+        experimental = List.of(TagCreaturesV2, TagBenchingV2, FinalChallenge, Realistic, TagMovingV2, TagTemperature);
 
-        others = List.of(SeasonColor, DisplayHud, InfoYLevel, SeasonText, MODText, DifficultyInfo, WeatherText, TemperatureText, CoordinateText, TimeText);
+        others = List.of(DisplayHud, InfoYLevel, SeasonText, MODText, DifficultyInfo, WeatherText, TemperatureText, CoordinateText, TimeText);
 
         values = new ArrayList<>();
         values.addAll(challenge);

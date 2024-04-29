@@ -2,20 +2,16 @@ package net.oilcake.mitelros.mixins.item;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
-import net.oilcake.mitelros.block.MaterialHandler;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.DispenseBehaviorEmptyBucketRedirect;
 import net.oilcake.mitelros.util.DispenseBehaviorFilledBucketRedirect;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemBucket.class)
@@ -23,33 +19,19 @@ public abstract class ItemBucketMixin extends ItemVessel {
     @Unique
     private static final int xpNeeded = 250;
 
-    @Shadow
-    public static boolean shouldContainedLiquidBePlacedAsSourceBlock(EntityPlayer player, boolean ctrl_is_down) {
-        return false;
-    }
-
-    @Shadow
-    public abstract boolean tryPlaceContainedLiquid(World world, EntityPlayer player, int x, int y, int z, boolean allow_placement_of_source_block);
-
-    @Shadow
-    public abstract Block getBlockForContents();
-
-    @Shadow
-    public abstract float getChanceOfMeltingWhenFilledWithLava();
-
     public ItemBucketMixin(int id, Material vessel_material, Material contents_material, int standard_volume, int max_stack_size_empty, int max_stack_size_full, String texture) {
         super(id, vessel_material, contents_material, standard_volume, max_stack_size_empty, max_stack_size_full, texture);
     }
 
     @Inject(method = "getChanceOfMeltingWhenFilledWithLava", at = @At("HEAD"), cancellable = true)
-    private void inject_1(CallbackInfoReturnable<Float> cir) {
+    private void itfBucketChance(CallbackInfoReturnable<Float> cir) {
         if (this.getVesselMaterial() == Materials.tungsten) {
             cir.setReturnValue(0.0F);
         }
     }
 
     @ModifyReturnValue(method = "getChanceOfMeltingWhenFilledWithLava", at = @At("RETURN"))
-    private float harder(float original) {
+    private float burnEasier(float original) {
         return original * 2.5F;
     }
 
@@ -57,7 +39,7 @@ public abstract class ItemBucketMixin extends ItemVessel {
      * @author
      * @reason
      */
-    @Overwrite
+    @Overwrite// TODO hard to rewrite
     public IBehaviorDispenseItem getDispenserBehavior() {
         return isEmpty() ? new DispenseBehaviorEmptyBucketRedirect((ItemBucket) getEmptyVessel())
                 : ((getContents() != Material.water && getContents() != Material.lava) ?
@@ -71,116 +53,14 @@ public abstract class ItemBucketMixin extends ItemVessel {
         }
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public boolean onItemRightClick(EntityPlayer player, float partial_tick, boolean ctrl_is_down) {
-        RaycastCollision rc = player.getSelectedObject(partial_tick, true);
+    @ModifyArg(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;convertOneOfHeldItem(Lnet/minecraft/ItemStack;)V", ordinal = 1))
+    private ItemStack itfWaterBowl(ItemStack created_item_stack, @Local(argsOnly = true) EntityPlayer player) {
         BiomeGenBase biome = player.worldObj.getBiomeGenForCoords(player.getBlockPosX(), player.getBlockPosZ());
-        if (rc != null && rc.isBlock()) {
-            if (isEmpty()) {
-                int x;
-                int y;
-                int z;
-                Material material;
-                if (rc.getBlockHitMaterial().isLiquid()) {
-                    x = rc.block_hit_x;
-                    y = rc.block_hit_y;
-                    z = rc.block_hit_z;
-                    material = rc.getBlockHitMaterial();
-                } else {
-                    x = rc.neighbor_block_x;
-                    y = rc.neighbor_block_y;
-                    z = rc.neighbor_block_z;
-                    material = rc.getNeighborOfBlockHitMaterial();
-                }
-                if (material != null && material.isLiquid()) {
-                    if (player.inCreativeMode() && !player.canMineAndEditBlock(x, y, z))
-                        return false;
-                    if (player.onServer()) {
-                        if (player.inCreativeMode() || ctrl_is_down)
-                            rc.world.setBlockToAir(x, y, z);
-                        if (!player.inCreativeMode())
-                            System.out.println(getChanceOfMeltingWhenFilledWithLava());
-                            if (material == Material.lava && rc.world.rand.nextFloat() < getChanceOfMeltingWhenFilledWithLava()) {
-                                player.addStat(StatList.objectBreakStats[this.itemID], 1);
-                                ItemStack held_item_stack = player.getHeldItemStack();
-                                ItemStack itemStack1 = getItemProducedWhenDestroyed(held_item_stack, DamageSource.lava);
-                                if (itemStack1 == null)
-                                    rc.world.blockFX(EnumBlockFX.item_consumed_by_lava, x, y, z);
-                                player.convertOneOfHeldItem(itemStack1);
-                                if (!player.hasHeldItem())
-                                    (player.getAsEntityPlayerMP()).prevent_item_pickup_due_to_held_item_breaking_until = System.currentTimeMillis() + 1500L;
-                            } else {
-                                if (rc.getBlockHitMaterial() == Material.water || rc.getNeighborOfBlockHitMaterial() == Material.water) {
-                                    if (player.onServer() && (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland)) {
-                                        player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Materials.dangerous_water)));
-                                    } else if (player.onServer() && (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver)) {
-                                        player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Material.water)));
-                                    } else if (player.onServer()) {
-                                        player.convertOneOfHeldItem(new ItemStack(getPeerForContents(Materials.suspicious_water)));
-                                    }
-                                    return true;
-                                }
-                                player.convertOneOfHeldItem(new ItemStack(getPeerForContents(material)));
-                            }
-                    }
-                    return true;
-                }
-                return false;
-            }
-            if (contains(Material.stone))
-                return false;
-            ItemStack item_stack = player.getHeldItemStack();
-            if (contains(Material.water) || contains(Materials.dangerous_water) || contains(Materials.suspicious_water)) {
-                Block block = rc.getBlockHit();
-                int x = rc.block_hit_x;
-                int y = rc.block_hit_y;
-                int z = rc.block_hit_z;
-                EnumFace face_hit = rc.face_hit;
-                if (rc.world.getBlock(x, y - 1, z) == Block.tilledField) {
-                    y--;
-                    block = rc.world.getBlock(x, y, z);
-                    face_hit = EnumFace.TOP;
-                }
-                if (block == Block.tilledField && face_hit == EnumFace.TOP) {
-                    if (BlockFarmland.fertilize(rc.world, x, y, z, player.getHeldItemStack(), player)) {
-                        if (player.onServer() && !player.inCreativeMode())
-                            player.convertOneOfHeldItem(new ItemStack(getEmptyVessel()));
-                        return true;
-                    }
-                    return false;
-                }
-            }
-            if (player.inCreativeMode() || (rc.getBlockHitMaterial() != classifyMaterialForm(getContents()) && rc.getNeighborOfBlockHitMaterial() != classifyMaterialForm(getContents()))) {
-                int x;
-                int y;
-                int z;
-                if (!rc.getBlockHit().isLiquid() && !rc.isBlockHitReplaceableBy(getBlockForContents(), 0)) {
-                    x = rc.neighbor_block_x;
-                    y = rc.neighbor_block_y;
-                    z = rc.neighbor_block_z;
-                } else {
-                    x = rc.block_hit_x;
-                    y = rc.block_hit_y;
-                    z = rc.block_hit_z;
-                }
-                if (!player.canPlayerEdit(x, y, z, item_stack))
-                    return false;
-                if (tryPlaceContainedLiquid(rc.world, player, x, y, z, shouldContainedLiquidBePlacedAsSourceBlock(player, ctrl_is_down))) {
-                    if (player.onServer() && !player.inCreativeMode())
-                        player.convertOneOfHeldItem(new ItemStack(getEmptyVessel()));
-                    return true;
-                }
-                return false;
-            }
-            if (player.onServer())
-                player.convertOneOfHeldItem(new ItemStack(getEmptyVessel()));
-            return true;
-        }
-        return false;
+        Material material;
+        if (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland) material = Materials.dangerous_water;
+        else if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) material = Material.water;
+        else material = Materials.suspicious_water;
+        return new ItemStack(this.getPeerForContents(material));
     }
 
     @ModifyExpressionValue(method = "tryPlaceContainedLiquid", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemBucket;getContents()Lnet/minecraft/Material;"))
@@ -289,10 +169,6 @@ public abstract class ItemBucketMixin extends ItemVessel {
         if (itfVessel != null) {
             cir.setReturnValue(itfVessel);
         }
-    }
-
-    private Material classifyMaterialForm(Material material) {
-        return MaterialHandler.classifyMaterialForm(material);
     }
 
     @ModifyConstant(method = "addInformation", constant = @Constant(intValue = 100))

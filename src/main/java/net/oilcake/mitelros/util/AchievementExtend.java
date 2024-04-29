@@ -63,7 +63,7 @@ public class AchievementExtend {
         lichHunter = (new Achievement(getNextAchievementID(), "LichHunter", -2, 11, Items.shockWand, AchievementList.mithrilIngot)).registerAchievement();
         copying = (new Achievement(getNextAchievementID(), "Copying", -4, 11, Items.forgingnote, lichHunter)).registerAchievement();
         decimator = (new Achievement(getNextAchievementID(), "Decimator", -6, 12, Item.appleGold, copying)).registerAchievement();
-        neverEnds = (new Achievement(getNextAchievementID(), "NeverEnds", -2, 17, Items.UruIngot, AchievementList.adamantiumIngot)).registerAchievement();
+        neverEnds = (new Achievement(getNextAchievementID(), "NeverEnds", -2, 17, Items.uruIngot, AchievementList.adamantiumIngot)).registerAchievement();
         forgingLegend = (new Achievement(getNextAchievementID(), "ForgingLegend", -6, 10, Items.ChestplateAncientmetalsacred, copying)).registerAchievement();
         invincible = (new Achievement(getNextAchievementID(), "Invincible", -3, 12, Items.Pulque, AchievementList.potion)).registerAchievement().setSpecial();
         stormStriker = (new Achievement(getNextAchievementID(), "StormStriker", 9, 16, new ItemStack(Block.skull, 1, 3), AchievementList.theEnd2)).registerAchievement().setSpecial();

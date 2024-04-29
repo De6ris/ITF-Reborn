@@ -4,7 +4,6 @@ import net.minecraft.*;
 import net.oilcake.mitelros.block.BlockFlowerPotExtend;
 import net.oilcake.mitelros.block.Blocks;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
@@ -17,11 +16,6 @@ public abstract class BlockFlowerPotMixin extends Block {
     @Shadow
     public static ItemStack getPlantForMeta(int par0) {
         return null;
-    }
-
-    @Shadow
-    public static int getMetaForPlant(ItemStack par0ItemStack) {
-        return 0;
     }
 
     protected BlockFlowerPotMixin(int par1, Material par2Material, BlockConstants constants) {
@@ -38,60 +32,23 @@ public abstract class BlockFlowerPotMixin extends Block {
         if (par0 == 13) cir.setReturnValue(new ItemStack(Blocks.flowerextend));
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, EnumFace face, float offset_x, float offset_y, float offset_z) {
+    @Inject(method = "onBlockActivated", at = @At(value = "INVOKE", target = "Lnet/minecraft/BlockFlowerPotMulti;a(Lnet/minecraft/ItemStack;)I", ordinal = 0), cancellable = true)
+    private void itfFlower(World world, int x, int y, int z, EntityPlayer player, EnumFace face, float offset_x, float offset_y, float offset_z, CallbackInfoReturnable<Boolean> cir) {
         ItemStack item_stack = player.getHeldItemStack();
-        if (item_stack == null)
-            return false;
-        if (BlockFlowerPotMulti.getMetaForPlant(item_stack) != 0) {
-            if (player.onServer()) {
-                int i = world.getBlockMetadata(x, y, z);
-                if (i != 0) {
-                    BlockBreakInfo info = new BlockBreakInfo(world, x, y, z);
-                    dropBlockAsEntityItem(info, getPlantForMeta(i));
-                    world.playSoundAtBlock(x, y, z, "random.pop", 0.1F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-                }
-                world.setBlock(x, y, z, flowerPotMulti.blockID, BlockFlowerPotMulti.getMetaForPlant(item_stack), 2);
-                if (!player.inCreativeMode())
-                    player.convertOneOfHeldItem(null);
-            }
-            return true;
-        }
-        if (BlockFlowerPotExtend.getMetaForPlant(item_stack) != 0) {
-            if (player.onServer()) {
-                int i = world.getBlockMetadata(x, y, z);
-                if (i != 0) {
-                    BlockBreakInfo info = new BlockBreakInfo(world, x, y, z);
-                    dropBlockAsEntityItem(info, getPlantForMeta(i));
-                    world.playSoundAtBlock(x, y, z, "random.pop", 0.1F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-                }
-                world.setBlock(x, y, z, Blocks.flowerPotExtend.blockID, BlockFlowerPotExtend.getMetaForPlant(item_stack), 2);
-                if (!player.inCreativeMode())
-                    player.convertOneOfHeldItem(null);
-            }
-            return true;
-        }
-        int metadata_for_plant = getMetaForPlant(item_stack);
-        if (metadata_for_plant == 0)
-            return false;
-        int metadata = world.getBlockMetadata(x, y, z);
-        if (metadata == metadata_for_plant)
-            return false;
+        if (item_stack.itemID != Blocks.flowerextend.blockID) return;
         if (player.onServer()) {
-            if (metadata != 0) {
+            int i = world.getBlockMetadata(x, y, z);
+            if (i != 0) {
                 BlockBreakInfo info = new BlockBreakInfo(world, x, y, z);
-                dropBlockAsEntityItem(info, getPlantForMeta(metadata));
+                dropBlockAsEntityItem(info, getPlantForMeta(i));
                 world.playSoundAtBlock(x, y, z, "random.pop", 0.1F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
             }
-            world.setBlockMetadataWithNotify(x, y, z, metadata_for_plant, 2);
+            world.setBlock(x, y, z, Blocks.flowerPotExtend.blockID, BlockFlowerPotExtend.getMetaForPlant(item_stack), 2);
             if (!player.inCreativeMode())
                 player.convertOneOfHeldItem(null);
         }
-        return true;
+        cir.setReturnValue(true);
+
     }
 
     @Inject(method = "getMetaForPlant", at = @At("HEAD"), cancellable = true)

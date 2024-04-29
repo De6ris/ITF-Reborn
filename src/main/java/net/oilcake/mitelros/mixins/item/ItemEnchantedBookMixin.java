@@ -18,7 +18,7 @@ public abstract class ItemEnchantedBookMixin extends Item {
      * @author
      * @reason
      */
-    @Overwrite
+    @Overwrite// Wont Fix because I change entirely TODO
     public WeightedRandomChestContent func_92112_a(Random par1Random, int par2, int par3, int par4) {
         ItemStack var6 = new ItemStack(this.itemID, 1, 0);
         List var4 = buildEnchantmentList(par1Random, 50);

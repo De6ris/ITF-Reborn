@@ -179,8 +179,8 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
      * @author
      * @reason
      */
-    @Overwrite
-    public void readStatsFromNBT(NBTTagCompound par1NBTTagCompound) {// TODO why null?
+    @Overwrite// Wont fix until I know why stat may be null TODO
+    public void readStatsFromNBT(NBTTagCompound par1NBTTagCompound) {
         Collection tags = par1NBTTagCompound.getTags();
         Iterator i = tags.iterator();
 

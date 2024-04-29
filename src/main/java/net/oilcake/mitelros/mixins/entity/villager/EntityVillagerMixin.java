@@ -38,7 +38,7 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
      * @author
      * @reason
      */
-    @Overwrite
+    @Overwrite// Wont fix because all the villagers are rewritten TODO
     private void addDefaultEquipmentAndRecipies(int par1) {
         int var6, var3[], var4[], var5;
         if (this.buyingList != null) {

@@ -22,8 +22,8 @@ public abstract class WorldServerMixin extends World {
      * @author
      * @reason
      */
-    @Overwrite
-    public Class getSuitableCreature(EnumCreatureType creature_type, int x, int y, int z) {// TODO hard to rewrite
+    @Overwrite// TODO hard to rewrite
+    public Class getSuitableCreature(EnumCreatureType creature_type, int x, int y, int z) {
         boolean check_depth = isOverworld();
         boolean is_blood_moon_up = isBloodMoon(true);
         boolean is_freezing_biome = getBiomeGenForCoords(x, z).isFreezing();

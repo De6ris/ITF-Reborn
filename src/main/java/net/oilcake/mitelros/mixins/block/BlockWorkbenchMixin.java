@@ -34,7 +34,7 @@ public abstract class BlockWorkbenchMixin extends Block {
         setMinHarvestLevel(1);
     }
 
-    @Overwrite
+    @Overwrite// Wont fix until we write a new workbench block TODO
     public boolean isPortable(World world, EntityLivingBase entity_living_base, int x, int y, int z) {
         if (world == null) {
             return true;
@@ -44,7 +44,7 @@ public abstract class BlockWorkbenchMixin extends Block {
 
     }
 
-    @Override
+    @Override// TODO bad override
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
         if (ITFConfig.TagBenchingV2.get() || info.wasExploded()) {
             if (info.wasExploded()) {

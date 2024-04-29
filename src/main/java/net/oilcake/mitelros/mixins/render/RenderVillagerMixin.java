@@ -14,7 +14,7 @@ public abstract class RenderVillagerMixin extends RenderLiving {
      * @author
      * @reason
      */
-    @Overwrite
+    @Overwrite// Wont fix because all the villagers are rewritten TODO
     protected ResourceLocation func_110902_a(EntityVillager par1EntityVillager) {
         return switch (par1EntityVillager.getProfession()) {
             case 1, 2, 3, 4, 5, 6 -> this.textures[1];
