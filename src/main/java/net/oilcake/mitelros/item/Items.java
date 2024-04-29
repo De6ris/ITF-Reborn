@@ -222,13 +222,9 @@ public class Items extends Item {
 
     public static final ItemArmor wolfBoots = new ItemBoots(IdUtil.getNextItemID(), Materials.wolf_fur, false);
 
-    public static final ItemAppleGold goldenApple = (ItemAppleGold) (new ItemAppleGold(66, 2, 1, "VANILLA")).setAlwaysEdible().setPotionEffect(Potion.regeneration.id, 30, 0, 1.0F).setUnlocalizedName("appleGold").useVanillaTexture("apple_golden");
-
     public static final Item goldenAppleLegend = (new ItemGoldenAppleLegend(IdUtil.getNextItemID(), 2, 1, "goldapple")).setAlwaysEdible().setPotionEffect(Potion.regeneration.id, 30, 4, 1.0F).setUnlocalizedName("wtfk").useVanillaTexture("apple_golden_legend");
 
     public static final ItemBowl bowlLemonade = (ItemBowl) (new ItemBowl(IdUtil.getNextItemID(), Materials.lemonade, "lemonade")).setFoodValue(4, 1, false, true, true).setPlantProduct().setUnlocalizedName("lemonade");
-
-    public static final ItemBowl bowlEmpty = (ItemBowl) (new ItemBowl(25, null, "VANILLA")).setUnlocalizedName("bowl").useVanillaTexture("bowl").setMaxStackSize(4);
 
     public static final ItemMorningStar morningStarCopper = new ItemMorningStar(IdUtil.getNextItemID(), Material.copper);
 
@@ -261,12 +257,6 @@ public class Items extends Item {
     public static final ItemWand shockWand = new ItemWand(IdUtil.getNextItemID(), Material.ancient_metal);
 
     public static final Item experimentalPotion = (new ItemPotionExperimental(IdUtil.getNextItemID())).setUnlocalizedName("experimentalPotion").setCreativeTab(CreativeTabs.tabMisc);
-
-    public static final ItemShardAT shardDiamond = (ItemShardAT) (new ItemShardAT(862, Material.diamond)).setUnlocalizedName("shardDiamond").setXPReward(4);
-
-    public static final ItemShardAT shardEmerald = (ItemShardAT) (new ItemShardAT(861, Material.emerald)).setUnlocalizedName("shardEmerald").setXPReward(3);
-
-    public static final ItemShardAT shardNetherQuartz = (ItemShardAT) (new ItemShardAT(863, Material.quartz)).setUnlocalizedName("shardNetherQuartz").setXPReward(2);
 
     public static final ItemRecordExtend recordDamnation = (ItemRecordExtend) (new ItemRecordExtend(2024, "imported.damnation", "record_damnation", "Damnation", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
 
@@ -416,25 +406,23 @@ public class Items extends Item {
 
     public static final Item totemOfKnowledge = ((ITFItem) (new ItemTotem(IdUtil.getNextItemID(), Material.ancient_metal, "totem")).setMaxStackSize(1)).setExtraInfo("右键提升20%经验");
 
-    public static final ItemIgnition ignitionCopper = new ItemIgnition(IdUtil.getNextItemID(), Material.copper);
+    public static final ItemFlintAndSteel ignitionCopper = (ItemFlintAndSteel) new ItemFlintAndSteel(IdUtil.getNextItemID()).setMaterial(Material.flint, Material.copper).setMaxDamage((int) (2.0F * Material.copper.durability));
 
-    public static final ItemIgnition ignitionSilver = new ItemIgnition(IdUtil.getNextItemID(), Material.silver);
+    public static final ItemFlintAndSteel ignitionSilver = (ItemFlintAndSteel) new ItemFlintAndSteel(IdUtil.getNextItemID()).setMaterial(Material.flint, Material.silver).setMaxDamage((int) (2.0F * Material.silver.durability));
 
-    public static final ItemIgnition ignitionGold = new ItemIgnition(IdUtil.getNextItemID(), Material.gold);
+    public static final ItemFlintAndSteel ignitionGold = (ItemFlintAndSteel) new ItemFlintAndSteel(IdUtil.getNextItemID()).setMaterial(Material.flint, Material.gold).setMaxDamage((int) (2.0F * Material.gold.durability));
 
-    public static final ItemIgnition ignitionIron = new ItemIgnition(3, Material.iron);
+    public static final ItemFlintAndSteel ignitionNickel = (ItemFlintAndSteel) new ItemFlintAndSteel(IdUtil.getNextItemID()).setMaterial(Material.flint, Materials.nickel).setMaxDamage((int) (2.0F * Materials.nickel.durability));
 
-    public static final ItemIgnition ignitionNickel = new ItemIgnition(IdUtil.getNextItemID(), Materials.nickel);
+    public static final ItemFlintAndSteel ignitionTungsten = (ItemFlintAndSteel) new ItemFlintAndSteel(IdUtil.getNextItemID()).setMaterial(Material.flint, Materials.tungsten).setMaxDamage((int) (2.0F * Materials.tungsten.durability));
 
-    public static final ItemIgnition ignitionTungsten = new ItemIgnition(IdUtil.getNextItemID(), Materials.tungsten);
+    public static final ItemFlintAndSteel ignitionMithril = (ItemFlintAndSteel) new ItemFlintAndSteel(IdUtil.getNextItemID()).setMaterial(Material.flint, Material.mithril).setMaxDamage((int) (2.0F * Material.mithril.durability));
 
-    public static final ItemIgnition ignitionMithril = new ItemIgnition(IdUtil.getNextItemID(), Material.mithril);
+    public static final ItemFlintAndSteel ignitionAncientMetal = (ItemFlintAndSteel) new ItemFlintAndSteel(IdUtil.getNextItemID()).setMaterial(Material.flint, Material.ancient_metal).setMaxDamage((int) (2.0F * Material.ancient_metal.durability));
 
-    public static final ItemIgnition ignitionAncientMetal = new ItemIgnition(IdUtil.getNextItemID(), Material.ancient_metal);
+    public static final ItemFlintAndSteel ignitionAdamantium = (ItemFlintAndSteel) new ItemFlintAndSteel(IdUtil.getNextItemID()).setMaterial(Material.flint, Material.adamantium).setMaxDamage((int) (2.0F * Material.adamantium.durability));
 
-    public static final ItemIgnition ignitionAdamantium = new ItemIgnition(IdUtil.getNextItemID(), Material.adamantium);
-
-    public static final ItemIgnition ignitionWood = new ItemIgnition(IdUtil.getNextItemID(), Material.wood);
+    public static final ItemFlintAndSteel ignitionWood = (ItemFlintAndSteel) new ItemFlintAndSteel(IdUtil.getNextItemID()).setMaterial(Material.flint, Material.wood).setMaxDamage(3 + (int) (2.0F * Material.wood.durability));
 
     public static final ItemBrewingMisc wither_branch = (new ItemBrewingMisc(IdUtil.getNextItemID(), Material.wood, "wither_wood")).setPotionEffectExtend("+0-1+2+3+13&4-4");
 
@@ -478,7 +466,7 @@ public class Items extends Item {
 
     public static final Item totemOfUnknown = (new ItemTotem(IdUtil.getNextItemID(), Material.rusted_iron, "totem")).setMaxStackSize(1);
 
-    public static final ItemIgnition ignitionRustedIron = new ItemIgnition(IdUtil.getNextItemID(), Material.rusted_iron);
+    public static final ItemFlintAndSteel ignitionRustedIron = (ItemFlintAndSteel) new ItemFlintAndSteel(IdUtil.getNextItemID()).setMaterial(Material.flint, Material.rusted_iron).setMaxDamage((int) (2.0F * Material.rusted_iron.durability));
 
     public static final ItemKnife stickKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, IdUtil.getNextItemID(), Materials.wood);
 
@@ -615,9 +603,7 @@ public class Items extends Item {
         event.register("armor/wolf_jacket", wolfChestplate);
         event.register("armor/wolf_leggings", wolfLeggings);
         event.register("armor/wolf_boots", wolfBoots);
-        event.register("apple_golden", goldenApple);
         event.register("apple_golden", goldenAppleLegend);
-        event.register("bowl", bowlEmpty);
         event.register("tools/copper_club", morningStarCopper);
         event.register("tools/silver_club", morningStarSilver);
         event.register("tools/gold_club", morningStarGold);
@@ -635,9 +621,6 @@ public class Items extends Item {
         event.register("wand/thunder", shockWand);
         event.register("potion/suspicious_potion", suspiciousPotion);
         event.register("potion/experimental_potion", experimentalPotion);
-        event.register("shards/diamond", shardDiamond);
-        event.register("shards/emerald", shardEmerald);
-        event.register("shards/quartz", shardNetherQuartz);
         event.register("misc/azurite", shardAzurite);
         event.register("records/record_damnation", recordDamnation);
         event.register("records/record_connected", recordConnected);
@@ -713,7 +696,6 @@ public class Items extends Item {
         event.register("ignition/copper", ignitionCopper);
         event.register("ignition/silver", ignitionSilver);
         event.register("ignition/gold", ignitionGold);
-        event.register("ignition/iron", ignitionIron);
         event.register("ignition/nickel", ignitionNickel);
         event.register("ignition/ancient_metal", ignitionAncientMetal);
         event.register("ignition/mithril", ignitionMithril);
@@ -792,7 +774,7 @@ public class Items extends Item {
             Item item = Item.getMatchingItem(ItemIngot.class, material);
             Item item_nugget = getMatchingItem(ItemNugget.class, material);
             register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemMorningStar.class, material), 1), true, "###", "#*#", " # ", '#', item_nugget, '*', item);
-            register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemIgnition.class, material)), true, "C ", " F", 'C', item_nugget, 'F', flint);
+            register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemFlintAndSteel.class, material)), true, "C ", " F", 'C', item_nugget, 'F', flint);
         }
 
     }

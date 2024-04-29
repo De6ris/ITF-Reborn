@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.mixins.item;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.item.Items;
@@ -41,13 +42,15 @@ public abstract class ItemMixin implements ITFItem {
     @Unique
     private String extraInfo;
 
-
     @Redirect(method = "<init>(ILjava/lang/String;I)V", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
-    public void removePrint(PrintStream printStream, String messsage) {
-    }
+    public void removePrint(PrintStream printStream, String messsage, @Local(argsOnly = true) String texture) {
+//        System.out.println(texture);
+//        System.out.println(Item.itemsList[256 + Integer.parseInt(messsage.substring(11))].getItemDisplayName());
+//        System.out.println("-----------------");
+    }// TODO why null item call, is that fml?
 
     @Redirect(method = "doesSubtypeMatterForProduct(Lnet/minecraft/ItemStack;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
-    public void removeErrorInfo(String text) {
+    public void removeErrorInfo(String text) {// TODO fix flowerextend recipes
     }
 
     @Inject(method = "getReachBonus(Lnet/minecraft/Block;I)F", at = @At("HEAD"), cancellable = true)
@@ -135,20 +138,24 @@ public abstract class ItemMixin implements ITFItem {
 
     @Redirect(method = "getExclusiveMaterial", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
     private void noError(String text) {
-    }
+    }// TODO why call to book?
 
     @Redirect(method = "getMatchingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
     private static void noError1(String text) {
-    }
+    }// TODO blast furnace recipes
 
     @Inject(method = "<clinit>", at = @At("TAIL"))
     private static void reachBonus(CallbackInfo ci) {
         Item.blazeRod.setReachBonus(0.5F);
+        Item.shardDiamond.setXPReward(4);
+        Item.shardEmerald.setXPReward(3);
+        Item.shardNetherQuartz.setXPReward(2);
+        Item.bowlEmpty.setMaxStackSize(4);
     }
 
     @ModifyReturnValue(method = "preventsHandDamage", at = @At("RETURN"))
     private boolean reachBonus(boolean original) {
-        return original || this.itemID == Item.blazeRod.itemID || this.itemID == Items.enderRod.itemID;
+        return original || this.itemID == Item.blazeRod.itemID || this.itemID == Items.enderRod.itemID || this.itemID == Items.frostRod.itemID;
     }
 
 }

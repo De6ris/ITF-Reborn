@@ -42,6 +42,7 @@ public class BlockAnvilMixin extends BlockFalling {
                     dropBlockAsEntityItem(info, (Item.getMatchingItem(ItemNugget.class, this.metal_type)).itemID);
                 }
                 cir.setReturnValue(0);
+                return;
             }
             cir.setReturnValue(super.dropBlockAsEntityItem(info.setDamage(tile_entity_anvil.damage)));
         }

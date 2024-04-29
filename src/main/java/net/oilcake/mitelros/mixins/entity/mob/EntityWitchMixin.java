@@ -1,14 +1,28 @@
 package net.oilcake.mitelros.mixins.entity.mob;
 
-import net.minecraft.Block;
 import net.minecraft.EntityWitch;
-import net.minecraft.Item;
 import net.oilcake.mitelros.item.Items;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityWitch.class)
 public class EntityWitchMixin {
-    private static final int[] witchDrops = new int[]{// TODO kill overwrite
-            Item.glowstone.itemID, Item.sugar.itemID, Item.redstone.itemID, Item.spiderEye.itemID, Item.glassBottle.itemID, Item.gunpowder.itemID, Item.stick.itemID, Item.stick.itemID, Item.knifeFlint.itemID, Item.ironNugget.itemID,
-            Item.seeds.itemID, Item.pumpkinSeeds.itemID, Item.carrot.itemID, Item.potato.itemID, Item.onion.itemID, Block.plantYellow.blockID, Block.plantRed.blockID, Item.potion.itemID, Items.seedsBeetroot.itemID};
+    @Mutable
+    @Shadow
+    @Final
+    private static int[] witchDrops;
+
+    @Inject(method = "<clinit>", at = @At("TAIL"))
+    private static void addWitchLoot(CallbackInfo ci) {
+        int[] original = witchDrops;
+        int[] expanded = new int[original.length + 1];
+        System.arraycopy(original, 0, expanded, 0, original.length);
+        expanded[original.length] = Items.seedsBeetroot.itemID;
+        witchDrops = expanded;
+    }
 }

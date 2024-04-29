@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ItemBucketMilkMixin extends ItemVessel {
     @Inject(method = "<init>(ILnet/minecraft/Material;)V", at = @At("RETURN"))
     private void injectInit(CallbackInfo callbackInfo) {
-        ((ITFItem) this).setFoodWater(4);
+        ((ITFItem) this).setFoodWater(8);
     }
 
     public ItemBucketMilkMixin(int id, Material vessel_material, Material contents_material, int standard_volume, int max_stack_size_empty, int max_stack_size_full, String texture) {

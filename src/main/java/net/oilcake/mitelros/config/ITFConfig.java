@@ -62,7 +62,7 @@ public class ITFConfig extends SimpleConfigs {
     public static final ConfigInteger InfoYLevel = new ConfigInteger("信息渲染高度", 0, 0, 10, "此值为x时信息显示从第x行开始");
     public static final ConfigBoolean SeasonText = new ConfigBoolean("季节信息", true);
     public static final ConfigBoolean MODText = new ConfigBoolean("模组名", true);
-    public static final ConfigBoolean DifficultyInfo = new ConfigBoolean("难度信息", true);
+    public static final ConfigBoolean DifficultyInfo = new ConfigBoolean("难度信息", true, "窗口标题, 主页面左下角, 游戏gui左上角");
     public static final ConfigBoolean WeatherText = new ConfigBoolean("天气信息", true);
     public static final ConfigBoolean TemperatureText = new ConfigBoolean("温度信息", true);
     public static final ConfigBoolean CoordinateText = new ConfigBoolean("位置信息", true, "拥有指南针时显示坐标");

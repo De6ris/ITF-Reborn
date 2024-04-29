@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemFishingRod.class)
-public abstract class ItemFishingRodMixin extends Item implements IDamageableItem {
+public abstract class ItemFishingRodMixin extends Item implements IDamageableItem {// TODO write a new fishingrod
     private Icon[] uncastIcons = new Icon[11];
 
     private Material hook_material;

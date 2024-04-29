@@ -6,26 +6,19 @@ import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.AchievementExtend;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(EntityItem.class)
 public abstract class EntityItemMixin extends Entity {
-    @Unique
-    private boolean isExploded;
 
     public EntityItemMixin(World par1World) {
         super(par1World);
     }
-
-    @Shadow
-    public abstract void tryRemoveFromWorldUniques();
 
     @Shadow
     public abstract ItemStack getEntityItem();
@@ -35,9 +28,6 @@ public abstract class EntityItemMixin extends Entity {
 
     @Shadow
     public abstract void setEntityItemStack(ItemStack par1ItemStack);
-
-    @Shadow
-    private int health;
 
     @Inject(method = "onCollideWithPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityItem;playSound(Ljava/lang/String;FF)V"), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void achievements(EntityPlayer par1EntityPlayer, CallbackInfo ci, boolean was_empty_handed_before, ItemStack var2, int var3) {
@@ -65,22 +55,6 @@ public abstract class EntityItemMixin extends Entity {
                 return Materials.suspicious_water;
             }
         }
-    }
-
-    @Inject(method = "handleExplosion(Lnet/minecraft/Explosion;)Z", cancellable = true, at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/EntityItem;calcExplosionForce(FD)F"))
-    private void injectCancelExplosionCopy(CallbackInfoReturnable<Boolean> callback) {
-        if (this.isExploded) {
-            setDead();
-            tryRemoveFromWorldUniques();
-            callback.setReturnValue(Boolean.TRUE);
-            callback.cancel();
-        }
-    }
-
-    @Redirect(method = "handleExplosion(Lnet/minecraft/Explosion;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityItem;tryRemoveFromWorldUniques()V"))
-    private void injectUpdateExploded(EntityItem caller) {
-        this.isExploded = true;
-        tryRemoveFromWorldUniques();
     }
     @Inject(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityDamageResult;startTrackingHealth(F)V"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
     private void makeCharcoal(Damage damage, CallbackInfoReturnable<EntityDamageResult> cir, EntityDamageResult result) {

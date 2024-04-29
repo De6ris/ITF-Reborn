@@ -20,12 +20,12 @@ public class PlayerAbilitiesMixin {
     public EntityPlayer player;
 
     @ModifyConstant(method = "getWalkSpeed", constant = @Constant(floatValue = 0.75F))
-    private float inject(float constant) {
+    private float slowerIfHungry(float constant) {
         return 0.25F;
     }
 
     @ModifyReturnValue(method = "getWalkSpeed", at = @At("RETURN"))
-    private float inject_1(float speed) {
+    private float itfWalkFactors(float speed) {
         if (ITFConfig.Realistic.get()) {
             speed *= Math.min((float) Math.pow(this.player.getHealth(), 2.0D) / 25.0F, 1.0F);
             if (!this.player.isPotionActive(Potion.nightVision)) {

@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Random;
 
 @Mixin(BlockWorkbench.class)
-public abstract class BlockWorkbenchMixin extends Block {
+public abstract class BlockWorkbenchMixin extends Block {// TODO compatibility
     protected Icon[] front_icons = new Icon[17];
 
     protected Icon[] side_icons = new Icon[17];

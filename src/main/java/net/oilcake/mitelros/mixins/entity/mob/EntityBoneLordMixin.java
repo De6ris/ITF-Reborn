@@ -20,7 +20,7 @@ public class EntityBoneLordMixin extends EntitySkeleton {
     protected void applyEntityAttributes(CallbackInfo ci) {
         super.applyEntityAttributes();
         setEntityAttribute(SharedMonsterAttributes.followRange, 128.0D);
-        setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.25999999046325684D);
+        setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.26D);
         setEntityAttribute(SharedMonsterAttributes.attackDamage, (ITFConfig.TagBattleSuffer.getIntegerValue() > 1) ? 7.0D : 5.0D);
         setEntityAttribute(SharedMonsterAttributes.maxHealth, (ITFConfig.TagBattleSuffer.getIntegerValue() > 1) ? 30.0D : 20.0D);
     }

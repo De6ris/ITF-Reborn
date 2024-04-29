@@ -12,13 +12,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
-@Mixin({MapGenNetherBridge.class})
-public abstract class WorldGenNetherMixin extends MapGenStructure {
-  @Shadow
-  private List spawnList;
-  
-  @Inject(method = {"<init>()V"}, at = {@At("RETURN")})
-  public void injectCtor(CallbackInfo callbackInfo) {
-    this.spawnList.add(new SpawnListEntry(EntityWitherBoneLord.class, 5, 1, 1));
-  }
+@Mixin(MapGenNetherBridge.class)
+public abstract class MapGenNetherBridgeMixin extends MapGenStructure {
+    @Shadow
+    private List spawnList;
+
+    @Inject(method = "<init>()V", at = @At("RETURN"))
+    public void injectCtor(CallbackInfo callbackInfo) {
+        this.spawnList.add(new SpawnListEntry(EntityWitherBoneLord.class, 5, 1, 1));
+    }
 }

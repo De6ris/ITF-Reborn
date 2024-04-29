@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.List;
 
 @Mixin(BiomeGenBase.class)
-public class BiomeBaseMixin {
+public abstract class BiomeGenBaseMixin {
     @Shadow
     protected List spawnableMonsterList;
 
@@ -41,14 +41,6 @@ public class BiomeBaseMixin {
         this.spawnableCreatureList.add(new SpawnListEntry(EntityChicken.class, 5, 4, 6));
         this.spawnableCreatureList.add(new SpawnListEntry(EntityCow.class, 5, 4, 6));
         this.spawnableCreatureList.add(new SpawnListEntry(EntityUnknown.class, 110, 0, 0));
-    }
-
-    public void DisgenAnimals() {
-        removeEntityFromSpawnableLists(EntityCow.class);
-        removeEntityFromSpawnableLists(EntityChicken.class);
-        removeEntityFromSpawnableLists(EntitySheep.class);
-        removeEntityFromSpawnableLists(EntityPig.class);
-        removeEntityFromSpawnableLists(EntityHorse.class);
     }
 
     @Inject(method = "<init>(I)V", at = @At("RETURN"))
@@ -79,13 +71,27 @@ public class BiomeBaseMixin {
         }
         if (ITFConfig.TagCreaturesV2.get())
             RegenAnimals();
-        if (ITFConfig.TagApocalypse.get())
-            DisgenAnimals();
+    }
+
+    @Inject(method = "getSpawnableList", at = @At("HEAD"), cancellable = true)
+    private void removeAnimalsThatProvidesMeat(EnumCreatureType par1EnumCreatureType, CallbackInfoReturnable<List> cir) {
+        if (ITFConfig.TagApocalypse.getBooleanValue() && par1EnumCreatureType == EnumCreatureType.animal) {
+            List original = this.spawnableCreatureList;
+            this.removeEntityFromSpawnableList(original, EntityCow.class);
+            this.removeEntityFromSpawnableList(original, EntityChicken.class);
+            this.removeEntityFromSpawnableList(original, EntitySheep.class);
+            this.removeEntityFromSpawnableList(original, EntityPig.class);
+            this.removeEntityFromSpawnableList(original, EntityHorse.class);
+            cir.setReturnValue(original);
+        }
     }
 
     @Shadow
     public void removeEntityFromSpawnableLists(Class _class) {
     }
+
+    @Shadow
+    public abstract void removeEntityFromSpawnableList(List list, Class _class);
 
     @Inject(method = "isHillyOrMountainous", at = @At("HEAD"), cancellable = true)
     private void inject(CallbackInfoReturnable<Boolean> cir) {

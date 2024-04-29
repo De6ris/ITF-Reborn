@@ -5,7 +5,10 @@ import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.QualityHandler;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,11 +20,6 @@ import java.util.List;
 
 @Mixin(ItemArmor.class)
 public abstract class ItemArmorMixin extends Item implements IDamageableItem {
-    @Mutable
-    @Shadow
-    @Final
-    private boolean is_leather;
-
     @Shadow
     protected Material effective_material;
 
@@ -30,10 +28,7 @@ public abstract class ItemArmorMixin extends Item implements IDamageableItem {
     private boolean is_chain_mail;
 
     @Inject(method = "<init>(ILnet/minecraft/Material;IZ)V", at = @At("RETURN"))
-    public void injectCtor(CallbackInfo callbackInfo) {// for fixing with materials
-        if (this.effective_material == Materials.wolf_fur || this.effective_material == Materials.ice_chunk) {
-            this.is_leather = true;
-        }
+    public void injectCtor(CallbackInfo callbackInfo) {
         setCraftingDifficultyAsComponent(this.effective_material.durability * 100.0F * getNumComponentsForDurability());
     }
 

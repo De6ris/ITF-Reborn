@@ -66,7 +66,7 @@ public abstract class BlockOreMixin extends Block {
         if (this == Block.oreIron) return Items.pieceIron.itemID;
         if (this == Block.oreMithril) return Items.pieceMithril.itemID;
         if (this == Block.oreAdamantium) return Items.pieceAdamantium.itemID;
-        if (this == Block.oreNetherQuartz) return Items.shardNetherQuartz.itemID;
+        if (this == Block.oreNetherQuartz) return Item.shardNetherQuartz.itemID;
         if (this == Blocks.oreNickel) return Items.pieceNickel.itemID;
         if (this == Blocks.oreTungsten) return Items.pieceTungsten.itemID;
         if (this == Blocks.oreUru) return Items.pieceUru.itemID;

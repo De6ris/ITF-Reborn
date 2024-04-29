@@ -9,26 +9,27 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Random;
 
-@Mixin({BiomeGenEnd.class})
+@Mixin(BiomeGenEnd.class)
 public class BiomeTheEndMixin extends BiomeGenBase {
-  protected BiomeTheEndMixin(int par1) {
-    super(par1);
-  }
+    protected BiomeTheEndMixin(int par1) {
+        super(par1);
+    }
 
-  @Inject(method = "<init>",at = @At("RETURN"))
-  public void injectCtor(CallbackInfo callbackInfo) {
-    this.spawnableMonsterList.add(new SpawnListEntry(EntityPhaseSpider.class, 5, 1, 4));
-  }
-  
-  public void decorate(World par1World, Random par2Random, int par3, int par4) {
-    super.decorate(par1World, par2Random, par3, par4);
-    WorldGenMinable genMinable = (new WorldGenMinable(Blocks.oreUru.blockID, 10, Block.whiteStone.blockID)).setMinableBlockMetadata(0);
-    int count = par2Random.nextInt(6) + 15;
-    for (int temp = 0; temp < count; temp++) {
-      int x = par3 + par2Random.nextInt(16);
-      int y = par2Random.nextInt(256);
-      int z = par4 + par2Random.nextInt(16);
-      genMinable.generate(par1World, par2Random, x, y, z);
-    } 
-  }
+    @Inject(method = "<init>", at = @At("RETURN"))
+    public void injectCtor(CallbackInfo callbackInfo) {
+        this.spawnableMonsterList.add(new SpawnListEntry(EntityPhaseSpider.class, 5, 1, 4));
+    }
+
+    @Override// TODO bad override
+    public void decorate(World par1World, Random par2Random, int par3, int par4) {
+        super.decorate(par1World, par2Random, par3, par4);
+        WorldGenMinable genMinable = (new WorldGenMinable(Blocks.oreUru.blockID, 10, Block.whiteStone.blockID)).setMinableBlockMetadata(0);
+        int count = par2Random.nextInt(6) + 15;
+        for (int temp = 0; temp < count; temp++) {
+            int x = par3 + par2Random.nextInt(16);
+            int y = par2Random.nextInt(256);
+            int z = par4 + par2Random.nextInt(16);
+            genMinable.generate(par1World, par2Random, x, y, z);
+        }
+    }
 }

@@ -6,12 +6,14 @@ import net.oilcake.mitelros.util.DamageSourceExtend;
 import net.xiaoyu233.fml.reload.transform.util.EntityLivestockAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin({EntityLivestock.class})
+@Mixin(EntityLivestock.class)
 public abstract class EntityLivestockMixin extends EntityAnimal implements EntityLivestockAccessor {
+    @Unique
     private int illnessToDeathCounter;
 
     public EntityLivestockMixin(World par1World) {
@@ -19,11 +21,11 @@ public abstract class EntityLivestockMixin extends EntityAnimal implements Entit
     }
 
     @Shadow
-    private boolean isWell() {
+    public boolean isWell() {
         return false;
     }
 
-    @Inject(method = {"onLivingUpdate()V"}, at = @At(value = "HEAD", shift = At.Shift.AFTER))
+    @Inject(method = "onLivingUpdate()V", at = @At(value = "HEAD", shift = At.Shift.AFTER))
     private void injectIllnessToDeath(CallbackInfo c) {
         if (!ITFConfig.Realistic.get()) return;
         if (!this.worldObj.isRemote) {
@@ -39,12 +41,12 @@ public abstract class EntityLivestockMixin extends EntityAnimal implements Entit
         }
     }
 
-    @Inject(method = {"readEntityFromNBT"}, at = {@At("RETURN")})
+    @Inject(method = "readEntityFromNBT", at = @At("RETURN"))
     public void injectReadNBT(NBTTagCompound par1NBTTagCompound, CallbackInfo callbackInfo) {
         this.illnessToDeathCounter = par1NBTTagCompound.getInteger("illnessToDeathCounter");
     }
 
-    @Inject(method = {"writeEntityToNBT"}, at = {@At("RETURN")})
+    @Inject(method = "writeEntityToNBT", at = @At("RETURN"))
     public void injectWriteNBT(NBTTagCompound par1NBTTagCompound, CallbackInfo callbackInfo) {
         par1NBTTagCompound.setInteger("illnessToDeathCounter", this.illnessToDeathCounter);
     }

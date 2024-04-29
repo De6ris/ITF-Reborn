@@ -31,7 +31,7 @@ public class ItemBowMixin extends Item {
         super(id, Material.wood, "bows/" + reinforcement_material.toString() + "/");
     }
 
-    @Inject(method = {"<clinit>()V"}, at = {@At("FIELD")})// TODO fix this
+    @Inject(method = {"<clinit>()V"}, at = {@At("FIELD")})// TODO compatibility
     private static void injectClinit(CallbackInfo callback) {
         possible_arrow_materials = new Material[]{
                 Material.flint, Material.obsidian, Material.copper, Material.silver, Material.rusted_iron, Material.gold, Material.iron, Material.mithril, Material.adamantium, Material.ancient_metal,
@@ -39,7 +39,7 @@ public class ItemBowMixin extends Item {
     }
 
     @Inject(method = "getTicksForMaxPull", at = @At("HEAD"), cancellable = true)
-    private static void getTicksForMaxPull(ItemStack item_stack, CallbackInfoReturnable<Integer> cir) {// TODO compability
+    private static void getTicksForMaxPull(ItemStack item_stack, CallbackInfoReturnable<Integer> cir) {// TODO compatibility
         int TicksPull;
         Material material = item_stack.getMaterialForRepairs();
         if (material == Materials.tungsten) {

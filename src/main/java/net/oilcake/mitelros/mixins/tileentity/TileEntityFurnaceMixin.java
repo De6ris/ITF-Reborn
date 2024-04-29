@@ -12,12 +12,16 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(TileEntityFurnace.class)
 public abstract class TileEntityFurnaceMixin extends TileEntity implements ISidedInventory, ITFFurnace {
+    @Shadow public abstract void smeltItem(int heat_level);
+
     @Shadow
     protected abstract boolean canSmelt(int heat_level);
 
@@ -214,42 +218,14 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
         return false;
     }
 
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite// TODO hard to rewrite
-    public void smeltItem(int heat_level) {
-        if (canSmelt(heat_level)) {
-            byte consumption;
-            ItemStack var1 = FurnaceRecipes.smelting().getSmeltingResult(getInputItemStack(), heat_level);
-            if (this.furnaceItemStacks[2] == null) {
-                this.furnaceItemStacks[2] = var1.copy();
-            } else if ((this.furnaceItemStacks[2]).itemID == var1.itemID) {
-                this.furnaceItemStacks[2].stackSize += var1.stackSize;
-            }
-            if ((getInputItemStack()).itemID == Block.sand.blockID && var1.itemID == Block.sandStone.blockID) {
-                consumption = 4;
-            } else if ((getInputItemStack()).itemID == Block.sand.blockID && var1.itemID == Block.glass.blockID) {
-                consumption = 4;
-            } else if ((getInputItemStack()).itemID == Items.claybowlRaw.itemID && var1.itemID == Items.claybowlEmpty.itemID) {
-                consumption = 4;
-            } else {
-                consumption = 1;
-            }
-            getInputItemStack().stackSize -= consumption;
-            if (getInputItemStack().getItem() == Item.clay && var1.getItem() == Item.brick) {
-                int extra_converted = Math.min(getOutputItemStack().getMaxStackSize() - (getOutputItemStack()).stackSize, (getInputItemStack()).stackSize);
-                if (extra_converted > 3)
-                    extra_converted = 3;
-                getOutputItemStack().stackSize += extra_converted;
-                getInputItemStack().stackSize -= extra_converted;
-            }
-            if ((this.furnaceItemStacks[0]).stackSize <= 0)
-                this.furnaceItemStacks[0] = null;
+    @ModifyConstant(method = "smeltItem", constant = @Constant(intValue = 1))
+    private int itfFurnaceRecipe(int constant) {
+        ItemStack var1 = FurnaceRecipes.smelting().getSmeltingResult(getInputItemStack(), heat_level);
+        if ((getInputItemStack()).itemID == Items.claybowlRaw.itemID && var1.itemID == Items.claybowlEmpty.itemID) {
+            return 4;
         }
+        return constant;
     }
-
     @Inject(method = "readFromNBT", at = @At("RETURN"))
     public void injectReadNBT(NBTTagCompound par1NBTTagCompound, CallbackInfo callbackInfo) {
         this.activated = par1NBTTagCompound.getBoolean("activated");
@@ -278,71 +254,5 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
     @Shadow
     public int getItemHeatLevel(ItemStack item_stack) {
         return 0;
-    }
-
-    @Shadow
-    public int[] getAccessibleSlotsFromSide(int i) {
-        return new int[0];
-    }
-
-    @Shadow
-    public boolean canInsertItem(int i, ItemStack itemStack, int i1) {
-        return false;
-    }
-
-    @Shadow
-    public boolean canExtractItem(int i, ItemStack itemStack, int i1) {
-        return false;
-    }
-
-    @Shadow
-    public int getSizeInventory() {
-        return 0;
-    }
-
-    @Shadow
-    public ItemStack getStackInSlot(int i) {
-        return null;
-    }
-
-    @Shadow
-    public ItemStack decrStackSize(int i, int i1) {
-        return null;
-    }
-
-    @Shadow
-    public ItemStack getStackInSlotOnClosing(int i) {
-        return null;
-    }
-
-    @Shadow
-    public void setInventorySlotContents(int i, ItemStack itemStack) {
-    }
-
-    @Shadow
-    public int getInventoryStackLimit() {
-        return 0;
-    }
-
-    @Shadow
-    public boolean isUseableByPlayer(EntityPlayer entityPlayer) {
-        return false;
-    }
-
-    @Shadow
-    public void openChest() {
-    }
-
-    @Shadow
-    public void closeChest() {
-    }
-
-    @Shadow
-    public boolean isItemValidForSlot(int i, ItemStack itemStack) {
-        return false;
-    }
-
-    @Shadow
-    public void destroyInventory() {
     }
 }
