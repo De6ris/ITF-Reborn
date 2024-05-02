@@ -3,6 +3,7 @@ package net.oilcake.mitelros.block;
 import net.minecraft.*;
 import net.oilcake.mitelros.block.api.ITFDoor;
 import net.oilcake.mitelros.block.api.ITFPane;
+import net.oilcake.mitelros.block.api.ITFWorkbench;
 import net.oilcake.mitelros.block.observer.BlockObserver;
 import net.oilcake.mitelros.block.receiver.BlockReceiver;
 import net.oilcake.mitelros.config.ITFConfig;
@@ -43,7 +44,7 @@ public class Blocks {
     public static final Block blastFurnaceObsidianBurning = (new BlockBlastFurnace(getNextBlockID(), Material.obsidian, true))
             .setHardness(38.4F).
             setResistance(40.0F).
-            setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);// TODO 4091 - 3840 = 251, furnaceHardenedClayBurning
+            setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);
 
     public static final Block blastFurnaceNetherrackBurning = (new BlockBlastFurnace(getNextBlockID(), Material.netherrack, true))
             .setHardness(153.6F).
@@ -67,7 +68,7 @@ public class Blocks {
             .setHardness(8.0F).
             setResistance(20.0F).
             setStepSound(Block.soundStoneFootstep)
-            .setLightValue(0.0F);// TODO 4086 - 3840 = 246, spark
+            .setLightValue(0.0F);
 
     public static final Block blockNickel = (new BlockOreBlockExtend(getNextBlockID(), Materials.nickel)).setStepSound(Block.soundMetalFootstep);
 
@@ -152,12 +153,15 @@ public class Blocks {
             .setHardness(8.0F).
             setResistance(20.0F).
             setStepSound(Block.soundStoneFootstep)
-            .setLightValue(0.0F);// TODO 4063 - 3840 = 223, furnaceObsidianBurning
+            .setLightValue(0.0F);
 
     public static final Block magicTable = new BlockMagicTable(getNextBlockID(), Material.diamond)
             .setHardness(2.4F).
             setResistance(20.0F)
             .setLightValue(1.0F);
+//    public static final Block workBenchNickel = new ITFWorkBench(getNextBlockID());
+//    public static final Block workBenchTungsten = new ITFWorkBench(getNextBlockID());
+    public static final Block itfWorkBench = new ITFWorkbench(getNextBlockID());
 
     public static void registerBlocks(ItemRegistryEvent registryEvent) {
         registryEvent.registerAnvil(anvilNickel, "nickel_anvil");
@@ -196,6 +200,9 @@ public class Blocks {
         registryEvent.registerItemBlock(blockReceiver, "block_receiver");
         registryEvent.registerItemBlock(blockEnchantPredicator, "block_enchant_predicator");
         registryEvent.registerItemBlock(magicTable, "magic_table");
+//        registryEvent.registerItemBlock(workBenchNickel, "crafting_table/nickel");
+//        registryEvent.registerItemBlock(workBenchTungsten, "crafting_table/tungsten");
+        registryEvent.registerItemBlock(itfWorkBench, "crafting_table");
     }
 
     public static void registerRecipes(RecipeRegistryEvent register) {

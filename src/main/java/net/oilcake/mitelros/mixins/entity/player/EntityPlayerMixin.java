@@ -308,11 +308,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
             this.setSprinting(false);
     }
 
-    @ModifyReturnValue(method = "getCraftingExperienceCost", at = @At("RETURN"))
-    private int moreEXPNeeded(int original) {
-        return original * 2;
-    }// quality item
-
     @Shadow
     public ItemStack[] getWornItems() {
         return new ItemStack[0];

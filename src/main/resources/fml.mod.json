@@ -37,9 +37,7 @@
       ],
       "net/minecraft/EntityClientPlayerMP": [
         "net/oilcake/mitelros/api/ITFClientPlayer"
-      ],
-      "net/minecraft/Material": [
-        "net/oilcake/mitelros/api/ITFMaterial"]
+      ]
     }
   }
 }

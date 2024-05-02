@@ -46,6 +46,7 @@ public abstract class ContainerRepairMixin extends Container implements ITFConta
         int xpDifference = 0;
         ItemStack item_stack_in_first_slot = this.inputSlots.getStackInSlot(0);
         Map enchantmentOnItem = EnchantmentHelper.getEnchantmentsMap(item_stack_in_first_slot);
+        int xpMultiplier = enchantmentOnItem.isEmpty() ? 100 : 500;
         for (int i = 0; i < enchantmentsOfBook.tagCount(); ++i) {
             NBTTagCompound tag = (NBTTagCompound) enchantmentsOfBook.tagAt(i);
             int id = tag.getShort("id");
@@ -54,14 +55,14 @@ public abstract class ContainerRepairMixin extends Container implements ITFConta
             if (enchantmentOnItem.containsKey(id)) {
                 int originalLevel = (int) enchantmentOnItem.get(id);
                 if (bookLevel > originalLevel) {
-                    xpDifference -= calculateEquivalentLevel(id, bookLevel) * 1000;
+                    xpDifference -= calculateEquivalentLevel(id, bookLevel) * xpMultiplier;
                 } else if (bookLevel == originalLevel) {
                     if (bookLevel < enchantment.getNumLevels()) {
-                        xpDifference -= calculateEquivalentLevel(id, bookLevel + 1) * 1000;
+                        xpDifference -= calculateEquivalentLevel(id, bookLevel + 1) * xpMultiplier;
                     }
                 }
             } else if (enchantment.canEnchantItem(item_stack_in_first_slot.getItem()) && canApplyTogether(enchantmentOnItem, enchantment)) {
-                xpDifference -= calculateEquivalentLevel(id, bookLevel) * 1000;
+                xpDifference -= calculateEquivalentLevel(id, bookLevel) * xpMultiplier;
             }
         }
         this.xpDifference = xpDifference;

@@ -44,8 +44,8 @@ public class TemperatureManager {
     }
 
     public void update() {
-        float tosubTract = 1E-5F * this.calcDelta() * (ITFConfig.TagExtremeClimate.get() ? 0.33f : 1.0f);
-        this.bodyTemperature -= tosubTract;
+        float toSubtract = 1E-5F * this.calcDelta() * (ITFConfig.TagExtremeClimate.get() ? 0.33f : 1.0f);
+        this.bodyTemperature -= toSubtract;
         this.bodyTemperature += (float) (1E-5D * this.getUnit());
         if (this.bodyTemperature < 0.0f) this.bodyTemperature = 0.0f;
         if (this.bodyTemperature > 60.0f) this.bodyTemperature = 60.0f;
@@ -135,7 +135,7 @@ public class TemperatureManager {
                 - (this.player.isPotionActive(PotionExtend.cool) ? this.player.getActivePotionEffect(PotionExtend.cool).getAmplifier() + 1 : 0);
         if (potionEffect * (normalTemperature - this.bodyTemperature) > 0) result += potionEffect * 4;
         if (this.player.isBurning()) result += 16;
-        result += this.calcArmorHeat() * 0.1f;
+        result += this.calcArmorHeat();
         World world = this.player.worldObj;
         switch (world.getDimensionId()) {
             case -1 -> {
