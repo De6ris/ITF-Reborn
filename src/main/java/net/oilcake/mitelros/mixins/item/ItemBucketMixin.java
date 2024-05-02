@@ -53,9 +53,10 @@ public abstract class ItemBucketMixin extends ItemVessel {
         }
     }
 
-    @ModifyArg(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;convertOneOfHeldItem(Lnet/minecraft/ItemStack;)V", ordinal = 1))
-    private ItemStack itfWaterBowl(ItemStack created_item_stack, @Local(argsOnly = true) EntityPlayer player) {
-        BiomeGenBase biome = player.worldObj.getBiomeGenForCoords(player.getBlockPosX(), player.getBlockPosZ());
+    @ModifyArg(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;convertOneOfHeldItem(Lnet/minecraft/ItemStack;)V"))
+    private ItemStack itfBucket(ItemStack created_item_stack, @Local RaycastCollision rc) {
+        if (created_item_stack == null || !created_item_stack.hasMaterial(Material.water)) return created_item_stack;
+        BiomeGenBase biome = rc.world.getBiomeGenForCoords(rc.block_hit_x, rc.block_hit_z);
         Material material;
         if (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland) material = Materials.dangerous_water;
         else if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) material = Material.water;

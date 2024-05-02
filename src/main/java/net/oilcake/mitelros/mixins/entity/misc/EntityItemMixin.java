@@ -41,21 +41,18 @@ public abstract class EntityItemMixin extends Entity {
             par1EntityPlayer.triggerAchievement(AchievementExtend.getWitherSkull);
     }
 
-    @ModifyArg(method = "spentTickInWater", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemVessel;getPeerForContents(Lnet/minecraft/Material;)Lnet/minecraft/ItemVessel;"))
+    @ModifyArg(method = "spentTickInWater", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemVessel;getPeerForContents(Lnet/minecraft/Material;)Lnet/minecraft/ItemVessel;", ordinal = 1))
     private Material itfWater(Material var1) {
         BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(getBlockPosX(), getBlockPosZ());
-        if (var1 != Material.water) {
-            return var1;
+        if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) {
+            return Material.water;
+        } else if (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland) {
+            return Materials.dangerous_water;
         } else {
-            if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) {
-                return Material.water;
-            } else if (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland) {
-                return Materials.dangerous_water;
-            } else {
-                return Materials.suspicious_water;
-            }
+            return Materials.suspicious_water;
         }
     }
+
     @Inject(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityDamageResult;startTrackingHealth(F)V"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
     private void makeCharcoal(Damage damage, CallbackInfoReturnable<EntityDamageResult> cir, EntityDamageResult result) {
         ItemStack item_stack = this.getEntityItem();
