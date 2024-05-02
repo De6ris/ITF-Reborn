@@ -63,7 +63,7 @@ public class TemperatureManager {
     private void checkFreeze() {
         boolean invincible = this.player.inCreativeMode() ||
                 EnchantmentHelper.hasEnchantment(this.player.getCuirass(), Enchantments.enchantmentCallOfNether) ||
-                this.calcArmorHeat() == 8 ||
+                this.calcArmorHeat() > 7 ||
                 this.player.isPotionActive(PotionExtend.frost_resistance);
 
         int freezeLevel = invincible ? -1 : (int) ((normalTemperature - this.bodyTemperature) / 3.0F);
@@ -97,7 +97,7 @@ public class TemperatureManager {
     private void checkHeat() {
         boolean invincible = this.player.inCreativeMode() ||
                 EnchantmentHelper.hasEnchantment(this.player.getCuirass(), Enchantments.enchantmentCallOfPolar) ||
-                this.calcArmorHeat() == -8 ||
+                this.calcArmorHeat() < -9 ||
                 this.player.isPotionActive(Potion.fireResistance);
 
         int heatLevel = invincible ? -1 : (int) ((this.bodyTemperature - normalTemperature) / 3.0F);
@@ -131,11 +131,15 @@ public class TemperatureManager {
 
     private double calculateCommonFactor() {
         double result = 0.0d;
+        int potionEffect = (this.player.isPotionActive(PotionExtend.warm) ? this.player.getActivePotionEffect(PotionExtend.warm).getAmplifier() + 1 : 0)
+                - (this.player.isPotionActive(PotionExtend.cool) ? this.player.getActivePotionEffect(PotionExtend.cool).getAmplifier() + 1 : 0);
+        if (potionEffect * (normalTemperature - this.bodyTemperature) > 0) result += potionEffect * 4;
+        if (this.player.isBurning()) result += 16;
+        result += this.calcArmorHeat() * 0.1f;
         World world = this.player.worldObj;
-        int dimensionId = world.getDimensionId();
-        switch (dimensionId) {
+        switch (world.getDimensionId()) {
             case -1 -> {
-                return result + 32;
+                return result + 24;
             }
             case 1 -> {
                 return result - 4;
@@ -144,24 +148,17 @@ public class TemperatureManager {
                 return result + heightFactor(this.player.getBlockPosY(), 128) + (ITFConfig.TagDeadGeothermy.get() ? -4 : 0);
             }
         }
-
         boolean isOutdoors = this.player.isOutdoors();
         boolean isRaining = world.isPrecipitating(false);
         if (isRaining) {
             float rainStrength = world.getRainStrength(1.0f);
             result -= rainStrength * (isOutdoors ? 8.0f : 4.0f);
         }
-
         int time = world.getTimeOfDay();
         result += sunshine(time) * (isOutdoors ? 2.0f : 1.0f);
-
         result += seasonFactor(world.getDayOfWorld());
         result += biomeFactor(world.getBiomeGenForCoords(this.player.getBlockPosX(), this.player.getBlockPosZ()));
         if (this.player.getBlockPosY() > 64) result += heightFactor(this.player.getBlockPosY(), 64);
-        result += this.calcArmorHeat() * 0.1f;
-        int potionEffect = (this.player.isPotionActive(PotionExtend.warm) ? this.player.getActivePotionEffect(PotionExtend.warm).getAmplifier() + 1 : 0)
-                - (this.player.isPotionActive(PotionExtend.cool) ? this.player.getActivePotionEffect(PotionExtend.cool).getAmplifier() + 1 : 0);
-        if (potionEffect * (normalTemperature - this.bodyTemperature) > 0) result += potionEffect * 4;
         return result;
     }
 
@@ -224,8 +221,6 @@ public class TemperatureManager {
 
     public int findHeatSource() {
         World world = this.player.worldObj;
-        int heat = 0;
-        if (this.player.isBurning()) heat += 16;
         int x = this.player.getBlockPosX();
         int y = this.player.getBlockPosY();
         int z = this.player.getBlockPosZ();
@@ -237,7 +232,7 @@ public class TemperatureManager {
                     if (block == null) continue;
                     int decay = Math.abs(dx) + Math.abs(dz);
                     int blockId = block.blockID;
-                    if (blockId == Block.lavaMoving.blockID || blockId == Block.lavaStill.blockID) {
+                    if (blockId == Block.lavaMoving.blockID || blockId == Block.lavaStill.blockID || blockId == Block.mantleOrCore.blockID) {
                         hottest = Math.max(hottest, 32 - 2 * decay);
                     }
                     if (decay > 4) continue;
@@ -251,12 +246,11 @@ public class TemperatureManager {
                 }
             }
         }
-        heat += hottest;
-        return heat;
+        return hottest;
     }
 
-    public int calcArmorHeat() {
-        int heat = 0;
+    public float calcArmorHeat() {
+        float heat = 0;
         ItemStack helmet = player.getHelmet();
         ItemStack cuirass = player.getCuirass();
         ItemStack leggings = player.getLeggings();
@@ -265,25 +259,25 @@ public class TemperatureManager {
             heat -= 1;
             if (helmet.itemID == Items.wolfHelmet.itemID) heat += 3;
             else if (helmet.itemID == Item.helmetLeather.itemID) heat += 2;
-            else if (helmet.itemID == Items.iceHelmet.itemID) heat -= 1;
+            else if (helmet.itemID == Items.iceHelmet.itemID) heat -= 1.4f;
         }
         if (cuirass != null) {
             heat -= 1;
             if (cuirass.itemID == Items.wolfChestplate.itemID) heat += 3;
             else if (cuirass.itemID == Item.plateLeather.itemID) heat += 2;
-            else if (cuirass.itemID == Items.iceChestplate.itemID) heat -= 1;
+            else if (cuirass.itemID == Items.iceChestplate.itemID) heat -= 1.4f;
         }
         if (leggings != null) {
             heat -= 1;
             if (leggings.itemID == Items.wolfLeggings.itemID) heat += 3;
             else if (leggings.itemID == Item.legsLeather.itemID) heat += 2;
-            else if (leggings.itemID == Items.iceLeggings.itemID) heat -= 1;
+            else if (leggings.itemID == Items.iceLeggings.itemID) heat -= 1.4f;
         }
         if (boots != null) {
             heat -= 1;
             if (boots.itemID == Items.wolfBoots.itemID) heat += 3;
             else if (boots.itemID == Item.bootsLeather.itemID) heat += 2;
-            else if (boots.itemID == Items.iceBoots.itemID) heat -= 1;
+            else if (boots.itemID == Items.iceBoots.itemID) heat -= 1.4f;
         }
         return heat;
     }

@@ -196,9 +196,6 @@ public class Blocks {
         registryEvent.registerItemBlock(blockReceiver, "block_receiver");
         registryEvent.registerItemBlock(blockEnchantPredicator, "block_enchant_predicator");
         registryEvent.registerItemBlock(magicTable, "magic_table");
-        for (int i = 0; i < 32 - (magicTable.blockID - blockEnchantPredicator.blockID); i++) {
-            getNextBlockID();
-        }// for future updates
     }
 
     public static void registerRecipes(RecipeRegistryEvent register) {

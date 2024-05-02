@@ -136,10 +136,6 @@ public abstract class ItemMixin implements ITFItem {
         return null;
     }
 
-    @Redirect(method = "getExclusiveMaterial", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
-    private void noError(String text) {
-    }// TODO why call to book?
-
     @Redirect(method = "getMatchingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
     private static void noError1(String text) {
     }// TODO blast furnace recipes

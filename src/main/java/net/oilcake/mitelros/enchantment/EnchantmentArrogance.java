@@ -24,7 +24,7 @@ public class EnchantmentArrogance extends Enchantment {
   }
   
   public boolean canEnchantItem(Item item) {
-    return (item.getMaterialForRepairs() != Materials.uru);
+    return (item.getHardestMetalMaterial() != Materials.uru);
   }
 
   @Override

@@ -97,7 +97,7 @@ public class WorldGenUnderworldCastle extends WorldGenerator {
         par1World.setBlock(x - 6, y, z - 6, Block.stairsCobblestone.blockID, 3, 2);
         par1World.setBlock(x + 6, y, z + 6, Block.stairsCobblestone.blockID, 2, 2);
         par1World.setBlock(x - 8, y, z - 5, Block.chestAncientMetal.blockID, Block.chestAncientMetal.getMetadataForDirectionFacing(0, getRandomDirection(random)), 2);
-        WeightedRandomChestContent[] var16 = WeightedRandomChestContent.func_92080_a(getChestContentsForWorld(par1World), new WeightedRandomChestContent[]{Item.enchantedBook.func_92114_b(random)});
+        WeightedRandomChestContent[] var16 = WeightedRandomChestContent.func_92080_a(getChestContentsForWorld(par1World), Item.enchantedBook.func_92114_b(random), Item.enchantedBook.func_92114_b(random));
         TileEntityChest var17 = (TileEntityChest) par1World.getBlockTileEntity(x - 8, y, z - 5);
         if (var17 != null)
             WeightedRandomChestContent.generateChestContents(par1World, y, random, var16, (IInventory) var17, 8, null);
