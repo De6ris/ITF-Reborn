@@ -40,6 +40,11 @@ accessible field net/minecraft/ContainerWorkbench x I
 accessible field net/minecraft/ContainerWorkbench y I
 accessible field net/minecraft/ContainerWorkbench z I
 
+accessible method net/minecraft/Potion setIconIndex (II)Lnet/minecraft/Potion;
+
+accessible method net/minecraft/GuiContainer drawCreativeTabHoveringText (Ljava/lang/String;II)V
+
 extendable class net/minecraft/BlockDoor
 accessible class net/minecraft/ContainerRepairINNER2
 accessible class net/minecraft/ComponentNetherBridgePiece
+accessible class net/minecraft/GuiBeaconButtonPower

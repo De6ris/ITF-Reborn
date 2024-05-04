@@ -2,7 +2,6 @@ package net.oilcake.mitelros.network;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.block.beaconExtend.TileEntityUruBeacon;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 
 import java.io.DataInput;
@@ -16,8 +15,8 @@ public class S2COpenWindow extends Packet100OpenWindow {
         super();
     }
 
-    public S2COpenWindow(int par1, int par2, String par3Str, int par4, boolean par5) {
-        super(par1, par2, par3Str, par4, par5);
+    public S2COpenWindow(int windowId, int inventoryType, String windowTitle, int slotsCount, boolean useProvidedWindowTitle) {
+        super(windowId, inventoryType, windowTitle, slotsCount, useProvidedWindowTitle);
     }
 
     @Override
@@ -62,6 +61,11 @@ public class S2COpenWindow extends Packet100OpenWindow {
     }
 
     @Override
+    public void processPacket(NetHandler netHandler) {
+        netHandler.handleOpenWindow(this);
+    }
+
+    @Override
     public int getPacketSize() {
         int bytes = 2 + Packet.getPacketSizeOfString(this.windowTitle) + 2;
         if (this.hasCoords()) {
@@ -70,25 +74,18 @@ public class S2COpenWindow extends Packet100OpenWindow {
         return bytes;
     }
 
-
+    @Override
     public void handleOpenWindow(EntityClientPlayerMP player) {
         WorldClient world = player.worldObj.getAsWorldClient();
         TileEntity tile_entity = world.getBlockTileEntity(this.x, this.y, this.z);
         if (this.hasTileEntity() && tile_entity == null) {
             Minecraft.setErrorMessage("handleOpenWindow: no tile entity found at " + StringHelper.getCoordsAsString(this.x, this.y, this.z));
         }
-        if (this.inventoryType == 0) {
+        if (this.itf_inventoryType == 0) {
             ((ITFPlayer) player).displayGUIEnchantReserver(this.x, this.y, this.z, new EnchantReserverSlots(new InventoryBasic(this.windowTitle, this.useProvidedWindowTitle, this.slotsCount)));
             player.openContainer.windowId = this.windowId;
-        } else if (this.inventoryType == 1) {
-            TileEntityUruBeacon var8 = (TileEntityUruBeacon) tile_entity;
-            ((ITFPlayer) player).displayGUIUruBeacon(var8);
-            if (this.useProvidedWindowTitle) {
-                var8.setCustomInvName(this.windowTitle);
-            }
-            player.openContainer.windowId = this.windowId;
         } else {
-            Minecraft.setErrorMessage("handleOpenWindow: type not handled " + this.inventoryType);
+            Minecraft.setErrorMessage("handleOpenWindow: type not handled " + this.itf_inventoryType);
         }
     }
 }

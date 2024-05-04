@@ -4,7 +4,6 @@ import com.google.common.eventbus.Subscribe;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.Blocks;
-import net.oilcake.mitelros.block.beaconExtend.TileEntityUruBeacon;
 import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;
 import net.oilcake.mitelros.block.observer.TileEntityObserver;
 import net.oilcake.mitelros.block.receiver.TileEntityReceiver;
@@ -15,8 +14,8 @@ import net.oilcake.mitelros.entity.misc.*;
 import net.oilcake.mitelros.entity.mob.*;
 import net.oilcake.mitelros.item.ItemGuideBook;
 import net.oilcake.mitelros.item.Items;
-import net.oilcake.mitelros.item.register.RecipeRegister;
 import net.oilcake.mitelros.item.register.ItemTextureRegister;
+import net.oilcake.mitelros.item.register.RecipeRegister;
 import net.oilcake.mitelros.network.*;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
@@ -188,6 +187,5 @@ public class ITFEvent {
         event.register(TileEntityEnchantReserver.class, "EnchantReserver");
         event.register(TileEntityObserver.class, "Observer");
         event.register(TileEntityReceiver.class, "Receiver");
-        event.register(TileEntityUruBeacon.class, "UruBeacon");
     }
 }

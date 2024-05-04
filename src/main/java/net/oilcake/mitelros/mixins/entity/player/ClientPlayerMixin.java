@@ -8,8 +8,6 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.block.api.ITFWorkbench;
-import net.oilcake.mitelros.block.beaconExtend.GuiUruBeacon;
-import net.oilcake.mitelros.block.beaconExtend.TileEntityUruBeacon;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.block.enchantreserver.GuiEnchantReserver;
 import net.oilcake.mitelros.config.ITFConfig;
@@ -32,10 +30,6 @@ public abstract class ClientPlayerMixin extends AbstractClientPlayer implements 
     @Override
     public void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
         this.mc.displayGuiScreen(new GuiEnchantReserver(this, x, y, z, slots));
-    }
-    @Override
-    public void displayGUIUruBeacon(TileEntityUruBeacon tileEntityUruBeacon) {
-        this.mc.displayGuiScreen(new GuiUruBeacon(this, tileEntityUruBeacon));
     }
 
     @WrapOperation(method = "getBenchAndToolsModifier", at = @At(value = "INVOKE", target = "Lnet/minecraft/BlockWorkbench;getToolMaterial(I)Lnet/minecraft/Material;"))

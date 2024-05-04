@@ -4,7 +4,6 @@ import net.minecraft.*;
 import net.oilcake.mitelros.block.api.ITFDoor;
 import net.oilcake.mitelros.block.api.ITFPane;
 import net.oilcake.mitelros.block.api.ITFWorkbench;
-import net.oilcake.mitelros.block.beaconExtend.BlockUruBeacon;
 import net.oilcake.mitelros.block.enchantreserver.BlockEnchantReserver;
 import net.oilcake.mitelros.block.observer.BlockObserver;
 import net.oilcake.mitelros.block.receiver.BlockReceiver;
@@ -134,6 +133,7 @@ public class Blocks {
         registryEvent.registerItemBlock(magicTable, "magic_table");
         registryEvent.registerItemBlock(itfWorkBench, "crafting_table");
         registryEvent.registerItemBlock(uruBeacon, "beacon");
+        uruBeacon.setUnlocalizedName("uru_beacon");
     }
 
     public static void registerRecipes(RecipeRegistryEvent register) {
@@ -184,6 +184,9 @@ public class Blocks {
                 'M', Item.ingotMithril, 'T', Block.enchantmentTable,
                 'H', blockEnchantEnhancer, 'P', blockEnchantPredicator,
                 'B', Items.forgingnote, 'E', Item.eyeOfEnder);
+        register.registerShapedRecipe(new ItemStack(uruBeacon), true, "UNU", "UBU", "UUU",
+                'U', Items.uruIngot, 'B', Block.beacon,
+                'N', Items.forgingnote);
 
         for (int i = 0; i < Blocks.itfWorkBench.getNumSubBlocks(); ++i) {
             Material tool_material = ITFWorkbench.getToolMaterial(i);

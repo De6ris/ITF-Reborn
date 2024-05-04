@@ -20,7 +20,7 @@ public class TemperatureManager {
     public int freezingWarning;
     public int heatWarning;
     public static final float normalTemperature = 37.2F;
-
+    public static final float standardRoomTemperature = 26.0F;
     public float bodyTemperature = normalTemperature;
 
     public TemperatureManager(EntityPlayer player) {
@@ -44,8 +44,6 @@ public class TemperatureManager {
     }
 
     public void update() {
-        float toSubtract = 1E-5F * this.calcDelta() * (ITFConfig.TagExtremeClimate.get() ? 0.33f : 1.0f);
-        this.bodyTemperature -= toSubtract;
         this.bodyTemperature += (float) (1E-5D * this.getUnit());
         if (this.bodyTemperature < 0.0f) this.bodyTemperature = 0.0f;
         if (this.bodyTemperature > 60.0f) this.bodyTemperature = 60.0f;
@@ -136,6 +134,7 @@ public class TemperatureManager {
         if (potionEffect * (normalTemperature - this.bodyTemperature) > 0) result += potionEffect * 4;
         if (this.player.isBurning()) result += 16;
         result += this.calcArmorHeat();
+        result -= 0.15f * (this.bodyTemperature - standardRoomTemperature) * (ITFConfig.TagExtremeClimate.get() ? 0.33f : 1.0f);
         World world = this.player.worldObj;
         switch (world.getDimensionId()) {
             case -1 -> {
@@ -160,10 +159,6 @@ public class TemperatureManager {
         result += biomeFactor(world.getBiomeGenForCoords(this.player.getBlockPosX(), this.player.getBlockPosZ()));
         if (this.player.getBlockPosY() > 64) result += heightFactor(this.player.getBlockPosY(), 64);
         return result;
-    }
-
-    private float calcDelta() {
-        return this.bodyTemperature - normalTemperature;
     }
 
     private static double sunshine(int time) {

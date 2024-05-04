@@ -1,9 +1,7 @@
 package net.oilcake.mitelros.mixins.item;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
-import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;

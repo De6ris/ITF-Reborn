@@ -1,7 +1,6 @@
 package net.oilcake.mitelros.block.enchantreserver;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;
 
 public class BlockEnchantReserver extends Block implements ITileEntityProvider {
     private Icon TEXTURE_TOP;

@@ -5,7 +5,6 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.block.beaconExtend.TileEntityUruBeacon;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.potion.PotionExtend;
@@ -63,12 +62,12 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @ModifyReturnValue(method = "getReach(Lnet/minecraft/Block;I)F", at = @At("RETURN"))
     private float addReach(float original) {
-        return original + (this.isPotionActive(PotionExtend.stretch) ? this.getActivePotionEffect(PotionExtend.stretch).getAmplifier() * 1.5F : 0.0F);
+        return original + (this.isPotionActive(PotionExtend.stretch) ? this.getActivePotionEffect(PotionExtend.stretch).getAmplifier() * 1.5F + 1.5F : 0.0F);
     }
 
     @ModifyReturnValue(method = "getReach(Lnet/minecraft/EnumEntityReachContext;Lnet/minecraft/Entity;)F", at = @At("RETURN"))
     private float addReachToEntity(float original) {
-        return original + (this.isPotionActive(PotionExtend.stretch) ? this.getActivePotionEffect(PotionExtend.stretch).getAmplifier() * 1.5F : 0.0F);
+        return original + (this.isPotionActive(PotionExtend.stretch) ? this.getActivePotionEffect(PotionExtend.stretch).getAmplifier() * 1.5F + 1.5F : 0.0F);
     }
 
     public int getCurrent_insulin_resistance_lvl() {
@@ -235,10 +234,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Override
     public void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
-    }
-
-    @Override
-    public void displayGUIUruBeacon(TileEntityUruBeacon tileEntityUruBeacon) {
     }
 
     @Inject(method = "readEntityFromNBT", at = @At("HEAD"))

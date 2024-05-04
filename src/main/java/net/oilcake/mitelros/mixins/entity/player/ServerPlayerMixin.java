@@ -3,8 +3,6 @@ package net.oilcake.mitelros.mixins.entity.player;
 import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
 import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.block.beaconExtend.ContainerUruBeacon;
-import net.oilcake.mitelros.block.beaconExtend.TileEntityUruBeacon;
 import net.oilcake.mitelros.block.enchantreserver.ContainerEnchantReserver;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.config.ITFConfig;
@@ -13,7 +11,6 @@ import net.oilcake.mitelros.network.S2CUpdateNutrition;
 import net.oilcake.mitelros.status.EnchantmentManager;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
-import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -120,24 +117,14 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
         this.protein = this.essential_fats = this.phytonutrients = 960000;
     }
 
-
     @Override
     public void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
         incrementWindowID();
         TileEntity tile_entity = this.worldObj.getBlockTileEntity(x, y, z);
-        this.playerNetServerHandler.sendPacketToPlayer((new Packet100OpenWindow(this.currentWindowId, 14, tile_entity.getCustomInvName(), 9, tile_entity.hasCustomName())).setCoords(x, y, z));
+        this.playerNetServerHandler.sendPacketToPlayer((new S2COpenWindow(this.currentWindowId, 0, tile_entity.getCustomInvName(), 9, tile_entity.hasCustomName())).setCoords(x, y, z));
         this.openContainer = new ContainerEnchantReserver(slots, this, x, y, z);
         this.openContainer.windowId = this.currentWindowId;
         this.sendContainerAndContentsToPlayer(this.openContainer, ((ContainerEnchantReserver) this.openContainer).getInventory());
-        this.openContainer.addCraftingToCrafters(this);
-    }
-
-    @Override
-    public void displayGUIUruBeacon(TileEntityUruBeacon tileEntityUruBeacon) {
-        this.incrementWindowID();
-        this.playerNetServerHandler.sendPacketToPlayer((new S2COpenWindow(this.currentWindowId, 1, tileEntityUruBeacon.getCustomNameOrUnlocalized(), tileEntityUruBeacon.getSizeInventory(), tileEntityUruBeacon.hasCustomName())).setCoords(tileEntityUruBeacon));
-        this.openContainer = new ContainerUruBeacon(this, tileEntityUruBeacon);
-        this.openContainer.windowId = this.currentWindowId;
         this.openContainer.addCraftingToCrafters(this);
     }
 

@@ -152,6 +152,7 @@ tile.azurite_cluster.name=Azurite Cluster
 tile.torch_idle.name=Torch
 tile.torch_off.name=Extinguished Torch
 tile.sulphur.name=Sulphur Block
+tile.uru_beacon.name=Uru Beacon
 
 tile.flowers/.luminescent_herb.name=Luminescent Herb
 tile.flowers/.azure_bluet.name=Azure Bluet

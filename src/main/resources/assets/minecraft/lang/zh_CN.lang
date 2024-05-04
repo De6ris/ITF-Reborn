@@ -152,6 +152,7 @@ tile.azurite_cluster.name=碧蓝水晶簇
 tile.torch_idle.name=阴燃火把
 tile.torch_off.name=熄灭火把
 tile.sulphur.name=硫磺块
+tile.uru_beacon.name=乌鲁金属信标
 
 tile.flowers/.luminescent_herb.name=荧光草
 tile.flowers/.azure_bluet.name=茜草花

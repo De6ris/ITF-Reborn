@@ -9,6 +9,7 @@ import net.oilcake.mitelros.entity.misc.EntityWandShockWave;
 import net.oilcake.mitelros.entity.misc.EntityWandSlimeBall;
 import net.oilcake.mitelros.network.S2CEnchantReserverInfo;
 import net.oilcake.mitelros.network.S2CEnchantmentInfo;
+import net.oilcake.mitelros.network.S2COpenWindow;
 import net.oilcake.mitelros.network.S2CUpdateNutrition;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -48,9 +49,9 @@ public abstract class NetClientHandlerMixin extends NetHandler implements ITFNet
             var8 = new EntityWandShockWave(this.worldClient, var2, var4, var6);
         } else if (par1Packet23VehicleSpawn.type == 103) {
             var8 = new EntityWandSlimeBall(this.worldClient, var2, var4, var6);
-    }
+        }
 
-    var8.rotationYaw = SpatialScaler.getRotation(par1Packet23VehicleSpawn.scaled_yaw);
+        var8.rotationYaw = SpatialScaler.getRotation(par1Packet23VehicleSpawn.scaled_yaw);
         var8.rotationPitch = SpatialScaler.getRotation(par1Packet23VehicleSpawn.scaled_pitch);
         if (var8 instanceof EntityBoat) {
             var8.setPositionAndRotation2(var8.posX, var8.posY, var8.posZ, var8.rotationYaw, var8.rotationPitch, 3);
@@ -107,6 +108,11 @@ public abstract class NetClientHandlerMixin extends NetHandler implements ITFNet
         GuiScreen openingGUI = this.mc.currentScreen;
         if (openingGUI instanceof GuiEnchantment guiEnchantment)
             ((ITFGui) guiEnchantment).setEnchantmentInfo(packet.getInfo());
+    }
+
+    @Override
+    public void handleITFOpenWindow(S2COpenWindow packet) {
+        packet.handleOpenWindow(this.mc.thePlayer);
     }
 
     @Shadow
