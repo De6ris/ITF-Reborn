@@ -1,4 +1,4 @@
-package net.oilcake.mitelros.item;
+package net.oilcake.mitelros.item.api;
 
 import net.minecraft.CreativeTabs;
 import net.minecraft.Item;

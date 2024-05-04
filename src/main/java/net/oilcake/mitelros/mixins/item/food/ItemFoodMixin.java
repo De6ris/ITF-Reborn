@@ -44,8 +44,8 @@ public class ItemFoodMixin extends Item {
     @Unique
     private int itfFoodTemperature(Material material) {
         if (material == Material.fruit) return -1;
-        if (material == Materials.ice_sucker || material == Materials.melon_ice || material == Materials.chocolate_smoothie)
-            return -2;
+        if (material == Materials.ice_sucker || material == Materials.melon_ice) return -2;
+        if (material == Materials.chocolate_smoothie) return -3;
         return 0;
     }
 

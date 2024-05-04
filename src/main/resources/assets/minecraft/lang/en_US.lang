@@ -67,8 +67,8 @@ item.tooltip.water.add=Water+%d
 item.tooltip.water.minus=Water%d
 item.tooltip.water.agave=40% Water+1
 item.tooltip.reach.add=Reach+%d
-item.tooltip.temperature.add=Warm%d
-item.tooltip.temperature.minus=Cool%d
+item.tooltip.temperature.add=Warm+%d
+item.tooltip.temperature.minus=Cool+%d
 
 item.armor/nickel_helmet.name=Nickel Helmet
 item.armor/nickel_chestplate.name=Nickel Chestplate

@@ -4,7 +4,8 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.config.ITFConfig;
-import net.oilcake.mitelros.item.api.ITFRock;
+import net.oilcake.mitelros.item.*;
+import net.oilcake.mitelros.item.api.*;
 import net.oilcake.mitelros.item.potion.ItemPotionExperimental;
 import net.oilcake.mitelros.item.potion.ItemPotionSuspicious;
 import net.oilcake.mitelros.util.Constant;
@@ -260,9 +261,9 @@ public class Items extends Item {
 
     public static final Item experimentalPotion = (new ItemPotionExperimental(getNextItemID())).setUnlocalizedName("experimentalPotion").setCreativeTab(CreativeTabs.tabMisc);
 
-    public static final ItemRecordExtend recordDamnation = (ItemRecordExtend) (new ItemRecordExtend(2024, "imported.damnation", "record_damnation", "Damnation", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
+    public static final ITFRecord recordDamnation = (ITFRecord) (new ITFRecord(2024, "imported.damnation", "record_damnation", "Damnation", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
 
-    public static final ItemRecordExtend recordConnected = (ItemRecordExtend) (new ItemRecordExtend(2025, "imported.connected", "record_connected", "Connected", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
+    public static final ITFRecord recordConnected = (ITFRecord) (new ITFRecord(2025, "imported.connected", "record_connected", "Connected", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
 
     public static final ItemArmor VibraniumHelmet = new ItemHelmet(getNextItemID(), Materials.vibranium, false);
 
@@ -298,7 +299,7 @@ public class Items extends Item {
 
     public static final Item Ale = (new ItemWine(getNextItemID())).setUnlocalizedName("ale").setCreativeTab(CreativeTabs.tabFood);
 
-    public static final ItemBow bowTungsten = new ItemBow(getNextItemID(), Materials.tungsten);
+    public static final ItemBow bowTungsten = new ITFBow(getNextItemID(), Materials.tungsten);
 
     public static final ItemArmor uruHelmet = new ItemHelmet(getNextItemID(), Materials.uru, false);
 
@@ -392,9 +393,9 @@ public class Items extends Item {
 
     public static final ItemArmor bootsCustom_b = new ItemBoots(getNextItemID(), Materials.custom_b, false);
 
-    public static final ItemFishingRod fishingRodNickel = (ItemFishingRod) (new ItemFishingRod(getNextItemID(), Materials.nickel)).setUnlocalizedName("fishingRod");
+    public static final ItemFishingRod fishingRodNickel = (ItemFishingRod) (new ITFFishingRod(getNextItemID(), Materials.nickel)).setUnlocalizedName("fishingRod");
 
-    public static final ItemFishingRod fishingRodTungsten = (ItemFishingRod) (new ItemFishingRod(getNextItemID(), Materials.tungsten)).setUnlocalizedName("fishingRod");
+    public static final ItemFishingRod fishingRodTungsten = (ItemFishingRod) (new ITFFishingRod(getNextItemID(), Materials.tungsten)).setUnlocalizedName("fishingRod");
 
     public static final ItemCarrotOnAStick carrotOnAStickNickel = (ItemCarrotOnAStick) (new ItemCarrotOnAStick(getNextItemID(), Materials.nickel)).setUnlocalizedName("carrotOnAStick");
 
@@ -444,7 +445,7 @@ public class Items extends Item {
 
     public static final Item sulphur = new ItemStandard(getNextItemID(), Materials.sulphur, "sulphur_sphere");
 
-    public static final ItemBow bowUru = new ItemBow(getNextItemID(), Materials.uru);
+    public static final ItemBow bowUru = new ITFBow(getNextItemID(), Materials.uru);
 
     public static final Item enderRod = ((ITFItem) (new ItemBrewingMisc(getNextItemID(), Material.ender_pearl, "ender_rod")).setPotionEffectExtend("+8+9+10+11&4-4+13").setReachBonus(0.5F)).setExtraInfo("似乎能提升触及距离, 还能酿药?");
 
@@ -482,7 +483,7 @@ public class Items extends Item {
 
     public static final ItemArmor iceBoots = new ItemBoots(getNextItemID(), Materials.ice_chunk, false);
 
-    public static final ItemFood ice_sucker = (ItemFood) (new ItemFood(getNextItemID(), Materials.ice_sucker, 0, 0, false, false, false, "ice_sucker")).setMaxStackSize(8).setAlwaysEdible();
+    public static final ItemFood ice_sucker = (ItemFood) (new ItemFood(getNextItemID(), Materials.ice_sucker, 1, 0, 1000, false, false, false, "ice_sucker")).setMaxStackSize(8).setAlwaysEdible();
 
     public static final ItemFood melon_ice = (ItemFood) (new ItemFood(getNextItemID(), Materials.melon_ice, 1, 1, 1000, false, false, true, "melon_ice")).setMaxStackSize(8);
 
@@ -499,520 +500,5 @@ public class Items extends Item {
     private static int getNextItemID() {
         if (!ITFConfig.FixID.getBooleanValue()) return IdUtil.getNextItemID();
         return Constant.nextItemID++;
-    }
-
-    public static void registerItems(ItemRegistryEvent event) {
-        event.register("armor/nickel_helmet", nickelHelmet);
-        event.register("armor/nickel_chestplate", nickelChestplate);
-        event.register("armor/nickel_leggings", nickelLeggings);
-        event.register("armor/nickel_boots", nickelBoots);
-        event.register("armor/nickel_chainmail_helmet", nickelHelmetChain);
-        event.register("armor/nickel_chainmail_chestplate", nickelChestplateChain);
-        event.register("armor/nickel_chainmail_leggings", nickelLeggingsChain);
-        event.register("armor/nickel_chainmail_boots", nickelBootsChain);
-        event.register("ingots/nickel", nickelIngot);
-        event.register("nuggets/nickel", nickelNugget);
-        event.register("tools/nickel_axe", nickelAxe);
-        event.register("tools/nickel_battle_axe", nickelBattleAxe);
-        event.register("tools/nickel_dagger", nickelDagger);
-        event.register("tools/nickel_hatchet", nickelHatchet);
-        event.register("tools/nickel_hoe", nickelHoe);
-        event.register("tools/nickel_knife", nickelKnife);
-        event.register("tools/nickel_pickaxe", nickelPickaxe);
-        event.register("tools/nickel_mattock", nickelMattock);
-        event.register("tools/nickel_scythe", nickelScythe);
-        event.register("tools/nickel_shears", nickelShears);
-        event.register("tools/nickel_shovel", nickelShovel);
-        event.register("tools/nickel_sword", nickelSword);
-        event.register("tools/nickel_war_hammer", nickelWarHammer);
-        event.register("doors/nickel", doorNickel);
-        event.register("chain/nickel", nickelChain);
-        event.register("coins/nickel", nickelCoin);
-        event.register("arrows/nickel_arrow", arrowNickel);
-        event.register("armor/tungsten_helmet", tungstenHelmet);
-        event.register("armor/tungsten_chestplate", tungstenChestplate);
-        event.register("armor/tungsten_leggings", tungstenLeggings);
-        event.register("armor/tungsten_boots", tungstenBoots);
-        event.register("armor/tungsten_chainmail_helmet", tungstenHelmetChain);
-        event.register("armor/tungsten_chainmail_chestplate", tungstenChestplateChain);
-        event.register("armor/tungsten_chainmail_leggings", tungstenLeggingsChain);
-        event.register("armor/tungsten_chainmail_boots", tungstenBootsChain);
-        event.register("ingots/tungsten", tungstenIngot);
-        event.register("nuggets/tungsten", tungstenNugget);
-        event.register("tools/tungsten_axe", tungstenAxe);
-        event.register("tools/tungsten_battle_axe", tungstenBattleAxe);
-        event.register("tools/tungsten_dagger", tungstenDagger);
-        event.register("tools/tungsten_hatchet", tungstenHatchet);
-        event.register("tools/tungsten_hoe", tungstenHoe);
-        event.register("tools/tungsten_knife", tungstenKnife);
-        event.register("tools/tungsten_pickaxe", tungstenPickaxe);
-        event.register("tools/tungsten_mattock", tungstenMattock);
-        event.register("tools/tungsten_scythe", tungstenScythe);
-        event.register("tools/tungsten_shears", tungstenShears);
-        event.register("tools/tungsten_shovel", tungstenShovel);
-        event.register("tools/tungsten_sword", tungstenSword);
-        event.register("tools/tungsten_war_hammer", tungstenWarHammer);
-        event.register("doors/tungsten", doorTungsten);
-        event.register("chain/tungsten", tungstenChain);
-        event.register("coins/tungsten", tungstenCoin);
-        event.register("arrows/tungsten_arrow", arrowTungsten);
-        event.register("bowls/porkchop_stew", bowlPorkchopStew);
-        event.register("bowls/lampchop_stew", bowlChestnutSoup);
-        event.register("bowls/salmon_soup", bowlSalmonSoup);
-        event.register("bowls/beetroot_soup", bowlBeetrootSoup);
-        event.register("pieces/copper", pieceCopper);
-        event.register("pieces/silver", pieceSilver);
-        event.register("pieces/gold", pieceGold);
-        event.register("pieces/gold_nether", pieceGoldNether);
-        event.register("pieces/iron", pieceIron);
-        event.register("pieces/nickel", pieceNickel);
-        event.register("pieces/tungsten", pieceTungsten);
-        event.register("pieces/mithril", pieceMithril);
-        event.register("pieces/adamantium", pieceAdamantium);
-        event.register("food/mashed_cactus", mashedCactus);
-        event.register("food/lemon", lemon);
-        event.register("food/lemon_pie", lemonPie);
-        event.register("bowls/lemonade", bowlLemonade);
-        event.register("buckets/nickel/empty", nickelBucket);
-        event.register("buckets/nickel/lava", nickelBucketLava);
-        event.register("buckets/nickel/milk", nickelBucketMilk);
-        event.register("buckets/nickel/stone", nickelBucketStone);
-        event.register("buckets/nickel/water", nickelBucketWater);
-        event.register("buckets/tungsten/empty", tungstenBucket);
-        event.register("buckets/tungsten/lava", tungstenBucketLava);
-        event.register("buckets/tungsten/milk", tungstenBucketMilk);
-        event.register("buckets/tungsten/stone", tungstenBucketStone);
-        event.register("buckets/tungsten/water", tungstenBucketWater);
-        event.register("bowls/bowl_water_suspicious", bowlWaterSuspicious);
-        event.register("bowls/bowl_water_swampland", bowlWaterSwampland);
-        event.register("buckets/copper/water_suspicious", copperBucketWaterSuspicious);
-        event.register("buckets/silver/water_suspicious", silverBucketWaterSuspicious);
-        event.register("buckets/gold/water_suspicious", goldBucketWaterSuspicious);
-        event.register("buckets/iron/water_suspicious", ironBucketWaterSuspicious);
-        event.register("buckets/nickel/water_suspicious", nickelBucketWaterSuspicious);
-        event.register("buckets/mithril/water_suspicious", mithrilBucketWaterSuspicious);
-        event.register("buckets/tungsten/water_suspicious", tungstenBucketWaterSuspicious);
-        event.register("buckets/adamantium/water_suspicious", adamantiumBucketWaterSuspicious);
-        event.register("buckets/ancient_metal/water_suspicious", ancientmetalBucketWaterSuspicious);
-        event.register("buckets/copper/water_swampland", copperBucketWaterDangerous);
-        event.register("buckets/silver/water_swampland", silverBucketWaterDangerous);
-        event.register("buckets/gold/water_swampland", goldBucketWaterDangerous);
-        event.register("buckets/iron/water_swampland", ironBucketWaterDangerous);
-        event.register("buckets/nickel/water_swampland", nickelBucketWaterDangerous);
-        event.register("buckets/mithril/water_swampland", mithrilBucketWaterDangerous);
-        event.register("buckets/tungsten/water_swampland", tungstenBucketWaterDangerous);
-        event.register("buckets/adamantium/water_swampland", adamantiumBucketWaterDangerous);
-        event.register("buckets/ancient_metal/water_swampland", ancientmetalBucketWaterDangerous);
-        event.register("misc/wolf_fur", wolf_fur);
-        event.register("food/horse_meat", horse_meat);
-        event.register("food/horse_meat_cooked", horse_meat_cooked);
-        event.register("armor/wolf_helmet", wolfHelmet);
-        event.register("armor/wolf_jacket", wolfChestplate);
-        event.register("armor/wolf_leggings", wolfLeggings);
-        event.register("armor/wolf_boots", wolfBoots);
-        event.register("apple_golden", goldenAppleLegend);
-        event.register("tools/copper_club", morningStarCopper);
-        event.register("tools/silver_club", morningStarSilver);
-        event.register("tools/gold_club", morningStarGold);
-        event.register("tools/iron_club", morningStarIron);
-        event.register("tools/nickel_club", morningStarNickel);
-        event.register("tools/ancient_metal_club", morningStarAncientMetal);
-        event.register("tools/mithril_club", morningStarMithril);
-        event.register("tools/tungsten_club", morningStarTungsten);
-        event.register("tools/adamantium_club", morningStarAdamantium);
-        event.register("frag/stalker_creeper", fragStalkerCreeper);
-        event.register("food/glow_berries", glowberries);
-        event.register("arrows/magical_arrow", arrowMagical);
-        event.register("wand/lava", lavaWand);
-        event.register("wand/ice", freezeWand);
-        event.register("wand/thunder", shockWand);
-        event.register("potion/suspicious_potion", suspiciousPotion);
-        event.register("potion/experimental_potion", experimentalPotion);
-        event.register("misc/azurite", shardAzurite);
-        event.register("records/record_damnation", recordDamnation);
-        event.register("records/record_connected", recordConnected);
-        event.register("tools/vibranium_sword", VibraniumSword);
-        event.register("armor/vibranium_helmet", VibraniumHelmet);
-        event.register("armor/vibranium_chestplate", VibraniumChestplate);
-        event.register("armor/vibranium_leggings", VibraniumLeggings);
-        event.register("armor/vibranium_boots", VibraniumBoots);
-        event.register("armor/null_helmet", helmetCustom_a);
-        event.register("armor/null_chestplate", chestplateCustom_a);
-        event.register("armor/null_leggings", leggingsCustom_a);
-        event.register("armor/null_boots", bootsCustom_a);
-        event.register("armor/null_helmet", helmetCustom_b);
-        event.register("armor/null_chestplate", chestplateCustom_b);
-        event.register("armor/null_leggings", leggingsCustom_b);
-        event.register("armor/null_boots", bootsCustom_b);
-        event.register("armor/ancient_metal_sacred_helmet", HelmetAncientmetalsacred);
-        event.register("armor/ancient_metal_sacred_chestplate", ChestplateAncientmetalsacred);
-        event.register("armor/ancient_metal_sacred_leggings", LeggingsAncientmetalsacred);
-        event.register("armor/ancient_metal_sacred_boots", BootsAncientmetalsacred);
-        event.register("misc/ancient_metal_armor_piece", AncientmetalArmorPiece);
-        event.register("food/agave", Agave);
-        event.register("misc/pulque", Pulque);
-        event.register("misc/ale", Ale);
-        event.register("armor/uru_helmet", uruHelmet);
-        event.register("armor/uru_chestplate", uruChestplate);
-        event.register("armor/uru_leggings", uruLeggings);
-        event.register("armor/uru_boots", uruBoots);
-        event.register("misc/forging_note", forgingnote);
-        event.register("ingots/uru", uruIngot);
-        event.register("nuggets/uru", uruNugget);
-        event.register("tools/uru_battle_axe", uruBattleAxe);
-        event.register("tools/uru_mattock", uruMattock);
-        event.register("tools/uru_scythe", uruScythe);
-        event.register("tools/uru_sword", uruSword);
-        event.register("tools/uru_war_hammer", uruWarHammer);
-        event.register("tools/uru_club", uruMorningStar);
-        event.register("tools/uru_pickaxe", uruPickaxe);
-        event.register("pieces/uru", pieceUru);
-        event.register("bows/tungsten/", bowTungsten).setUnlocalizedName("tungsten_bow");
-        event.register("food/beetroot", beetroot);
-        event.register("food/beetroot_seeds", seedsBeetroot);
-        event.register("hardened_clay_bowls/raw", claybowlRaw);
-        event.register("hardened_clay_bowls/beef_stew", claybowlBeefStew);
-        event.register("hardened_clay_bowls/beetroot_soup", claybowlBeetrootSoup);
-        event.register("hardened_clay_bowls/bowl_milk", claybowlMilk);
-        event.register("hardened_clay_bowls/bowl_salad", claybowlSalad);
-        event.register("hardened_clay_bowls/bowl_water", claybowlWater);
-        event.register("hardened_clay_bowls/bowl_water_suspicious", claybowlWaterSuspicious);
-        event.register("hardened_clay_bowls/bowl_water_swampland", claybowlWaterSwampland);
-        event.register("hardened_clay_bowls/cereal", claybowlCereal);
-        event.register("hardened_clay_bowls/chicken_soup", claybowlChickenSoup);
-        event.register("hardened_clay_bowls/cream_of_mushroom_soup", claybowlCreamOfMushroomSoup);
-        event.register("hardened_clay_bowls/cream_of_vegetable_soup", claybowlCreamOfVegetableSoup);
-        event.register("hardened_clay_bowls/empty", claybowlEmpty);
-        event.register("hardened_clay_bowls/ice_cream", claybowlIceCream);
-        event.register("hardened_clay_bowls/lampchop_stew", claybowlChestnutSoup);
-        event.register("hardened_clay_bowls/lemonade", claybowlLemonade);
-        event.register("hardened_clay_bowls/mashed_potato", claybowlMashedPotato);
-        event.register("hardened_clay_bowls/mushroom_stew", claybowlMushroomStew);
-        event.register("hardened_clay_bowls/porkchop_stew", claybowlPorkchopStew);
-        event.register("hardened_clay_bowls/porridge", claybowlPorridge);
-        event.register("hardened_clay_bowls/pumpkin_soup", claybowlPumpkinSoup);
-        event.register("hardened_clay_bowls/salmon_soup", claybowlSalmonSoup);
-        event.register("hardened_clay_bowls/sorbet", claybowlSorbet);
-        event.register("hardened_clay_bowls/vegetable_soup", claybowlVegetableSoup);
-        event.register("totem/totem_of_fecund", totemOfFecund);
-        event.register("totem/totem_of_destroy", totemOfDestroy);
-        event.register("totem/totem_of_knowledge", totemOfKnowledge);
-        event.register("totem/totem_of_preserve", totemOfPreserve);
-        event.register("totem/totem_of_hunting", totemOfHunting);
-        event.register("ignition/wood", ignitionWood);
-        event.register("ignition/copper", ignitionCopper);
-        event.register("ignition/silver", ignitionSilver);
-        event.register("ignition/gold", ignitionGold);
-        event.register("ignition/nickel", ignitionNickel);
-        event.register("ignition/ancient_metal", ignitionAncientMetal);
-        event.register("ignition/mithril", ignitionMithril);
-        event.register("ignition/tungsten", ignitionTungsten);
-        event.register("ignition/adamantium", ignitionAdamantium);
-        event.register("misc/wither_branch", wither_branch);
-        event.register("tools/detector", detectorDiamond);
-        event.register("tools/detector_emerald", detectorEmerald);
-        event.register("misc/sulphur_sphere", sulphur);
-        event.register("bows/uru/", bowUru).setUnlocalizedName("uru_bow");
-        event.register("misc/ender_rod", enderRod);
-        event.register("tools/rusted_iron_club", morningStarRustedIron);
-        event.register("buckets/wood/empty", woodBucket);
-        event.register("buckets/wood/water", woodBucketWater);
-        event.register("buckets/wood/water_suspicious", woodBucketWaterSuspicious);
-        event.register("buckets/wood/water_swampland", woodBucketWaterDangerous);
-        event.register("buckets/wood/milk", woodBucketMilk);
-        event.register("tools/flint_hoe", hoeFlint);
-        event.register("food/peeled_sugarcane", peeledSugarcane);
-        event.register("totem/totem_of_sentry", totemOfSentry);
-        event.register("totem/totem_of_unknown", totemOfUnknown);
-        event.register("ignition/rusted_iron", ignitionRustedIron);
-        event.register("tools/flint_hoe", hoeFlint);
-        event.register("tools/stick_knife", stickKnife);
-        event.register("wand/slime", slimeWand);//4483
-        event.register("misc/ice_chunk", iceChunk);
-        event.register("armor/ice_helmet", iceHelmet);
-        event.register("armor/ice_chestplate", iceChestplate);
-        event.register("armor/ice_leggings", iceLeggings);
-        event.register("armor/ice_boots", iceBoots);
-        event.register("food/ice_sucker", ice_sucker);
-        event.register("food/melon_ice", melon_ice);
-        event.register("food/chocolate_smoothie", chocolate_smoothie);
-        event.register("misc/frost_rod", frostRod);
-        event.register("misc/frost_powder", frostPowder);
-        event.register("hardened_clay_bowls/hot_water", clayBowlHotWater).setUnlocalizedName("bowl_hot_water");
-        event.register("bowls/hot_water", bowlHotWater).setUnlocalizedName("bowl_hot_water");
-    }
-
-    public static void registerBasicToolRecipes(RecipeRegistryEvent register, Material material) {
-        Item item = Item.getMatchingItem(ItemIngot.class, material);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemSword.class, material)), true, "A", "A", "S", 'A', item, 'S', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemHoe.class, material)), true, "AA", "S ", "S ", 'A', item, 'S', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemAxe.class, material)), true, "AA", "SA", "S ", 'A', item, 'S', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemShovel.class, material)), true, "A", "S", "S", 'A', item, 'S', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemPickaxe.class, material)), true, "AAA", " S ", " S ", 'A', item, 'S', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemFishingRod.class, material)), true, "  S", " SG", "SAG", 'A', getMatchingItem(ItemNugget.class, item.getExclusiveMaterial()), 'S', Item.stick, 'G', Item.silk);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemShears.class, material)), true, "A ", " A", 'A', item);
-        registerArmorRecipe(register, item, material);
-    }
-
-    public static void registerMITEToolRecipeForITFMaterial(RecipeRegistryEvent register, Material material) {
-        Item item_ingot = Item.getMatchingItem(ItemIngot.class, material);
-        Item item_nugget = getMatchingItem(ItemNugget.class, item_ingot.getExclusiveMaterial());
-        Item item_chain = Item.getMatchingItem(ItemChain.class, material);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemArrow.class, material)), true, "C", "B", "A", 'A', Item.feather, 'B', Item.stick, 'C', item_nugget);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemChain.class, material)), true, " A ", "A A", " A ", 'A', item_nugget);
-        registerArmorRecipe(register, item_chain, material);
-        register.registerShapedRecipe(new ItemStack(ItemBucket.getPeer(material, null)), true, "A A", " A ", 'A', item_ingot);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemScythe.class, material)), true, "SA ", "S A", "S  ", 'A', item_ingot, 'S', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemMattock.class, material)), true, "AAA", " SA", " S ", 'A', item_ingot, 'S', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemHatchet.class, material)), true, " BA", " B ", 'A', item_ingot, 'B', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemWarHammer.class, material)), true, "AAA", "ABA", " B ", 'A', item_ingot, 'B', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemDagger.class, material)), true, " A ", " B ", 'A', item_ingot, 'B', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemBattleAxe.class, material)), true, "A A", "ABA", " B ", 'A', item_ingot, 'B', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemDoor.class, material)), true, "AA", "AA", "AA", 'A', item_ingot);
-    }
-
-    public static void registerITFToolRecipe(RecipeRegistryEvent register) {
-        Material[] materials = new Material[]{Material.copper, Material.silver, Material.gold, Material.iron, Materials.nickel, Material.ancient_metal, Material.mithril, Materials.tungsten, Material.adamantium};
-
-        for (Material material : materials) {
-            Item item = Item.getMatchingItem(ItemIngot.class, material);
-            Item item_nugget = getMatchingItem(ItemNugget.class, material);
-            register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemMorningStar.class, material), 1), true, "###", "#*#", " # ", '#', item_nugget, '*', item);
-            register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemFlintAndSteel.class, material)), true, "C ", " F", 'C', item_nugget, 'F', flint);
-        }
-
-    }
-
-    public static void registerArmorRecipe(RecipeRegistryEvent register, Item item, Material material) {
-        if (item instanceof ItemChain) {
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemHelmet.class, material, true)), true, "AAA", "A A", 'A', item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemCuirass.class, material, true)), true, "A A", "AAA", "AAA", 'A', item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemLeggings.class, material, true)), true, "AAA", "A A", "A A", 'A', item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemBoots.class, material, true)), true, "A A", "A A", 'A', item);
-        } else {
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemHelmet.class, material, false)), true, "AAA", "A A", 'A', item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemCuirass.class, material, false)), true, "A A", "AAA", "AAA", 'A', item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemLeggings.class, material, false)), true, "AAA", "A A", "A A", 'A', item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemBoots.class, material, false)), true, "A A", "A A", 'A', item);
-        }
-    }
-
-    public static void registerFullMetalToolRecipe(RecipeRegistryEvent register, Material material) {
-        registerBasicToolRecipes(register, material);
-        registerMITEToolRecipeForITFMaterial(register, material);
-    }
-
-    public static void registerRecipes(RecipeRegistryEvent register) {
-        register.registerShapelessRecipe(new ItemStack(lemonPie), true, Item.sugar, Item.egg, Item.flour, lemon);
-        register.registerShapelessRecipe(new ItemStack(nickelIngot, 9), true, Blocks.blockNickel);
-        register.registerShapelessRecipe(new ItemStack(nickelNugget, 9), true, nickelIngot);
-        register.registerShapelessRecipe(new ItemStack(tungstenIngot, 9), true, Blocks.blockTungsten);
-        register.registerShapelessRecipe(new ItemStack(tungstenNugget, 9), true, tungstenIngot);
-        register.registerShapelessRecipe(new ItemStack(frostPowder, 2), true, frostRod);
-        registerArmorRecipe(register, wolf_fur, Materials.wolf_fur);
-        registerArmorRecipe(register, iceChunk, Materials.ice_chunk);
-        registerITFToolRecipe(register);
-        registerFullMetalToolRecipe(register, Materials.nickel);
-        registerFullMetalToolRecipe(register, Materials.tungsten);
-        register.registerShapedRecipe(new ItemStack(bowTungsten, 1), true, "#C ", "#EC", "#C ", '#', silk, 'E', tungstenIngot, 'C', stick);
-        register.registerShapedRecipe(new ItemStack(ignitionWood, 1), true, "SW", "WW", 'S', silk, 'W', stick);
-        register.registerShapedRecipe(new ItemStack(ignitionWood, 1), true, "SW", "WW", 'S', sinew, 'W', stick);
-        register.registerShapedRecipe(new ItemStack(detectorEmerald, 1), true, "FAF", "ANA", "FAF", 'A', Item.goldNugget, 'F', Item.ancientMetalNugget, 'N', Item.emerald);
-        register.registerShapedRecipe(new ItemStack(detectorDiamond, 1), true, "FAF", "ANA", "FAF", 'A', Item.goldNugget, 'F', Item.ancientMetalNugget, 'N', Item.diamond);
-        register.registerShapedRecipe(new ItemStack(woodBucket, 1), true, "W W", " W ", 'W', Block.wood);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "SP", "S ", 'F', Item.flint, 'S', Item.stick, 'P', sinew);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "S ", "SP", 'F', Item.flint, 'S', Item.stick, 'P', sinew);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", " S", "PS", 'F', Item.flint, 'S', Item.stick, 'P', sinew);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "PS", " S", 'F', Item.flint, 'S', Item.stick, 'P', sinew);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "PS", " S", 'F', Item.flint, 'S', Item.stick, 'P', Item.silk);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", " S", "PS", 'F', Item.flint, 'S', Item.stick, 'P', Item.silk);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "SP", "S ", 'F', Item.flint, 'S', Item.stick, 'P', Item.silk);
-        register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "S ", "SP", 'F', Item.flint, 'S', Item.stick, 'P', Item.silk);
-        register.registerShapedRecipe(new ItemStack(stickKnife, 1), true, "S", "S", 'S', Item.stick);
-        register.registerShapelessRecipe(new ItemStack(totemOfUnknown, 1), true, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon);
-        register.registerShapelessRecipe(new ItemStack(peeledSugarcane, 2), false, Item.reed, Item.reed);
-        register.registerShapelessRecipe(new ItemStack(sulphur, 9), true, new ItemStack(Blocks.blockSulphur, 1));
-        register.registerShapelessRecipe(new ItemStack(Item.gunpowder, 5), true, new ItemStack(Items.sulphur, 8), new ItemStack(Item.coal, 1, 1));
-        register.registerShapelessRecipe(new ItemStack(forgingnote, 2), false, forgingnote, Item.writableBook);
-        register.registerShapelessRecipe(new ItemStack(uruHelmet, 1), true, forgingnote, uruIngot, Item.helmetMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruChestplate, 1), true, forgingnote, uruIngot, Item.plateMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruLeggings, 1), true, forgingnote, uruIngot, Item.legsMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruBoots, 1), true, forgingnote, uruIngot, Item.bootsMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruSword, 1), true, forgingnote, uruIngot, Item.swordMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruScythe, 1), true, forgingnote, uruIngot, Item.scytheMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruBattleAxe, 1), true, forgingnote, uruIngot, Item.battleAxeMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruWarHammer, 1), true, forgingnote, uruIngot, Item.warHammerMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruMattock, 1), true, forgingnote, uruIngot, Item.mattockMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruMorningStar, 1), true, forgingnote, uruIngot, morningStarMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(bowUru, 1), true, forgingnote, uruIngot, Item.bowMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruPickaxe, 1), true, forgingnote, uruIngot, Item.pickaxeMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruNugget, 9), true, uruIngot);
-        register.registerShapelessRecipe(new ItemStack(HelmetAncientmetalsacred, 1), true, forgingnote, Item.ingotGold, Item.helmetAncientMetal);
-        register.registerShapelessRecipe(new ItemStack(ChestplateAncientmetalsacred, 1), true, forgingnote, Item.ingotGold, Item.plateAncientMetal);
-        register.registerShapelessRecipe(new ItemStack(LeggingsAncientmetalsacred, 1), true, forgingnote, Item.ingotGold, Item.legsAncientMetal);
-        register.registerShapelessRecipe(new ItemStack(BootsAncientmetalsacred, 1), true, forgingnote, Item.ingotGold, Item.bootsAncientMetal);
-        register.registerShapelessRecipe(new ItemStack(tungstenNugget, 1), false, arrowTungsten);
-        register.registerShapelessRecipe(new ItemStack(nickelNugget, 1), false, arrowNickel);
-        register.registerShapelessRecipe(new ItemStack(mashedCactus, 1), true, Block.cactus);
-        register.registerShapelessRecipe(new ItemStack(nickelIngot, 1), true, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget);
-        register.registerShapelessRecipe(new ItemStack(tungstenIngot, 1), true, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget);
-        register.registerShapelessRecipe(new ItemStack(uruIngot, 1), true, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget);
-        register.registerShapelessRecipe(new ItemStack(Item.leather, 1), true, wolf_fur, wolf_fur, wolf_fur, wolf_fur);
-        register.registerShapelessRecipe(new ItemStack(Block.ice, 1), true, iceChunk, iceChunk, iceChunk, iceChunk);
-        register.registerShapelessRecipe(new ItemStack(seedsBeetroot, 1), false, beetroot, beetroot);
-        register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 1), false, beetroot);
-        register.registerShapelessRecipe(new ItemStack(Pulque, 1), true, Item.sugar, Agave, new ItemStack(Item.potion, 1, 0));//.resetDifficulty(3200);
-        register.registerShapelessRecipe(new ItemStack(Ale, 1), true, Item.sugar, Item.wheat, new ItemStack(Item.potion, 1, 0));//.resetDifficulty(3200);
-        register.registerShapelessRecipe(new ItemStack(claybowlRaw, 1), false, Item.clay);
-        register.registerShapelessRecipe(new ItemStack(tungstenBucket, 1), false, tungstenBucketStone);//.resetDifficulty(100);
-        register.registerShapelessRecipe(new ItemStack(nickelBucket, 1), false, nickelBucketStone);//.resetDifficulty(100);
-        int i;
-        for (i = 1; i <= 9; i++) {
-            register.registerShapelessRecipe(new ItemStack(Item.glassBottle, i), false, new ItemStack(suspiciousPotion, i));
-        }
-        register.registerShapelessRecipe(new ItemStack(bowlBeetrootSoup, 1, 0), false, beetroot, beetroot, beetroot, beetroot, beetroot, beetroot, Item.bowlWater);
-        register.registerShapelessRecipe(new ItemStack(bowlPorkchopStew, 1), true, Item.bowlWater, Item.porkCooked, Item.carrot, Item.potato, Block.mushroomBrown);
-        register.registerShapelessRecipe(new ItemStack(bowlChestnutSoup, 1), true, Item.bowlWater, Item.lambchopCooked, Item.onion, Item.potato);
-        register.registerShapelessRecipe(new ItemStack(bowlSalmonSoup, 1), true, Item.fishLargeCooked, beetroot, Block.mushroomBrown, Item.bowlWater);
-        register.registerShapelessRecipe(new ItemStack(bowlLemonade, 1), true, Item.sugar, lemon, Item.bowlWater);
-        register.registerShapelessRecipe(new ItemStack(carrotOnAStickNickel, 1), false, Item.carrot, fishingRodNickel);
-        register.registerShapelessRecipe(new ItemStack(carrotOnAStickTungsten, 1), false, Item.carrot, fishingRodTungsten);
-        for (i = 1; i <= 9; i++) {
-            register.registerShapelessRecipe(new ItemStack(Item.bowlEmpty, i), false, new ItemStack(bowlWaterSuspicious, i));
-            register.registerShapelessRecipe(new ItemStack(Item.bowlEmpty, i), false, new ItemStack(bowlWaterSwampland, i));
-        }
-        register.registerShapelessRecipe(new ItemStack(claybowlBeefStew), false, Item.beefCooked, Block.mushroomBrown, Item.potato, claybowlWater);
-        register.registerShapelessRecipe(new ItemStack(claybowlChickenSoup), false, Item.chickenCooked, Item.carrot, Item.onion, claybowlWater);
-        register.registerShapelessRecipe(new ItemStack(claybowlVegetableSoup), false, Item.potato, Item.carrot, Item.onion, claybowlWater);
-        register.registerShapelessRecipe(new ItemStack(claybowlIceCream), false, Item.chocolate, claybowlMilk, Item.snowball);
-        register.registerShapelessRecipe(new ItemStack(claybowlIceCream), false, new ItemStack(Item.dyePowder, 1, 3), Item.sugar, claybowlMilk, Item.snowball);
-        register.registerShapelessRecipe(new ItemStack(claybowlSalad), false, Block.plantYellow, Block.plantYellow, Block.plantYellow, claybowlEmpty);
-        register.registerShapelessRecipe(new ItemStack(claybowlCreamOfMushroomSoup), false, Block.mushroomBrown, Block.mushroomBrown, claybowlMilk);
-        register.registerShapelessRecipe(new ItemStack(claybowlCreamOfVegetableSoup), false, Item.potato, Item.carrot, Item.onion, claybowlMilk);
-        register.registerShapelessRecipe(new ItemStack(claybowlPumpkinSoup), false, Block.pumpkin, claybowlWater);
-        register.registerShapelessRecipe(new ItemStack(claybowlMashedPotato), false, Item.bakedPotato, Item.cheese, claybowlMilk);
-        register.registerShapelessRecipe(new ItemStack(claybowlSorbet), false, Item.orange, Item.sugar, Item.snowball, claybowlEmpty);
-        register.registerShapelessRecipe(new ItemStack(claybowlPorridge), false, Item.seeds, Item.blueberries, Item.sugar, claybowlWater);
-        register.registerShapelessRecipe(new ItemStack(claybowlCereal), false, Item.wheat, Item.sugar, claybowlMilk);
-        register.registerShapelessRecipe(new ItemStack(claybowlMushroomStew), false, Block.mushroomBrown, Block.mushroomRed, claybowlWater);
-        register.registerShapelessRecipe(new ItemStack(claybowlBeetrootSoup, 1, 0), false, beetroot, beetroot, beetroot, beetroot, beetroot, beetroot, claybowlWater);
-        register.registerShapelessRecipe(new ItemStack(claybowlPorkchopStew, 1), true, claybowlWater, Item.porkCooked, Item.carrot, Item.potato, Block.mushroomBrown);
-        register.registerShapelessRecipe(new ItemStack(claybowlChestnutSoup, 1), true, claybowlWater, Item.lambchopCooked, Item.onion, Item.potato);
-        register.registerShapelessRecipe(new ItemStack(claybowlSalmonSoup, 1), true, Item.fishLargeCooked, beetroot, Block.mushroomBrown, claybowlWater);
-        register.registerShapelessRecipe(new ItemStack(claybowlLemonade, 1), true, Item.sugar, lemon, claybowlWater);
-        register.registerShapelessRecipe(new ItemStack(experimentalPotion, 1), true, Item.blazePowder, Item.netherStalkSeeds, new ItemStack(Item.potion, 1, 0), new ItemStack(Item.appleGold, 1, 0));
-        register.registerShapelessRecipe(new ItemStack(Item.cheese, 1), false, new ItemStack(claybowlMilk, 4));//.resetDifficulty(6400);
-        register.registerShapelessRecipe(new ItemStack(Item.cheese, 2), false, new ItemStack(claybowlMilk, 8));//.resetDifficulty(6400);
-        for (i = 1; i <= 9; i++) {
-            register.registerShapelessRecipe(new ItemStack(claybowlEmpty, i), false, new ItemStack(claybowlWaterSuspicious, i));
-            register.registerShapelessRecipe(new ItemStack(claybowlEmpty, i), false, new ItemStack(claybowlWaterSwampland, i));
-        }
-        ItemBucketMilk[] milk_buckets = {Item.bucketCopperMilk, Item.bucketSilverMilk, Item.bucketGoldMilk, Item.bucketIronMilk, Item.bucketAncientMetalMilk, Item.bucketMithrilMilk, Item.bucketAdamantiumMilk, tungstenBucketMilk, nickelBucketMilk};
-        for (int n = 0; n < milk_buckets.length; n++) {
-            register.registerShapelessRecipe(new ItemStack(Item.cake), false, Item.flour, Item.sugar, Item.egg, milk_buckets[n]);
-            int i1;
-            for (i1 = 1; i1 <= 9; i1++) {
-                register.registerShapelessRecipe(new ItemStack(Item.cheese, i1), false, new ItemStack(milk_buckets[n], i1));//.resetDifficulty(6400);
-            }
-            for (i1 = 1; i1 <= 4; i1++) {
-                register.registerShapelessRecipe(new ItemStack(Item.bowlMilk, i1), true, milk_buckets[n], new ItemStack(Item.bowlEmpty, i1));//.resetDifficulty(25);
-            }
-            for (i1 = 1; i1 <= 4; i1++) {
-                register.registerShapelessRecipe(new ItemStack(claybowlMilk, i1), true, milk_buckets[n], new ItemStack(claybowlEmpty, i1));//.resetDifficulty(25);
-            }
-            register.registerShapelessRecipe(new ItemStack(milk_buckets[n]), true, milk_buckets[n]
-                    .getEmptyVessel(), Item.bowlMilk, Item.bowlMilk, Item.bowlMilk, Item.bowlMilk);//.resetDifficulty(25);
-            register.registerShapelessRecipe(new ItemStack(milk_buckets[n]), true, milk_buckets[n]
-                    .getEmptyVessel(), claybowlMilk, claybowlMilk, claybowlMilk, claybowlMilk);//.resetDifficulty(25);
-        }
-        register.registerShapelessRecipe(new ItemStack(Item.dough, 1), false, Item.flour, Item.bowlWater);
-        register.registerShapelessRecipe(new ItemStack(Item.dough, 1), false, Item.flour, claybowlWater);
-        ItemBucket[] water_buckets = {Item.bucketCopperWater, Item.bucketSilverWater, Item.bucketGoldWater, Item.bucketIronWater, Item.bucketAncientMetalWater, Item.bucketMithrilWater, Item.bucketAdamantiumWater, nickelBucketWater, tungstenBucketWater};
-        for (int j = 0; j < water_buckets.length; j++) {
-            int i1;
-            for (i1 = 1; i1 <= 4; i1++) {
-                register.registerShapelessRecipe(new ItemStack(Item.dough, i1), false, water_buckets[j], new ItemStack(Item.flour, i1));
-                register.registerShapelessRecipe(new ItemStack(Item.cookie, i1 * 4), false, water_buckets[j], new ItemStack(Item.flour, i1), new ItemStack(Item.chocolate, i1));
-                register.registerShapelessRecipe(new ItemStack(Item.bowlWater, i1), true, water_buckets[j], new ItemStack(Item.bowlEmpty, i1));//.resetDifficulty(25);
-                register.registerShapelessRecipe(new ItemStack(claybowlWater, i1), true, water_buckets[j], new ItemStack(claybowlEmpty, i1));//.resetDifficulty(25);
-            }
-            for (i1 = 1; i1 <= 2; i1++) {
-                register.registerShapelessRecipe(new ItemStack(Item.cookie, i1 * 4), false, water_buckets[j], new ItemStack(Item.flour, i1), new ItemStack(Item.dyePowder, i1, 3), new ItemStack(Item.sugar, i1));
-            }
-            register.registerShapelessRecipe(new ItemStack(water_buckets[j]), true, water_buckets[j].getEmptyVessel(), new ItemStack(Item.bowlWater, 4));//.resetDifficulty(25);
-            register.registerShapelessRecipe(new ItemStack(water_buckets[j]), true, water_buckets[j].getEmptyVessel(), new ItemStack(claybowlWater, 4));//.resetDifficulty(25);
-        }
-        ItemBucket[] sus_water_buckets = {copperBucketWaterSuspicious, silverBucketWaterSuspicious, goldBucketWaterSuspicious, ironBucketWaterSuspicious, ancientmetalBucketWaterSuspicious, mithrilBucketWaterSuspicious, adamantiumBucketWaterSuspicious, nickelBucketWaterSuspicious, tungstenBucketWaterSuspicious};
-        for (int k = 0; k < sus_water_buckets.length; k++) {
-            for (int i1 = 1; i1 <= 4; i1++) {
-                register.registerShapelessRecipe(new ItemStack(bowlWaterSuspicious, i1), true, sus_water_buckets[k], new ItemStack(Item.bowlEmpty, i1));//.resetDifficulty(25);
-                register.registerShapelessRecipe(new ItemStack(claybowlWaterSuspicious, i1), true, sus_water_buckets[k], new ItemStack(claybowlEmpty, i1));//.resetDifficulty(25);
-            }
-            register.registerShapelessRecipe(new ItemStack(sus_water_buckets[k]), true, sus_water_buckets[k].getEmptyVessel(), new ItemStack(bowlWaterSuspicious, 4));//.resetDifficulty(25);
-            register.registerShapelessRecipe(new ItemStack(sus_water_buckets[k]), true, sus_water_buckets[k].getEmptyVessel(), new ItemStack(claybowlWaterSuspicious, 4));//.resetDifficulty(25);
-        }
-        ItemBucket[] smp_water_buckets = {copperBucketWaterDangerous, silverBucketWaterDangerous, goldBucketWaterDangerous, ironBucketWaterDangerous, ancientmetalBucketWaterDangerous, mithrilBucketWaterDangerous, adamantiumBucketWaterDangerous, nickelBucketWaterDangerous, tungstenBucketWaterDangerous};
-        for (int m = 0; m < smp_water_buckets.length; m++) {
-            for (int i1 = 1; i1 <= 4; i1++) {
-                register.registerShapelessRecipe(new ItemStack(bowlWaterSwampland, i1), true, smp_water_buckets[m], new ItemStack(Item.bowlEmpty, i1));//.resetDifficulty(25);
-                register.registerShapelessRecipe(new ItemStack(claybowlWaterSwampland, i1), true, smp_water_buckets[m], new ItemStack(claybowlEmpty, i1));//.resetDifficulty(25);
-            }
-            register.registerShapelessRecipe(new ItemStack(smp_water_buckets[m]), true, smp_water_buckets[m].getEmptyVessel(), new ItemStack(bowlWaterSwampland, 4));//.resetDifficulty(25);
-            register.registerShapelessRecipe(new ItemStack(smp_water_buckets[m]), true, smp_water_buckets[m].getEmptyVessel(), new ItemStack(claybowlWaterSwampland, 4));//.resetDifficulty(25);
-        }
-        register.registerShapelessRecipe(new ItemStack(Item.cake), false, Item.flour, Item.sugar, Item.egg, claybowlMilk);
-        ItemCoin[] coins = {nickelCoin, tungstenCoin};
-        for (ItemCoin coin : coins) {
-            for (int plank_subtype = 1; plank_subtype <= 9; plank_subtype++) {
-                register.registerShapelessRecipe(new ItemStack(coin.getNuggetPeer(), plank_subtype), true, new ItemStack(coin, plank_subtype));//.resetDifficulty(25); TODO what is resetDifficulty
-            }
-            register.registerShapelessRecipe(new ItemStack(coin), true, new ItemStack(coin.getNuggetPeer()));
-        }
-        registerFurnaceRecipes();
-        register.registerShapedRecipe(new ItemStack(ice_sucker), true, "AB", "BB", 'A', Item.stick, 'B', Item.snowball);
-        register.registerShapedRecipe(new ItemStack(melon_ice), true, "AB", "BC", 'A', Item.stick, 'B', Item.snowball, 'C', Item.melon);
-        register.registerShapedRecipe(new ItemStack(chocolate_smoothie), true, "AAA", "BBB", 'A', iceChunk, 'B', new ItemStack(Item.dyePowder, 1, 3));
-    }
-
-
-    private static void registerFurnaceRecipes() {
-        FurnaceRecipes.smelting().addSmelting(pieceAdamantium.itemID, new ItemStack(adamantiumNugget));
-        FurnaceRecipes.smelting().addSmelting(pieceCopper.itemID, new ItemStack(copperNugget));
-        FurnaceRecipes.smelting().addSmelting(pieceGold.itemID, new ItemStack(goldNugget));
-        FurnaceRecipes.smelting().addSmelting(pieceGoldNether.itemID, new ItemStack(goldNugget));
-        FurnaceRecipes.smelting().addSmelting(pieceSilver.itemID, new ItemStack(silverNugget));
-        FurnaceRecipes.smelting().addSmelting(pieceIron.itemID, new ItemStack(ironNugget));
-        FurnaceRecipes.smelting().addSmelting(pieceNickel.itemID, new ItemStack(nickelNugget));
-        FurnaceRecipes.smelting().addSmelting(pieceMithril.itemID, new ItemStack(mithrilNugget));
-        FurnaceRecipes.smelting().addSmelting(pieceTungsten.itemID, new ItemStack(tungstenNugget));
-        FurnaceRecipes.smelting().addSmelting(pieceUru.itemID, new ItemStack(uruNugget));
-        FurnaceRecipes.smelting().addSmelting(AncientmetalArmorPiece.itemID, new ItemStack(ancientMetalNugget));
-        FurnaceRecipes.smelting().addSmelting(claybowlWaterSuspicious.itemID, new ItemStack(claybowlWater));
-        FurnaceRecipes.smelting().addSmelting(claybowlWaterSwampland.itemID, new ItemStack(claybowlWater));
-        FurnaceRecipes.smelting().addSmelting(suspiciousPotion.itemID, new ItemStack(potion, 1, 0));
-        FurnaceRecipes.smelting().addSmelting(horse_meat.itemID, new ItemStack(horse_meat_cooked));
-        FurnaceRecipes.smelting().addSmelting(claybowlRaw.itemID, new ItemStack(claybowlEmpty));
-        FurnaceRecipes.smelting().addSmelting(bowlWater.itemID, new ItemStack(bowlHotWater));
-        FurnaceRecipes.smelting().addSmelting(claybowlWater.itemID, new ItemStack(clayBowlHotWater));
-        Class[] tools = {
-                ItemSword.class, ItemAxe.class, ItemPickaxe.class, ItemHoe.class, ItemShovel.class, ItemWarHammer.class, ItemBattleAxe.class, ItemScythe.class, ItemDagger.class, ItemKnife.class,
-                ItemMorningStar.class, ItemHatchet.class, ItemShears.class, ItemMattock.class, ItemHelmet.class, ItemBoots.class, ItemLeggings.class, ItemCuirass.class};
-        Material[] available_material = {Material.copper, Material.silver, Material.gold, Material.iron, Materials.nickel, Materials.tungsten, Material.ancient_metal, Material.rusted_iron};
-        for (Class tool : tools) {
-            for (Material material : available_material) {
-                Item matchingitem = Item.getMatchingItem(tool, material);
-                if (matchingitem != null) {
-                    if (matchingitem instanceof ItemArmor) {
-                        matchingitem = ItemArmor.getMatchingArmor(tool, material, false);
-                        FurnaceRecipes.smelting().addSmelting(matchingitem.itemID, new ItemStack(appleRed));
-                        matchingitem = ItemArmor.getMatchingArmor(tool, material, true);
-                        FurnaceRecipes.smelting().addSmelting(matchingitem.itemID, new ItemStack(appleRed));
-                    } else {
-                        FurnaceRecipes.smelting().addSmelting(matchingitem.itemID, new ItemStack(appleRed));
-                    }
-                }
-            }
-        }
-        ItemFood.setCookingResult((ItemFood) horse_meat, (ItemFood) horse_meat_cooked, 6);
     }
 }

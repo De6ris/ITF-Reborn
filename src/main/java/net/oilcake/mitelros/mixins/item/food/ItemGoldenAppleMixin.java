@@ -24,7 +24,7 @@ public abstract class ItemGoldenAppleMixin extends ItemFood {
         }
     }
 
-    @Redirect(method = "onEaten", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;addPotionEffect(Lnet/minecraft/PotionEffect;)V", ordinal = 2))
+    @Redirect(method = "onEaten", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;addPotionEffect(Lnet/minecraft/PotionEffect;)V", ordinal = 1))
     private void doNotAddResistance(EntityPlayer instance, PotionEffect potionEffect) {
     }
 }

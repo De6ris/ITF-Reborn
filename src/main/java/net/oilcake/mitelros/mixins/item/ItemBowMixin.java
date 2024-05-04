@@ -5,6 +5,8 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.item.Materials;
+import net.oilcake.mitelros.item.api.ITFBow;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -18,43 +20,43 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(ItemBow.class)
-public class ItemBowMixin extends Item {
+public abstract class ItemBowMixin extends Item {
     @Final
     @Shadow
     @Mutable
     private static Material[] possible_arrow_materials;
 
+    @Mutable
+    @Shadow
+    @Final
+    public static String[] bow_pull_icon_name_array;
     @Shadow
     private Material reinforcement_material;
 
-    public ItemBowMixin(int id, Material reinforcement_material) {
-        super(id, Material.wood, "bows/" + reinforcement_material.toString() + "/");
-    }
+    @Inject(method = "<clinit>", at = @At("TAIL"))
+    private static void addITFBowlMaterials(CallbackInfo ci) {
+        Material[] original = possible_arrow_materials;
+        Material[] expanded = new Material[original.length + 3];
+        System.arraycopy(original, 0, expanded, 0, original.length);
+        expanded[original.length] = Materials.nickel;
+        expanded[original.length + 1] = Materials.tungsten;
+        expanded[original.length + 2] = Materials.magical;
+        possible_arrow_materials = expanded;
 
-    @Inject(method = {"<clinit>()V"}, at = {@At("FIELD")})// TODO compatibility
-    private static void injectClinit(CallbackInfo callback) {
-        possible_arrow_materials = new Material[]{
-                Material.flint, Material.obsidian, Material.copper, Material.silver, Material.rusted_iron, Material.gold, Material.iron, Material.mithril, Material.adamantium, Material.ancient_metal,
-                Materials.nickel, Materials.tungsten, Materials.magical};
-    }
+        bow_pull_icon_name_array = new String[possible_arrow_materials.length * 3];
+
+        for (int arrow_index = 0; arrow_index < possible_arrow_materials.length; ++arrow_index) {
+            Material material = possible_arrow_materials[arrow_index];
+            for (int icon_index = 0; icon_index < 3; ++icon_index) {
+                ItemBow.bow_pull_icon_name_array[arrow_index * 3 + icon_index] = material.name + "_arrow_" + icon_index;
+            }
+        }
+    }// feels stupid
 
     @Inject(method = "getTicksForMaxPull", at = @At("HEAD"), cancellable = true)
-    private static void getTicksForMaxPull(ItemStack item_stack, CallbackInfoReturnable<Integer> cir) {// TODO compatibility
-        int TicksPull;
-        Material material = item_stack.getMaterialForRepairs();
-        if (material == Materials.tungsten) {
-            TicksPull = 30;
-        } else if (material == Materials.uru) {
-            TicksPull = 18;
-        } else if (material == Material.mithril) {
-            TicksPull = 27;
-        } else if (material == Material.ancient_metal) {
-            TicksPull = 24;
-        } else {
-            TicksPull = 20;
-        }
-        cir.setReturnValue((int) (TicksPull * (1.0F - 0.5F * EnchantmentHelper.getEnchantmentLevelFraction(Enchantment.quickness, item_stack))));
-    }
+    private static void setITFPullSpeed(ItemStack item_stack, CallbackInfoReturnable<Integer> cir) {
+        cir.setReturnValue(ITFBow.overridePullSpeed(item_stack));
+    }// TODO compatibility
 
     @ModifyExpressionValue(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;inCreativeMode()Z"))
     private boolean infinity(boolean original, @Local(argsOnly = true) EntityPlayer player) {
@@ -72,44 +74,15 @@ public class ItemBowMixin extends Item {
             entity_arrow.setDamage(entity_arrow.getDamage() - (double) ((float) power * 0.5F) - 0.5);
         }
         Material material = item_stack.getMaterialForRepairs();
-        if (material == Materials.tungsten) {
-            entity_arrow.setDamage(entity_arrow.getDamage() * 1.15D);
-        } else if (material == Materials.uru) {
-            entity_arrow.setDamage(entity_arrow.getDamage() * 0.9D);
-        } else if (material == Material.mithril) {
-            entity_arrow.setDamage(entity_arrow.getDamage() * 1.1D);
-        } else if (material == Material.ancient_metal) {
-            entity_arrow.setDamage(entity_arrow.getDamage() * 1.05D);
-        } else {
-            entity_arrow.setDamage(entity_arrow.getDamage() * 0.75D);
-        }
+        entity_arrow.setDamage(entity_arrow.getDamage() * ITFBow.getDamageModifier(material));
         if (power > 0) {
             entity_arrow.setDamage(entity_arrow.getDamage() + (double) ((float) power * 0.5F) + 0.5);
         }
-    }
-
-    @Inject(method = "<init>(ILnet/minecraft/Material;)V", at = @At("RETURN"))
-    private void injectInit(CallbackInfo callbackInfo) {
-        this.setMaxDamage((this.reinforcement_material == Materials.tungsten) ? 256 : ((this.reinforcement_material == Materials.uru) ? 512 : ((this.reinforcement_material == Material.mithril) ? 128 : ((this.reinforcement_material == Material.ancient_metal) ? 64 : 32))));
-    }
-
+    }// TODO compatibility
 
     @ModifyConstant(method = "addInformation", constant = @Constant(intValue = 10))
     private int itfBonus(int bonus) {
-        if (this.reinforcement_material == Materials.tungsten) {
-            bonus = 35;
-        } else if (this.reinforcement_material == Materials.uru) {
-            bonus = 45;
-        }
-        return bonus;
-    }
-
-    @Inject(method = "<init>", at = @At("TAIL"))
-    private void itfMaxDamage(int id, Material reinforcement_material, CallbackInfo ci) {
-        if (this.reinforcement_material == Materials.tungsten) {
-            setMaxDamage(256);
-        } else if (this.reinforcement_material == Materials.uru) {
-            setMaxDamage(512);
-        }
+        int itfBonus = ITFBow.getArrowSpeedBonus(this.reinforcement_material);
+        return itfBonus != 0 ? itfBonus : bonus;
     }
 }

@@ -12,8 +12,11 @@ public class BlockMagicTable extends BlockEnchantmentTable {
 
     private Icon TEXTURE_SIDE;
 
-    protected BlockMagicTable(int par1, Material gem_type) {
-        super(par1, gem_type);
+    protected BlockMagicTable(int par1) {
+        super(par1, Material.diamond);
+        this.setHardness(2.4F);
+        this.setResistance(20.0F);
+        this.setLightValue(1.0F);
     }
 
     @Override
@@ -32,5 +35,4 @@ public class BlockMagicTable extends BlockEnchantmentTable {
         this.TEXTURE_BOTTOM = mt.registerIcon("magic_table/bottom");
         this.TEXTURE_SIDE = mt.registerIcon("magic_table/side");
     }
-
 }

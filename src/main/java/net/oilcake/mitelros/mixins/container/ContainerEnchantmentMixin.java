@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -75,9 +76,7 @@ public abstract class ContainerEnchantmentMixin extends Container {
             throw new RuntimeException(e);
         }
         int[] results = new int[12];
-        for (int i = 0; i < 12; i++) {
-            results[i] = -1;
-        }
+        Arrays.fill(results, -1);
 
         Random copiedRandom;
         for (int line = 0; line < 3; line++) {

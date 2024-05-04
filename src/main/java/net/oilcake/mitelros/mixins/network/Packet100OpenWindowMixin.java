@@ -43,7 +43,7 @@ public class Packet100OpenWindowMixin {
         return 32767;
     }
 
-    @Inject(method = "handleOpenWindow", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"), cancellable = true)
+    @Inject(method = "handleOpenWindow", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V", ordinal = 1), cancellable = true)
     private void inject(EntityClientPlayerMP player, CallbackInfo ci) {
         if (this.inventoryType == 14) {
             ((ITFPlayer) player).displayGUIEnchantReserver(this.x, this.y, this.z, new EnchantReserverSlots(new InventoryBasic(this.windowTitle, this.useProvidedWindowTitle, this.slotsCount)));

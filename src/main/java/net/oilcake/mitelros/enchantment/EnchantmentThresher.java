@@ -4,6 +4,7 @@ import net.minecraft.CreativeTabs;
 import net.minecraft.Enchantment;
 import net.minecraft.EnumRarity;
 import net.minecraft.Item;
+import net.oilcake.mitelros.item.api.ItemMorningStar;
 
 public class EnchantmentThresher extends Enchantment {
   protected EnchantmentThresher(int id, EnumRarity rarity, int difficulty) {
@@ -19,7 +20,7 @@ public class EnchantmentThresher extends Enchantment {
   }
   
   public boolean canEnchantItem(Item item) {
-    return item instanceof net.oilcake.mitelros.item.ItemMorningStar;
+    return item instanceof ItemMorningStar;
   }
   
   public boolean isOnCreativeTab(CreativeTabs creativeModeTab) {

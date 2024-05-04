@@ -4,6 +4,8 @@ import net.minecraft.*;
 import net.oilcake.mitelros.block.api.ITFDoor;
 import net.oilcake.mitelros.block.api.ITFPane;
 import net.oilcake.mitelros.block.api.ITFWorkbench;
+import net.oilcake.mitelros.block.beaconExtend.BlockUruBeacon;
+import net.oilcake.mitelros.block.enchantreserver.BlockEnchantReserver;
 import net.oilcake.mitelros.block.observer.BlockObserver;
 import net.oilcake.mitelros.block.receiver.BlockReceiver;
 import net.oilcake.mitelros.config.ITFConfig;
@@ -21,74 +23,39 @@ public class Blocks {
         return Constant.nextBlockID--;
     }
 
-    public static final Block blastFurnaceStoneIdle = (new BlockBlastFurnace(getNextBlockID(), Material.stone, false)).setCreativeTab(CreativeTabs.tabDecorations)
-            .setHardness(4.8F).
-            setResistance(20.0F).
-            setStepSound(Block.soundStoneFootstep);
+    public static final Block blastFurnaceStoneIdle = (new BlockBlastFurnace(getNextBlockID(), Material.stone, false)).setCreativeTab(CreativeTabs.tabDecorations).setHardness(4.8F).setResistance(20.0F).setStepSound(Block.soundStoneFootstep);
 
-    public static final Block blastFurnaceObsidianIdle = (new BlockBlastFurnace(getNextBlockID(), Material.obsidian, false)).setCreativeTab(CreativeTabs.tabDecorations)
-            .setHardness(38.4F).
-            setResistance(40.0F).
-            setStepSound(Block.soundStoneFootstep);
+    public static final Block blastFurnaceObsidianIdle = (new BlockBlastFurnace(getNextBlockID(), Material.obsidian, false)).setCreativeTab(CreativeTabs.tabDecorations).setHardness(38.4F).setResistance(40.0F).setStepSound(Block.soundStoneFootstep);
 
-    public static final Block blastFurnaceNetherrackIdle = (new BlockBlastFurnace(getNextBlockID(), Material.netherrack, false)).setCreativeTab(CreativeTabs.tabDecorations)
-            .setHardness(153.6F).
-            setResistance(80.0F).
-            setStepSound(Block.soundStoneFootstep);
+    public static final Block blastFurnaceNetherrackIdle = (new BlockBlastFurnace(getNextBlockID(), Material.netherrack, false)).setCreativeTab(CreativeTabs.tabDecorations).setHardness(153.6F).setResistance(80.0F).setStepSound(Block.soundStoneFootstep);
 
-    public static final Block blastFurnaceStoneBurning = (new BlockBlastFurnace(getNextBlockID(), Material.stone, true))
-            .setHardness(4.8F).
-            setResistance(20.0F).
-            setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);
+    public static final Block blastFurnaceStoneBurning = (new BlockBlastFurnace(getNextBlockID(), Material.stone, true)).setHardness(4.8F).setResistance(20.0F).setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);
 
-    public static final Block blastFurnaceObsidianBurning = (new BlockBlastFurnace(getNextBlockID(), Material.obsidian, true))
-            .setHardness(38.4F).
-            setResistance(40.0F).
-            setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);
+    public static final Block blastFurnaceObsidianBurning = (new BlockBlastFurnace(getNextBlockID(), Material.obsidian, true)).setHardness(38.4F).setResistance(40.0F).setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);
 
-    public static final Block blastFurnaceNetherrackBurning = (new BlockBlastFurnace(getNextBlockID(), Material.netherrack, true))
-            .setHardness(153.6F).
-            setResistance(80.0F).
-            setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);
+    public static final Block blastFurnaceNetherrackBurning = (new BlockBlastFurnace(getNextBlockID(), Material.netherrack, true)).setHardness(153.6F).setResistance(80.0F).setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);
 
-    public static final Block blockSmokerIdle = (new BlockSmoker(getNextBlockID(), false))
-            .setHardness(2.0F).
-            setResistance(20.0F).
-            setCreativeTab(CreativeTabs.tabDecorations).
-            setStepSound(Block.soundStoneFootstep);
+    public static final Block blockSmokerIdle = (new BlockSmoker(getNextBlockID(), false)).setHardness(2.0F).setResistance(20.0F).setCreativeTab(CreativeTabs.tabDecorations).setStepSound(Block.soundStoneFootstep);
 
-    public static final Block blockSmokerBurning = (new BlockSmoker(getNextBlockID(), true))
-            .setHardness(2.0F).
-            setResistance(20.0F).
-            setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);
+    public static final Block blockSmokerBurning = (new BlockSmoker(getNextBlockID(), true)).setHardness(2.0F).setResistance(20.0F).setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);
 
     public static final BlockAnvil anvilNickel = new AnvilBlock(getNextBlockID(), Materials.nickel);
 
-    public static final Block blockEnchantReserver = (new BlockEnchantReserver(getNextBlockID()))
-            .setHardness(8.0F).
-            setResistance(20.0F).
-            setStepSound(Block.soundStoneFootstep)
-            .setLightValue(0.0F);
+    public static final Block blockEnchantReserver = (new BlockEnchantReserver(getNextBlockID())).setHardness(8.0F).setResistance(20.0F).setStepSound(Block.soundStoneFootstep).setLightValue(0.0F);
 
     public static final Block blockNickel = (new BlockOreBlockExtend(getNextBlockID(), Materials.nickel)).setStepSound(Block.soundMetalFootstep);
 
-    public static final Block fenceNickel = (new ITFPane(getNextBlockID(), "bars/nickel_bars", "bars/nickel_bars", Materials.nickel, false)).setStepSound(Block.soundMetalFootstep).setResistance(6.0F)
-            .setHardness(3.2F).setMinHarvestLevel(3);
+    public static final Block fenceNickel = (new ITFPane(getNextBlockID(), "bars/nickel_bars", "bars/nickel_bars", Materials.nickel, false)).setStepSound(Block.soundMetalFootstep).setResistance(6.0F).setHardness(3.2F).setMinHarvestLevel(3);
 
     public static final Block doorNickel = (new ITFDoor(getNextBlockID(), Materials.nickel)).setStepSound(Block.soundMetalFootstep).setMinHarvestLevel(3);
 
-    public static final Block oreNickel = (new BlockOre(getNextBlockID(), Materials.nickel, 2))
-            .setHardness(3.0F)
-            .setResistance(20.0F);
+    public static final Block oreNickel = (new BlockOre(getNextBlockID(), Materials.nickel, 2)).setHardness(3.0F).setResistance(20.0F);
 
-    public static final Block oreTungsten = (new BlockOre(getNextBlockID(), Materials.tungsten, 4))
-            .setHardness(3.5F)
-            .setResistance(30.0F);
+    public static final Block oreTungsten = (new BlockOre(getNextBlockID(), Materials.tungsten, 4)).setHardness(3.5F).setResistance(30.0F);
 
     public static final Block blockTungsten = (new BlockOreStorage(getNextBlockID(), Materials.tungsten)).setStepSound(Block.soundMetalFootstep);
 
-    public static final Block fenceTungsten = (new ITFPane(getNextBlockID(), "bars/tungsten_bars", "bars/tungsten_bars", Materials.tungsten, false)).setStepSound(Block.soundMetalFootstep).setResistance(96.0F)
-            .setHardness(51.2F).setMinHarvestLevel(5);
+    public static final Block fenceTungsten = (new ITFPane(getNextBlockID(), "bars/tungsten_bars", "bars/tungsten_bars", Materials.tungsten, false)).setStepSound(Block.soundMetalFootstep).setResistance(96.0F).setHardness(51.2F).setMinHarvestLevel(5);
 
     public static final Block doorTungsten = (new ITFDoor(getNextBlockID(), Materials.tungsten)).setStepSound(Block.soundMetalFootstep).setMinHarvestLevel(5);
 
@@ -96,72 +63,37 @@ public class Blocks {
 
     public static final BlockFlowerExtend flowerextend = new BlockFlowerExtend(getNextBlockID());
 
-    public static final Block blockEnchantEnhancer = (new BlockEnchantEnhancer(getNextBlockID()))
-            .setHardness(8.0F).
-            setResistance(20.0F).
-            setStepSound(Block.soundStoneFootstep);
+    public static final Block blockEnchantEnhancer = (new BlockEnchantEnhancer(getNextBlockID())).setHardness(8.0F).setResistance(20.0F).setStepSound(Block.soundStoneFootstep);
 
-    public static final Block oreUru = (new BlockOre(getNextBlockID(), Materials.uru, 4))
-            .setHardness(5.0F).
-            setResistance(150.0F);
+    public static final Block oreUru = (new BlockOre(getNextBlockID(), Materials.uru, 4)).setHardness(5.0F).setResistance(150.0F);
 
     public static final Block beetroots = (new BlockBeetroots(getNextBlockID())).setUnlocalizedName("beetroot");
 
     public static final Block beetrootsDead = (new BlockBeetrootsDead(getNextBlockID())).setUnlocalizedName("beetroot");
 
-    public static final Block flowerPotExtend = (new BlockFlowerPotExtend(getNextBlockID()))
-            .setHardness(0.0F).setStepSound(Block.soundPowderFootstep).setUnlocalizedName("flowerPot");
+    public static final Block flowerPotExtend = (new BlockFlowerPotExtend(getNextBlockID())).setHardness(0.0F).setStepSound(Block.soundPowderFootstep).setUnlocalizedName("flowerPot");
 
-    public static final Block blockAzurite = new BlockGrowableOre(getNextBlockID(), Materials.crystal, 2)
-            .setStepSound(Block.soundGlassFootstep).
-            setHardness(1.2F).
-            setResistance(12.0f).setLightValue(1.0F);
+    public static final Block blockAzurite = new BlockGrowableOre(getNextBlockID(), Materials.crystal, 2).setStepSound(Block.soundGlassFootstep).setHardness(1.2F).setResistance(12.0f).setLightValue(1.0F);
 
-    public static final Block azuriteCluster = new BlockCaveMisc(getNextBlockID(), Materials.crystal)
-            .setLightValue(0.75F).
-            setHardness(0.6F).
-            setMinHarvestLevel(1).
-            setResistance(6.0f).setStepSound(Block.soundGlassFootstep);
+    public static final Block azuriteCluster = new BlockCaveMisc(getNextBlockID(), Materials.crystal).setLightValue(0.75F).setHardness(0.6F).setMinHarvestLevel(1).setResistance(6.0f).setStepSound(Block.soundGlassFootstep);
 
-    public static final Block torchWoodIdle = (new BlockTorchIdle(getNextBlockID()))
-            .setHardness(0.0F).
-            setLightValue(0.5F).
-            setStepSound(Block.soundWoodFootstep).
-            setUnlocalizedName("torch");
+    public static final Block torchWoodIdle = (new BlockTorchIdle(getNextBlockID())).setHardness(0.0F).setLightValue(0.5F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("torch");
 
-    public static final Block torchWoodExtinguished = (new BlockTorchIdle(getNextBlockID()))
-            .setHardness(0.0F).
-            setLightValue(0.1F).
-            setStepSound(Block.soundWoodFootstep).
-            setUnlocalizedName("torch");
+    public static final Block torchWoodExtinguished = (new BlockTorchIdle(getNextBlockID())).setHardness(0.0F).setLightValue(0.1F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("torch");
 
-    public static final Block blockObserver = new BlockObserver(getNextBlockID(), Material.stone)
-            .setHardness(2.5F).
-            setResistance(20.0f).
-            setStepSound(Block.soundStoneFootstep);
-    public static final Block blockReceiver = new BlockReceiver(getNextBlockID())
-            .setHardness(2.5F).
-            setResistance(20.0f).
-            setStepSound(Block.soundStoneFootstep);
+    public static final Block blockObserver = new BlockObserver(getNextBlockID(), Material.stone).setHardness(2.5F).setResistance(20.0f).setStepSound(Block.soundStoneFootstep);
 
-    public static final Block blockSulphur = new BlockOre(getNextBlockID(), Materials.sulphur, 1)
-            .setHardness(1.2F).
-            setResistance(10.0F).
-            setStepSound(Block.soundStoneFootstep);
+    public static final Block blockReceiver = new BlockReceiver(getNextBlockID()).setHardness(2.5F).setResistance(20.0f).setStepSound(Block.soundStoneFootstep);
 
-    public static final Block blockEnchantPredicator = (new BlockEnchantPredicator(getNextBlockID()))
-            .setHardness(8.0F).
-            setResistance(20.0F).
-            setStepSound(Block.soundStoneFootstep)
-            .setLightValue(0.0F);
+    public static final Block blockSulphur = new BlockOre(getNextBlockID(), Materials.sulphur, 1).setHardness(1.2F).setResistance(10.0F).setStepSound(Block.soundStoneFootstep);
 
-    public static final Block magicTable = new BlockMagicTable(getNextBlockID(), Material.diamond)
-            .setHardness(2.4F).
-            setResistance(20.0F)
-            .setLightValue(1.0F);
-//    public static final Block workBenchNickel = new ITFWorkBench(getNextBlockID());
-//    public static final Block workBenchTungsten = new ITFWorkBench(getNextBlockID());
+    public static final Block blockEnchantPredicator = new BlockEnchantPredicator(getNextBlockID());
+
+    public static final Block magicTable = new BlockMagicTable(getNextBlockID());
+
     public static final Block itfWorkBench = new ITFWorkbench(getNextBlockID());
+
+    public static final Block uruBeacon = new BlockUruBeacon(getNextBlockID());
 
     public static void registerBlocks(ItemRegistryEvent registryEvent) {
         registryEvent.registerAnvil(anvilNickel, "nickel_anvil");
@@ -200,15 +132,14 @@ public class Blocks {
         registryEvent.registerItemBlock(blockReceiver, "block_receiver");
         registryEvent.registerItemBlock(blockEnchantPredicator, "block_enchant_predicator");
         registryEvent.registerItemBlock(magicTable, "magic_table");
-//        registryEvent.registerItemBlock(workBenchNickel, "crafting_table/nickel");
-//        registryEvent.registerItemBlock(workBenchTungsten, "crafting_table/tungsten");
         registryEvent.registerItemBlock(itfWorkBench, "crafting_table");
+        registryEvent.registerItemBlock(uruBeacon, "beacon");
     }
 
     public static void registerRecipes(RecipeRegistryEvent register) {
         shapedRecipe(register);
         shapelessRecipe(register);
-        furnaceRecipe(register);
+        furnaceRecipe();
         //TODO fix block recipe with subtype
     }
 
@@ -253,6 +184,13 @@ public class Blocks {
                 'M', Item.ingotMithril, 'T', Block.enchantmentTable,
                 'H', blockEnchantEnhancer, 'P', blockEnchantPredicator,
                 'B', Items.forgingnote, 'E', Item.eyeOfEnder);
+
+        for (int i = 0; i < Blocks.itfWorkBench.getNumSubBlocks(); ++i) {
+            Material tool_material = ITFWorkbench.getToolMaterial(i);
+            for (int plank_subtype = 0; plank_subtype < 4; ++plank_subtype) {
+                register.registerShapedRecipe(new ItemStack(Blocks.itfWorkBench, 1, i), true, "IL", "s#", 'I', ItemIngot.getMatchingItem(ItemIngot.class, tool_material), 'L', Item.leather, 's', Item.stick, '#', new ItemStack(Block.planks, 1, plank_subtype));
+            }
+        }
     }
 
     public static void shapelessRecipe(RecipeRegistryEvent register) {
@@ -275,7 +213,7 @@ public class Blocks {
         nineToOne(register, new ItemStack(blockAzurite), Items.shardAzurite);
     }
 
-    public static void furnaceRecipe(RecipeRegistryEvent register) {
+    public static void furnaceRecipe() {
         FurnaceRecipes.smelting().addSmelting(oreTungsten.blockID, new ItemStack(Items.tungstenIngot));
         FurnaceRecipes.smelting().addSmelting(oreNickel.blockID, new ItemStack(Items.nickelIngot));
         FurnaceRecipes.smelting().addSmelting(oreUru.blockID, new ItemStack(Items.uruIngot));

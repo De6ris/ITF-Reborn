@@ -36,6 +36,10 @@ accessible field net/minecraft/BiomeDecorator flowersPerChunk I
 accessible field net/minecraft/BiomeDecorator grassPerChunk I
 accessible field net/minecraft/BiomeDecorator treesPerChunk I
 
+accessible field net/minecraft/ContainerWorkbench x I
+accessible field net/minecraft/ContainerWorkbench y I
+accessible field net/minecraft/ContainerWorkbench z I
+
 extendable class net/minecraft/BlockDoor
 accessible class net/minecraft/ContainerRepairINNER2
 accessible class net/minecraft/ComponentNetherBridgePiece

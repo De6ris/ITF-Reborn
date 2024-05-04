@@ -204,7 +204,7 @@ public class TileEntityEnchantReserver extends TileEntity implements ISidedInven
     }
 
     public boolean isUseableByPlayer(EntityPlayer player) {
-        if (player.getWorld().getBlock(this.xCoord, this.yCoord, this.zCoord) instanceof net.oilcake.mitelros.block.BlockEnchantReserver && player.getWorld().getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) instanceof TileEntityEnchantReserver)
+        if (player.getWorld().getBlock(this.xCoord, this.yCoord, this.zCoord) instanceof BlockEnchantReserver && player.getWorld().getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) instanceof TileEntityEnchantReserver)
             return (player.getDistance(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D) <= 64.0D);
         return false;
     }

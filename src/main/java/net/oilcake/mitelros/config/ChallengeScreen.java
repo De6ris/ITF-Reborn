@@ -2,6 +2,7 @@ package net.oilcake.mitelros.config;
 
 import fi.dy.masa.malilib.config.SimpleConfigs;
 import fi.dy.masa.malilib.config.interfaces.IConfigResettable;
+import fi.dy.masa.malilib.config.options.ConfigBase;
 import fi.dy.masa.malilib.config.options.ConfigInteger;
 import fi.dy.masa.malilib.gui.button.GuiButtonCommented;
 import fi.dy.masa.malilib.gui.screen.GuiScreenCommented;
@@ -10,6 +11,8 @@ import net.minecraft.GuiButton;
 import net.minecraft.GuiScreen;
 import net.minecraft.GuiYesNoMITE;
 import net.minecraft.I18n;
+
+import java.util.function.Consumer;
 
 public class ChallengeScreen extends GuiScreenCommented {
 
@@ -67,23 +70,28 @@ public class ChallengeScreen extends GuiScreenCommented {
                 this.configs.save();
             }
             if (par2 == 4) {
-                ITFConfig.spite.forEach(x -> {
+                Consumer<ConfigBase> setMaximized = x -> {
                     if (x instanceof ConfigBooleanChallenge challenge) challenge.setBooleanValue(true);
                     if (x instanceof ConfigInteger configInteger)
                         configInteger.setIntegerValue(configInteger.getMaxIntegerValue());
-                });
-                ITFConfig.enemy.forEach(x -> {
-                    if (x instanceof ConfigBooleanChallenge challenge) challenge.setBooleanValue(true);
-                    if (x instanceof ConfigInteger configInteger)
-                        configInteger.setIntegerValue(configInteger.getMaxIntegerValue());
-                });
-                ITFConfig.luck.forEach(x -> {
+                };
+                ITFConfig.spite.forEach(setMaximized);
+                ITFConfig.enemy.forEach(setMaximized);
+                Consumer<ConfigBase> setMinimized = x -> {
                     if (x instanceof ConfigBooleanChallenge challenge) challenge.setBooleanValue(false);
                     if (x instanceof ConfigInteger configInteger) configInteger.setIntegerValue(0);
-                });
+                };
+                ITFConfig.luck.forEach(setMinimized);
                 this.configs.save();
             }
         }
         this.mc.displayGuiScreen(this);
+    }
+
+    @Override
+    protected void keyTyped(char par1, int par2) {
+        if (par2 == 1) {
+            this.mc.displayGuiScreen(this.parentScreen);
+        }
     }
 }

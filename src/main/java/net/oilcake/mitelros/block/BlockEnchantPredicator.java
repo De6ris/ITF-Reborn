@@ -8,12 +8,15 @@ public class BlockEnchantPredicator extends Block {
     private Icon TEXTURE_BOTTOM;
 
     private Icon TEXTURE_SIDE;
+
     protected BlockEnchantPredicator(int par1) {
         super(par1, Material.anvil, new BlockConstants());
         setCreativeTab(CreativeTabs.tabDecorations);
         setMaxStackSize(1);
         setLightOpacity(0);
         setLightValue(0.75F);
+        setHardness(8.0F);
+        setStepSound(Block.soundStoneFootstep);
     }
 
     @Override

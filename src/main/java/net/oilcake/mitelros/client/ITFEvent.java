@@ -4,6 +4,7 @@ import com.google.common.eventbus.Subscribe;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.Blocks;
+import net.oilcake.mitelros.block.beaconExtend.TileEntityUruBeacon;
 import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;
 import net.oilcake.mitelros.block.observer.TileEntityObserver;
 import net.oilcake.mitelros.block.receiver.TileEntityReceiver;
@@ -14,10 +15,9 @@ import net.oilcake.mitelros.entity.misc.*;
 import net.oilcake.mitelros.entity.mob.*;
 import net.oilcake.mitelros.item.ItemGuideBook;
 import net.oilcake.mitelros.item.Items;
-import net.oilcake.mitelros.network.C2SDecreaseWater;
-import net.oilcake.mitelros.network.S2CEnchantReserverInfo;
-import net.oilcake.mitelros.network.S2CEnchantmentInfo;
-import net.oilcake.mitelros.network.S2CUpdateNutrition;
+import net.oilcake.mitelros.item.register.RecipeRegister;
+import net.oilcake.mitelros.item.register.ItemTextureRegister;
+import net.oilcake.mitelros.network.*;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.reload.event.*;
@@ -87,13 +87,13 @@ public class ITFEvent {
 
     @Subscribe
     public void onItemRegister(ItemRegistryEvent event) {
-        Items.registerItems(event);
+        ItemTextureRegister.registerItems(event);
         Blocks.registerBlocks(event);
     }
 
     @Subscribe
     public void onRecipeRegister(RecipeRegistryEvent event) {
-        Items.registerRecipes(event);
+        RecipeRegister.registerRecipes(event);
         Blocks.registerRecipes(event);
     }
 
@@ -110,6 +110,7 @@ public class ITFEvent {
         event.register(false, true, C2SDecreaseWater.class);//135
         event.register(true, false, S2CEnchantmentInfo.class);//136
         event.register(true, false, S2CUpdateNutrition.class);//137
+        event.register(true, false, S2COpenWindow.class);//138
     }
 
     @Subscribe
@@ -187,5 +188,6 @@ public class ITFEvent {
         event.register(TileEntityEnchantReserver.class, "EnchantReserver");
         event.register(TileEntityObserver.class, "Observer");
         event.register(TileEntityReceiver.class, "Receiver");
+        event.register(TileEntityUruBeacon.class, "UruBeacon");
     }
 }

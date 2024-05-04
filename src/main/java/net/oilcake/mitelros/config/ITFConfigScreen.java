@@ -12,7 +12,7 @@ import static net.oilcake.mitelros.ITFStart.MOD_ID;
 
 public class ITFConfigScreen extends GuiScreenCommented {
 
-    private GuiScreen parentScreen;
+    private final GuiScreen parentScreen;
     private final ITFConfig configs;
 
     public ITFConfigScreen(GuiScreen parentScreen) {
@@ -62,5 +62,12 @@ public class ITFConfigScreen extends GuiScreenCommented {
             }
         }
         this.mc.displayGuiScreen(this);
+    }
+
+    @Override
+    protected void keyTyped(char par1, int par2) {
+        if (par2 == 1) {
+            this.mc.displayGuiScreen(this.parentScreen);
+        }
     }
 }

@@ -1,11 +1,13 @@
 package net.oilcake.mitelros.api;
 
+import net.oilcake.mitelros.block.beaconExtend.TileEntityUruBeacon;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.status.*;
 
 public interface ITFPlayer {
 
     void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots);
+    void displayGUIUruBeacon(TileEntityUruBeacon tileEntityUruBeacon);
 
     NewPlayerManager getNewPlayerManager();
 

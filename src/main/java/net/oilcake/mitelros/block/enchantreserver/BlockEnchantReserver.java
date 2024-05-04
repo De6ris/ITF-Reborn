@@ -1,4 +1,4 @@
-package net.oilcake.mitelros.block;
+package net.oilcake.mitelros.block.enchantreserver;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;
@@ -10,7 +10,7 @@ public class BlockEnchantReserver extends Block implements ITileEntityProvider {
 
     private Icon TEXTURE_SIDE;
 
-    protected BlockEnchantReserver(int par1) {
+    public BlockEnchantReserver(int par1) {
         super(par1, Material.anvil, new BlockConstants());
         setCreativeTab(CreativeTabs.tabDecorations);
         setMaxStackSize(1);

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class EntityLich extends EntityBoneLord implements IBossDisplayData {
     private final EntityAIAvoidEntity aiAvoidPlayerStrategic = new EntityAIAvoidEntity(this, EntityPlayer.class, 6.0F, 1.1D, 1.4D);

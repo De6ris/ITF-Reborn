@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemCarrotOnAStick.class)
-public abstract class ItemCarrotStickMixin {
+public abstract class ItemCarrotOnAStickMixin {
     @Shadow
     protected Material hook_material;
 

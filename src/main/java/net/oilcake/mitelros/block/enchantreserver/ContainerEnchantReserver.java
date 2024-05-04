@@ -97,7 +97,7 @@ public class ContainerEnchantReserver extends Container {
     }
 
     public boolean canInteractWith(EntityPlayer player) {
-        if (this.world.getBlock(this.blockX, this.blockY, this.blockZ) instanceof net.oilcake.mitelros.block.BlockEnchantReserver && this.world.getBlockTileEntity(this.blockX, this.blockY, this.blockZ) instanceof TileEntityEnchantReserver)
+        if (this.world.getBlock(this.blockX, this.blockY, this.blockZ) instanceof BlockEnchantReserver && this.world.getBlockTileEntity(this.blockX, this.blockY, this.blockZ) instanceof TileEntityEnchantReserver)
             return (player.getDistanceSq(this.blockX + 0.5D, this.blockY + 0.5D, this.blockZ + 0.5D) <= 64.0D);
         return false;
     }

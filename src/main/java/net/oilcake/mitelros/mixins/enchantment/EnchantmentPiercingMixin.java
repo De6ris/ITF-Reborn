@@ -4,7 +4,7 @@ import net.minecraft.Enchantment;
 import net.minecraft.EnchantmentPiercing;
 import net.minecraft.EnumRarity;
 import net.minecraft.Item;
-import net.oilcake.mitelros.item.ItemMorningStar;
+import net.oilcake.mitelros.item.api.ItemMorningStar;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

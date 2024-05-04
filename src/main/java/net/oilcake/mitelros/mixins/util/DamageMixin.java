@@ -3,6 +3,7 @@ package net.oilcake.mitelros.mixins.util;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
+import net.oilcake.mitelros.item.api.ItemMorningStar;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,7 +20,7 @@ public class DamageMixin {
     @ModifyExpressionValue(method = "applyTargetDefenseModifiers", at = @At(value = "INVOKE", target = "Lnet/minecraft/Enchantment;getLevelFraction(Lnet/minecraft/ItemStack;)F"))
     private float morningStar(float original) {
         boolean using_morningstar = getItemAttackedWith() != null &&
-                getItemAttackedWith().getItem() instanceof net.oilcake.mitelros.item.ItemMorningStar;
+                getItemAttackedWith().getItem() instanceof ItemMorningStar;
         return original + (using_morningstar ? 0.6F : 0.0F);
     }
 

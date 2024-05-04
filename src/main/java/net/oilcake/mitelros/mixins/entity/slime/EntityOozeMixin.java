@@ -20,6 +20,7 @@ public abstract class EntityOozeMixin extends EntityCubic {
 
     @ModifyReturnValue(method = "isImmuneTo", at = @At("RETURN"))
     private boolean nickelDamage(boolean original, @Local(argsOnly = true) DamageSource damage_source) {
+        original &= !damage_source.isExplosion();
         return (damage_source.getItemAttackedWith() != null) ? (original && damage_source.getItemAttackedWith().getMaterialForRepairs() != Materials.nickel) : original;
     }
 

@@ -28,9 +28,13 @@ public abstract class ItemArrowMixin extends Item {
 
     @Inject(method = "<clinit>()V", at = @At("RETURN"))
     private static void injectClinit(CallbackInfo callback) {
-        material_types = new Material[]{
-                Material.flint, Material.obsidian, Material.copper, Material.silver, Material.gold, Material.iron, Material.rusted_iron, Material.ancient_metal, Material.mithril, Material.adamantium,
-                Materials.nickel, Materials.tungsten, Materials.magical};
+        Material[] original = material_types;
+        Material[] expanded = new Material[original.length + 3];
+        System.arraycopy(original, 0, expanded, 0, original.length);
+        expanded[original.length] = Materials.nickel;
+        expanded[original.length + 1] = Materials.tungsten;
+        expanded[original.length + 2] = Materials.magical;
+        material_types = expanded;
     }
 
     @Inject(method = "addInformation", at = @At("TAIL"))
@@ -42,11 +46,11 @@ public abstract class ItemArrowMixin extends Item {
 
     @Inject(method = "getChanceOfRecovery", at = @At("HEAD"), cancellable = true)
     private void itfArrow(CallbackInfoReturnable<Float> cir) {
-        if (ReflectHelper.dyCast(this) == Items.arrowNickel)
+        if (this.arrowhead_material == Materials.nickel)
             cir.setReturnValue(0.7F);
-        if (ReflectHelper.dyCast(this) == Items.arrowTungsten)
+        if (this.arrowhead_material == Materials.tungsten)
             cir.setReturnValue(0.9F);
-        if (ReflectHelper.dyCast(this) == Items.arrowMagical)
+        if (this.arrowhead_material == Materials.magical)
             cir.setReturnValue(0.0F);
     }
 }

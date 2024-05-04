@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFPlayer;
+import net.oilcake.mitelros.block.beaconExtend.TileEntityUruBeacon;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.potion.PotionExtend;
@@ -232,7 +233,12 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         return drunkManager;
     }
 
+    @Override
     public void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
+    }
+
+    @Override
+    public void displayGUIUruBeacon(TileEntityUruBeacon tileEntityUruBeacon) {
     }
 
     @Inject(method = "readEntityFromNBT", at = @At("HEAD"))

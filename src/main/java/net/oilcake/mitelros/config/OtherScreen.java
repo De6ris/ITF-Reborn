@@ -57,4 +57,11 @@ public class OtherScreen extends GuiScreenCommented {
         }
         this.mc.displayGuiScreen(this);
     }
+
+    @Override
+    protected void keyTyped(char par1, int par2) {
+        if (par2 == 1) {
+            this.mc.displayGuiScreen(this.parentScreen);
+        }
+    }
 }
