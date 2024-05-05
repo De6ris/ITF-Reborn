@@ -1,5 +1,7 @@
 package net.oilcake.mitelros.mixins.world;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.Debug;
 import net.minecraft.WeatherEvent;
 import net.minecraft.World;
@@ -9,7 +11,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.Random;
 
@@ -18,9 +19,9 @@ public class WeatherEventMixin {
     @Shadow
     public long start;
 
-    @Redirect(method = "addStorm", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I", ordinal = 1))
-    private int season(Random instance, int i) {
-        return (int) (instance.nextInt(2400) * getStormDurationModify(this.getSeasonOfStormStart()));
+    @WrapOperation(method = "addStorm", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I", ordinal = 1))
+    private int season(Random instance, int i, Operation<Integer> original) {
+        return (int) (original.call(instance, i / 2) * getStormDurationModify(this.getSeasonOfStormStart()));
     }
 
     @ModifyConstant(method = "addStorm", constant = @Constant(intValue = 4, ordinal = 0))

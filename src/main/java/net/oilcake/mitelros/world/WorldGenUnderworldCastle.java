@@ -7,7 +7,7 @@ import net.oilcake.mitelros.item.Items;
 import java.util.Random;
 
 public class WorldGenUnderworldCastle extends WorldGenerator {
-    private static String[] Layer = new String[22];
+    private static final String[] Layer;
 
     public boolean generate(World par1World, Random random, int x, int y, int z) {
         while ((par1World.isAirBlock(x, y, z) && y > 144) || y > 160)
@@ -97,7 +97,7 @@ public class WorldGenUnderworldCastle extends WorldGenerator {
         par1World.setBlock(x - 6, y, z - 6, Block.stairsCobblestone.blockID, 3, 2);
         par1World.setBlock(x + 6, y, z + 6, Block.stairsCobblestone.blockID, 2, 2);
         par1World.setBlock(x - 8, y, z - 5, Block.chestAncientMetal.blockID, Block.chestAncientMetal.getMetadataForDirectionFacing(0, getRandomDirection(random)), 2);
-        WeightedRandomChestContent[] var16 = WeightedRandomChestContent.func_92080_a(getChestContentsForWorld(par1World), Item.enchantedBook.func_92114_b(random), Item.enchantedBook.func_92114_b(random));
+        WeightedRandomChestContent[] var16 = WeightedRandomChestContent.func_92080_a(getChestContentsForWorld(par1World), Item.enchantedBook.func_92114_b(random), Item.enchantedBook.func_92114_b(random), Item.enchantedBook.func_92114_b(random), Item.enchantedBook.func_92114_b(random));
         TileEntityChest var17 = (TileEntityChest) par1World.getBlockTileEntity(x - 8, y, z - 5);
         if (var17 != null)
             WeightedRandomChestContent.generateChestContents(par1World, y, random, var16, (IInventory) var17, 8, null);
@@ -713,6 +713,7 @@ public class WorldGenUnderworldCastle extends WorldGenerator {
     }
 
     static {
+        Layer = new String[22];
         Layer[0] = "    OOOOO                                 OOOOO      OOOOOOOOO                             OOOOOOOOO   OOOOOOOOOOO                           OOOOOOOOOOO  OOOOOOOOOOO                           OOOOOOOOOOO OOOOOOOOOOOOO                         OOOOOOOOOOOOOOOOOOOOOOOOOOO O O O O O O O O O O O OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO  OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO   OOOOOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOOOOO      OOOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOOO         OOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOO           OOOOO                             OOOOO             OOOO                             OOOO              OOOO                             OOOO              OOOO                             OOOO       ";
         Layer[1] = "    OOOOO                                 OOOOO      OO     OO                             OO     OO   O         O                           O         O  O O     O O                           O O     O O O           O                         O           OO           OO O O O O       O O O O OO           OO           OOOOOOOOOOO     OOOOOOOOOOO           OO                                                 OO           O                         O           O O O     O O                           O O     O O  O         O          O     O          O         O   OO     OO        OOO       OOO        OO     OO      OOO O        OO  O       O  OO        O OOO         OO         O    O       O    O         OO           O        O     O       O     O        O           OO       O      O       O      O       OO           O      O  O  OOO       O       O      O           OO     O   O    O       O        O     OO           O     O   O    O       O        O     O           OO    O    O    O       O         O    OO           O    O    O    O       O         O    O           OO    O    OOOOOO       OOOOOOOOOOO    OO           O   O                             O   O                                                                                                                                                               ";
         Layer[2] = "    OOOOO                                 OOOOO      OO     OO                             OO     OO   O         O                           O         O  O O     O O                           O O     O O O           O                         O           OO           OO O O O O       O O O O OO           OO           OOOOOOOOOOO     OOOOOOOOOOO           OO                                                 OO           O                         O           O O O     O O                           O O     O O  O         O          O     O          O         O   OO     OO        OOO       OOO        OO     OO      OOO O        OO  O       O  OO        O OOO         OO         O    O       O    O         OO           O        O     O       O     O        O           OO       O      O       O      O       OO           O      O  O  OOO       O       O      O           OO     O   O    O       O        O     OO           O     O   O    O       O        O     O           OO    O    O    O       O         O    OO           O    O    O                      O    O           OO    O    OOOO           OOOOOOOOO    OO           O   O                             O   O                                                                                                                                                               ";
@@ -740,9 +741,9 @@ public class WorldGenUnderworldCastle extends WorldGenerator {
     private static final WeightedRandomChestContent[] chest_contents_for_underworld_castle = new WeightedRandomChestContent[]{
             new WeightedRandomChestContent(Item.ingotAncientMetal.itemID, 0, 3, 5, 10),
             new WeightedRandomChestContent(Item.ingotGold.itemID, 0, 3, 5, 10),
-            new WeightedRandomChestContent(Item.diamond.itemID, 0, 2, 4, 10),
+            new WeightedRandomChestContent(Item.diamond.itemID, 0, 1, 2, 10),
             new WeightedRandomChestContent(Items.AncientmetalArmorPiece.itemID, 0, 6, 9, 20),
-            new WeightedRandomChestContent(Item.coinAncientMetal.itemID, 0, 2, 4, 15),
+            new WeightedRandomChestContent(Item.coinAncientMetal.itemID, 0, 1, 2, 15),
             new WeightedRandomChestContent(Item.horseArmorMithril.itemID, 0, 1, 1, 2),
             new WeightedRandomChestContent(Item.horseArmorAncientMetal.itemID, 0, 1, 1, 2),
             new WeightedRandomChestContent(Items.freezeWand.itemID, 0, 1, 1, 2),

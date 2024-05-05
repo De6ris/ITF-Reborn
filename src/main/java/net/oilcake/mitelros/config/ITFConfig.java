@@ -43,7 +43,6 @@ public class ITFConfig extends SimpleConfigs {
 
     // luck
 
-    public static final ConfigBooleanChallenge TagDistortion = new ConfigBooleanChallenge("血肉畸变", "玩家可获得最高40的生命值", -2);
     public static final ConfigBooleanChallenge TagDigest = new ConfigBooleanChallenge("原生代谢", "玩家食用生肉/饮用水获得概率性debuff的概率降低100%", -2);
     public static final ConfigBooleanChallenge TagArmament = new ConfigBooleanChallenge("战备军械", "玩家的护甲值在耐久低于25%时才会减少，且不再受到低于自身护甲值的伤害", -2);
     public static final ConfigBooleanChallenge TagWorkOfHeaven = new ConfigBooleanChallenge("巧夺天工", "品质装备的效果增强一倍", -2);
@@ -59,15 +58,8 @@ public class ITFConfig extends SimpleConfigs {
 
 
     /* other */
-    public static final ConfigBoolean DisplayHud = new ConfigBoolean("信息显示", true);
-    public static final ConfigInteger InfoYLevel = new ConfigInteger("信息渲染高度", 0, 0, 10, "此值为x时信息显示从第x行开始");
-    public static final ConfigBoolean SeasonText = new ConfigBoolean("季节信息", true);
-    public static final ConfigBoolean MODText = new ConfigBoolean("模组名", true);
-    public static final ConfigBoolean DifficultyInfo = new ConfigBoolean("难度信息", true, "窗口标题, 主页面左下角, 游戏gui左上角");
-    public static final ConfigBoolean WeatherText = new ConfigBoolean("天气信息", true);
-    public static final ConfigBoolean TemperatureText = new ConfigBoolean("温度信息", true);
-    public static final ConfigBoolean CoordinateText = new ConfigBoolean("位置信息", true, "拥有指南针时显示坐标");
-    public static final ConfigBoolean TimeText = new ConfigBoolean("时间信息", true, "拥有钟时显示时间");
+    public static final ConfigBoolean TemperatureBar = new ConfigBoolean("绘画温度条", true);
+    public static final ConfigBoolean NutritionBar = new ConfigBoolean("绘画营养条", true);
 
     //misc
     public static final ConfigBoolean FixID = new ConfigBoolean("固定ID", false, "(整合包作者需考虑)固定物品ID以及方块ID");
@@ -93,18 +85,16 @@ public class ITFConfig extends SimpleConfigs {
     public static void init() {
         spite = List.of(TagUnstableConvection, TagExtremeClimate, TagDryDilemma, TagHeatStroke, TagDeadGeothermy, TagRejection, TagEternalRaining, TagApocalypse, TagDimensionInvade, TagCorrosion);
         enemy = List.of(TagMiracleDisaster, TagInvisibleFollower, TagUnderAlliance, TagPseudoVision, TagInstinctSurvival, TagFallenInMine, TagBattleSuffer, TagWorshipDark, TagDemonDescend, TagPillager);
-        luck = List.of(TagDistortion, TagDigest, TagArmament, TagWorkOfHeaven);
+        luck = List.of(TagDigest, TagArmament, TagWorkOfHeaven);
 
         challenge = new ArrayList<>();
         challenge.addAll(spite);
         challenge.addAll(enemy);
         challenge.addAll(luck);
 
-
         experimental = List.of(TagCreaturesV2, TagBenchingV2, FinalChallenge, Realistic, TagMovingV2, TagTemperature);
 
-
-        info = List.of(DisplayHud, InfoYLevel, SeasonText, MODText, DifficultyInfo, WeatherText, TemperatureText, CoordinateText, TimeText);
+        info = List.of(TemperatureBar, NutritionBar);
         misc = List.of(FixID, ItemIDStart, BlockIDStart);
 
         others = new ArrayList<>();

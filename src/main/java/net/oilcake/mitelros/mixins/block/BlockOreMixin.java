@@ -1,5 +1,7 @@
 package net.oilcake.mitelros.mixins.block;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import net.minecraft.*;
@@ -19,11 +21,11 @@ public abstract class BlockOreMixin extends Block {
         super(par1, par2Material, constants);
     }
 
-    @Redirect(method = "dropBlockAsEntityItem", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I"))
-    private int preventLapisLazuiDropping(Random instance, int i, @Local(argsOnly = true) BlockBreakInfo info) {
+    @WrapOperation(method = "dropBlockAsEntityItem", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I"))
+    private int preventLapisLazuiDropping(Random instance, int i, Operation<Integer> original, @Local(argsOnly = true) BlockBreakInfo info) {
         if (EnchantmentHelper.hasEnchantment(info.responsible_item_stack, Enchantments.enchantmentAbsorb))
             return -3;
-        return instance.nextInt(i);
+        return original.call(instance, i);
     }
 
     @Inject(method = "dropBlockAsEntityItem", at = @At(value = "FIELD", target = "Lnet/minecraft/BlockOre;blockID:I", ordinal = 2))

@@ -10,7 +10,6 @@ import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.DamageSourceExtend;
 
 public class TemperatureManager {
-
     private final EntityPlayer player;
 
     public int heatResistance;
@@ -128,6 +127,7 @@ public class TemperatureManager {
 
 
     private double calculateCommonFactor() {
+        boolean debug = false;
         double result = 0.0d;
         int potionEffect = (this.player.isPotionActive(PotionExtend.warm) ? this.player.getActivePotionEffect(PotionExtend.warm).getAmplifier() + 1 : 0)
                 - (this.player.isPotionActive(PotionExtend.cool) ? this.player.getActivePotionEffect(PotionExtend.cool).getAmplifier() + 1 : 0);
@@ -135,6 +135,8 @@ public class TemperatureManager {
         if (this.player.isBurning()) result += 16;
         result += this.calcArmorHeat();
         result -= 0.15f * (this.bodyTemperature - standardRoomTemperature) * (ITFConfig.TagExtremeClimate.get() ? 0.33f : 1.0f);
+        if (debug) System.out.println(result + "deltaed");
+
         World world = this.player.worldObj;
         switch (world.getDimensionId()) {
             case -1 -> {
@@ -155,9 +157,18 @@ public class TemperatureManager {
         }
         int time = world.getTimeOfDay();
         result += sunshine(time) * (isOutdoors ? 2.0f : 1.0f);
+        if (debug) System.out.println(result + "sunshined");
+
         result += seasonFactor(world.getDayOfWorld());
+        if (debug) System.out.println(result + "seasoned");
+
         result += biomeFactor(world.getBiomeGenForCoords(this.player.getBlockPosX(), this.player.getBlockPosZ()));
+        if (debug) System.out.println(result + "biomed");
+
         if (this.player.getBlockPosY() > 64) result += heightFactor(this.player.getBlockPosY(), 64);
+        if (debug) System.out.println(result + "heighted");
+        if (debug) System.out.println("-----------");
+
         return result;
     }
 

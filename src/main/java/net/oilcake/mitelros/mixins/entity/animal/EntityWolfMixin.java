@@ -1,12 +1,13 @@
 package net.oilcake.mitelros.mixins.entity.animal;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityWolf.class)
@@ -16,8 +17,8 @@ public class EntityWolfMixin extends EntityTameable {
         this.targetTasks.addTask(4, new EntityAITargetNonTamed(this, EntitySkeleton.class, 200, false));
     }
 
-    @Redirect(method = "dropFewItems", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityWolf;dropItem(II)Lnet/minecraft/EntityItem;"))
-    private EntityItem doNotDropLeather(EntityWolf instance, int i, int j) {
+    @WrapOperation(method = "dropFewItems", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityWolf;dropItem(II)Lnet/minecraft/EntityItem;"))
+    private EntityItem doNotDropLeather(EntityWolf instance, int id, int quantity, Operation<EntityItem> original) {
         return null;
     }
 

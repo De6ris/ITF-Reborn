@@ -1,5 +1,7 @@
 package net.oilcake.mitelros.mixins.item.recipes;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
@@ -7,15 +9,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(CraftingManager.class)
 public abstract class CraftingManagerMixin {
 
-    @Redirect(method = "checkRecipe", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
-    private void noError(String text) {
+    @WrapOperation(method = "checkRecipe", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
+    private void noError(String text, Operation<Void> original) {
     }// TODO fix it
 
     @Inject(method = "findMatchingRecipe", at = @At(value = "INVOKE", target = "Lnet/minecraft/InventoryCrafting;getEventHandler()Lnet/minecraft/Container;"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)

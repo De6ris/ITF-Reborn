@@ -2,6 +2,8 @@ package net.oilcake.mitelros.mixins.entity.player;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFPlayer;
@@ -152,10 +154,9 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         return original && this.getWater() != 0;
     }
 
-    @Redirect(method = "attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
-    private EntityDamageResult redirectEntityAttack(EntityLivingBase caller, Damage damage) {
-        EntityDamageResult entityDamageResult = super.attackEntityFrom(damage);
-        return this.miscManager.destroyTotemCheck(entityDamageResult);
+    @WrapOperation(method = "attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
+    private EntityDamageResult redirectEntityAttack(EntityPlayer instance, Damage damage, Operation<EntityDamageResult> original) {
+        return this.miscManager.destroyTotemCheck(original.call(instance, damage));
     }
 
     @Shadow
@@ -284,18 +285,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     private void inject_1(Damage damage, CallbackInfoReturnable<EntityDamageResult> cir) {
         if (ITFConfig.FinalChallenge.get())
             damage.scaleAmount(1.0F + Constant.calculateCurrentDifficulty() / 50.0F);
-    }
-
-    @ModifyReturnValue(method = "getHealthLimit()F", at = @At("RETURN"))
-    private float itfHealth(float HealthLMTwithoutTag) {
-        float HealthLMTwithTag;
-        int level = this.getExperienceLevel();
-        if (level <= 35) {
-            HealthLMTwithTag = HealthLMTwithoutTag;
-        } else {
-            HealthLMTwithTag = Math.max(Math.min(14 + level / 10 * 2, 40), 20);
-        }
-        return ITFConfig.TagDistortion.get() ? HealthLMTwithTag : HealthLMTwithoutTag;
     }
 
     @ModifyArg(method = "getCurrentPlayerStrVsBlock", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F"), index = 0)

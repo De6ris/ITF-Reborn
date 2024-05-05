@@ -1,6 +1,10 @@
 package net.oilcake.mitelros.mixins.entity.misc;
 
-import net.minecraft.*;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import net.minecraft.Entity;
+import net.minecraft.EntityArrow;
+import net.minecraft.ItemStack;
+import net.minecraft.World;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.entity.mob.EntityBoneBodyguard;
 import net.oilcake.mitelros.entity.mob.EntityStray;
@@ -12,7 +16,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(EntityArrow.class)
 public abstract class EntityArrowMixin extends Entity {
@@ -24,20 +27,8 @@ public abstract class EntityArrowMixin extends Entity {
     }
 
     @Shadow
-    protected void entityInit() {
-    }
-
-    @Shadow
     public ItemStack getLauncher() {
         return null;
-    }
-
-    @Shadow
-    public void readEntityFromNBT(NBTTagCompound nbtTagCompound) {
-    }
-
-    @Shadow
-    public void writeEntityToNBT(NBTTagCompound nbtTagCompound) {
     }
 
     @Shadow
@@ -58,17 +49,13 @@ public abstract class EntityArrowMixin extends Entity {
         return velocity;
     }
 
-    @Redirect(method = "onUpdate()V", at = @At(ordinal = 0, value = "INVOKE", target = "Lnet/minecraft/ItemArrow;getDamage()F"))
-    public float SPSkeletonExtraDamage(ItemArrow itemArrow) {
+    @ModifyExpressionValue(method = "onUpdate", at = @At(ordinal = 0, value = "INVOKE", target = "Lnet/minecraft/ItemArrow;getDamage()F"))
+    private float addDamage(float original) {
         float dummy = 0.0F;
-        if (ITFConfig.FinalChallenge.get())
-            dummy += Constant.calculateCurrentDifficulty() / 12.5F;
-        if (this.shootingEntity.getClass() == EntityStray.class)
-            dummy += 0.5F;
-        if (this.shootingEntity.getClass() == EntityBoneBodyguard.class)
-            dummy++;
-        if (this.shootingEntity.getClass() == EntityWitherBodyguard.class)
-            dummy += 1.5F;
-        return itemArrow.getDamage() + dummy;
+        if (ITFConfig.FinalChallenge.get()) dummy += Constant.calculateCurrentDifficulty() / 12.5F;
+        if (this.shootingEntity.getClass() == EntityStray.class) dummy += 0.5F;
+        if (this.shootingEntity.getClass() == EntityBoneBodyguard.class) dummy++;
+        if (this.shootingEntity.getClass() == EntityWitherBodyguard.class) dummy += 1.5F;
+        return original + dummy;
     }
 }

@@ -1,11 +1,12 @@
 package net.oilcake.mitelros.mixins.item.food;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemAppleGold.class)
@@ -24,7 +25,7 @@ public abstract class ItemGoldenAppleMixin extends ItemFood {
         }
     }
 
-    @Redirect(method = "onEaten", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;addPotionEffect(Lnet/minecraft/PotionEffect;)V", ordinal = 1))
-    private void doNotAddResistance(EntityPlayer instance, PotionEffect potionEffect) {
+    @WrapOperation(method = "onEaten", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;addPotionEffect(Lnet/minecraft/PotionEffect;)V", ordinal = 1))
+    private void doNotAddResistance(EntityPlayer instance, PotionEffect potionEffect, Operation<Void> original) {
     }
 }

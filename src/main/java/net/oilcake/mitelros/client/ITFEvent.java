@@ -28,22 +28,10 @@ public class ITFEvent {
     public void handleChatCommand(HandleChatCommandEvent event) {
         String par2Str = event.getCommand();
         EntityPlayer player = event.getPlayer();
-        if (par2Str.startsWith("tpa") && !Minecraft.inDevMode() && Objects.equals(player.getEntityName(), "kt")) {
-            player.sendChatToPlayer(ChatMessageComponent.createFromText("<kt> 敢不敢不用tp"));
-            event.setExecuteSuccess(true);
-        }
-        if (par2Str.startsWith("Hello World!")) {
-            player.sendChatToPlayer(ChatMessageComponent.createFromText("你好，世界！"));
-            event.setExecuteSuccess(true);
-        }
         if (par2Str.startsWith("Brain Power")) {
             if (player.rand.nextFloat() <= 0.1F)
                 player.makeSound("imported.meme.brainpower", 10.0F, 1.0F);
             player.sendChatToPlayer(ChatMessageComponent.createFromText("O-oooooooooo AAAAE-A-A-I-A-U- JO-oooooooooooo AAE-O-A-A-U-U-A- E-eee-ee-eee AAAAE-A-E-I-E-A- JO-ooo-ooo-oooo EEEEO-A-AAA-AAA- O----------\n"));
-            event.setExecuteSuccess(true);
-        }
-        if (par2Str.startsWith("tpt") && !Minecraft.inDevMode()) {
-            player.sendChatToPlayer(ChatMessageComponent.createFromText("玩家当前体温为" + player.getTemperatureManager().bodyTemperature + "℃").setColor(EnumChatFormatting.WHITE));
             event.setExecuteSuccess(true);
         }
         if (par2Str.startsWith("yay")) {

@@ -14,9 +14,11 @@ accessible field net/minecraft/Entity rand Ljava/util/Random;
 accessible field net/minecraft/EntitySkeleton frenzied_by_bone_lord_countdown I
 
 accessible field net/minecraft/ItemVessel vessel_material Lnet/minecraft/Material;
+
 accessible field net/minecraft/Material durability F
 accessible field net/minecraft/Material name Ljava/lang/String;
 accessible field net/minecraft/Material min_harvest_level I
+accessible method net/minecraft/Material setCanDouseFire ()Lnet/minecraft/Material;
 
 accessible method net/minecraft/EnumInsulinResistanceLevel getColor ()Lnet/minecraft/EnumChatFormatting;
 

@@ -1,6 +1,8 @@
 package net.oilcake.mitelros.mixins.item;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
@@ -13,7 +15,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -42,15 +43,15 @@ public abstract class ItemMixin implements ITFItem {
     @Unique
     private String extraInfo;
 
-    @Redirect(method = "<init>(ILjava/lang/String;I)V", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
-    public void removePrint(PrintStream printStream, String messsage, @Local(argsOnly = true) String texture) {
+    @WrapOperation(method = "<init>(ILjava/lang/String;I)V", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"))
+    public void removePrint(PrintStream instance, String x, Operation<Void> original, @Local(argsOnly = true) String texture) {
 //        System.out.println(texture);
 //        System.out.println(Item.itemsList[256 + Integer.parseInt(messsage.substring(11))].getItemDisplayName());
 //        System.out.println("-----------------");
     }// TODO why null item call, is that fml?
 
-    @Redirect(method = "doesSubtypeMatterForProduct(Lnet/minecraft/ItemStack;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
-    public void removeErrorInfo(String text) {// TODO fix flowerextend recipes
+    @WrapOperation(method = "doesSubtypeMatterForProduct(Lnet/minecraft/ItemStack;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
+    public void removeErrorInfo(String text, Operation<Void> original) {// TODO fix flowerextend recipes
     }
 
     @Inject(method = "getReachBonus(Lnet/minecraft/Block;I)F", at = @At("HEAD"), cancellable = true)
@@ -136,12 +137,12 @@ public abstract class ItemMixin implements ITFItem {
         return null;
     }
 
-    @Redirect(method = "getExclusiveMaterial", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V", ordinal = 1))
-    private void noError(String text) {
+    @WrapOperation(method = "getExclusiveMaterial", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V", ordinal = 1))
+    private void noError(String text, Operation<Void> original) {
     }// TODO why call to book?
 
-    @Redirect(method = "getMatchingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
-    private static void noError1(String text) {
+    @WrapOperation(method = "getMatchingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
+    private static void noError1(String text, Operation<Void> original) {
     }// TODO blast furnace recipes
 
     @Inject(method = "<clinit>", at = @At("TAIL"))

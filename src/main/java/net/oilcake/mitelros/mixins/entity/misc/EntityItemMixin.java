@@ -53,6 +53,20 @@ public abstract class EntityItemMixin extends Entity {
         }
     }
 
+    @Inject(method = "convertItem", at = @At("HEAD"), cancellable = true)
+    private void checkNull(Item item, CallbackInfo ci) {
+        if (this.worldObj.isRemote) {
+            Minecraft.setErrorMessage("convertItem: not meant to be called on client");
+            ci.cancel();
+            return;
+        }
+        if (item == null) {
+            this.setDead();
+            this.entityFX(EnumEntityFX.burned_up_in_lava);
+            ci.cancel();
+        }
+    }
+
     @Inject(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityDamageResult;startTrackingHealth(F)V"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
     private void makeCharcoal(Damage damage, CallbackInfoReturnable<EntityDamageResult> cir, EntityDamageResult result) {
         ItemStack item_stack = this.getEntityItem();

@@ -1,5 +1,8 @@
 package net.oilcake.mitelros.mixins.entity.mob;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFSkeleton;
 import net.oilcake.mitelros.item.Items;
@@ -8,7 +11,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntitySkeleton.class)
@@ -70,24 +72,24 @@ public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAt
         par1NBTTagCompound.setByte("num_arrows", (byte) this.numArrows);
     }
 
-    @Redirect(method = "setCombatTask", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntitySkeleton;getHeldItemStack()Lnet/minecraft/ItemStack;"))
-    private ItemStack redirect(EntitySkeleton instance) {
+    @WrapOperation(method = "setCombatTask", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntitySkeleton;getHeldItemStack()Lnet/minecraft/ItemStack;"))
+    private ItemStack redirect(EntitySkeleton instance, Operation<ItemStack> original) {
         if (this.numArrows == 0) {
             return null;
         }
-        return instance.getHeldItemStack();
+        return original.call(instance);
     }
 
-    @Redirect(method = "onSpawnWithEgg", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityAITasks;addTask(ILnet/minecraft/EntityAIBase;)V", ordinal = 0))
-    private void cancel(EntityAITasks instance, int par1, EntityAIBase par2EntityAIBase) {
+    @WrapOperation(method = "onSpawnWithEgg", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityAITasks;addTask(ILnet/minecraft/EntityAIBase;)V", ordinal = 0))
+    private void cancel(EntityAITasks instance, int par1, EntityAIBase par2EntityAIBase, Operation<Void> original) {
     }
 
-    @Redirect(method = "onSpawnWithEgg", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntitySkeleton;setCurrentItemOrArmor(ILnet/minecraft/ItemStack;)V", ordinal = 0))
-    private void cancel(EntitySkeleton instance, int par1, ItemStack par2ItemStack) {
+    @WrapOperation(method = "onSpawnWithEgg", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntitySkeleton;setCurrentItemOrArmor(ILnet/minecraft/ItemStack;)V", ordinal = 0))
+    private void cancel(EntitySkeleton instance, int par1, ItemStack par2ItemStack, Operation<Void> original) {
     }
 
-    @Redirect(method = "onSpawnWithEgg", at = @At(value = "INVOKE", target = "Lnet/minecraft/AttributeInstance;setAttribute(D)V"))
-    private void cancel(AttributeInstance instance, double v) {
+    @WrapOperation(method = "onSpawnWithEgg", at = @At(value = "INVOKE", target = "Lnet/minecraft/AttributeInstance;setAttribute(D)V"))
+    private void cancel(AttributeInstance instance, double v, Operation<Void> original) {
         if (isBoneLord()) {
             setCurrentItemOrArmor(1, (new ItemStack(Items.tungstenBoots)).randomizeForMob(this, false));
             setCurrentItemOrArmor(2, (new ItemStack(Items.tungstenLeggings)).randomizeForMob(this, false));
@@ -155,25 +157,8 @@ public abstract class EntitySkeletonMixin extends EntityMob implements IRangedAt
         }
     }
 
-    @Inject(method = "dropFewItems", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntitySkeleton;getSkeletonType()I", ordinal = 1))
-    private void itfDropArrow(boolean recently_hit_by_player, DamageSource damage_source, CallbackInfo ci) {
-        if (this.getSkeletonType() != 2) {
-            int looting = damage_source.getLootingModifier();
-            int j = Math.min(this.numArrows, this.rand.nextInt(2 + looting));
-            if (j > 0 && !recently_hit_by_player) {
-                j -= this.rand.nextInt(j + 1);
-            }
-            if (isLongdead() && j > 0) {
-                j = (this.rand.nextInt(3) == 0) ? 1 : 0;
-            }
-            for (int k = 0; k < j; k++) {
-                dropItem(isLongdead() ? Item.arrowAncientMetal.itemID : Item.arrowRustedIron.itemID, 1);
-            }
-        }
-    }
-
-    @Redirect(method = "dropFewItems", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntitySkeleton;getSkeletonType()I", ordinal = 1))
-    private int doNotDropArrow(EntitySkeleton instance) {
-        return 2;
+    @ModifyExpressionValue(method = "dropFewItems", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I", ordinal = 3))
+    private int limitArrowDrop(int original) {
+        return Math.min(this.numArrows, original);
     }
 }

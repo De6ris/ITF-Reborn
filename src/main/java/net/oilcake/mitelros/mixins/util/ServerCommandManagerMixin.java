@@ -12,11 +12,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ServerCommandManagerMixin extends CommandHandler {
     @Inject(method = "<init>()V", at = @At("RETURN"))
     private void injectInit(CallbackInfo callbackInfo) {
-        registerCommand(new CommandWater());
-        registerCommand(new CommandCurrentSituation());
-        registerCommand(new CommandAddCurrentSituation());
         registerCommand(new CommandHunger());
         registerCommand(new CommandDamage());
-        registerCommand(new CommandSetTemperature());
+        registerCommand(new CommandSetStatus());
+        registerCommand(new CommandStatus());
     }
 }

@@ -1,6 +1,8 @@
 package net.oilcake.mitelros.mixins.container;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFContainerRepair;
@@ -10,7 +12,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
@@ -36,8 +37,8 @@ public abstract class ContainerRepairMixin extends Container implements ITFConta
         return original || this.inputSlots.getStackInSlot(0).isItemEnchanted();
     }
 
-    @Redirect(method = "updateRepairOutput", at = @At(ordinal = 0, value = "INVOKE", target = "Lnet/minecraft/ItemStack;isItemEnchanted()Z"))
-    public boolean itfIsEnchanted(ItemStack item_stack_in_first_slot) {
+    @WrapOperation(method = "updateRepairOutput", at = @At(ordinal = 0, value = "INVOKE", target = "Lnet/minecraft/ItemStack;isItemEnchanted()Z"))
+    public boolean itfIsEnchanted(ItemStack instance, Operation<Boolean> original) {
         return false;
     }
 
@@ -46,7 +47,7 @@ public abstract class ContainerRepairMixin extends Container implements ITFConta
         int xpDifference = 0;
         ItemStack item_stack_in_first_slot = this.inputSlots.getStackInSlot(0);
         Map enchantmentOnItem = EnchantmentHelper.getEnchantmentsMap(item_stack_in_first_slot);
-        int xpMultiplier = enchantmentOnItem.isEmpty() ? 100 : 500;
+        int xpMultiplier = enchantmentOnItem.isEmpty() ? 20 : 100;
         for (int i = 0; i < enchantmentsOfBook.tagCount(); ++i) {
             NBTTagCompound tag = (NBTTagCompound) enchantmentsOfBook.tagAt(i);
             int id = tag.getShort("id");
@@ -101,8 +102,9 @@ public abstract class ContainerRepairMixin extends Container implements ITFConta
     private static int calculateEquivalentLevel(int id, int level) {
         Enchantment enchantment = Enchantment.get(id);
         if (((ITFEnchantment) enchantment).isCurse()) return 0;
-        return enchantment.hasLevels() ?
+        int original = enchantment.hasLevels() ?
                 enchantment.getMinEnchantmentLevelsCost(level) :
                 enchantment.getMinEnchantmentLevelsCost();
+        return original * (((ITFEnchantment) enchantment).isTreasure() ? 10 : 2);
     }
 }

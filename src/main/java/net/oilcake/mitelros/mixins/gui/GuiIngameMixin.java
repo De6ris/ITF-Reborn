@@ -1,20 +1,13 @@
 package net.oilcake.mitelros.mixins.gui;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.api.ITFFoodStats;
-import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.config.ITFConfig;
-import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.util.Constant;
-import net.oilcake.mitelros.util.GuiInGameInfoHandler;
-import org.lwjgl.opengl.GL11;
+import net.oilcake.mitelros.util.GuiInGameDrawer;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -25,59 +18,9 @@ public class GuiIngameMixin extends Gui {
     private Minecraft mc;
 
     @Inject(method = "func_110327_a", at = @At("HEAD"))
-    private void injectITFWater(int par1, int par2, CallbackInfo ci) {
-        int var12 = par1 / 2 + 91;
-        int var13 = par2 - 39;
-        FoodStats foodStats = this.mc.thePlayer.getFoodStats();
-        this.mc.getTextureManager().bindTexture(Constant.icons_itf);
-        this.mc.mcProfiler.endStartSection("water");
-        int water = ((ITFFoodStats) foodStats).getWater();
-        for (int temp = 0; temp < 10; temp++) {
-            int var28 = var13 - 9;
-            int var25 = 16;
-            int var36 = 0;
-            int var27 = var12 - temp * 8 - 9;
-            if (this.mc.thePlayer.isPotionActive(PotionExtend.dehydration)) {
-                var25 += 27;
-                var36 = 3;
-            }
-            if (temp < ((ITFFoodStats) this.mc.thePlayer.getFoodStats()).getWaterLimit() / 2)
-                drawTexturedModalRect(var27, var28, 16 + var36 * 9, 54, 9, 9);
-            if (temp * 2 + 1 < water)
-                drawTexturedModalRect(var27, var28, var25 + 9, 54, 9, 9);
-            if (temp * 2 + 1 == water)
-                drawTexturedModalRect(var27, var28, var25 + 18, 54, 9, 9);
-        }
-    }
-
-    @Inject(method = "func_110327_a", at = @At("HEAD"))
-    private void injectITFAir(int par1, int par2, CallbackInfo ci) {
-        AttributeInstance var10 = this.mc.thePlayer.getEntityAttribute(SharedMonsterAttributes.maxHealth);
-        int var12 = par1 / 2 + 91;
-        int var13 = par2 - 39;
-        float var14 = (float) var10.getAttributeValue();
-        float var15 = this.mc.thePlayer.getAbsorptionAmount();
-        int var16 = MathHelper.ceiling_float_int((var14 + var15) / 2.0F / 10.0F);
-        int var17 = Math.max(10 - (var16 - 2), 3);
-        int displayY = var13 - (var16 - 1) * var17 - 20;
-        int var23;
-        int var25;
-        int var26;
-        int var28;
-        this.mc.mcProfiler.endStartSection("air");
-        if (this.mc.thePlayer.isInsideOfMaterial(Material.water)) {
-            var23 = this.mc.thePlayer.getAir();
-            var28 = MathHelper.ceiling_double_int((double) (var23 - 2) * 10.0 / 300.0);
-            var25 = (byte) (MathHelper.ceiling_double_int((double) var23 * 10.0 / 300.0) - var28);
-
-            for (var26 = 0; var26 < var28 + var25; ++var26) {
-                if (var26 < var28) {
-                    this.drawTexturedModalRect(var12 - var26 * 8 - 9, displayY, 16, 18, 9, 9);
-                } else {
-                    this.drawTexturedModalRect(var12 - var26 * 8 - 9, displayY, 25, 18, 9, 9);
-                }
-            }
-        }
+    private void drawWaterAndAir(int par1, int par2, CallbackInfo ci) {
+        GuiInGameDrawer.drawWater(this, this.mc, par1, par2);
+        GuiInGameDrawer.drawAir(this, this.mc, par1, par2);
     }
 
     @Inject(method = "func_110327_a", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityClientPlayerMP;isInsideOfMaterial(Lnet/minecraft/Material;)Z"), cancellable = true)
@@ -86,85 +29,13 @@ public class GuiIngameMixin extends Gui {
         ci.cancel();
     }
 
-    @Redirect(method = "renderGameOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z"), require = 0)
-    private boolean disableDevInfo() {
-        return false;
-    }
-
-    @Inject(method = "renderGameOverlay(FZII)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z", shift = At.Shift.BEFORE))
-    private void cornerInfo(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
-        if (!ITFConfig.DisplayHud.getBooleanValue()) return;
-        if (((!this.mc.gameSettings.showDebugInfo || this.mc.gameSettings.gui_mode != 0)) && Minecraft.getErrorMessage() == null) {
-            GuiInGameInfoHandler.drawInfo(this, this.mc);
-        }
-    }
-
     @Inject(locals = LocalCapture.CAPTURE_FAILHARD, method = "func_110327_a(II)V", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/Profiler;endStartSection(Ljava/lang/String;)V", args = "ldc=air", shift = At.Shift.BEFORE))
     private void nutritionBar(int par1, int par2, CallbackInfo ci, boolean var3, int var4, int var5, FoodStats var7, int var8, AttributeInstance var10, int var11, int var12, int var13, float var14, float var15) {
-        this.drawNutrientsBar(var12, var13);
-        this.drawTemperatureBar(var12, var13);
-    }
-
-    @Unique
-    private void drawNutrientsBar(int var12, int var13) {
-        int protein = Math.max(this.mc.thePlayer.getProtein() - 800000, 0);
-        int phytonutrients = Math.max(this.mc.thePlayer.getPhytonutrients() - 800000, 0);
-        int var26 = var12 - 90;
-        int var25 = var13 + 32;
-        if (protein > phytonutrients) {
-            GL11.glPushMatrix();
-            GL11.glScalef(0.6F, 1.0F, 1.0F);
-            this.mc.getTextureManager().bindTexture(Constant.icons_itf);
-            drawTexturedModalRect(var26 - 205, var25, 0, 106, 182, 6);
-            drawTexturedModalRect(var26 - 205, var25, 0, 100, (int) (182.0F * getRateNutrient(protein)), 6);
-            GL11.glPopMatrix();
-            GL11.glPushMatrix();
-            GL11.glScalef(0.6F, 1.0F, 1.0F);
-            this.mc.getTextureManager().bindTexture(Constant.icons_itf);
-            drawTexturedModalRect(var26 - 205, var25, 0, 94, (int) (182.0F * getRateNutrient(phytonutrients)), 6);
-            GL11.glPopMatrix();
-        } else {
-            GL11.glPushMatrix();
-            GL11.glScalef(0.6F, 1.0F, 1.0F);
-            this.mc.getTextureManager().bindTexture(Constant.icons_itf);
-            drawTexturedModalRect(var26 - 205, var25, 0, 106, 182, 6);
-            drawTexturedModalRect(var26 - 205, var25, 0, 94, (int) (182.0F * getRateNutrient(phytonutrients)), 6);
-            GL11.glPopMatrix();
-            GL11.glPushMatrix();
-            GL11.glScalef(0.6F, 1.0F, 1.0F);
-            this.mc.getTextureManager().bindTexture(Constant.icons_itf);
-            drawTexturedModalRect(var26 - 205, var25, 0, 100, (int) (182.0F * getRateNutrient(protein)), 6);
-            GL11.glPopMatrix();
+        if (ITFConfig.NutritionBar.getBooleanValue()) {
+            GuiInGameDrawer.drawNutrientsBar(this, this.mc, var12, var13);
+        }
+        if (ITFConfig.TemperatureBar.getBooleanValue()) {
+            GuiInGameDrawer.drawTemperatureBar(this, this.mc, var12, var13);
         }
     }
-
-    @Unique
-    private void drawTemperatureBar(int var12, int var13) {
-        int var26 = var12 - 90;
-        int var25 = var13 + 24;
-        GL11.glPushMatrix();
-        GL11.glScalef(0.6F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(Constant.icons_itf);
-        drawTexturedModalRect(var26 - 205, var25, 0, 106, 182, 6);
-        float temperature = ((ITFPlayer) this.mc.thePlayer).getTemperatureManager().bodyTemperature;
-        double unit = ((ITFPlayer) this.mc.thePlayer).getTemperatureManager().getUnit();
-        float length = temperature * 3.138f;
-        if (length > 182.0f) length = 182.0f;
-        if (length < 0.0f) length = 1.0f;
-        drawTexturedModalRect(var26 - 205, var25, 0, 118, (int) length, 6);
-
-        GL11.glPopMatrix();
-    }
-
-    @Unique
-    private float getRateNutrient(long par1) {
-        par1 *= par1;
-        par1 /= 160000L;
-        return (float) par1 / 160000.0F;
-    }
-
-    @Redirect(method = "func_110327_a(II)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/AttributeInstance;getAttributeValue()D"))
-    private double redirectHealthLimit(AttributeInstance att) {
-        return this.mc.thePlayer.getHealthLimit();
-    }// TODO what does it do
 }

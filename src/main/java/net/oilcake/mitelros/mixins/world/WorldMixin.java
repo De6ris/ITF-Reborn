@@ -1,11 +1,16 @@
 package net.oilcake.mitelros.mixins.world;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.Debug;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.config.ITFConfig;
 import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Random;
@@ -33,10 +38,10 @@ public abstract class WorldMixin implements ITFWorld {
         return explosion;
     }
 
-    @Redirect(method = "generateWeatherEvents(I)Ljava/util/List;", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I", ordinal = 2))
-    private int itfRain(Random instance, int i) {
+    @WrapOperation(method = "generateWeatherEvents(I)Ljava/util/List;", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I", ordinal = 2))
+    private int itfRain(Random instance, int i, Operation<Integer> original) {
         int duration_static = 6000 * (ITFConfig.TagEternalRaining.get() ? 6 : 1);
-        int duration_random = instance.nextInt(12000) * (ITFConfig.TagEternalRaining.get() ? 2 : 1);
+        int duration_random = original.call(instance, i) * (ITFConfig.TagEternalRaining.get() ? 2 : 1);
         int duration = duration_random + duration_static;
         duration = (int) (duration * getRainDurationModify(getWorldSeason()));
         return duration - 6000;
