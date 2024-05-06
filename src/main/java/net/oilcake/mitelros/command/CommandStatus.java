@@ -27,7 +27,7 @@ public class CommandStatus extends CommandBase {
         String stringBuilder = "胰岛素抗性: " + player.getInsulinResistance() +
                 ", 蛋白质: " + player.getProtein() +
                 ", 植物营养素: " + player.getPhytonutrients() +
-                ", 体温: " + ((ITFPlayer) player).getTemperatureManager().bodyTemperature;
+                ", 体温: " + ((ITFPlayer) player).getTemperatureManager().getBodyTemperature();
         iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(stringBuilder));
     }
 }

@@ -32,6 +32,7 @@
 * 加入了status指令, 无需权限, 可查看目前玩家状态, 如体温, 营养等
 * 加入了setStatus指令, 需要权限, 可修改玩家状态.
 * 删除了CurrentSituation, Water, AddCurrentSituation指令
+* 现在温度变化时用double, 以提高精度
 
 ### 修复
 

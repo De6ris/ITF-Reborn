@@ -37,7 +37,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     @Unique
     private int last_water;
     @Unique
-    private float last_temperature;
+    private double last_temperature;
 
     @Unique
     private int last_phytonutrients;
@@ -87,7 +87,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
             learnCurseEffect();
         }
         int water = this.getWater();
-        float temperature = this.getTemperatureManager().bodyTemperature;
+        double temperature = this.getTemperatureManager().getBodyTemperature();
         if (water != this.last_water || this.phytonutrients != this.last_phytonutrients || this.protein != this.last_protein || temperature != this.last_temperature) {
             this.playerNetServerHandler.sendPacketToPlayer(new S2CUpdateNutrition(phytonutrients, protein, water, temperature));
             this.last_water = water;

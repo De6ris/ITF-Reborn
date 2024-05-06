@@ -5,6 +5,7 @@ import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.item.Items;
+import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.DamageSourceExtend;
@@ -18,12 +19,24 @@ public class TemperatureManager {
 
     public int freezingWarning;
     public int heatWarning;
-    public static final float normalTemperature = 37.2F;
-    public static final float standardRoomTemperature = 26.0F;
-    public float bodyTemperature = normalTemperature;
+    public static final double normalTemperature = 37.2D;
+    public static final double standardRoomTemperature = 26.0D;
+    private double bodyTemperature = normalTemperature;
 
     public TemperatureManager(EntityPlayer player) {
         this.player = player;
+    }
+
+    public void setBodyTemperature(double bodyTemperature) {
+        this.bodyTemperature = bodyTemperature;
+    }
+
+    public void addBodyTemperature(double delta) {
+        this.bodyTemperature += delta;
+    }
+
+    public double getBodyTemperature() {
+        return bodyTemperature;
     }
 
     public void addFreezingCoolDown(int coolDown) {
@@ -43,9 +56,9 @@ public class TemperatureManager {
     }
 
     public void update() {
-        this.bodyTemperature += (float) (1E-5D * this.getUnit());
-        if (this.bodyTemperature < 0.0f) this.bodyTemperature = 0.0f;
-        if (this.bodyTemperature > 60.0f) this.bodyTemperature = 60.0f;
+        this.addBodyTemperature(1E-5D * this.getUnit());
+        if (this.bodyTemperature < 0.0D) this.bodyTemperature = 0.0D;
+        if (this.bodyTemperature > 60.0D) this.bodyTemperature = 60.0D;
         this.checkFreeze();
         this.checkHeat();
     }
@@ -63,7 +76,7 @@ public class TemperatureManager {
                 this.calcArmorHeat() > 7 ||
                 this.player.isPotionActive(PotionExtend.frost_resistance);
 
-        int freezeLevel = invincible ? -1 : (int) ((normalTemperature - this.bodyTemperature) / 3.0F);
+        int freezeLevel = invincible ? -1 : (int) ((normalTemperature - this.bodyTemperature) / 3.0D);
 
         if (freezeLevel <= 0) {
             if (this.freezingCoolDown > 0) {
@@ -97,7 +110,7 @@ public class TemperatureManager {
                 this.calcArmorHeat() < -9 ||
                 this.player.isPotionActive(Potion.fireResistance);
 
-        int heatLevel = invincible ? -1 : (int) ((this.bodyTemperature - normalTemperature) / 3.0F);
+        int heatLevel = invincible ? -1 : (int) ((this.bodyTemperature - normalTemperature) / 3.0D);
 
         if (heatLevel <= 0) {
             if (this.heatResistance > 0) {
@@ -134,7 +147,7 @@ public class TemperatureManager {
         if (potionEffect * (normalTemperature - this.bodyTemperature) > 0) result += potionEffect * 4;
         if (this.player.isBurning()) result += 16;
         result += this.calcArmorHeat();
-        result -= 0.15f * (this.bodyTemperature - standardRoomTemperature) * (ITFConfig.TagExtremeClimate.get() ? 0.33f : 1.0f);
+        result -= 0.15D * (this.bodyTemperature - standardRoomTemperature) * (ITFConfig.TagExtremeClimate.get() ? 0.33D : 1.0D);
         if (debug) System.out.println(result + "deltaed");
 
         World world = this.player.worldObj;
@@ -257,33 +270,13 @@ public class TemperatureManager {
 
     public float calcArmorHeat() {
         float heat = 0;
-        ItemStack helmet = player.getHelmet();
-        ItemStack cuirass = player.getCuirass();
-        ItemStack leggings = player.getLeggings();
-        ItemStack boots = player.getBoots();
-        if (helmet != null) {
-            heat -= 1;
-            if (helmet.itemID == Items.wolfHelmet.itemID) heat += 3;
-            else if (helmet.itemID == Item.helmetLeather.itemID) heat += 2;
-            else if (helmet.itemID == Items.iceHelmet.itemID) heat -= 1.4f;
-        }
-        if (cuirass != null) {
-            heat -= 1;
-            if (cuirass.itemID == Items.wolfChestplate.itemID) heat += 3;
-            else if (cuirass.itemID == Item.plateLeather.itemID) heat += 2;
-            else if (cuirass.itemID == Items.iceChestplate.itemID) heat -= 1.4f;
-        }
-        if (leggings != null) {
-            heat -= 1;
-            if (leggings.itemID == Items.wolfLeggings.itemID) heat += 3;
-            else if (leggings.itemID == Item.legsLeather.itemID) heat += 2;
-            else if (leggings.itemID == Items.iceLeggings.itemID) heat -= 1.4f;
-        }
-        if (boots != null) {
-            heat -= 1;
-            if (boots.itemID == Items.wolfBoots.itemID) heat += 3;
-            else if (boots.itemID == Item.bootsLeather.itemID) heat += 2;
-            else if (boots.itemID == Items.iceBoots.itemID) heat -= 1.4f;
+        for (ItemStack wornItem : this.player.getWornItems()) {
+            if (wornItem != null) {
+                heat -= 1;
+                if (wornItem.hasMaterial(Materials.wolf_fur)) heat += 3;
+                if (wornItem.hasMaterial(Material.leather)) heat += 2;
+                if (wornItem.hasMaterial(Materials.ice_chunk)) heat -= 1.4f;
+            }
         }
         return heat;
     }

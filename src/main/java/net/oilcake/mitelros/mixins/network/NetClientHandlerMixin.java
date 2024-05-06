@@ -100,7 +100,7 @@ public abstract class NetClientHandlerMixin extends NetHandler implements ITFNet
         clientPlayer.setPhytonutrients(packet.getPhytonutrients());
         clientPlayer.setProtein(packet.getProtein());
         ((ITFFoodStats) this.mc.thePlayer.getFoodStats()).setSatiationWater(packet.getWater(), false);
-        ((ITFPlayer) this.mc.thePlayer).getTemperatureManager().bodyTemperature = packet.getTemp();
+        ((ITFPlayer) this.mc.thePlayer).getTemperatureManager().setBodyTemperature(packet.getTemp());
     }
 
     @Override

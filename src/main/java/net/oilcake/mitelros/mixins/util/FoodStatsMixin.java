@@ -56,7 +56,7 @@ public class FoodStatsMixin implements ITFFoodStats {
             player.addPotionEffect(new PotionEffect(PotionExtend.warm.id, 1280, temperature - 1));
         } else if (temperature < 0) {
             player.addPotionEffect(new PotionEffect(PotionExtend.cool.id, 1280, -temperature - 1));
-            player.getTemperatureManager().bodyTemperature += temperature * 0.1f;
+            player.getTemperatureManager().addBodyTemperature(temperature * 0.1D);
         }
     }
 

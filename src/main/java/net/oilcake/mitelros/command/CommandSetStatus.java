@@ -49,7 +49,7 @@ public class CommandSetStatus extends CommandBase {
             }
             case "temperature" -> {
                 double temp = parseDouble(iCommandListener, strings[1]);
-                ((ITFPlayer) player).getTemperatureManager().bodyTemperature = (float) temp;
+                ((ITFPlayer) player).getTemperatureManager().setBodyTemperature(temp);
                 iCommandListener.sendChatToPlayer(ChatMessageComponent.createFromText("温度现在为" + temp).setColor(EnumChatFormatting.WHITE));
             }
         }

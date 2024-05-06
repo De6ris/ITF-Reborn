@@ -53,11 +53,11 @@ public class GuiInGameDrawer {
         GL11.glScalef(0.6F, 1.0F, 1.0F);
         mc.getTextureManager().bindTexture(Constant.icons_itf);
         gui.drawTexturedModalRect(var26 - 205, var25, 0, 106, 182, 6);
-        float temperature = ((ITFPlayer) mc.thePlayer).getTemperatureManager().bodyTemperature;
-        float length = 91.0f * (((temperature - TemperatureManager.normalTemperature) * (temperature - TemperatureManager.normalTemperature) * (temperature > TemperatureManager.normalTemperature ? 1 : -1) / 9.0f) + 1.0f);
-        if (length > 182.0f) length = 182.0f;
-        if (length < 0.0f) length = 1.0f;
-        gui.drawTexturedModalRect(var26 - 205, var25, 0, 118, (int) length, 6);
+        double temperature = ((ITFPlayer) mc.thePlayer).getTemperatureManager().getBodyTemperature();
+        int length = (int) (91.0D * (((temperature - TemperatureManager.normalTemperature) * (temperature - TemperatureManager.normalTemperature) * (temperature > TemperatureManager.normalTemperature ? 1 : -1) / 9.0D) + 1.0D));
+        if (length > 182) length = 182;
+        if (length < 0) length = 1;
+        gui.drawTexturedModalRect(var26 - 205, var25, 0, 118, length, 6);
         GL11.glPopMatrix();
     }
 

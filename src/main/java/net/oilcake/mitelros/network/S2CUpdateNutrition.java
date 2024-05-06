@@ -12,12 +12,12 @@ public class S2CUpdateNutrition extends Packet {
     private int protein;
     private int phytonutrients;
     private int water;
-    private float temp;
+    private double temp;
 
     public S2CUpdateNutrition() {
     }
 
-    public S2CUpdateNutrition(int phytonutrients, int protein, int water, float temp) {
+    public S2CUpdateNutrition(int phytonutrients, int protein, int water, double temp) {
         this.phytonutrients = phytonutrients;
         this.protein = protein;
         this.water = water;
@@ -36,7 +36,7 @@ public class S2CUpdateNutrition extends Packet {
         return water;
     }
 
-    public float getTemp() {
+    public double getTemp() {
         return temp;
     }
 
@@ -45,7 +45,7 @@ public class S2CUpdateNutrition extends Packet {
         this.protein = dataInput.readInt();
         this.phytonutrients = dataInput.readInt();
         this.water = dataInput.readInt();
-        this.temp = dataInput.readFloat();
+        this.temp = dataInput.readDouble();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class S2CUpdateNutrition extends Packet {
         dataOutput.writeInt(this.protein);
         dataOutput.writeInt(this.phytonutrients);
         dataOutput.writeInt(this.water);
-        dataOutput.writeFloat(this.temp);
+        dataOutput.writeDouble(this.temp);
     }
 
     @Override
@@ -63,6 +63,6 @@ public class S2CUpdateNutrition extends Packet {
 
     @Override
     public int getPacketSize() {
-        return 16;
+        return 20;
     }
 }
