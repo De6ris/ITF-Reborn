@@ -99,6 +99,8 @@
     "item.recipes.CraftingManagerMixin",
     "item.recipes.FurnaceRecipesMixin",
     "item.recipes.RecipeHelperMixin",
+    "item.recipes.RecipesFoodMixin",
+    "item.recipes.RecipesMITEMixin",
     "network.NetClientHandlerMixin",
     "network.NetHandlerMixin",
     "network.NetServerHandlerMixin",

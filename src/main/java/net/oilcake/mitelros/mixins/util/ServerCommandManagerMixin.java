@@ -2,7 +2,10 @@ package net.oilcake.mitelros.mixins.util;
 
 import net.minecraft.CommandHandler;
 import net.minecraft.ServerCommandManager;
-import net.oilcake.mitelros.command.*;
+import net.oilcake.mitelros.command.CommandDamage;
+import net.oilcake.mitelros.command.CommandHunger;
+import net.oilcake.mitelros.command.CommandSetStatus;
+import net.oilcake.mitelros.command.CommandStatus;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

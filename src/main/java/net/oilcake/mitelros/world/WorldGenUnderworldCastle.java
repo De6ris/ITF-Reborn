@@ -760,6 +760,7 @@ public class WorldGenUnderworldCastle extends WorldGenerator {
             new WeightedRandomChestContent(Items.BootsAncientmetalsacred.itemID, 0, 1, 1, 1),
             new WeightedRandomChestContent(Items.LeggingsAncientmetalsacred.itemID, 0, 1, 1, 1),
             new WeightedRandomChestContent(Items.totemOfKnowledge.itemID, 0, 1, 1, 3),
-            new WeightedRandomChestContent(Items.totemOfSentry.itemID, 0, 1, 1, 3)
+            new WeightedRandomChestContent(Items.totemOfSentry.itemID, 0, 1, 1, 3),
+            new WeightedRandomChestContent(Items.totemOfFlattening.itemID, 0, 1, 1, 3)
     };
 }

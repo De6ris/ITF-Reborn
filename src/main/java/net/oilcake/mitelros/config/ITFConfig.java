@@ -39,6 +39,7 @@ public class ITFConfig extends SimpleConfigs {
     public static final ConfigBooleanChallenge TagDimensionInvade = new ConfigBooleanChallenge("维度入侵", "除了末地之外的任何维度都会生成其他维度的敌对生物", 4);
     public static final ConfigInteger TagCorrosion = new ConfigInteger("瘴气", 0, 0, 3, "每级使玩家的物品耐久度消耗提升30%");
     public static final ConfigBooleanChallenge TagPillager = new ConfigBooleanChallenge("掠夺者", "允许部分怪物捡起物品", 1);
+    public static final ConfigBooleanChallenge TagBurnOut = new ConfigBooleanChallenge("油尽灯枯", "火把会变成阴燃, 最后熄灭", 2);
 
 
     // luck
@@ -46,6 +47,7 @@ public class ITFConfig extends SimpleConfigs {
     public static final ConfigBooleanChallenge TagDigest = new ConfigBooleanChallenge("原生代谢", "玩家食用生肉/饮用水获得概率性debuff的概率降低100%", -2);
     public static final ConfigBooleanChallenge TagArmament = new ConfigBooleanChallenge("战备军械", "玩家的护甲值在耐久低于25%时才会减少，且不再受到低于自身护甲值的伤害", -2);
     public static final ConfigBooleanChallenge TagWorkOfHeaven = new ConfigBooleanChallenge("巧夺天工", "品质装备的效果增强一倍", -2);
+    public static final ConfigBooleanChallenge TagTotemBlessing = new ConfigBooleanChallenge("图腾祝福", "加强图腾的效果", -2);
 
 
     /* experimentalConfig */
@@ -83,9 +85,9 @@ public class ITFConfig extends SimpleConfigs {
     public static ITFConfig Instance;
 
     public static void init() {
-        spite = List.of(TagUnstableConvection, TagExtremeClimate, TagDryDilemma, TagHeatStroke, TagDeadGeothermy, TagRejection, TagEternalRaining, TagApocalypse, TagDimensionInvade, TagCorrosion);
+        spite = List.of(TagUnstableConvection, TagExtremeClimate, TagDryDilemma, TagHeatStroke, TagDeadGeothermy, TagRejection, TagEternalRaining, TagApocalypse, TagDimensionInvade, TagCorrosion, TagBurnOut);
         enemy = List.of(TagMiracleDisaster, TagInvisibleFollower, TagUnderAlliance, TagPseudoVision, TagInstinctSurvival, TagFallenInMine, TagBattleSuffer, TagWorshipDark, TagDemonDescend, TagPillager);
-        luck = List.of(TagDigest, TagArmament, TagWorkOfHeaven);
+        luck = List.of(TagDigest, TagArmament, TagWorkOfHeaven, TagTotemBlessing);
 
         challenge = new ArrayList<>();
         challenge.addAll(spite);

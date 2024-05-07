@@ -1,9 +1,12 @@
 package net.oilcake.mitelros.mixins.entity.misc;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.AchievementExtend;
+import net.oilcake.mitelros.util.FireCookHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -67,12 +70,18 @@ public abstract class EntityItemMixin extends Entity {
         }
     }
 
-    @Inject(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityDamageResult;startTrackingHealth(F)V"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
-    private void makeCharcoal(Damage damage, CallbackInfoReturnable<EntityDamageResult> cir, EntityDamageResult result) {
+    @WrapOperation(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemStack;canDouseFire()Z"))
+    private boolean protectWaterBowl(ItemStack instance, Operation<Boolean> original) {
+        if (FireCookHandler.getCookResult(instance) != null || FireCookHandler.isCookResult(instance)) return false;
+        return original.call(instance);
+    }
+
+    @Inject(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityDamageResult;startTrackingHealth(F)V", ordinal = 1), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+    private void itfCookItemEntity(Damage damage, CallbackInfoReturnable<EntityDamageResult> cir, EntityDamageResult result) {
         ItemStack item_stack = this.getEntityItem();
-        Item item = item_stack.getItem();
-        if (damage.isFireDamage() && (item.itemID == Block.wood.blockID || item.itemID == Item.coal.itemID)) {
-            if (item.itemID == Block.wood.blockID) {
+        ItemStack cooked_item_stack = FireCookHandler.getCookResult(item_stack);
+        if (damage.isFireDamage() && (cooked_item_stack != null || FireCookHandler.isCookResult(item_stack))) {
+            if (cooked_item_stack != null) {
                 int x = this.getBlockPosX();
                 int y = this.getBlockPosY();
                 int z = this.getBlockPosZ();
@@ -86,7 +95,11 @@ public abstract class EntityItemMixin extends Entity {
             }
             this.cooking_progress += damage.getAmount() * 3.0f;
             if (this.cooking_progress >= 100.0f) {
-                ItemStack cooked_item_stack = new ItemStack(Item.coal, item_stack.stackSize, 1);
+                if (cooked_item_stack == null) {
+                    this.setDead();
+                    cir.setReturnValue(result.setEntityWasDestroyed());
+                    return;
+                }
                 this.setEntityItemStack(cooked_item_stack);
             }
             cir.setReturnValue(result.setEntityWasAffected());

@@ -104,7 +104,7 @@ public class FeastManager {
             this.Feast_trigger_chicken_soup = true;
         if (itemVessel.contains(Material.cereal))
             this.Feast_trigger_cereal = true;
-        if (itemVessel.contains(Materials.chestnut_soup))
+        if (itemVessel.contains(Materials.lampchop_stew))
             this.Feast_trigger_chestnut_soup = true;
         if (itemVessel.contains(Material.ice_cream))
             this.Feast_trigger_ice_cream = true;
@@ -132,7 +132,7 @@ public class FeastManager {
             this.Feast_trigger_vegetable_soup = true;
         if (itemVessel.contains(Materials.fish_soup))
             this.Feast_trigger_salmon_soup = true;
-        if (itemVessel.contains(Materials.beetroot))
+        if (itemVessel.contains(Materials.beetroot_soup))
             this.Feast_trigger_beetroot_soup = true;
     }
 }

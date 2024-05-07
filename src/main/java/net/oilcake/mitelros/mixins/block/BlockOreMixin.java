@@ -45,18 +45,17 @@ public abstract class BlockOreMixin extends Block {
             if (this == Block.oreEmerald) {
                 id_dropped.set(hasAbsorb ? 0 : Item.shardEmerald.itemID);
                 info.getResponsiblePlayer().triggerAchievement(AchievementList.emeralds);
-                quantity_dropped.set(3 + info.world.rand.nextInt(5));
+                quantity_dropped.set(4 + info.world.rand.nextInt(4));
             } else if (this.blockID == Block.oreDiamond.blockID) {
-                System.out.println("yes i am diamond");
                 id_dropped.set(hasAbsorb ? 0 : Item.shardDiamond.itemID);
                 info.getResponsiblePlayer().triggerAchievement(AchievementList.diamonds);
-                quantity_dropped.set(3 + info.world.rand.nextInt(5));
+                quantity_dropped.set(4 + info.world.rand.nextInt(4));
             } else if (this == Block.oreGold) {
                 id_dropped.set(info.getMetadata() == 2 ? Items.pieceGoldNether.itemID : Items.pieceGold.itemID);
-                quantity_dropped.set(3 + info.world.rand.nextInt(5));
+                quantity_dropped.set(4 + info.world.rand.nextInt(4));
             } else if (this.oreToPiece() != 0) {
                 id_dropped.set(this.oreToPiece());
-                quantity_dropped.set(3 + info.world.rand.nextInt(5));
+                quantity_dropped.set(4 + info.world.rand.nextInt(4));
             }
         }
     }

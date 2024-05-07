@@ -167,7 +167,7 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
                         smeltItem(this.heat_level);
                         if (getInputItemStack() != null && getOutputItemStack().getItem() instanceof net.minecraft.ItemMeat)
                             this.worldObj.playSoundEffect((this.xCoord + 0.5F), (this.yCoord + 0.5F), (this.zCoord + 0.5F), "imported.random.sizzle");
-                        if ((getInputItemStack() != null && getOutputItemStack().getItem() == Item.bowlWater) || getOutputItemStack().getItem() == Items.claybowlWater)
+                        if ((getInputItemStack() != null && getOutputItemStack().getItem() == Item.bowlWater) || getOutputItemStack().getItem() == Items.clayBowlWater)
                             this.worldObj.playSoundEffect((this.xCoord + 0.5F), (this.yCoord + 0.5F), (this.zCoord + 0.5F), "imported.random.boil");
                         var2 = true;
                     }
@@ -221,7 +221,7 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
     @ModifyConstant(method = "smeltItem", constant = @Constant(intValue = 1))
     private int itfFurnaceRecipe(int constant) {
         ItemStack var1 = FurnaceRecipes.smelting().getSmeltingResult(getInputItemStack(), heat_level);
-        if ((getInputItemStack()).itemID == Items.claybowlRaw.itemID && var1.itemID == Items.claybowlEmpty.itemID) {
+        if ((getInputItemStack()).itemID == Items.clayBowlRaw.itemID && var1.itemID == Items.clayBowlEmpty.itemID) {
             return 4;
         }
         return constant;

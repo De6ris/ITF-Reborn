@@ -7,7 +7,7 @@ public class ItemBowlClay extends ItemBowl {
         super(id, contents, texture);
         this.vessel_material = Material.hardened_clay;
         this.setMaterial(Material.hardened_clay);
-        this.setContainerItem(Items.claybowlEmpty);
+        this.setContainerItem(Items.clayBowlEmpty);
         this.setTextureName("hardened_clay_bowls/" + texture);
     }
 
@@ -34,7 +34,7 @@ public class ItemBowlClay extends ItemBowl {
 
     @Override
     public float getCompostingValue() {
-        return (this == Items.claybowlMilk) ? 0.0F : super.getCompostingValue();
+        return (this == Items.clayBowlMilk) ? 0.0F : super.getCompostingValue();
     }
 
     @Override
@@ -45,41 +45,41 @@ public class ItemBowlClay extends ItemBowl {
     public static ItemVessel getPeer(Material vessel_material, Material contents) {
         if (vessel_material == Material.hardened_clay) {
             if (contents == null)
-                return Items.claybowlEmpty;
+                return Items.clayBowlEmpty;
             if (contents == Material.mushroom_stew)
-                return Items.claybowlMushroomStew;
+                return Items.clayBowlMushroomStew;
             if (contents == Material.milk)
-                return Items.claybowlMilk;
+                return Items.clayBowlMilk;
             if (contents == Material.water)
-                return Items.claybowlWater;
+                return Items.clayBowlWater;
             if (contents == Material.beef_stew)
-                return Items.claybowlBeefStew;
+                return Items.clayBowlBeefStew;
             if (contents == Material.chicken_soup)
-                return Items.claybowlChickenSoup;
+                return Items.clayBowlChickenSoup;
             if (contents == Material.vegetable_soup)
-                return Items.claybowlVegetableSoup;
+                return Items.clayBowlVegetableSoup;
             if (contents == Material.ice_cream)
-                return Items.claybowlIceCream;
+                return Items.clayBowlIceCream;
             if (contents == Material.salad)
-                return Items.claybowlSalad;
+                return Items.clayBowlSalad;
             if (contents == Material.cream_of_mushroom_soup)
-                return Items.claybowlCreamOfMushroomSoup;
+                return Items.clayBowlCreamOfMushroomSoup;
             if (contents == Material.cream_of_vegetable_soup)
-                return Items.claybowlCreamOfVegetableSoup;
+                return Items.clayBowlCreamOfVegetableSoup;
             if (contents == Material.mashed_potato)
-                return Items.claybowlMashedPotato;
+                return Items.clayBowlMashedPotato;
             if (contents == Material.porridge)
-                return Items.claybowlPorridge;
+                return Items.clayBowlPorridge;
             if (contents == Material.cereal)
-                return Items.claybowlCereal;
-            if (contents == Materials.chestnut_soup)
-                return Items.claybowlChestnutSoup;
+                return Items.clayBowlCereal;
+            if (contents == Materials.lampchop_stew)
+                return Items.clayBowlLampchopSoup;
             if (contents == Materials.porkchop_stew)
-                return Items.claybowlPorkchopStew;
+                return Items.clayBowlPorkchopStew;
             if (contents == Materials.suspicious_water)
-                return Items.claybowlWaterSuspicious;
+                return Items.clayBowlWaterSuspicious;
             if (contents == Materials.dangerous_water)
-                return Items.claybowlWaterSwampland;
+                return Items.clayBowlWaterSwampland;
         }
         return null;
     }

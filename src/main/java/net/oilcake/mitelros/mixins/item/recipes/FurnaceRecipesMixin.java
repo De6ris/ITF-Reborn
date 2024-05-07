@@ -44,8 +44,8 @@ public class FurnaceRecipesMixin {
                 output.setStackSize(1);
             }
             result_item_stack = output;
-        } else if (input_item_id == Items.claybowlRaw.itemID && input_item_stack.stackSize >= 4) {
-            result_item_stack = new ItemStack(Items.claybowlEmpty, 4);
+        } else if (input_item_id == Items.clayBowlRaw.itemID && input_item_stack.stackSize >= 4) {
+            result_item_stack = new ItemStack(Items.clayBowlEmpty, 4);
         }
         if (result_item_stack != null) {
             cir.setReturnValue(heat_level < TileEntityFurnace.getHeatLevelRequired(input_item_stack.itemID) ? null : result_item_stack);

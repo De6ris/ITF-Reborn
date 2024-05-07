@@ -13,7 +13,7 @@ public class Materials extends Material {
 
     public static final Material porkchop_stew;
 
-    public static final Material chestnut_soup;
+    public static final Material lampchop_stew;
 
     public static final Material fish_soup;
 
@@ -42,6 +42,7 @@ public class Materials extends Material {
     public static final Material agave;
 
     public static final Material beetroot;
+    public static final Material beetroot_soup;
 
     public static final Material crystal;
 
@@ -62,7 +63,7 @@ public class Materials extends Material {
         vibranium = (Materials) (new Materials(EnumEquipmentMaterials.VIBRANIUM)).setRequiresTool().setMetal(true).setMinHarvestLevel(1);
         uru = (Materials) (new Materials(EnumEquipmentMaterials.URU)).setRequiresTool().setMetal(true).setHarmedByLava(false).setMinHarvestLevel(5);
         porkchop_stew = (new MaterialFood("porkchop_stew")).setHarmedByPepsin();
-        chestnut_soup = (new MaterialFood("chestnut_soup")).setHarmedByPepsin();
+        lampchop_stew = (new MaterialFood("chestnut_soup")).setHarmedByPepsin();
         fish_soup = (new MaterialFood("chestnut_soup")).setHarmedByPepsin();
         mashedCactus = new MaterialFood("mashed_cactus");
         glowberries = new MaterialFood("glowberries");
@@ -77,6 +78,7 @@ public class Materials extends Material {
         ancient_metal_sacred = (Materials) (new Materials(EnumEquipmentMaterials.ANCIENT_METAL_SACRED)).setRequiresTool().setMetal(true).setMinHarvestLevel(3);
         agave = new MaterialFood("agave");
         beetroot = new MaterialFood("beetroot");
+        beetroot_soup = new MaterialFood("beetroot_soup");
         crystal = new Material("crystal").setDurability(4.0F);
         sulphur = new Material("sulphur").setDurability(2.0F);
         peeledSugarcane = new MaterialFood("peeledSugarcane");

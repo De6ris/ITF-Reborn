@@ -122,7 +122,7 @@ public class Items extends Item {
 
     public static final ItemBowl bowlPorkchopStew = (ItemBowl) (new ItemBowl(getNextItemID(), Materials.porkchop_stew, "porkchop_stew")).setFoodValue(14, 14, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("porkchopStew");
 
-    public static final ItemBowl bowlChestnutSoup = (ItemBowl) (new ItemBowl(getNextItemID(), Materials.chestnut_soup, "lampchop_stew")).setFoodValue(12, 12, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("lampchopStew");
+    public static final ItemBowl bowlLampchopStew = (ItemBowl) (new ItemBowl(getNextItemID(), Materials.lampchop_stew, "lampchop_stew")).setFoodValue(12, 12, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("lampchopStew");
 
     public static final ItemBowl bowlWaterSuspicious = (ItemBowl) (new ItemBowl(getNextItemID(), Materials.suspicious_water, "suspicious_water")).setUnlocalizedName("SuspiciousWater");
 
@@ -330,57 +330,57 @@ public class Items extends Item {
 
     public static final ItemBowl bowlSalmonSoup = (ItemBowl) (new ItemBowl(getNextItemID(), Materials.fish_soup, "salmon_soup")).setFoodValue(14, 14, true, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("salmonSoup");
 
-    public static final ItemBowl bowlBeetrootSoup = (ItemBowl) (new ItemBowl(getNextItemID(), Materials.beetroot, "beetroot_soup")).setFoodValue(15, 6, 6000, false, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beetrootSoup");
+    public static final ItemBowl bowlBeetrootSoup = (ItemBowl) (new ItemBowl(getNextItemID(), Materials.beetroot_soup, "beetroot_soup")).setFoodValue(15, 6, 6000, false, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beetrootSoup");
 
-    public static final ItemStandard claybowlRaw = (ItemStandard) (new ItemStandard(getNextItemID(), Material.clay, "bowlclayRaw")).setMaxStackSize(4);
+    public static final ItemStandard clayBowlRaw = (ItemStandard) (new ItemStandard(getNextItemID(), Material.clay, "bowlclayRaw")).setMaxStackSize(4);
 
-    public static final ItemBowlClay claybowlEmpty = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), null, "VANILLA")).setMaxStackSize(4);
+    public static final ItemBowlClay clayBowlEmpty = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), null, "VANILLA")).setMaxStackSize(4);
 
-    public static final ItemBowlClay claybowlMushroomStew = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.mushroom_stew, "mushroom_stew")).setFoodValue(2, 4, false, false, false).setPlantProduct().setUnlocalizedName("mushroomStew");
+    public static final ItemBowlClay clayBowlMushroomStew = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.mushroom_stew, "mushroom_stew")).setFoodValue(2, 4, false, false, false).setPlantProduct().setUnlocalizedName("mushroomStew");
 
-    public static final ItemBowlClay claybowlMilk = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.milk, "bowl_milk")).setFoodValue(0, 1, true, false, false).setAnimalProduct().setAlwaysEdible().setUnlocalizedName("bowlMilk");
+    public static final ItemBowlClay clayBowlMilk = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.milk, "bowl_milk")).setFoodValue(0, 1, true, false, false).setAnimalProduct().setAlwaysEdible().setUnlocalizedName("bowlMilk");
 
-    public static final ItemBowlClay claybowlWater = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.water, "bowl_water")).setUnlocalizedName("bowlWater");
+    public static final ItemBowlClay clayBowlWater = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.water, "bowl_water")).setUnlocalizedName("bowlWater");
 
-    public static final ItemBowlClay claybowlBeefStew = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.beef_stew, "beef_stew")).setFoodValue(16, 16, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beefStew");
+    public static final ItemBowlClay clayBowlBeefStew = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.beef_stew, "beef_stew")).setFoodValue(16, 16, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beefStew");
 
-    public static final ItemBowlClay claybowlChickenSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.chicken_soup, "chicken_soup")).setFoodValue(10, 10, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("chickenSoup");
+    public static final ItemBowlClay clayBowlChickenSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.chicken_soup, "chicken_soup")).setFoodValue(10, 10, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("chickenSoup");
 
-    public static final ItemBowlClay claybowlVegetableSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.vegetable_soup, "vegetable_soup")).setFoodValue(6, 6, false, false, true).setPlantProduct().setUnlocalizedName("vegetableSoup");
+    public static final ItemBowlClay clayBowlVegetableSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.vegetable_soup, "vegetable_soup")).setFoodValue(6, 6, false, false, true).setPlantProduct().setUnlocalizedName("vegetableSoup");
 
-    public static final ItemBowlClay claybowlIceCream = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.ice_cream, "ice_cream")).setFoodValue(5, 4, 1000, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("iceCream");
+    public static final ItemBowlClay clayBowlIceCream = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.ice_cream, "ice_cream")).setFoodValue(5, 4, 1000, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("iceCream");
 
-    public static final ItemBowlClay claybowlSalad = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.salad, "bowl_salad")).setFoodValue(1, 1, false, false, true).setPlantProduct().setUnlocalizedName("salad");
+    public static final ItemBowlClay clayBowlSalad = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.salad, "bowl_salad")).setFoodValue(1, 1, false, false, true).setPlantProduct().setUnlocalizedName("salad");
 
-    public static final ItemBowlClay claybowlCreamOfMushroomSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.cream_of_mushroom_soup, "cream_of_mushroom_soup")).setFoodValue(3, 5, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("creamOfMushroomSoup");
+    public static final ItemBowlClay clayBowlCreamOfMushroomSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.cream_of_mushroom_soup, "cream_of_mushroom_soup")).setFoodValue(3, 5, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("creamOfMushroomSoup");
 
-    public static final ItemBowlClay claybowlCreamOfVegetableSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.cream_of_vegetable_soup, "cream_of_vegetable_soup")).setFoodValue(7, 7, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("creamOfVegetableSoup");
+    public static final ItemBowlClay clayBowlCreamOfVegetableSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.cream_of_vegetable_soup, "cream_of_vegetable_soup")).setFoodValue(7, 7, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("creamOfVegetableSoup");
 
-    public static final ItemBowlClay claybowlPumpkinSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.pumpkin_soup, "pumpkin_soup")).setFoodValue(1, 2, false, false, true).setPlantProduct().setUnlocalizedName("pumpkinSoup");
+    public static final ItemBowlClay clayBowlPumpkinSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.pumpkin_soup, "pumpkin_soup")).setFoodValue(1, 2, false, false, true).setPlantProduct().setUnlocalizedName("pumpkinSoup");
 
-    public static final ItemBowlClay claybowlMashedPotato = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.mashed_potato, "mashed_potato")).setFoodValue(12, 8, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("mashedPotato");
+    public static final ItemBowlClay clayBowlMashedPotato = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.mashed_potato, "mashed_potato")).setFoodValue(12, 8, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("mashedPotato");
 
-    public static final ItemBowlClay claybowlSorbet = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.sorbet, "sorbet")).setFoodValue(4, 2, 2000, false, false, true).setPlantProduct().setUnlocalizedName("sorbet");
+    public static final ItemBowlClay clayBowlSorbet = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.sorbet, "sorbet")).setFoodValue(4, 2, 2000, false, false, true).setPlantProduct().setUnlocalizedName("sorbet");
 
-    public static final ItemBowlClay claybowlPorridge = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.porridge, "porridge")).setFoodValue(4, 2, 2000, false, false, true).setPlantProduct().setUnlocalizedName("porridge");
+    public static final ItemBowlClay clayBowlPorridge = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.porridge, "porridge")).setFoodValue(4, 2, 2000, false, false, true).setPlantProduct().setUnlocalizedName("porridge");
 
-    public static final ItemBowlClay claybowlCereal = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.cereal, "cereal")).setFoodValue(4, 2, 1000, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("cereal");
+    public static final ItemBowlClay clayBowlCereal = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Material.cereal, "cereal")).setFoodValue(4, 2, 1000, true, false, false).setPlantProduct().setAnimalProduct().setUnlocalizedName("cereal");
 
-    public static final ItemBowlClay claybowlLemonade = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.lemonade, "lemonade")).setFoodValue(4, 1, false, true, true).setPlantProduct().setUnlocalizedName("lemonade");
+    public static final ItemBowlClay clayBowlLemonade = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.lemonade, "lemonade")).setFoodValue(4, 1, false, true, true).setPlantProduct().setUnlocalizedName("lemonade");
 
-    public static final ItemBowlClay claybowlPorkchopStew = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.porkchop_stew, "porkchop_stew")).setFoodValue(14, 14, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("porkchopStew");
+    public static final ItemBowlClay clayBowlPorkchopStew = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.porkchop_stew, "porkchop_stew")).setFoodValue(14, 14, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("porkchopStew");
 
-    public static final ItemBowlClay claybowlChestnutSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.chestnut_soup, "lampchop_stew")).setFoodValue(12, 12, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("lampchopStew");
+    public static final ItemBowlClay clayBowlLampchopSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.lampchop_stew, "lampchop_stew")).setFoodValue(12, 12, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("lampchopStew");
 
-    public static final ItemBowlClay claybowlWaterSuspicious = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.suspicious_water, "suspicious_water")).setUnlocalizedName("SuspiciousWater");
+    public static final ItemBowlClay clayBowlWaterSuspicious = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.suspicious_water, "suspicious_water")).setUnlocalizedName("SuspiciousWater");
 
-    public static final ItemBowlClay claybowlWaterSwampland = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.dangerous_water, "swampland_water")).setUnlocalizedName("SwamplandWater");
+    public static final ItemBowlClay clayBowlWaterSwampland = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.dangerous_water, "swampland_water")).setUnlocalizedName("SwamplandWater");
 
-    public static final ItemBowlClay claybowlSalmonSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.fish_soup, "salmon_soup")).setFoodValue(14, 14, true, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("salmonSoup");
+    public static final ItemBowlClay clayBowlSalmonSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.fish_soup, "salmon_soup")).setFoodValue(14, 14, true, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("salmonSoup");
 
-    public static final ItemBowlClay claybowlBeetrootSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.beetroot, "beetroot_soup")).setFoodValue(15, 6, 6000, false, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beetrootSoup");
+    public static final ItemBowlClay clayBowlBeetrootSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.beetroot_soup, "beetroot_soup")).setFoodValue(15, 6, 6000, false, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beetrootSoup");
 
-    public static final Item totemOfFecund = (new ItemTotem(getNextItemID(), Material.gold, "totem")).setMaxStackSize(1);
+    public static final Item totemOfFecund = new ItemTotem(getNextItemID(), Material.gold, "totem");
 
     public static final ItemArmor helmetCustom_b = new ItemHelmet(getNextItemID(), Materials.custom_b, false);
 
@@ -400,11 +400,11 @@ public class Items extends Item {
 
     public static final ItemPotionSuspicious suspiciousPotion = (ItemPotionSuspicious) (new ItemPotionSuspicious(getNextItemID())).setUnlocalizedName("suspiciousPotion").setCreativeTab(CreativeTabs.tabMisc);
 
-    public static final Item totemOfDestroy = (new ItemTotem(getNextItemID(), Materials.tungsten, "totem")).setMaxStackSize(1);
+    public static final Item totemOfDestroy = new ItemTotem(getNextItemID(), Materials.tungsten, "totem");
 
-    public static final Item totemOfPreserve = (new ItemTotem(getNextItemID(), Material.iron, "totem")).setMaxStackSize(1);
+    public static final Item totemOfPreserve = new ItemTotem(getNextItemID(), Material.iron, "totem");
 
-    public static final Item totemOfKnowledge = ((ITFItem) (new ItemTotem(getNextItemID(), Material.ancient_metal, "totem")).setMaxStackSize(1)).setExtraInfo("右键提升20%经验");
+    public static final Item totemOfKnowledge = ((ITFItem) (new ItemTotem(getNextItemID(), Material.ancient_metal, "totem"))).setExtraInfo("右键提升20%经验");
 
     public static final ItemFlintAndSteel ignitionCopper = (ItemFlintAndSteel) new ItemFlintAndSteel(getNextItemID()).setMaterial(Material.flint, Material.copper).setMaxDamage((int) (2.0F * Material.copper.durability));
 
@@ -428,7 +428,7 @@ public class Items extends Item {
 
     public static final ItemGuideBook guide = new ItemGuideBook(getNextItemID());
 
-    public static final Item totemOfHunting = (new ItemTotem(getNextItemID(), Materials.nickel, "totem")).setMaxStackSize(1);
+    public static final Item totemOfHunting = new ItemTotem(getNextItemID(), Materials.nickel, "totem");
 
     public static final ItemClub uruMorningStar = ReflectHelper.createInstance(ItemClub.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.uru);
 
@@ -448,7 +448,7 @@ public class Items extends Item {
 
     public static final ItemMorningStar morningStarRustedIron = new ItemMorningStar(getNextItemID(), Material.rusted_iron);
 
-    public static final ItemBucket woodBucket = (ItemBucket) new ItemBucket(getNextItemID(), Materials.wood, null);
+    public static final ItemBucket woodBucket = new ItemBucket(getNextItemID(), Materials.wood, null);
 
     public static final ItemBucket woodBucketWater = (ItemBucket) new ItemBucket(getNextItemID(), Materials.wood, Materials.water).setContainerItem(woodBucket);
 
@@ -462,16 +462,18 @@ public class Items extends Item {
 
     public static final ItemFood peeledSugarcane = (new ItemFood(getNextItemID(), Materials.peeledSugarcane, 0, 1, 1000, false, false, true, "peeledSugarcane")).setPlantProduct();
 
-    public static final Item totemOfSentry = (new ItemTotem(getNextItemID(), Material.adamantium, "totem")).setMaxStackSize(1);
+    public static final Item totemOfSentry = new ItemTotem(getNextItemID(), Material.adamantium, "totem");
 
-    public static final Item totemOfUnknown = (new ItemTotem(getNextItemID(), Material.rusted_iron, "totem")).setMaxStackSize(1);
+    public static final Item totemOfUnknown = new ItemTotem(getNextItemID(), Material.rusted_iron, "totem");
 
     public static final ItemFlintAndSteel ignitionRustedIron = (ItemFlintAndSteel) new ItemFlintAndSteel(getNextItemID()).setMaterial(Material.flint, Material.rusted_iron).setMaxDamage((int) (2.0F * Material.rusted_iron.durability));
 
     public static final ItemKnife stickKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.wood);
 
     public static final ItemWand slimeWand = new ItemWand(getNextItemID(), Material.copper);
+
     public static final Item iceChunk = new ItemStandard(getNextItemID(), Materials.ice_chunk, "ice_chunk").setCraftingDifficultyAsComponent(50.0F);
+
     public static final ItemArmor iceHelmet = new ItemHelmet(getNextItemID(), Materials.ice_chunk, false);
 
     public static final ItemArmor iceChestplate = new ItemCuirass(getNextItemID(), Materials.ice_chunk, false);
@@ -493,6 +495,8 @@ public class Items extends Item {
     public static final ItemBowlClay clayBowlHotWater = new ItemBowlClay(getNextItemID(), Materials.hot_water, "bowl_hot_water");
 
     public static final ItemBowl bowlHotWater = new ItemBowl(getNextItemID(), Materials.hot_water, "bowl_water");
+
+    public static final Item totemOfFlattening = ((ITFItem) (new ItemTotem(getNextItemID(), Material.dirt, "totem"))).setExtraInfo("据说能够平整16x16的土地");
 
     private static int getNextItemID() {
         if (!ITFConfig.FixID.getBooleanValue()) return IdUtil.getNextItemID();

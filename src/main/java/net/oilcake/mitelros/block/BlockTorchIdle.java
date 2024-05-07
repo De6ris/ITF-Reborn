@@ -2,59 +2,41 @@ package net.oilcake.mitelros.block;
 
 import net.minecraft.BlockBreakInfo;
 import net.minecraft.BlockTorch;
-import net.minecraft.EnumParticle;
 import net.minecraft.World;
+import net.oilcake.mitelros.config.ITFConfig;
 
 import java.util.Random;
 
 public class BlockTorchIdle extends BlockTorch {
     protected BlockTorchIdle(int par1) {
         super(par1);
+        this.setHardness(0.0F);
     }
 
+    @Override
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
         return info.wasExploded() ? 0 : super.dropBlockAsEntityItem(info);
     }
 
     @Override
     public boolean updateTick(World world, int x, int y, int z, Random random) {
-        if (super.updateTick(world, x, y, z, random)) {
+        if (this.checkIfNotLegal(world, x, y, z)) {
             return true;
         } else {
+            if (!ITFConfig.TagBurnOut.getBooleanValue()) return false;
             int ran = random.nextInt(512);
-            if(ran == 0 && world.getBlockId(x,y,z) == Blocks.torchWoodIdle.blockID){
-                world.setBlock(x, y, z, Blocks.torchWoodExtinguished.blockID, world.getBlockMetadata(x,y,z), 2);
+            if (ran == 0 && world.getBlockId(x, y, z) == Blocks.torchWoodIdle.blockID) {
+                world.setBlock(x, y, z, Blocks.torchWoodExtinguished.blockID, world.getBlockMetadata(x, y, z), 2);
             }
             return false;
         }
     }
 
+    @Override
     public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-        if(par1World.getBlockId(par2, par3, par4) == Blocks.torchWoodExtinguished.blockID) {
+        if (par1World.getBlockId(par2, par3, par4) == Blocks.torchWoodExtinguished.blockID) {
             return;
         }
-        int var6 = par1World.getBlockMetadata(par2, par3, par4);
-        double var7 = (double)par2 + 0.5;
-        double var9 = (double)par3 + 0.7;
-        double var11 = (double)par4 + 0.5;
-        double var13 = 0.22f;
-        double var15 = 0.27f;
-        if (var6 == 1) {
-            par1World.spawnParticle(EnumParticle.smoke, var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-            par1World.spawnParticle(EnumParticle.flame, var7 - var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-        } else if (var6 == 2) {
-            par1World.spawnParticle(EnumParticle.smoke, var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-            par1World.spawnParticle(EnumParticle.flame, var7 + var15, var9 + var13, var11, 0.0, 0.0, 0.0);
-        } else if (var6 == 3) {
-            par1World.spawnParticle(EnumParticle.smoke, var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
-            par1World.spawnParticle(EnumParticle.flame, var7, var9 + var13, var11 - var15, 0.0, 0.0, 0.0);
-        } else if (var6 == 4) {
-            par1World.spawnParticle(EnumParticle.smoke, var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
-            par1World.spawnParticle(EnumParticle.flame, var7, var9 + var13, var11 + var15, 0.0, 0.0, 0.0);
-        } else {
-            par1World.spawnParticle(EnumParticle.smoke, var7, var9, var11, 0.0, 0.0, 0.0);
-            par1World.spawnParticle(EnumParticle.flame, var7, var9, var11, 0.0, 0.0, 0.0);
-        }
-
+        super.randomDisplayTick(par1World, par2, par3, par4, par5Random);
     }
 }

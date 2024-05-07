@@ -53,7 +53,7 @@ public class RecipeRegister extends Items {
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 1), false, beetroot);
         register.registerShapelessRecipe(new ItemStack(Pulque, 1), true, Item.sugar, Agave, new ItemStack(Item.potion, 1, 0));//.resetDifficulty(3200);
         register.registerShapelessRecipe(new ItemStack(Ale, 1), true, Item.sugar, Item.wheat, new ItemStack(Item.potion, 1, 0));//.resetDifficulty(3200);
-        register.registerShapelessRecipe(new ItemStack(claybowlRaw, 1), false, Item.clay);
+        register.registerShapelessRecipe(new ItemStack(clayBowlRaw, 1), false, Item.clay);
         register.registerShapelessRecipe(new ItemStack(tungstenBucket, 1), false, tungstenBucketStone);//.resetDifficulty(100);
         register.registerShapelessRecipe(new ItemStack(nickelBucket, 1), false, nickelBucketStone);//.resetDifficulty(100);
 

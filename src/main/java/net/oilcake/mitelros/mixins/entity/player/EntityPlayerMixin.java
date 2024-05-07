@@ -156,7 +156,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @WrapOperation(method = "attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
     private EntityDamageResult redirectEntityAttack(EntityPlayer instance, Damage damage, Operation<EntityDamageResult> original) {
-        return this.miscManager.destroyTotemCheck(original.call(instance, damage));
+        return this.miscManager.totemCheckOnDeath(original.call(instance, damage));
     }
 
     @Shadow

@@ -18,13 +18,13 @@ public class RecipesFurnaceExtend extends Items {
         FurnaceRecipes.smelting().addSmelting(pieceTungsten.itemID, new ItemStack(tungstenNugget));
         FurnaceRecipes.smelting().addSmelting(pieceUru.itemID, new ItemStack(uruNugget));
         FurnaceRecipes.smelting().addSmelting(AncientmetalArmorPiece.itemID, new ItemStack(ancientMetalNugget));
-        FurnaceRecipes.smelting().addSmelting(claybowlWaterSuspicious.itemID, new ItemStack(claybowlWater));
-        FurnaceRecipes.smelting().addSmelting(claybowlWaterSwampland.itemID, new ItemStack(claybowlWater));
+        FurnaceRecipes.smelting().addSmelting(clayBowlWaterSuspicious.itemID, new ItemStack(clayBowlWater));
+        FurnaceRecipes.smelting().addSmelting(clayBowlWaterSwampland.itemID, new ItemStack(clayBowlWater));
         FurnaceRecipes.smelting().addSmelting(suspiciousPotion.itemID, new ItemStack(potion, 1, 0));
         FurnaceRecipes.smelting().addSmelting(horse_meat.itemID, new ItemStack(horse_meat_cooked));
-        FurnaceRecipes.smelting().addSmelting(claybowlRaw.itemID, new ItemStack(claybowlEmpty));
+        FurnaceRecipes.smelting().addSmelting(clayBowlRaw.itemID, new ItemStack(clayBowlEmpty));
         FurnaceRecipes.smelting().addSmelting(bowlWater.itemID, new ItemStack(bowlHotWater));
-        FurnaceRecipes.smelting().addSmelting(claybowlWater.itemID, new ItemStack(clayBowlHotWater));
+        FurnaceRecipes.smelting().addSmelting(clayBowlWater.itemID, new ItemStack(clayBowlHotWater));
         Class[] tools = {
                 ItemSword.class, ItemAxe.class, ItemPickaxe.class, ItemHoe.class, ItemShovel.class, ItemWarHammer.class, ItemBattleAxe.class, ItemScythe.class, ItemDagger.class, ItemKnife.class,
                 ItemMorningStar.class, ItemHatchet.class, ItemShears.class, ItemMattock.class, ItemHelmet.class, ItemBoots.class, ItemLeggings.class, ItemCuirass.class};

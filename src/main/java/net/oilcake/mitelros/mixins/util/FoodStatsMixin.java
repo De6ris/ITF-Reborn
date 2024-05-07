@@ -73,8 +73,10 @@ public class FoodStatsMixin implements ITFFoodStats {
         return this.water;
     }
 
+    @Unique
     private final float global_water_rate = 1.0F;
 
+    @Unique
     private static float getWaterPerTick() {
         return 0.002F;
     }

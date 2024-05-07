@@ -76,9 +76,9 @@ public class Blocks {
 
     public static final Block azuriteCluster = new BlockCaveMisc(getNextBlockID(), Materials.crystal).setLightValue(0.75F).setHardness(0.6F).setMinHarvestLevel(1).setResistance(6.0f).setStepSound(Block.soundGlassFootstep);
 
-    public static final Block torchWoodIdle = (new BlockTorchIdle(getNextBlockID())).setHardness(0.0F).setLightValue(0.5F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("torch");
+    public static final Block torchWoodIdle = (new BlockTorchIdle(getNextBlockID())).setLightValue(0.5F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("torch");
 
-    public static final Block torchWoodExtinguished = (new BlockTorchIdle(getNextBlockID())).setHardness(0.0F).setLightValue(0.1F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("torch");
+    public static final Block torchWoodExtinguished = (new BlockTorchIdle(getNextBlockID())).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("torch");
 
     public static final Block blockObserver = new BlockObserver(getNextBlockID(), Material.stone).setHardness(2.5F).setResistance(20.0f).setStepSound(Block.soundStoneFootstep);
 

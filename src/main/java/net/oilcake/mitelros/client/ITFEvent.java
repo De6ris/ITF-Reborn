@@ -21,8 +21,6 @@ import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.reload.event.*;
 
-import java.util.Objects;
-
 public class ITFEvent {
     @Subscribe
     public void handleChatCommand(HandleChatCommandEvent event) {

@@ -149,7 +149,7 @@ public class MiscManager {
         return distance;
     }
 
-    public EntityDamageResult destroyTotemCheck(EntityDamageResult entityDamageResult) {
+    public EntityDamageResult totemCheckOnDeath(EntityDamageResult entityDamageResult) {
         if (entityDamageResult != null && player.getHealthFraction() <= 0.1D && !entityDamageResult.entityWasDestroyed()) {
             ItemStack var5 = player.getHeldItemStack();
             if (var5 != null && var5.getItem() instanceof ItemTotem) {
@@ -189,6 +189,7 @@ public class MiscManager {
             player.triggerAchievement(AchievementExtend.BravetheCold);
         }
     }
+
     public void iceChunkCheck() {
         boolean wearing_full_suit_ice_chunk = true;
         for (int i = 0; i < 4; ++i) {
@@ -207,7 +208,6 @@ public class MiscManager {
             player.triggerAchievement(AchievementExtend.BravetheHeat);
         }
     }
-
 
     public void broadcast() {
         player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey(MOD_ID + "挂载成功,当前版本:").setColor(EnumChatFormatting.BLUE)

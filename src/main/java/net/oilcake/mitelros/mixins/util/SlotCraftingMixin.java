@@ -41,7 +41,7 @@ public abstract class SlotCraftingMixin extends Slot {
             this.thePlayer.addStat(AchievementExtend.cheersforMinecraft, 1);
         if (item == Items.experimentalPotion)
             this.thePlayer.addStat(AchievementExtend.nochoice, 1);
-        if (item instanceof ItemBowlClay && (item == Items.claybowlSalad || ItemBowlClay.isSoupOrStew(item))) {
+        if (item instanceof ItemBowlClay && (item == Items.clayBowlSalad || ItemBowlClay.isSoupOrStew(item))) {
             this.thePlayer.triggerAchievement(fineDining);
         }
     }
