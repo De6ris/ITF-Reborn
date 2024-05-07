@@ -105,8 +105,9 @@ public class ItemTotem extends Item {
     }
 
     private static void flatten(EntityPlayer player, World world, int startX, int y, int startZ, int range) {
-        if (world.getDimensionId() != 0) {
+        if (world.getDimensionId() != 0 || y < 60) {
             destroyEffect(player);
+            return;
         }
         for (int i = 0; i < 8; i++) {
             player.entityFX(EnumEntityFX.smoke_and_steam);
