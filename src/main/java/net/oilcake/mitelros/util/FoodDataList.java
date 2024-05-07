@@ -78,13 +78,14 @@ public class FoodDataList {
                 player.addWater(1);
         }
         if (item_stack.getItem() instanceof ItemMeat meat) {
-            int outcome = rand.nextInt(ITFConfig.Realistic.get() ? 1 : 4);
             if (meat.is_cooked) {
                 player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
                 player.addPotionEffect(new PotionEffect(PotionExtend.warm.id, 1280, 0));
             } else {
-                if (outcome == (ITFConfig.TagDigest.get() ? 4 : 0))
-                    player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (240.0D * (1.0D + rand.nextDouble())), 0));
+                if (ITFConfig.TagDigest.get()) return;
+                if (ITFConfig.Realistic.get() || rand.nextInt(4) == 0) {
+                    player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (120.0D * (1.0D + rand.nextDouble())), 0));
+                }
             }
         }
     }

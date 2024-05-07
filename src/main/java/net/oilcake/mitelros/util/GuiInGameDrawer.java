@@ -8,6 +8,8 @@ import net.oilcake.mitelros.status.TemperatureManager;
 import org.lwjgl.opengl.GL11;
 
 public class GuiInGameDrawer {
+    public static final ResourceLocation icons_itf = new ResourceLocation("textures/gui/itf_icons.png");
+
     public static void drawNutrientsBar(Gui gui, Minecraft mc, int var12, int var13) {
         int protein = Math.max(mc.thePlayer.getProtein() - 800000, 0);
         int phytonutrients = Math.max(mc.thePlayer.getPhytonutrients() - 800000, 0);
@@ -16,25 +18,25 @@ public class GuiInGameDrawer {
         if (protein > phytonutrients) {
             GL11.glPushMatrix();
             GL11.glScalef(0.6F, 1.0F, 1.0F);
-            mc.getTextureManager().bindTexture(Constant.icons_itf);
+            mc.getTextureManager().bindTexture(icons_itf);
             gui.drawTexturedModalRect(var26 - 205, var25, 0, 106, 182, 6);
             gui.drawTexturedModalRect(var26 - 205, var25, 0, 100, (int) (182.0F * getRateNutrient(protein)), 6);
             GL11.glPopMatrix();
             GL11.glPushMatrix();
             GL11.glScalef(0.6F, 1.0F, 1.0F);
-            mc.getTextureManager().bindTexture(Constant.icons_itf);
+            mc.getTextureManager().bindTexture(icons_itf);
             gui.drawTexturedModalRect(var26 - 205, var25, 0, 94, (int) (182.0F * getRateNutrient(phytonutrients)), 6);
             GL11.glPopMatrix();
         } else {
             GL11.glPushMatrix();
             GL11.glScalef(0.6F, 1.0F, 1.0F);
-            mc.getTextureManager().bindTexture(Constant.icons_itf);
+            mc.getTextureManager().bindTexture(icons_itf);
             gui.drawTexturedModalRect(var26 - 205, var25, 0, 106, 182, 6);
             gui.drawTexturedModalRect(var26 - 205, var25, 0, 94, (int) (182.0F * getRateNutrient(phytonutrients)), 6);
             GL11.glPopMatrix();
             GL11.glPushMatrix();
             GL11.glScalef(0.6F, 1.0F, 1.0F);
-            mc.getTextureManager().bindTexture(Constant.icons_itf);
+            mc.getTextureManager().bindTexture(icons_itf);
             gui.drawTexturedModalRect(var26 - 205, var25, 0, 100, (int) (182.0F * getRateNutrient(protein)), 6);
             GL11.glPopMatrix();
         }
@@ -51,7 +53,7 @@ public class GuiInGameDrawer {
         int var25 = var13 + 24;
         GL11.glPushMatrix();
         GL11.glScalef(0.6F, 1.0F, 1.0F);
-        mc.getTextureManager().bindTexture(Constant.icons_itf);
+        mc.getTextureManager().bindTexture(icons_itf);
         gui.drawTexturedModalRect(var26 - 205, var25, 0, 106, 182, 6);
         double temperature = ((ITFPlayer) mc.thePlayer).getTemperatureManager().getBodyTemperature();
         int length = (int) (91.0D * (((temperature - TemperatureManager.normalTemperature) * (temperature - TemperatureManager.normalTemperature) * (temperature > TemperatureManager.normalTemperature ? 1 : -1) / 9.0D) + 1.0D));
@@ -65,7 +67,7 @@ public class GuiInGameDrawer {
         int var12 = par1 / 2 + 91;
         int var13 = par2 - 39;
         FoodStats foodStats = mc.thePlayer.getFoodStats();
-        mc.getTextureManager().bindTexture(Constant.icons_itf);
+        mc.getTextureManager().bindTexture(icons_itf);
         mc.mcProfiler.endStartSection("water");
         int water = ((ITFFoodStats) foodStats).getWater();
         for (int temp = 0; temp < 10; temp++) {

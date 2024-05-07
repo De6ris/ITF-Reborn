@@ -9,6 +9,7 @@ public class CommandStatus extends CommandBase {
         return "status";
     }
 
+    @Override
     public int getRequiredPermissionLevel() {
         return 0;
     }
@@ -16,6 +17,11 @@ public class CommandStatus extends CommandBase {
     @Override
     public String getCommandUsage(ICommandSender iCommandSender) {
         return "command.status.usage";
+    }
+
+    @Override
+    public boolean canCommandSenderUseCommand(ICommandSender par1ICommandSender) {
+        return true;
     }
 
     @Override
@@ -27,7 +33,7 @@ public class CommandStatus extends CommandBase {
         String stringBuilder = "胰岛素抗性: " + player.getInsulinResistance() +
                 ", 蛋白质: " + player.getProtein() +
                 ", 植物营养素: " + player.getPhytonutrients() +
-                ", 体温: " + ((ITFPlayer) player).getTemperatureManager().getBodyTemperature();
+                ", 体温: " + String.format("%.2f", ((ITFPlayer) player).getTemperatureManager().getBodyTemperature());
         iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(stringBuilder));
     }
 }

@@ -7,10 +7,11 @@ import net.oilcake.mitelros.entity.misc.EntityWandShockWave;
 import net.oilcake.mitelros.entity.misc.EntityWandSlimeBall;
 
 public class ItemWand extends ItemTool implements IDamageableItem {
-    private Material reinforcement_material;
+    private final Material reinforcement_material;
 
     public ItemWand(int id, Material material) {
         super(id, material);
+        this.reinforcement_material = material;
         setMaxStackSize(1);
         setMaxDamage(192);
         setCreativeTab(CreativeTabs.tabCombat);

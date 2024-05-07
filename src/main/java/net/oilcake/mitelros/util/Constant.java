@@ -7,7 +7,6 @@ import net.oilcake.mitelros.config.ConfigBooleanChallenge;
 import net.oilcake.mitelros.config.ITFConfig;
 
 public class Constant {
-    public static final ResourceLocation icons_itf = new ResourceLocation("textures/gui/icons_mitf.png");
     public static int nextPotionID = 24;
     public static int nextBiomeID = 27;
     public static int nextCurseID = 17;
