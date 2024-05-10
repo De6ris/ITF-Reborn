@@ -20,7 +20,6 @@ public class TemperatureManager {
     public int freezingWarning;
     public int heatWarning;
     public static final double normalTemperature = 37.2D;
-    public static final double standardRoomTemperature = 26.0D;
     private double bodyTemperature = normalTemperature;
 
     public TemperatureManager(EntityPlayer player) {
@@ -68,6 +67,14 @@ public class TemperatureManager {
         int heatUnit = this.findHeatSource();
         double commonFactor = this.calculateCommonFactor();
         return (commonFactor + heatUnit - freezeUnit) * (ITFConfig.TagExtremeClimate.get() ? 3.0d : 1.0d);
+    }
+
+    public boolean feelsHot() {
+        return this.bodyTemperature > normalTemperature;
+    }
+
+    public boolean feelsCold() {
+        return this.bodyTemperature < normalTemperature;
     }
 
     private void checkFreeze() {
@@ -151,10 +158,10 @@ public class TemperatureManager {
         double result = 0.0d;
         int potionEffect = (this.player.isPotionActive(PotionExtend.warm) ? this.player.getActivePotionEffect(PotionExtend.warm).getAmplifier() + 1 : 0)
                 - (this.player.isPotionActive(PotionExtend.cool) ? this.player.getActivePotionEffect(PotionExtend.cool).getAmplifier() + 1 : 0);
-        if (potionEffect * (normalTemperature - this.bodyTemperature) > 0) result += potionEffect * 4;
+        if (potionEffect * (normalTemperature - this.bodyTemperature) > 0) result += potionEffect * 8;
         if (this.player.isBurning()) result += 16;
         result += this.calcArmorHeat();
-        result -= 0.15D * (this.bodyTemperature - standardRoomTemperature) * (ITFConfig.TagExtremeClimate.get() ? 0.33D : 1.0D);
+        result -= (this.bodyTemperature - normalTemperature) * (ITFConfig.TagExtremeClimate.get() ? 0.33D : 1.0D);
         if (debug) System.out.println(result + "deltaed");
 
         World world = this.player.worldObj;
@@ -174,10 +181,9 @@ public class TemperatureManager {
         boolean isRaining = world.isPrecipitating(false);
         if (isRaining && !biome.isDesertBiome()) {
             float rainStrength = world.getRainStrength(1.0f);
-            result -= rainStrength * (isOutdoors ? 8.0f : 4.0f);
+            result -= rainStrength * (isOutdoors ? 4.0f : 1.0f);
         }
-        int time = world.getTimeOfDay();
-        result += sunshine(time) * (isOutdoors ? 2.0f : 1.0f);
+        result += sunshine(world.getTimeOfDay()) * (isOutdoors ? 4.0f : 1.0f) * (biome.isDesertBiome() ? 2.0f : 1.0f);
         if (debug) System.out.println(result + "sunshined");
 
         result += seasonFactor(world.getDayOfWorld());
@@ -280,8 +286,8 @@ public class TemperatureManager {
         for (ItemStack wornItem : this.player.getWornItems()) {
             if (wornItem != null) {
                 heat -= 1;
-                if (wornItem.hasMaterial(Materials.wolf_fur)) heat += 3;
-                if (wornItem.hasMaterial(Material.leather)) heat += 2;
+                if (wornItem.hasMaterial(Materials.wolf_fur)) heat += 3.4;
+                if (wornItem.hasMaterial(Material.leather)) heat += 2.2;
                 if (wornItem.hasMaterial(Materials.ice_chunk)) heat -= 1.4f;
             }
         }
