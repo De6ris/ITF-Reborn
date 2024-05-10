@@ -1,8 +1,9 @@
 package net.oilcake.mitelros.enchantment;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.ITFEnchantment;
 
-public class EnchantmentTemperature extends Enchantment {
+public class EnchantmentTemperature extends Enchantment implements ITFEnchantment {
     protected EnchantmentTemperature(int id, EnumRarity rarity, int difficulty) {
         super(id, rarity, difficulty);
     }
@@ -12,10 +13,10 @@ public class EnchantmentTemperature extends Enchantment {
     }
 
     public String getNameSuffix() {
-        if (this == Enchantments.enchantmentCallOfNether) {
-            return "temperature.callofnether";
-        } else if (this == Enchantments.enchantmentCallOfPolar) {
-            return "temperature.callofpolar";
+        if (this == Enchantments.enchantmentFrostResistance) {
+            return "temperature.frost_immunity";
+        } else if (this == Enchantments.enchantmentHeatResistance) {
+            return "temperature.heat_immunity";
         } else {
             Minecraft.setErrorMessage("getNameSuffix: no handler for " + this);
             return null;

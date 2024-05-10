@@ -4,6 +4,7 @@ import net.minecraft.Block;
 import net.minecraft.ItemDoor;
 import net.minecraft.Material;
 import net.oilcake.mitelros.block.Blocks;
+import net.oilcake.mitelros.block.api.ITFDoor;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,9 +19,7 @@ public class ItemDoorMixin {
 
     @Inject(method = "getBlock", at = @At("HEAD"), cancellable = true)
     private void itfDoor(CallbackInfoReturnable<Block> cir) {
-        if (this.door_material == Materials.nickel)
-            cir.setReturnValue(Blocks.doorNickel);
-        if (this.door_material == Materials.tungsten)
-            cir.setReturnValue(Blocks.doorTungsten);
+        Block itfDoor = ITFDoor.getDoor(this.door_material);
+        if (itfDoor != null) cir.setReturnValue(itfDoor);
     }
 }

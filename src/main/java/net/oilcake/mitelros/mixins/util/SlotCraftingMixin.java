@@ -25,7 +25,7 @@ public abstract class SlotCraftingMixin extends Slot {
     private void inject(ItemStack par1ItemStack, CallbackInfo ci) {
         Item item = par1ItemStack.getItem();
         Block block = (item instanceof ItemBlock) ? ((ItemBlock) item).getBlock() : null;
-        if (item == Items.LeggingsAncientmetalsacred || item == Items.ChestplateAncientmetalsacred || item == Items.HelmetAncientmetalsacred || item == Items.BootsAncientmetalsacred)
+        if (item == Items.leggingsAncientMetalSacred || item == Items.chestplateAncientMetalSacred || item == Items.helmetAncientMetalSacred || item == Items.bootsAncientMetalSacred)
             this.thePlayer.addStat(AchievementExtend.forgingLegend, 1);
         if (item == Items.forgingnote)
             this.thePlayer.addStat(AchievementExtend.copying, 1);
@@ -35,9 +35,9 @@ public abstract class SlotCraftingMixin extends Slot {
             this.thePlayer.addStat(AchievementExtend.getBeacon, 1);
         if (item == Items.mashedCactus)
             this.thePlayer.addStat(AchievementList.seeds, 1);
-        if (item == Items.glowberries || item == Items.Agave)
+        if (item == Items.glowberries || item == Items.agave)
             this.thePlayer.addStat(AchievementExtend.mashedCactus, 1);
-        if (item == Items.Pulque || item == Items.Ale)
+        if (item == Items.pulque || item == Items.ale)
             this.thePlayer.addStat(AchievementExtend.cheersforMinecraft, 1);
         if (item == Items.experimentalPotion)
             this.thePlayer.addStat(AchievementExtend.nochoice, 1);

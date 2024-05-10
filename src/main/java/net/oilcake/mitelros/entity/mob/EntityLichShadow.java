@@ -17,7 +17,7 @@ public class EntityLichShadow extends EntitySkeleton {
     if (num_drops > 0 && !recently_hit_by_player)
       num_drops -= this.rand.nextInt(num_drops + 1); 
     for (int i = 0; i < num_drops; i++)
-      dropItem(Items.AncientmetalArmorPiece.itemID, 1); 
+      dropItem(Items.ancientMetalArmorPiece.itemID, 1);
   }
   
   public void addRandomWeapon() {

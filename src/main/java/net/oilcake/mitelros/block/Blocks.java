@@ -18,7 +18,7 @@ import net.xiaoyu233.fml.util.IdUtil;
 
 public class Blocks {
     private static int getNextBlockID() {
-        if (!ITFConfig.FixID.getBooleanValue()) return IdUtil.getNextBlockID();
+        if (!ITFConfig.FixedID.getBooleanValue()) return IdUtil.getNextBlockID();
         return Constant.nextBlockID--;
     }
 
@@ -204,7 +204,7 @@ public class Blocks {
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 9), true, new ItemStack(flowerextend, 1, 4));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 7), true, new ItemStack(flowerextend, 1, 5));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 1), true, new ItemStack(flowerextend, 1, 6));
-        register.registerShapelessRecipe(new ItemStack(Items.Agave, 1, 1), true, new ItemStack(flowerextend, 1, 7));
+        register.registerShapelessRecipe(new ItemStack(Items.agave, 1, 1), true, new ItemStack(flowerextend, 1, 7));
 
 //        register.registerShapelessRecipe(new ItemStack(Items.glowberries, 1), true, new ItemStack(luminescentHerb, 1));
         for (int i = 0; i <= 4; i++) {

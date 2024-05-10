@@ -2,7 +2,6 @@ package net.oilcake.mitelros.util;
 
 import fi.dy.masa.malilib.config.options.ConfigBase;
 import fi.dy.masa.malilib.config.options.ConfigInteger;
-import net.minecraft.ResourceLocation;
 import net.oilcake.mitelros.config.ConfigBooleanChallenge;
 import net.oilcake.mitelros.config.ITFConfig;
 

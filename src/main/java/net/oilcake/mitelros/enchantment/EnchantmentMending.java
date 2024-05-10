@@ -1,8 +1,9 @@
 package net.oilcake.mitelros.enchantment;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.ITFEnchantment;
 
-public class EnchantmentMending extends Enchantment {
+public class EnchantmentMending extends Enchantment implements ITFEnchantment {
     protected EnchantmentMending(int id, EnumRarity rarity, int difficulty) {
         super(id, rarity, difficulty);
     }

@@ -46,6 +46,10 @@ accessible method net/minecraft/Potion setIconIndex (II)Lnet/minecraft/Potion;
 
 accessible method net/minecraft/GuiContainer drawCreativeTabHoveringText (Ljava/lang/String;II)V
 
+accessible field net/minecraft/WeightedRandomChestContent min_quantity I
+accessible field net/minecraft/WeightedRandomChestContent max_quantity I
+accessible field net/minecraft/WeightedRandomChestContent theItemId Lnet/minecraft/ItemStack;
+
 extendable class net/minecraft/BlockDoor
 accessible class net/minecraft/ContainerRepairINNER2
 accessible class net/minecraft/ComponentNetherBridgePiece

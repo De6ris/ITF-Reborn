@@ -7,18 +7,22 @@ public class EnchantmentSweeping extends Enchantment {
         super(id, rarity, difficulty);
     }
 
+    @Override
     public int getNumLevels() {
-        return 5;
+        return 3;
     }
 
+    @Override
     public String getNameSuffix() {
         return "sweeping";
     }
 
+    @Override
     public boolean canEnchantItem(Item item) {
         return item instanceof ItemScythe;
     }
 
+    @Override
     public boolean isOnCreativeTab(CreativeTabs creativeModeTab) {
         return (creativeModeTab == CreativeTabs.tabCombat);
     }

@@ -8,6 +8,7 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
+import net.oilcake.mitelros.util.FoodDataList;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,15 +31,12 @@ public abstract class ItemMixin implements ITFItem {
     public abstract Material getMaterialForRepairs();
 
     @Shadow
-    protected List materials;
-
-    @Shadow
     @Final
     public int itemID;
     @Unique
-    private int water;
+    private int foodWater;
     @Unique
-    private int temperature;
+    private int foodTemperature;
 
     @Unique
     private String extraInfo;
@@ -61,20 +59,21 @@ public abstract class ItemMixin implements ITFItem {
 
     @Inject(method = "addInformation", at = @At(value = "INVOKE", target = "Lnet/minecraft/Item;getNutrition()I"))
     private void itfFoodInfo(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
-        if (item_stack.getItem() == Items.Agave) {
-            info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.agave", "40%"));
-        } else if (this.water > 0) {
-            info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.add", this.water));
-        } else if (this.water < 0) {
-            info.add(EnumChatFormatting.YELLOW + Translator.getFormatted("item.tooltip.water.minus", this.water));
+        float chanceOfDecreaseWater = FoodDataList.chanceOfDecreaseWater(item_stack.itemID);
+        if (chanceOfDecreaseWater > 0) {
+            info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.chance", Math.round(100.0f * (1.0f - chanceOfDecreaseWater))));
+        } else if (this.foodWater > 0) {
+            info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.add", this.foodWater));
+        } else if (this.foodWater < 0) {
+            info.add(EnumChatFormatting.YELLOW + Translator.getFormatted("item.tooltip.water.minus", this.foodWater));
         }
         if (ReflectHelper.dyCast(this) instanceof ItemMeat meat && meat.is_cooked) {
             info.add(EnumChatFormatting.GOLD + Translator.getFormatted("item.tooltip.temperature.add", 1));
         }
-        if (this.temperature > 0) {
-            info.add(EnumChatFormatting.GOLD + Translator.getFormatted("item.tooltip.temperature.add", this.temperature));
-        } else if (this.temperature < 0) {
-            info.add(EnumChatFormatting.GREEN + Translator.getFormatted("item.tooltip.temperature.minus", -this.temperature));
+        if (this.foodTemperature > 0) {
+            info.add(EnumChatFormatting.GOLD + Translator.getFormatted("item.tooltip.temperature.add", this.foodTemperature));
+        } else if (this.foodTemperature < 0) {
+            info.add(EnumChatFormatting.GREEN + Translator.getFormatted("item.tooltip.temperature.minus", -this.foodTemperature));
         }
     }
 
@@ -89,21 +88,21 @@ public abstract class ItemMixin implements ITFItem {
     }
 
     public int getFoodWater() {
-        return this.water;
+        return this.foodWater;
     }
 
     public void setFoodWater(int water) {
-        this.water = water;
+        this.foodWater = water;
     }
 
     @Override
     public int getFoodTemperature() {
-        return this.temperature;
+        return this.foodTemperature;
     }
 
     @Override
     public void setFoodTemperature(int temperature) {
-        this.temperature = temperature;
+        this.foodTemperature = temperature;
     }
 
     @Override
@@ -120,21 +119,8 @@ public abstract class ItemMixin implements ITFItem {
     @Inject(method = "getRepairItem", at = @At("HEAD"), cancellable = true)
     private void itfRepairItem(CallbackInfoReturnable<Item> cir) {
         Material material_for_repairs = this.getMaterialForRepairs();
-        Item repairItem = itfRepairItem(material_for_repairs);
+        Item repairItem = Materials.getITFRepairItem(material_for_repairs);
         if (repairItem != null) cir.setReturnValue(repairItem);
-    }
-
-    @Unique
-    private static Item itfRepairItem(Material material_for_repairs) {
-        if (material_for_repairs == Materials.nickel)
-            return Items.nickelNugget;
-        if (material_for_repairs == Materials.tungsten)
-            return Items.tungstenNugget;
-        if (material_for_repairs == Materials.ancient_metal_sacred)
-            return Items.AncientmetalArmorPiece;
-        if (material_for_repairs == Materials.uru)
-            return Items.uruNugget;
-        return null;
     }
 
     @WrapOperation(method = "getExclusiveMaterial", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V", ordinal = 1))
@@ -146,7 +132,7 @@ public abstract class ItemMixin implements ITFItem {
     }// TODO blast furnace recipes
 
     @Inject(method = "<clinit>", at = @At("TAIL"))
-    private static void reachBonus(CallbackInfo ci) {
+    private static void setExtraAttributes(CallbackInfo ci) {
         Item.blazeRod.setReachBonus(0.5F);
         Item.shardDiamond.setXPReward(4);
         Item.shardEmerald.setXPReward(3);

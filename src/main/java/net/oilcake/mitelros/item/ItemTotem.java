@@ -1,75 +1,81 @@
 package net.oilcake.mitelros.item;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.entity.misc.EntityLongdeadSentry;
+import net.oilcake.mitelros.util.AchievementExtend;
 
 public class ItemTotem extends Item {
-    private final Material totemMaterial;
-
     public ItemTotem(int id, Material material, String texture) {
         super(id, material, texture);
-        this.totemMaterial = material;
         setMaxStackSize(1);
         setCraftingDifficultyAsComponent(100.0F);
         setCreativeTab(CreativeTabs.tabTools);
     }
 
-    private void performEffectCommon(EntityPlayer player, ItemTotem totem) {
+    public static void trigger(EntityPlayer player, boolean isProactive) {
         player.clearActivePotions();
-        player.setHealth(Math.max(player.getHealth(), 2.0F), true, player.getHealFX());
+        player.setHealth(isProactive ? Math.max(player.getHealth(), 2.0F) : player.getMaxHealth(), true, player.getHealFX());
+        player.entityFX(EnumEntityFX.smoke_and_steam);
         player.makeSound("imported.random.totem_use", 3.0F, 1.0F + player.rand.nextFloat() * 0.1F);
         if (!player.isPlayerInCreative()) {
             player.addPotionEffect(new PotionEffect(Potion.blindness.id, 40, 4));
             player.vision_dimming = 1.0F;
         }
+        if (!isProactive) {
+            player.triggerAchievement(AchievementExtend.cheatdeath);
+        }
     }
 
-    private void performEffectSpecified(EntityPlayer player, ItemTotem totem) {
-        if (player.onClient()) return;
-        Material totem_material = totem.totemMaterial;
-        if (totem_material == Material.gold) {
+    private static void performEffectSpecified(EntityPlayer player, ItemTotem totem) {
+        int itemID = totem.itemID;
+        if (itemID == Items.totemOfFecund.itemID) {
             fecundEffect(player);
-        } else if (totem_material == Material.ancient_metal) {
+        } else if (itemID == Items.totemOfKnowledge.itemID) {
             knowledgeEffect(player);
-        } else if (totem_material == Material.iron) {
+        } else if (itemID == Items.totemOfPreserve.itemID) {
             preserveEffect(player);
-        } else if (totem_material == Materials.nickel) {
+        } else if (itemID == Items.totemOfHunting.itemID) {
             huntingEffect(player);
-        } else if (totem_material == Materials.tungsten) {
+        } else if (itemID == Items.totemOfDestroy.itemID) {
             destroyEffect(player);
-        } else if (totem_material == Materials.adamantium) {
-            EntityLongdeadSentry sentry = new EntityLongdeadSentry(player.worldObj);
-            sentry.setPosition(player.posX, player.posY, player.posZ);
-            sentry.refreshDespawnCounter(-9600);
-            player.worldObj.spawnEntityInWorld(sentry);
-            sentry.onSpawnWithEgg(null);
-            sentry.entityFX(EnumEntityFX.summoned);
-        } else if (totem_material == Material.rusted_iron) {
-            for (int i = 0; i < 8; i++) {
-                player.entityFX(EnumEntityFX.smoke_and_steam);
-            }
-            player.addPotionEffect(new PotionEffect(Potion.resistance.id, 400, 10));
-            player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 400, 127));
-        } else if (totem_material == Material.dirt) {
-            flatten(player, player.worldObj, player.getBlockPosX(), player.getBlockPosY(), player.getBlockPosZ(), ITFConfig.TagTotemBlessing.getBooleanValue() ? 32 : 16);
+        } else if (itemID == Items.totemOfSentry.itemID) {
+            sentryEffect(player);
+        } else if (itemID == Items.totemOfUnknown.itemID) {
+            unknownEffect(player);
+        } else if (itemID == Items.totemOfFlattening.itemID) {
+            flatten(player, player.worldObj, player.getBlockPosX(), player.getBlockPosY(), player.getBlockPosZ(), ITFConfig.TagTotemBlessing.getBooleanValue() ? 15 : 7);
         } else {
-            Minecraft.setErrorMessage("effectSpecified(): Undefined Material " + totem_material.toString() + ".");
+            Minecraft.setErrorMessage("Undefined totem: " + totem.getItemDisplayName());
         }
     }
 
     @Override
     public boolean onItemRightClick(EntityPlayer player, float partial_tick, boolean ctrl_is_down) {
         ItemStack totem = player.getHeldItemStack();
-        if (totem.getItem() instanceof ItemTotem) {
-            performEffectCommon(player, (ItemTotem) totem.getItem());
-            performEffectSpecified(player, (ItemTotem) totem.getItem());
-            if (!player.isPlayerInCreative()) {
-                player.convertOneOfHeldItem(null);
+        if (totem.getItem() instanceof ItemTotem itemTotem) {
+            if (!canTrigger(itemTotem, player)) return false;
+            if (player.onServer()) {
+                trigger(player, true);
+                performEffectSpecified(player, (ItemTotem) totem.getItem());
+                if (!player.isPlayerInCreative()) {
+                    player.convertOneOfHeldItem(null);
+                }
             }
             return true;
         }
         return false;
+    }
+
+    private static boolean canTrigger(ItemTotem itemTotem, EntityPlayer player) {
+        if (itemTotem.itemID == Items.totemOfFlattening.itemID) {
+            return player.worldObj.getDimensionId() == 0 && player.getBlockPosY() >= 60;
+        }
+        if (itemTotem.itemID == Items.totemOfKnowledge.itemID) {
+            return ITFConfig.TagTotemBlessing.getBooleanValue() || ((ITFPlayer) player).getMiscManager().getKnowledgeTotemCounter() < 10;
+        }
+        return true;
     }
 
     private static void huntingEffect(EntityPlayer player) {
@@ -85,6 +91,9 @@ public class ItemTotem extends Item {
             player.entityFX(EnumEntityFX.curse_effect_learned);
         int xpToAdd = player.experience / 5;
         player.addExperience(ITFConfig.TagTotemBlessing.getBooleanValue() ? xpToAdd : Math.min(xpToAdd, 30000));
+        if (!ITFConfig.TagTotemBlessing.getBooleanValue()) {
+            ((ITFPlayer) player).getMiscManager().addKnowledgeTotemCounter();
+        }
     }
 
     private static void fecundEffect(EntityPlayer player) {
@@ -105,18 +114,14 @@ public class ItemTotem extends Item {
     }
 
     private static void flatten(EntityPlayer player, World world, int startX, int y, int startZ, int range) {
-        if (world.getDimensionId() != 0 || y < 60) {
-            destroyEffect(player);
-            return;
-        }
         for (int i = 0; i < 8; i++) {
             player.entityFX(EnumEntityFX.smoke_and_steam);
         }
         BiomeGenBase biome = player.getBiome();
         int surfaceID = biome.isDesertBiome() ? Block.sand.blockID : Block.dirt.blockID;
         int deepID = biome.isDesertBiome() ? Block.sandStone.blockID : Block.stone.blockID;
-        for (int x = startX; x < startX + range; x++) {
-            for (int z = startZ; z < startZ + range; z++) {
+        for (int x = startX - range; x <= startX + range; x++) {
+            for (int z = startZ - range; z <= startZ + range; z++) {
                 world.setBlock(x, y - 5, z, deepID, 0, 2);
                 world.setBlock(x, y - 4, z, deepID, 0, 2);
                 world.setBlock(x, y - 3, z, surfaceID, 0, 2);
@@ -137,5 +142,22 @@ public class ItemTotem extends Item {
             player.entityFX(EnumEntityFX.smoke);
         player.worldObj.createExplosion(player, player.posX, player.posY + 1.5D, player.posZ, 0.0F, 4.0F - 4.0F * delta, true);
         player.setHealth(player.getMaxHealth() / 2.0F, true, player.getHealFX());
+    }
+
+    private static void sentryEffect(EntityPlayer player) {
+        EntityLongdeadSentry sentry = new EntityLongdeadSentry(player.worldObj);
+        sentry.setPosition(player.posX, player.posY, player.posZ);
+        sentry.refreshDespawnCounter(-9600);
+        player.worldObj.spawnEntityInWorld(sentry);
+        sentry.onSpawnWithEgg(null);
+        sentry.entityFX(EnumEntityFX.summoned);
+    }
+
+    private static void unknownEffect(EntityPlayer player) {
+        for (int i = 0; i < 8; i++) {
+            player.entityFX(EnumEntityFX.smoke_and_steam);
+        }
+        player.addPotionEffect(new PotionEffect(Potion.resistance.id, 400, 10));
+        player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 400, 127));
     }
 }

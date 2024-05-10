@@ -24,8 +24,6 @@ public interface ITFPlayer {
 
     int malnourishedLevel();
 
-    int getCurrent_insulin_resistance_lvl();
-
     DrunkManager getDrunkManager();
 
     HuntManager getHuntManager();

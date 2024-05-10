@@ -57,7 +57,7 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
             cir.setReturnValue((item.getHardestMetalMaterial() == Materials.tungsten) ? 4 : ((item.getHardestMetalMaterial() == Material.rusted_iron) ? 2 : 3));
         if (item_id == Items.pieceAdamantium.itemID || item_id == Blocks.oreUru.blockID || item_id == Items.pieceUru.itemID)
             cir.setReturnValue(4);
-        if (item_id == Blocks.oreTungsten.blockID || item_id == Items.pieceMithril.itemID || item_id == Items.pieceTungsten.itemID || item_id == Items.AncientmetalArmorPiece.itemID)
+        if (item_id == Blocks.oreTungsten.blockID || item_id == Items.pieceMithril.itemID || item_id == Items.pieceTungsten.itemID || item_id == Items.ancientMetalArmorPiece.itemID)
             cir.setReturnValue(3);
         if (item_id == Blocks.oreNickel.blockID || item_id == Items.pieceCopper.itemID || item_id == Items.pieceSilver.itemID || item_id == Items.pieceGold.itemID || item_id == Items.pieceGoldNether.itemID || item_id == Items.pieceIron.itemID || item_id == Items.pieceNickel.itemID)
             cir.setReturnValue(2);

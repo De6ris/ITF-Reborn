@@ -2,6 +2,7 @@ package net.oilcake.mitelros.status;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
+import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.item.Materials;
@@ -56,8 +57,8 @@ public class TemperatureManager {
 
     public void update() {
         this.addBodyTemperature(1E-5D * this.getUnit());
-        if (this.bodyTemperature < 0.0D) this.bodyTemperature = 0.0D;
-        if (this.bodyTemperature > 60.0D) this.bodyTemperature = 60.0D;
+        if (this.bodyTemperature < 20.0D) this.bodyTemperature = 20.0D;
+        if (this.bodyTemperature > 50.0D) this.bodyTemperature = 50.0D;
         this.checkFreeze();
         this.checkHeat();
     }
@@ -71,7 +72,7 @@ public class TemperatureManager {
 
     private void checkFreeze() {
         boolean invincible = this.player.inCreativeMode() ||
-                EnchantmentHelper.hasEnchantment(this.player.getCuirass(), Enchantments.enchantmentCallOfNether) ||
+                EnchantmentHelper.hasEnchantment(this.player.getCuirass(), Enchantments.enchantmentFrostResistance) ||
                 this.calcArmorHeat() > 7 ||
                 this.player.isPotionActive(PotionExtend.frost_resistance);
 
@@ -89,12 +90,17 @@ public class TemperatureManager {
             }
         }
 
-        if (freezeLevel >= 4) {
-            this.freezingWarning++;
+        if (freezeLevel >= 2) {
+            this.freezingWarning += freezeLevel - 1;
             this.player.triggerAchievement(AchievementExtend.hypothermia);
-            if (this.freezingWarning > 500) {
-                this.player.addPotionEffect(new PotionEffect(PotionExtend.freeze.id, 20 + (this.freezingWarning >> 3), this.player.isInRain() ? freezeLevel : (freezeLevel - 1)));
-                this.player.attackEntityFrom(new Damage(DamageSourceExtend.freeze, 2.0F));
+            if (this.freezingWarning > 600) {
+                this.player.addPotionEffect(new PotionEffect(PotionExtend.freeze.id, 20 + (this.freezingWarning >> 2), this.player.isInRain() ? freezeLevel : (freezeLevel - 1)));
+                this.player.attackEntityFrom(new Damage(DamageSourceExtend.freeze, 1.0F));
+                if (this.player.getSatiation() > 0) {
+                    this.player.getFoodStats().addNutrition(-1);
+                } else {
+                    this.player.attackEntityFrom(new Damage(DamageSourceExtend.freeze, 1.0F));
+                }
                 this.freezingWarning = 0;
             }
         } else if (this.freezingWarning > 0) {
@@ -102,10 +108,9 @@ public class TemperatureManager {
         }
     }
 
-
     private void checkHeat() {
         boolean invincible = this.player.inCreativeMode() ||
-                EnchantmentHelper.hasEnchantment(this.player.getCuirass(), Enchantments.enchantmentCallOfPolar) ||
+                EnchantmentHelper.hasEnchantment(this.player.getCuirass(), Enchantments.enchantmentHeatResistance) ||
                 this.calcArmorHeat() < -9 ||
                 this.player.isPotionActive(Potion.fireResistance);
 
@@ -123,20 +128,23 @@ public class TemperatureManager {
             }
         }
 
-        if (heatLevel >= 4) {
-            this.heatWarning++;
+        if (heatLevel >= 2) {
+            this.heatWarning += heatLevel - 1;
             this.player.triggerAchievement(AchievementExtend.hyperthermia);
-            if (this.heatWarning > 500) {
-                this.player.attackEntityFrom(new Damage(DamageSourceExtend.heat, 2.0F));
-                ((ITFFoodStats) this.player.getFoodStats()).addWater(-1);
-                this.player.addPotionEffect(new PotionEffect(Potion.confusion.id, 20 + (this.heatWarning >> 3), 1));
+            if (this.heatWarning > 600) {
+                this.player.attackEntityFrom(new Damage(DamageSourceExtend.heat, 1.0F));
+                if (((ITFPlayer) this.player).getWater() > 0) {
+                    ((ITFFoodStats) this.player.getFoodStats()).addWater(-1);
+                } else {
+                    this.player.attackEntityFrom(new Damage(DamageSourceExtend.heat, 1.0F));
+                }
+                this.player.addPotionEffect(new PotionEffect(Potion.confusion.id, 20 + (this.heatWarning >> 2), 1));
                 this.heatWarning = 0;
             }
         } else if (this.heatWarning > 0) {
             this.heatWarning -= 1;
         }
     }
-
 
     private double calculateCommonFactor() {
         boolean debug = false;
@@ -152,7 +160,7 @@ public class TemperatureManager {
         World world = this.player.worldObj;
         switch (world.getDimensionId()) {
             case -1 -> {
-                return result + 24;
+                return result + 36;
             }
             case 1 -> {
                 return result - 4;
@@ -162,8 +170,9 @@ public class TemperatureManager {
             }
         }
         boolean isOutdoors = this.player.isOutdoors();
+        BiomeGenBase biome = world.getBiomeGenForCoords(this.player.getBlockPosX(), this.player.getBlockPosZ());
         boolean isRaining = world.isPrecipitating(false);
-        if (isRaining) {
+        if (isRaining && !biome.isDesertBiome()) {
             float rainStrength = world.getRainStrength(1.0f);
             result -= rainStrength * (isOutdoors ? 8.0f : 4.0f);
         }
@@ -174,7 +183,7 @@ public class TemperatureManager {
         result += seasonFactor(world.getDayOfWorld());
         if (debug) System.out.println(result + "seasoned");
 
-        result += biomeFactor(world.getBiomeGenForCoords(this.player.getBlockPosX(), this.player.getBlockPosZ()));
+        result += biomeFactor(biome);
         if (debug) System.out.println(result + "biomed");
 
         if (this.player.getBlockPosY() > 64) result += heightFactor(this.player.getBlockPosY(), 64);
@@ -195,13 +204,12 @@ public class TemperatureManager {
     public static double biomeFactor(BiomeGenBase biome) {
         float temperature = biome.temperature;
         return temperature == 0.8f ? 0.0d :
-                (temperature > 0.8f ? 1 : -1) * (temperature - 0.8f) * (temperature - 0.8f) * 2.0f;
+                (temperature > 0.8f ? 1 : -1) * (temperature - 0.8f) * (temperature - 0.8f) * 16.0f;
     }
 
     public static double seasonFactor(int day) {
         return 2.0d * Math.sin(0.0490873852123 * (day - 16));
     }
-
 
     public int findFreezeSource() {
         World world = this.player.worldObj;

@@ -87,20 +87,11 @@ public class Materials extends Material {
         melon_ice = new MaterialFood("melon_ice");
         chocolate_smoothie = new MaterialFood("chocolate_smoothie");
         frost = new Material("frost");
-        hot_water = new MaterialFood("hot_water");
+        hot_water = new MaterialLiquid("hot_water", MapColor.waterColor).setCanDouseFire().setDrinkable();
     }
-
 
     public Materials(EnumEquipmentMaterial enum_crafting_material) {
         super(enum_crafting_material);
-    }
-
-    public Materials(String name, MapColor map_color) {
-        super(name, map_color);
-    }
-
-    public Materials(String name) {
-        super(name);
     }
 
     @Override
@@ -117,5 +108,77 @@ public class Materials extends Material {
             return 0.0F;
         Minecraft.setErrorMessage("getDamageVsEntity: unhandled material " + this.name);
         return 0.0F;
+    }
+
+    public static Item getITFRepairItem(Material material_for_repairs) {
+        if (material_for_repairs == Materials.nickel)
+            return Items.nickelNugget;
+        if (material_for_repairs == Materials.tungsten)
+            return Items.tungstenNugget;
+        if (material_for_repairs == Materials.ancient_metal_sacred)
+            return Items.ancientMetalArmorPiece;
+        if (material_for_repairs == Materials.uru)
+            return Items.uruNugget;
+        return null;
+    }
+
+    public static ItemVessel getITFBowl(Material vessel_material, Material contents) {
+        if (vessel_material == Material.wood) {
+            if (contents == Materials.fish_soup)
+                return Items.bowlSalmonSoup;
+            if (contents == Materials.beetroot_soup)
+                return Items.bowlBeetrootSoup;
+            if (contents == Materials.lampchop_stew)
+                return Items.bowlLampchopStew;
+            if (contents == Materials.porkchop_stew)
+                return Items.bowlPorkchopStew;
+            if (contents == Materials.suspicious_water)
+                return Items.bowlWaterSuspicious;
+            if (contents == Materials.dangerous_water)
+                return Items.bowlWaterSwampland;
+            if (contents == Materials.hot_water)
+                return Items.bowlHotWater;
+        }
+        if (vessel_material == Material.hardened_clay) {
+            if (contents == null)
+                return Items.clayBowlEmpty;
+            if (contents == Material.mushroom_stew)
+                return Items.clayBowlMushroomStew;
+            if (contents == Material.milk)
+                return Items.clayBowlMilk;
+            if (contents == Material.water)
+                return Items.clayBowlWater;
+            if (contents == Material.beef_stew)
+                return Items.clayBowlBeefStew;
+            if (contents == Material.chicken_soup)
+                return Items.clayBowlChickenSoup;
+            if (contents == Material.vegetable_soup)
+                return Items.clayBowlVegetableSoup;
+            if (contents == Material.ice_cream)
+                return Items.clayBowlIceCream;
+            if (contents == Material.salad)
+                return Items.clayBowlSalad;
+            if (contents == Material.cream_of_mushroom_soup)
+                return Items.clayBowlCreamOfMushroomSoup;
+            if (contents == Material.cream_of_vegetable_soup)
+                return Items.clayBowlCreamOfVegetableSoup;
+            if (contents == Material.mashed_potato)
+                return Items.clayBowlMashedPotato;
+            if (contents == Material.porridge)
+                return Items.clayBowlPorridge;
+            if (contents == Material.cereal)
+                return Items.clayBowlCereal;
+            if (contents == Materials.lampchop_stew)
+                return Items.clayBowlLampchopSoup;
+            if (contents == Materials.porkchop_stew)
+                return Items.clayBowlPorkchopStew;
+            if (contents == Materials.suspicious_water)
+                return Items.clayBowlWaterSuspicious;
+            if (contents == Materials.dangerous_water)
+                return Items.clayBowlWaterSwampland;
+            if (contents == Materials.hot_water)
+                return Items.clayBowlHotWater;
+        }
+        return null;
     }
 }

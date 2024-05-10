@@ -2,6 +2,7 @@ package net.oilcake.mitelros.util;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
+import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 
@@ -21,15 +22,13 @@ public class FoodDataList {
         return 0;
     }
 
-    public static int foodWater(int id, Material material) {
-        if (material == Material.fruit | id == 135)
+    public static int foodWater(int id, Material material) {// 137 carrot; it is called when initialize
+        if (material == Material.fruit | id == 137  || material == Materials.ice_sucker || material == Materials.melon_ice || material == Materials.chocolate_smoothie)
             return ITFConfig.TagDryDilemma.get() ? 1 : 2;
         if (material == (Materials.glowberries) || material == Materials.peeledSugarcane || material == Materials.agave || material == Materials.mashedCactus)
             return 1;
         if (material == Material.cheese || id == 88 || material == Material.bread || material == Material.desert)
             return -1;
-        if (material == Materials.ice_sucker || material == Materials.melon_ice || material == Materials.chocolate_smoothie)
-            return 2;
         return 0;
     }
 
@@ -65,13 +64,8 @@ public class FoodDataList {
             player.addPotionEffect(new PotionEffect(Potion.confusion.id, 600, 0));
         if (item_stack.hasMaterial(Material.bread) || item_stack.hasMaterial(Material.desert))
             player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
-        if (item_stack.hasMaterial(Materials.glowberries)) {
-            if (rand.nextDouble() > (ITFConfig.TagDryDilemma.get() ? 0.5D : 1.0D))
-                player.addWater(-1);
-        }
-        if (item_stack.hasMaterial(Materials.agave)) {
-            if (rand.nextDouble() > (ITFConfig.TagDryDilemma.get() ? 0.2D : 0.4D))
-                player.addWater(-1);
+        if (rand.nextFloat() < chanceOfDecreaseWater(item_stack.itemID)) {
+            player.addWater(-1);
         }
         if (item_stack.itemID == Item.egg.itemID) {
             if (rand.nextDouble() > (ITFConfig.TagDryDilemma.get() ? 0.5D : 0.25D))
@@ -88,5 +82,11 @@ public class FoodDataList {
                 }
             }
         }
+    }
+
+    public static float chanceOfDecreaseWater(int itemID) {
+        if (itemID == Items.agave.itemID) return ITFConfig.TagDryDilemma.get() ? 0.8F : 0.6F;
+        if (itemID == Items.glowberries.itemID) return ITFConfig.TagDryDilemma.get() ? 0.5F : 0.0F;
+        return 0.0F;
     }
 }

@@ -39,48 +39,6 @@ public class ItemBowlClay extends ItemBowl {
 
     @Override
     public ItemVessel getPeerForContents(Material contents) {
-        return ItemBowlClay.getPeer(this.getVesselMaterial(), contents);
-    }
-
-    public static ItemVessel getPeer(Material vessel_material, Material contents) {
-        if (vessel_material == Material.hardened_clay) {
-            if (contents == null)
-                return Items.clayBowlEmpty;
-            if (contents == Material.mushroom_stew)
-                return Items.clayBowlMushroomStew;
-            if (contents == Material.milk)
-                return Items.clayBowlMilk;
-            if (contents == Material.water)
-                return Items.clayBowlWater;
-            if (contents == Material.beef_stew)
-                return Items.clayBowlBeefStew;
-            if (contents == Material.chicken_soup)
-                return Items.clayBowlChickenSoup;
-            if (contents == Material.vegetable_soup)
-                return Items.clayBowlVegetableSoup;
-            if (contents == Material.ice_cream)
-                return Items.clayBowlIceCream;
-            if (contents == Material.salad)
-                return Items.clayBowlSalad;
-            if (contents == Material.cream_of_mushroom_soup)
-                return Items.clayBowlCreamOfMushroomSoup;
-            if (contents == Material.cream_of_vegetable_soup)
-                return Items.clayBowlCreamOfVegetableSoup;
-            if (contents == Material.mashed_potato)
-                return Items.clayBowlMashedPotato;
-            if (contents == Material.porridge)
-                return Items.clayBowlPorridge;
-            if (contents == Material.cereal)
-                return Items.clayBowlCereal;
-            if (contents == Materials.lampchop_stew)
-                return Items.clayBowlLampchopSoup;
-            if (contents == Materials.porkchop_stew)
-                return Items.clayBowlPorkchopStew;
-            if (contents == Materials.suspicious_water)
-                return Items.clayBowlWaterSuspicious;
-            if (contents == Materials.dangerous_water)
-                return Items.clayBowlWaterSwampland;
-        }
-        return null;
+        return Materials.getITFBowl(this.getVesselMaterial(), contents);
     }
 }

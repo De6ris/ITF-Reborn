@@ -15,8 +15,9 @@ public class S2COpenWindow extends Packet100OpenWindow {
         super();
     }
 
-    public S2COpenWindow(int windowId, int inventoryType, String windowTitle, int slotsCount, boolean useProvidedWindowTitle) {
-        super(windowId, inventoryType, windowTitle, slotsCount, useProvidedWindowTitle);
+    public S2COpenWindow(int windowId, EnumInventoryType enumInventoryType, String windowTitle, int slotsCount, boolean useProvidedWindowTitle) {
+        super(windowId, 255, windowTitle, slotsCount, useProvidedWindowTitle);
+        this.itf_inventoryType = enumInventoryType.getType();
     }
 
     @Override
@@ -81,11 +82,25 @@ public class S2COpenWindow extends Packet100OpenWindow {
         if (this.hasTileEntity() && tile_entity == null) {
             Minecraft.setErrorMessage("handleOpenWindow: no tile entity found at " + StringHelper.getCoordsAsString(this.x, this.y, this.z));
         }
-        if (this.itf_inventoryType == 0) {
+        if (this.itf_inventoryType == EnumInventoryType.EnchantReserver.getType()) {
             ((ITFPlayer) player).displayGUIEnchantReserver(this.x, this.y, this.z, new EnchantReserverSlots(new InventoryBasic(this.windowTitle, this.useProvidedWindowTitle, this.slotsCount)));
             player.openContainer.windowId = this.windowId;
         } else {
             Minecraft.setErrorMessage("handleOpenWindow: type not handled " + this.itf_inventoryType);
+        }
+    }
+
+    public enum EnumInventoryType {
+        EnchantReserver(0);
+
+        final int type;
+
+        EnumInventoryType(int type) {
+            this.type = type;
+        }
+
+        public int getType() {
+            return type;
         }
     }
 }

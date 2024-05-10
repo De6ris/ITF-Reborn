@@ -37,7 +37,7 @@ public abstract class WorldGenDungeonsMixin extends WorldGenerator {
                 new WeightedRandomChestContent(Items.ignitionRustedIron.itemID, 0, 1, 1, 1)
         );
         chest_contents_for_underworld = WeightedRandomChestContent.func_92080_a(chest_contents_for_underworld,
-                new WeightedRandomChestContent(Items.AncientmetalArmorPiece.itemID, 0, 1, 2, 10),
+                new WeightedRandomChestContent(Items.ancientMetalArmorPiece.itemID, 0, 1, 2, 10),
                 new WeightedRandomChestContent(Items.morningStarAncientMetal.itemID, 0, 1, 1, 2),
                 new WeightedRandomChestContent(Items.ignitionAncientMetal.itemID, 0, 1, 1, 2)
         );

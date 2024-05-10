@@ -37,10 +37,10 @@ public class RecipeRegister extends Items {
         register.registerShapelessRecipe(new ItemStack(peeledSugarcane, 2), false, Item.reed, Item.reed);
         register.registerShapelessRecipe(new ItemStack(sulphur, 9), true, new ItemStack(Blocks.blockSulphur, 1));
         register.registerShapelessRecipe(new ItemStack(Item.gunpowder, 5), true, new ItemStack(Items.sulphur, 8), new ItemStack(Item.coal, 1, 1));
-        register.registerShapelessRecipe(new ItemStack(HelmetAncientmetalsacred, 1), true, forgingnote, Item.ingotGold, Item.helmetAncientMetal);
-        register.registerShapelessRecipe(new ItemStack(ChestplateAncientmetalsacred, 1), true, forgingnote, Item.ingotGold, Item.plateAncientMetal);
-        register.registerShapelessRecipe(new ItemStack(LeggingsAncientmetalsacred, 1), true, forgingnote, Item.ingotGold, Item.legsAncientMetal);
-        register.registerShapelessRecipe(new ItemStack(BootsAncientmetalsacred, 1), true, forgingnote, Item.ingotGold, Item.bootsAncientMetal);
+        register.registerShapelessRecipe(new ItemStack(helmetAncientMetalSacred, 1), true, forgingnote, Item.ingotGold, Item.helmetAncientMetal);
+        register.registerShapelessRecipe(new ItemStack(chestplateAncientMetalSacred, 1), true, forgingnote, Item.ingotGold, Item.plateAncientMetal);
+        register.registerShapelessRecipe(new ItemStack(leggingsAncientMetalSacred, 1), true, forgingnote, Item.ingotGold, Item.legsAncientMetal);
+        register.registerShapelessRecipe(new ItemStack(bootsAncientMetalSacred, 1), true, forgingnote, Item.ingotGold, Item.bootsAncientMetal);
         register.registerShapelessRecipe(new ItemStack(tungstenNugget, 1), false, arrowTungsten);
         register.registerShapelessRecipe(new ItemStack(nickelNugget, 1), false, arrowNickel);
         register.registerShapelessRecipe(new ItemStack(mashedCactus, 1), true, Block.cactus);
@@ -51,8 +51,8 @@ public class RecipeRegister extends Items {
         register.registerShapelessRecipe(new ItemStack(Block.ice, 1), true, iceChunk, iceChunk, iceChunk, iceChunk);
         register.registerShapelessRecipe(new ItemStack(seedsBeetroot, 1), false, beetroot, beetroot);
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 1), false, beetroot);
-        register.registerShapelessRecipe(new ItemStack(Pulque, 1), true, Item.sugar, Agave, new ItemStack(Item.potion, 1, 0));//.resetDifficulty(3200);
-        register.registerShapelessRecipe(new ItemStack(Ale, 1), true, Item.sugar, Item.wheat, new ItemStack(Item.potion, 1, 0));//.resetDifficulty(3200);
+        register.registerShapelessRecipe(new ItemStack(pulque, 1), true, Item.sugar, agave, new ItemStack(Item.potion, 1, 0));//.resetDifficulty(3200);
+        register.registerShapelessRecipe(new ItemStack(ale, 1), true, Item.sugar, Item.wheat, new ItemStack(Item.potion, 1, 0));//.resetDifficulty(3200);
         register.registerShapelessRecipe(new ItemStack(clayBowlRaw, 1), false, Item.clay);
         register.registerShapelessRecipe(new ItemStack(tungstenBucket, 1), false, tungstenBucketStone);//.resetDifficulty(100);
         register.registerShapelessRecipe(new ItemStack(nickelBucket, 1), false, nickelBucketStone);//.resetDifficulty(100);

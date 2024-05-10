@@ -65,7 +65,7 @@ generator.default_1_1=Large Biomes(Old)
 
 item.tooltip.water.add=Water+%d
 item.tooltip.water.minus=Water%d
-item.tooltip.water.agave=40% Water+1
+item.tooltip.water.chance=%d%%Water+1
 item.tooltip.reach.add=Reach+%d
 item.tooltip.temperature.add=Warm+%d
 item.tooltip.temperature.minus=Cool+%d
@@ -92,8 +92,8 @@ enchantment.vanishing=Curse Of Vanishing
 enchantment.melting=Melting
 enchantment.absorb=Absorb
 enchantment.destroying=Destroying
-enchantment.temperature.callofnether=Call of Nether
-enchantment.temperature.callofpolar=Call of Polar
+enchantment.temperature.frost_immunity=Frost Immunity
+enchantment.temperature.heat_immunity=Heat Immunity
 enchantment.infinity=Infinity
 enchantment.arrogance=Curse Of Arrogance
 enchantment.sweeping=Sweeping
@@ -394,6 +394,8 @@ item.arrows/magical_arrow.name=Magical Arrow
 item.wand/lava.name=Wand of Lava
 item.wand/ice.name=Wand of Ice
 item.wand/thunder.name=Wand of Thunder
+
+item.loot_pack/lich.name=Lich Loot Pack
 
 itemarrow.tooltip.disable=Disabled by technical issue...
 itemtool.tooltip.slimeresistance=Bonus vs slime

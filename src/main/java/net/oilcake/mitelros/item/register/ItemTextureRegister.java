@@ -134,11 +134,11 @@ public class ItemTextureRegister extends Items {
         event.register("misc/azurite", shardAzurite);
         event.register("records/record_damnation", recordDamnation);
         event.register("records/record_connected", recordConnected);
-        event.register("tools/vibranium_sword", VibraniumSword);
-        event.register("armor/vibranium_helmet", VibraniumHelmet);
-        event.register("armor/vibranium_chestplate", VibraniumChestplate);
-        event.register("armor/vibranium_leggings", VibraniumLeggings);
-        event.register("armor/vibranium_boots", VibraniumBoots);
+        event.register("tools/vibranium_sword", vibraniumSword);
+        event.register("armor/vibranium_helmet", vibraniumHelmet);
+        event.register("armor/vibranium_chestplate", vibraniumChestplate);
+        event.register("armor/vibranium_leggings", vibraniumLeggings);
+        event.register("armor/vibranium_boots", vibraniumBoots);
         event.register("armor/null_helmet", helmetCustom_a);
         event.register("armor/null_chestplate", chestplateCustom_a);
         event.register("armor/null_leggings", leggingsCustom_a);
@@ -147,14 +147,14 @@ public class ItemTextureRegister extends Items {
         event.register("armor/null_chestplate", chestplateCustom_b);
         event.register("armor/null_leggings", leggingsCustom_b);
         event.register("armor/null_boots", bootsCustom_b);
-        event.register("armor/ancient_metal_sacred_helmet", HelmetAncientmetalsacred);
-        event.register("armor/ancient_metal_sacred_chestplate", ChestplateAncientmetalsacred);
-        event.register("armor/ancient_metal_sacred_leggings", LeggingsAncientmetalsacred);
-        event.register("armor/ancient_metal_sacred_boots", BootsAncientmetalsacred);
-        event.register("misc/ancient_metal_armor_piece", AncientmetalArmorPiece);
-        event.register("food/agave", Agave);
-        event.register("misc/pulque", Pulque);
-        event.register("misc/ale", Ale);
+        event.register("armor/ancient_metal_sacred_helmet", helmetAncientMetalSacred);
+        event.register("armor/ancient_metal_sacred_chestplate", chestplateAncientMetalSacred);
+        event.register("armor/ancient_metal_sacred_leggings", leggingsAncientMetalSacred);
+        event.register("armor/ancient_metal_sacred_boots", bootsAncientMetalSacred);
+        event.register("misc/ancient_metal_armor_piece", ancientMetalArmorPiece);
+        event.register("food/agave", agave);
+        event.register("misc/pulque", pulque);
+        event.register("misc/ale", ale);
         event.register("armor/uru_helmet", uruHelmet);
         event.register("armor/uru_chestplate", uruChestplate);
         event.register("armor/uru_leggings", uruLeggings);
@@ -244,5 +244,6 @@ public class ItemTextureRegister extends Items {
         event.register("hardened_clay_bowls/hot_water", clayBowlHotWater).setUnlocalizedName("bowl_hot_water");
         event.register("bowls/hot_water", bowlHotWater).setUnlocalizedName("bowl_hot_water");
         event.register("totem/totem_of_flattening", totemOfFlattening);
+        event.register("loot_pack/lich", lootPackLich);
     }
 }

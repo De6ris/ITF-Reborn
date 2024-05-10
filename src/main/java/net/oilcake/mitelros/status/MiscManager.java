@@ -17,15 +17,27 @@ import java.util.List;
 import static net.oilcake.mitelros.ITFStart.MOD_ID;
 
 public class MiscManager {
-
-    private EntityPlayer player;
+    private final EntityPlayer player;
 
     private int detectorDelay = 0;
+
+    private byte knowledgeTotemCounter = 0;
+
+    public byte getKnowledgeTotemCounter() {
+        return knowledgeTotemCounter;
+    }
+
+    public void setKnowledgeTotemCounter(byte knowledgeTotemCounter) {
+        this.knowledgeTotemCounter = knowledgeTotemCounter;
+    }
+
+    public void addKnowledgeTotemCounter() {
+        this.knowledgeTotemCounter += 1;
+    }
 
     public MiscManager(EntityPlayer player) {
         this.player = player;
     }
-
 
     public float getNickelArmorCoverage() {
         float coverage = 0.0F;
@@ -123,6 +135,15 @@ public class MiscManager {
         }
     }
 
+    public void dimmingUpdate() {
+        if (player.getHealth() < 5.0F && ITFConfig.Realistic.get()) {
+            player.vision_dimming = Math.max(player.vision_dimming, 1.0F - player.getHealthFraction());
+        }
+        if (player.vision_dimming > 0.1F && player.isPlayerInCreative()) {
+            player.vision_dimming = 0.05F;
+        }
+    }
+
     public void curseUpdate() {
         if (player.hasCurse(CurseExtend.fear_of_light)) {
             float light_modifier = (18 - player.worldObj.getBlockLightValue(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY + player.yOffset), MathHelper.floor_double(player.posZ))) / 15.0F;
@@ -154,21 +175,11 @@ public class MiscManager {
             ItemStack var5 = player.getHeldItemStack();
             if (var5 != null && var5.getItem() instanceof ItemTotem) {
                 entityDamageResult.entity_was_destroyed = false;
-                this.activeNegativeUndying();
+                ItemTotem.trigger(this.player, false);
                 player.setHeldItemStack(null);
             }
         }
         return entityDamageResult;
-    }
-
-    public void activeNegativeUndying() {
-        this.player.clearActivePotions();
-        this.player.setHealth(this.player.getMaxHealth(), true, this.player.getHealFX());
-        this.player.entityFX(EnumEntityFX.smoke_and_steam);
-        this.player.makeSound("imported.random.totem_use", 3.0F, 1.0F + this.player.rand.nextFloat() * 0.1F);
-        this.player.addPotionEffect(new PotionEffect(Potion.blindness.id, 40, 4));
-        this.player.vision_dimming += 0.75F;
-        this.player.triggerAchievement(AchievementExtend.cheatdeath);
     }
 
     public void wolfFurCheck() {

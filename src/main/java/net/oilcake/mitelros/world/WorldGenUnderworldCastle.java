@@ -2,16 +2,14 @@ package net.oilcake.mitelros.world;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.entity.boss.EntityLich;
-import net.oilcake.mitelros.item.Items;
+import net.oilcake.mitelros.util.ITFLootTables;
 
 import java.util.Random;
 
 public class WorldGenUnderworldCastle extends WorldGenerator {
     private static final String[] Layer;
 
-    public boolean generate(World par1World, Random random, int x, int y, int z) {
-        while ((par1World.isAirBlock(x, y, z) && y > 144) || y > 160)
-            y--;
+    private boolean checkValidity(World par1World, int x, int y, int z) {
         int var6 = par1World.getBlockId(x + 25, y, z);
         if (!par1World.isUnderworld() && var6 != Block.stone.blockID)
             return false;
@@ -28,11 +26,26 @@ public class WorldGenUnderworldCastle extends WorldGenerator {
         if (!par1World.isUnderworld() && var6 != 0)
             return false;
         var6 = par1World.getBlockId(x, y, z);
-        if (!par1World.isUnderworld() && var6 != Block.stone.blockID)
+        return par1World.isUnderworld() || var6 == Block.stone.blockID;
+    }
+
+    public boolean generate(World par1World, Random random, int x, int y, int z) {
+        if (y > 160) {
+            y = 160;
+        }
+        while (par1World.isAirBlock(x, y, z) && y > 144) {
+            y--;
+        }
+        if (!this.checkValidity(par1World, x, y, z)) {
             return false;
+        }
+        return this.forceGenerate(par1World, random, x, y, z);
+    }
+
+    public boolean forceGenerate(World par1World, Random random, int x, int y, int z) {
         for (int par1 = -25; par1 <= 25; par1++) {
             for (int par2 = -25; par2 <= 25; par2++)
-                par1World.setBlock(x + par1, y, z + par2, getRandomStone(random.nextInt(3)), 0, 2);
+                par1World.setBlock(x + par1, y, z + par2, getRandomStone(random), 0, 2);
         }
         for (int par0 = 0; par0 < 22; par0++) {
             y++;
@@ -42,7 +55,7 @@ public class WorldGenUnderworldCastle extends WorldGenerator {
                 for (int par2 = 25; par2 >= -25; par2--) {
                     char id = Layer[par0].charAt(Builder);
                     if (id != ' ') {
-                        par1World.setBlock(x + par2, y, z + i, getRandomStone(random.nextInt(3)), 0, 2);
+                        par1World.setBlock(x + par2, y, z + i, getRandomStone(random), 0, 2);
                     } else {
                         par1World.setBlockToAir(x + par2, y, z + i);
                     }
@@ -54,7 +67,7 @@ public class WorldGenUnderworldCastle extends WorldGenerator {
                 for (int par2 = -25; par2 <= 25; par2++) {
                     char id = Layer[par0].charAt(Builder);
                     if (id != ' ') {
-                        par1World.setBlock(x + par2, y, z + i, getRandomStone(random.nextInt(3)), 0, 2);
+                        par1World.setBlock(x + par2, y, z + i, getRandomStone(random), 0, 2);
                     } else {
                         par1World.setBlockToAir(x + par2, y, z + i);
                     }
@@ -97,14 +110,11 @@ public class WorldGenUnderworldCastle extends WorldGenerator {
         par1World.setBlock(x - 6, y, z - 6, Block.stairsCobblestone.blockID, 3, 2);
         par1World.setBlock(x + 6, y, z + 6, Block.stairsCobblestone.blockID, 2, 2);
         par1World.setBlock(x - 8, y, z - 5, Block.chestAncientMetal.blockID, Block.chestAncientMetal.getMetadataForDirectionFacing(0, getRandomDirection(random)), 2);
-        WeightedRandomChestContent[] var16 = WeightedRandomChestContent.func_92080_a(getChestContentsForWorld(par1World), Item.enchantedBook.func_92114_b(random), Item.enchantedBook.func_92114_b(random), Item.enchantedBook.func_92114_b(random), Item.enchantedBook.func_92114_b(random));
         TileEntityChest var17 = (TileEntityChest) par1World.getBlockTileEntity(x - 8, y, z - 5);
-        if (var17 != null)
-            WeightedRandomChestContent.generateChestContents(par1World, y, random, var16, (IInventory) var17, 8, null);
+        if (var17 != null) this.fillChest(par1World, y, random, var17);
         par1World.setBlock(x + 8, y, z + 5, Block.chestAncientMetal.blockID, Block.chestAncientMetal.getMetadataForDirectionFacing(0, getRandomDirection(random)), 2);
         var17 = (TileEntityChest) par1World.getBlockTileEntity(x + 8, y, z + 5);
-        if (var17 != null)
-            WeightedRandomChestContent.generateChestContents(par1World, y, random, var16, (IInventory) var17, 8, null);
+        if (var17 != null) this.fillChest(par1World, y, random, var17);
         fillBlocksWithMetadata(par1World, x - 14, x - 10, y, y, z - 5, z - 5, Block.stoneSingleSlab.blockID, 3);
         fillBlocksWithMetadata(par1World, x + 10, x + 14, y, y, z + 5, z + 5, Block.stoneSingleSlab.blockID, 3);
         fillBlocksWithMetadata(par1World, x - 14, x - 10, y, y, z - 6, z - 6, Block.stoneSingleSlab.blockID, 11);
@@ -474,7 +484,7 @@ public class WorldGenUnderworldCastle extends WorldGenerator {
         var11.setLocationAndAngles(x + 0.5D, y + 2.0D, z + 0.5D, 0.0F, 0.0F);
         var11.onSpawnWithEgg(null);
         var11.func_110163_bv();
-        par1World.spawnEntityInWorld((Entity) var11);
+        par1World.spawnEntityInWorld(var11);
         par1World.setBlock(x + 6, y, z, Block.mobSpawner.blockID);
         var18 = (TileEntityMobSpawner) par1World.getBlockTileEntity(x + 6, y, z);
         if (var18 != null) {
@@ -491,12 +501,10 @@ public class WorldGenUnderworldCastle extends WorldGenerator {
         }
         par1World.setBlock(x + 13, y, z, Block.chestAncientMetal.blockID, Block.chestAncientMetal.getMetadataForDirectionFacing(0, getRandomDirection(random)), 2);
         var17 = (TileEntityChest) par1World.getBlockTileEntity(x + 13, y, z);
-        if (var17 != null)
-            WeightedRandomChestContent.generateChestContents(par1World, y, random, var16, (IInventory) var17, 8, null);
+        if (var17 != null) this.fillChest(par1World, y, random, var17);
         par1World.setBlock(x - 13, y, z, Block.chestAncientMetal.blockID, Block.chestAncientMetal.getMetadataForDirectionFacing(0, getRandomDirection(random)), 2);
         var17 = (TileEntityChest) par1World.getBlockTileEntity(x - 13, y, z);
-        if (var17 != null)
-            WeightedRandomChestContent.generateChestContents(par1World, y, random, var16, (IInventory) var17, 8, null);
+        if (var17 != null) this.fillChest(par1World, y, random, var17);
         fillBlocksWithMetadata(par1World, x + 7, x + 7, y, y, z + 2, z + 3, Block.stoneSingleSlab.blockID, 3);
         fillBlocksWithMetadata(par1World, x + 8, x + 8, y, y, z + 2, z + 3, Block.stoneSingleSlab.blockID, 11);
         fillBlocksWithMetadata(par1World, x - 7, x - 7, y, y, z + 2, z + 3, Block.stoneSingleSlab.blockID, 3);
@@ -661,8 +669,12 @@ public class WorldGenUnderworldCastle extends WorldGenerator {
         return (index == 0) ? 1 : ((index >= 6) ? 2 : 0);
     }
 
-    private int getRandomStone(int index) {
-        return (index == 0) ? Block.cobblestoneMossy.blockID : Block.cobblestone.blockID;
+    private int getRandomStone(Random random) {
+        return switch (random.nextInt(3)) {
+            case 0 -> Block.stoneBrick.blockID;
+            case 1 -> Block.cobblestone.blockID;
+            default -> Block.cobblestoneMossy.blockID;
+        };
     }
 
     private int getRandomFence() {
@@ -708,10 +720,6 @@ public class WorldGenUnderworldCastle extends WorldGenerator {
         }
     }
 
-    private static WeightedRandomChestContent[] getChestContentsForWorld(World world) {
-        return chest_contents_for_underworld_castle;
-    }
-
     static {
         Layer = new String[22];
         Layer[0] = "    OOOOO                                 OOOOO      OOOOOOOOO                             OOOOOOOOO   OOOOOOOOOOO                           OOOOOOOOOOO  OOOOOOOOOOO                           OOOOOOOOOOO OOOOOOOOOOOOO                         OOOOOOOOOOOOOOOOOOOOOOOOOOO O O O O O O O O O O O OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO  OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO   OOOOOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOOOOO      OOOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOOO         OOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOO           OOOOOOOOOOOOOOOOO     OOOOOOOOOOOOOOOOOOO           OOOOO                             OOOOO             OOOO                             OOOO              OOOO                             OOOO              OOOO                             OOOO       ";
@@ -738,29 +746,8 @@ public class WorldGenUnderworldCastle extends WorldGenerator {
         Layer[21] = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 OOO                                                                                                                                                                                                                                                       O           O                                      O           O                   ";
     }
 
-    private static final WeightedRandomChestContent[] chest_contents_for_underworld_castle = new WeightedRandomChestContent[]{
-            new WeightedRandomChestContent(Item.ingotAncientMetal.itemID, 0, 3, 5, 10),
-            new WeightedRandomChestContent(Item.ingotGold.itemID, 0, 3, 5, 10),
-            new WeightedRandomChestContent(Item.diamond.itemID, 0, 1, 2, 10),
-            new WeightedRandomChestContent(Items.AncientmetalArmorPiece.itemID, 0, 6, 9, 20),
-            new WeightedRandomChestContent(Item.coinAncientMetal.itemID, 0, 1, 2, 15),
-            new WeightedRandomChestContent(Item.horseArmorMithril.itemID, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Item.horseArmorAncientMetal.itemID, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Items.freezeWand.itemID, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Items.lavaWand.itemID, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Item.warHammerAncientMetal.itemID, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Item.battleAxeAncientMetal.itemID, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Item.swordAncientMetal.itemID, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Item.bootsAncientMetal.itemID, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Item.legsAncientMetal.itemID, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Item.plateAncientMetal.itemID, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Item.helmetAncientMetal.itemID, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Items.ChestplateAncientmetalsacred.itemID, 0, 1, 1, 1),
-            new WeightedRandomChestContent(Items.HelmetAncientmetalsacred.itemID, 0, 1, 1, 1),
-            new WeightedRandomChestContent(Items.BootsAncientmetalsacred.itemID, 0, 1, 1, 1),
-            new WeightedRandomChestContent(Items.LeggingsAncientmetalsacred.itemID, 0, 1, 1, 1),
-            new WeightedRandomChestContent(Items.totemOfKnowledge.itemID, 0, 1, 1, 3),
-            new WeightedRandomChestContent(Items.totemOfSentry.itemID, 0, 1, 1, 3),
-            new WeightedRandomChestContent(Items.totemOfFlattening.itemID, 0, 1, 1, 3)
-    };
+    private void fillChest(World par1World, int y, Random random, TileEntityChest var17) {
+        WeightedRandomChestContent[] lootTable = WeightedRandomChestContent.func_92080_a(ITFLootTables.lichCastle.get(), Item.enchantedBook.func_92114_b(random), Item.enchantedBook.func_92114_b(random), Item.enchantedBook.func_92114_b(random), Item.enchantedBook.func_92114_b(random));
+        WeightedRandomChestContent.generateChestContents(par1World, y, random, lootTable, var17, 8, null);
+    }
 }

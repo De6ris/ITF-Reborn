@@ -1,15 +1,14 @@
 package net.oilcake.mitelros.entity.boss;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.api.ITFEnchantment;
+import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.entity.mob.EntityLichShadow;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.util.AchievementExtend;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+import java.util.Random;
 
 public class EntityLich extends EntityBoneLord implements IBossDisplayData {
     private final EntityAIAvoidEntity aiAvoidPlayerStrategic = new EntityAIAvoidEntity(this, EntityPlayer.class, 6.0F, 1.1D, 1.4D);
@@ -19,6 +18,8 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
     private final EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 
     private final static Item[] totems = new Item[]{Items.totemOfFlattening, Items.totemOfSentry, Items.totemOfKnowledge};
+    private final static Item[] wands = new Item[]{Items.freezeWand, Items.lavaWand};
+    private final static Item[] armors = new Item[]{Items.helmetAncientMetalSacred, Items.chestplateAncientMetalSacred, Items.leggingsAncientMetalSacred, Items.bootsAncientMetalSacred};
 
     private int max_num_evasions;
 
@@ -66,10 +67,10 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
 
     protected void addRandomEquipment() {
         addRandomWeapon();
-        setBoots((new ItemStack(Items.BootsAncientmetalsacred)).randomizeForMob(this, true));
-        setLeggings((new ItemStack(Items.LeggingsAncientmetalsacred)).randomizeForMob(this, true));
-        setCuirass((new ItemStack(Items.ChestplateAncientmetalsacred)).randomizeForMob(this, true));
-        setHelmet((new ItemStack(Items.HelmetAncientmetalsacred)).randomizeForMob(this, true));
+        setBoots((new ItemStack(Items.bootsAncientMetalSacred)).randomizeForMob(this, true));
+        setLeggings((new ItemStack(Items.leggingsAncientMetalSacred)).randomizeForMob(this, true));
+        setCuirass((new ItemStack(Items.chestplateAncientMetalSacred)).randomizeForMob(this, true));
+        setHelmet((new ItemStack(Items.helmetAncientMetalSacred)).randomizeForMob(this, true));
     }
 
     public void onUpdate() {
@@ -254,30 +255,43 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
         setHeldItemStack(item_stack);
     }
 
+    @Override
     public int getExperienceValue() {
         return super.getExperienceValue() * 20;
     }
 
+    @Override
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         this.dropItemStack(new ItemStack(Items.forgingnote.itemID, 1, 0), 0.0F);
-        ItemStack treasureBook = new ItemStack(Item.enchantedBook.itemID, 1, 0);
-        List<Enchantment> treasureList = Arrays.stream(Enchantment.enchantmentsBookList).filter(Objects::nonNull).filter(x -> ((ITFEnchantment) x).isTreasure()).toList();
-        Enchantment chosen = treasureList.get(this.rand.nextInt(treasureList.size()));
-        Item.enchantedBook.addEnchantment(treasureBook, new EnchantmentData(chosen.effectId, chosen.getNumLevels()));
+        ItemStack treasureBook = getRandomTreasureEnchantment(this.rand);
         this.dropItemStack(treasureBook, 0.0F);
         this.dropItem(totems[this.rand.nextInt(totems.length)]);
+        this.dropItemStack(new ItemStack(wands[this.rand.nextInt(wands.length)]).applyRandomItemStackDamageForChest());
+        this.dropItemStack(new ItemStack(armors[this.rand.nextInt(armors.length)]).applyRandomItemStackDamageForChest());
+        this.dropItem(Items.lootPackLich);
         int looting = damage_source.getLootingModifier();
-        int num_drops = this.rand.nextInt(3 + looting) - 1;
-        if (num_drops > 0 && !recently_hit_by_player)
-            num_drops -= this.rand.nextInt(num_drops + 1);
-        for (int i = 0; i < num_drops; i++)
-            dropItem(Items.AncientmetalArmorPiece.itemID, 1);
         if (recently_hit_by_player && !this.has_taken_massive_fall_damage && this.rand.nextInt(getBaseChanceOfRareDrop()) < 5 + looting * 2)
             dropItem(Items.goldenAppleLegend);
         if (recently_hit_by_player && !this.has_taken_massive_fall_damage && this.rand.nextInt(getBaseChanceOfRareDrop()) < 5 + looting * 2)
             dropItemStack(new ItemStack(Item.skull.itemID, 1, 0), 0.0F);
     }
 
+    private static ItemStack getRandomTreasureEnchantment(Random random) {
+        ItemStack treasureBook = new ItemStack(Item.enchantedBook.itemID, 1, 0);
+//        List<Enchantment> treasureList = Arrays.stream(Enchantment.enchantmentsBookList).filter(Objects::nonNull).filter(x -> ((ITFEnchantment) x).isTreasure()).toList();
+//        Enchantment chosen = treasureList.get(random.nextInt(treasureList.size()));
+        Enchantment chosen = switch (random.nextInt(4)) {
+            case 0 -> random.nextBoolean() ? Enchantment.silkTouch : Enchantment.fortune;
+            case 1 -> random.nextBoolean() ? Enchantments.enchantmentFrostResistance : Enchantments.enchantmentHeatResistance;
+            case 2 -> Enchantment.looting;
+            default ->
+                    random.nextBoolean() ? Enchantments.enchantmentMending : (random.nextBoolean() ? Enchantments.enchantmentMoonlightMending : Enchantments.enchantmentSunlightMending);
+        };
+        Item.enchantedBook.addEnchantment(treasureBook, new EnchantmentData(chosen.effectId, chosen.getNumLevels()));
+        return treasureBook;
+    }
+
+    @Override
     public void onDeath(DamageSource par1DamageSource) {
         super.onDeath(par1DamageSource);
         List<Entity> targets = getNearbyEntities(48.0F, 48.0F);

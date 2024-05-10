@@ -121,7 +121,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     public void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
         incrementWindowID();
         TileEntity tile_entity = this.worldObj.getBlockTileEntity(x, y, z);
-        this.playerNetServerHandler.sendPacketToPlayer((new S2COpenWindow(this.currentWindowId, 0, tile_entity.getCustomInvName(), 9, tile_entity.hasCustomName())).setCoords(x, y, z));
+        this.playerNetServerHandler.sendPacketToPlayer((new S2COpenWindow(this.currentWindowId, S2COpenWindow.EnumInventoryType.EnchantReserver, tile_entity.getCustomInvName(), 9, tile_entity.hasCustomName())).setCoords(x, y, z));
         this.openContainer = new ContainerEnchantReserver(slots, this, x, y, z);
         this.openContainer.windowId = this.currentWindowId;
         this.sendContainerAndContentsToPlayer(this.openContainer, ((ContainerEnchantReserver) this.openContainer).getInventory());
@@ -151,6 +151,13 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
         if (this.protein == 0)
             return true;
         return (this.phytonutrients == 0);
+    }
+
+    @Unique
+    private int getCurrent_insulin_resistance_lvl() {
+        if (this.insulin_resistance_level == null)
+            return 0;
+        return this.insulin_resistance_level.ordinal() + 1;
     }
 
     @Inject(method = "getWetnessAndMalnourishmentHungerMultiplier", at = @At("RETURN"), cancellable = true)

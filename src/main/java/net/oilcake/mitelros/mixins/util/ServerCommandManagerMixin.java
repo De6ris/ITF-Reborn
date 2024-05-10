@@ -2,6 +2,7 @@ package net.oilcake.mitelros.mixins.util;
 
 import net.minecraft.CommandHandler;
 import net.minecraft.ServerCommandManager;
+import net.oilcake.mitelros.command.CommandGenerate;
 import net.oilcake.mitelros.command.CommandHunger;
 import net.oilcake.mitelros.command.CommandSetStatus;
 import net.oilcake.mitelros.command.CommandStatus;
@@ -17,5 +18,6 @@ public class ServerCommandManagerMixin extends CommandHandler {
         registerCommand(new CommandHunger());
         registerCommand(new CommandSetStatus());
         registerCommand(new CommandStatus());
+        registerCommand(new CommandGenerate());
     }
 }

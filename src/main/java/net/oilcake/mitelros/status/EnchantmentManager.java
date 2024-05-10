@@ -34,22 +34,19 @@ public class EnchantmentManager {
         }
     }
 
-    public void sweep(float damage) {
+    public void sweep(Entity target, float damage) {
         ItemStack heldItemStack = player.getHeldItemStack();
         if (EnchantmentHelper.hasEnchantment(heldItemStack, Enchantments.enchantmentSweeping)) {
-            List targets = player.getNearbyEntities(5.0F, 5.0F);
-            this.attackMonsters(targets, damage * EnchantmentHelper.getEnchantmentLevelFraction(Enchantments.enchantmentSweeping, heldItemStack));
+            List targets = target.getNearbyEntities(2.0F, 2.0F);
+            targets.removeIf(x -> !(x instanceof EntityLivingBase));
+            this.attackMonsters(targets, damage * 0.4f * EnchantmentHelper.getEnchantmentLevelFraction(Enchantments.enchantmentSweeping, heldItemStack));
         }
     }
 
-    public void attackMonsters(List targets, float damage) {
-        for (int i = 0; i < targets.size(); i++) {
-            EntityLivingBase entityMonster = (targets.get(i) instanceof EntityLivingBase) ? (EntityLivingBase) targets.get(i) : null;
-            if (entityMonster != null
-                    && entityMonster.getDistanceSqToEntity(player) <= player.getReach(EnumEntityReachContext.FOR_MELEE_ATTACK, entityMonster)
-                    && entityMonster.canEntityBeSeenFrom(player.posX, player.getEyePosY(), player.posZ, 5.0D))
-                entityMonster.attackEntityFrom(new Damage(DamageSource.causePlayerDamage(player), damage));
-        }
+    public void attackMonsters(List<EntityLivingBase> targets, float damage) {
+        targets.stream().filter(x -> x != this.player)
+                .filter(x -> x.getDistanceSqToEntity(player) <= Math.pow(player.getReach(EnumEntityReachContext.FOR_MELEE_ATTACK, x), 2))
+                .forEach(x -> x.attackEntityFrom(new Damage(DamageSource.causePlayerDamage(player), damage)));
     }
 
     public void arroganceUpdate() {

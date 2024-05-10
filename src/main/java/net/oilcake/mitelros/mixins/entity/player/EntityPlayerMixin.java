@@ -31,10 +31,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     public InventoryPlayer inventory;
 
     @Shadow
-    public abstract int getExperienceLevel();
-
-
-    @Shadow
     public abstract boolean hasFoodEnergy();
 
     @Unique
@@ -49,9 +45,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     public DiarrheaManager diarrheaManager = new DiarrheaManager(ReflectHelper.dyCast(this));
 
     @Shadow
-    public EnumInsulinResistanceLevel insulin_resistance_level;
-
-    @Shadow
     public PlayerCapabilities capabilities;
 
     @Unique
@@ -64,18 +57,12 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @ModifyReturnValue(method = "getReach(Lnet/minecraft/Block;I)F", at = @At("RETURN"))
     private float addReach(float original) {
-        return original + (this.isPotionActive(PotionExtend.stretch) ? this.getActivePotionEffect(PotionExtend.stretch).getAmplifier() * 1.5F + 1.5F : 0.0F);
+        return original + (this.isPotionActive(PotionExtend.stretch) ? this.getActivePotionEffect(PotionExtend.stretch).getAmplifier() * 1.0F + 1.0F : 0.0F);
     }
 
     @ModifyReturnValue(method = "getReach(Lnet/minecraft/EnumEntityReachContext;Lnet/minecraft/Entity;)F", at = @At("RETURN"))
     private float addReachToEntity(float original) {
-        return original + (this.isPotionActive(PotionExtend.stretch) ? this.getActivePotionEffect(PotionExtend.stretch).getAmplifier() * 1.5F + 1.5F : 0.0F);
-    }
-
-    public int getCurrent_insulin_resistance_lvl() {
-        if (this.insulin_resistance_level == null)
-            return 0;
-        return this.insulin_resistance_level.ordinal() + 1;
+        return original + (this.isPotionActive(PotionExtend.stretch) ? this.getActivePotionEffect(PotionExtend.stretch).getAmplifier() * 0.5F + 0.5F : 0.0F);
     }
 
     @Inject(method = "jump", at = @At("HEAD"), cancellable = true)
@@ -108,7 +95,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Inject(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;heal(FLnet/minecraft/EnumEntityFX;)V", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void sweep(Entity target, CallbackInfo ci, boolean critical, float damage, int knockback, boolean was_set_on_fire, int fire_aspect, EntityDamageResult result, boolean target_was_harmed, int stunning) {
-        this.enchantmentManager.sweep(damage);
+        this.enchantmentManager.sweep(target,damage);
     }
 
     @ModifyExpressionValue(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Ljava/lang/Math;random()D"))
@@ -162,9 +149,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @Shadow
     protected FoodStats foodStats;
 
-    @Shadow
-    public float vision_dimming;
-
     @Unique
     private MiscManager miscManager = new MiscManager(ReflectHelper.dyCast(this));
     @Unique
@@ -174,6 +158,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         return miscManager;
     }
 
+    @Unique
     private WaterManager waterManager = new WaterManager(ReflectHelper.dyCast(this));
 
     @Unique
@@ -187,19 +172,16 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     private void injectTick(CallbackInfo ci) {
         if (!this.worldObj.isRemote) {
             this.miscManager.detectorUpdate();
+            this.miscManager.dimmingUpdate();
             this.diarrheaManager.update();
 //            this.miscManager.curseUpdate(); // TODO this do nothing
             this.huntManager.update();
-            if (Minecraft.inDevMode() && this.vision_dimming > 0.1F && isPlayerInCreative())
-                this.vision_dimming = 0.05F;
             this.waterManager.update();
             this.drunkManager.update1();
             if (ITFConfig.TagTemperature.getBooleanValue()) {
                 this.temperatureManager.update();
             }
             this.drunkManager.update2();
-            if (getHealth() < 5.0F && ITFConfig.Realistic.get())
-                this.vision_dimming = Math.max(this.vision_dimming, 1.0F - getHealthFraction());
         }
         this.feastManager.achievementCheck();
         this.enchantmentManager.arroganceUpdate();
@@ -249,6 +231,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         this.temperatureManager.heatWarning = par1NBTTagCompound.getInteger("HeatWarning");
         this.temperatureManager.setBodyTemperature(par1NBTTagCompound.getFloat("BodyTemperature"));
         this.drunkManager.setDrunk_duration(par1NBTTagCompound.getInteger("DrunkDuration"));
+        this.miscManager.setKnowledgeTotemCounter(par1NBTTagCompound.getByte("KnowledgeTotemUsed"));
     }
 
     @Inject(method = "writeEntityToNBT", at = @At("HEAD"))
@@ -263,6 +246,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         par1NBTTagCompound.setInteger("HeatWarning", this.temperatureManager.heatWarning);
         par1NBTTagCompound.setFloat("BodyTemperature", ((float) this.temperatureManager.getBodyTemperature()));
         par1NBTTagCompound.setInteger("DrunkDuration", this.drunkManager.getDrunk_duration());
+        par1NBTTagCompound.setByte("KnowledgeTotemUsed", this.miscManager.getKnowledgeTotemCounter());
     }
 
     @Inject(method = "checkForArmorAchievements", at = @At("HEAD"))
@@ -294,12 +278,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Inject(method = "fall", at = @At("TAIL"))
     private void TagMovingV2(float par1, CallbackInfo ci) {
-        if (ITFConfig.TagMovingV2.get())
+        if (ITFConfig.Realistic.get())
             this.setSprinting(false);
-    }
-
-    @Shadow
-    public ItemStack[] getWornItems() {
-        return new ItemStack[0];
     }
 }

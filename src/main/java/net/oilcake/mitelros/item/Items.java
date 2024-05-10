@@ -8,6 +8,7 @@ import net.oilcake.mitelros.item.api.*;
 import net.oilcake.mitelros.item.potion.ItemPotionExperimental;
 import net.oilcake.mitelros.item.potion.ItemPotionSuspicious;
 import net.oilcake.mitelros.util.Constant;
+import net.oilcake.mitelros.util.ITFLootTables;
 import net.xiaoyu233.fml.util.IdUtil;
 import net.xiaoyu233.fml.util.ReflectHelper;
 
@@ -262,15 +263,15 @@ public class Items extends Item {
 
     public static final ITFRecord recordConnected = (ITFRecord) (new ITFRecord(2025, "imported.connected", "record_connected", "Connected", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
 
-    public static final ItemArmor VibraniumHelmet = new ItemHelmet(getNextItemID(), Materials.vibranium, false);
+    public static final ItemArmor vibraniumHelmet = new ItemHelmet(getNextItemID(), Materials.vibranium, false);
 
-    public static final ItemArmor VibraniumChestplate = new ItemCuirass(getNextItemID(), Materials.vibranium, false);
+    public static final ItemArmor vibraniumChestplate = new ItemCuirass(getNextItemID(), Materials.vibranium, false);
 
-    public static final ItemArmor VibraniumLeggings = new ItemLeggings(getNextItemID(), Materials.vibranium, false);
+    public static final ItemArmor vibraniumLeggings = new ItemLeggings(getNextItemID(), Materials.vibranium, false);
 
-    public static final ItemArmor VibraniumBoots = new ItemBoots(getNextItemID(), Materials.vibranium, false);
+    public static final ItemArmor vibraniumBoots = new ItemBoots(getNextItemID(), Materials.vibranium, false);
 
-    public static final ItemSword VibraniumSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.vibranium);
+    public static final ItemSword vibraniumSword = ReflectHelper.createInstance(ItemSword.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.vibranium);
 
     public static final ItemArmor helmetCustom_a = new ItemHelmet(getNextItemID(), Materials.custom_a, false);
 
@@ -280,21 +281,21 @@ public class Items extends Item {
 
     public static final ItemArmor bootsCustom_a = new ItemBoots(getNextItemID(), Materials.custom_a, false);
 
-    public static final ItemArmor HelmetAncientmetalsacred = new ItemHelmet(getNextItemID(), Materials.ancient_metal_sacred, false);
+    public static final ItemArmor helmetAncientMetalSacred = new ItemHelmet(getNextItemID(), Materials.ancient_metal_sacred, false);
 
-    public static final ItemArmor ChestplateAncientmetalsacred = new ItemCuirass(getNextItemID(), Materials.ancient_metal_sacred, false);
+    public static final ItemArmor chestplateAncientMetalSacred = new ItemCuirass(getNextItemID(), Materials.ancient_metal_sacred, false);
 
-    public static final ItemArmor LeggingsAncientmetalsacred = new ItemLeggings(getNextItemID(), Materials.ancient_metal_sacred, false);
+    public static final ItemArmor leggingsAncientMetalSacred = new ItemLeggings(getNextItemID(), Materials.ancient_metal_sacred, false);
 
-    public static final ItemArmor BootsAncientmetalsacred = new ItemBoots(getNextItemID(), Materials.ancient_metal_sacred, false);
+    public static final ItemArmor bootsAncientMetalSacred = new ItemBoots(getNextItemID(), Materials.ancient_metal_sacred, false);
 
-    public static final Item AncientmetalArmorPiece = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.ancient_metal_sacred).setCraftingDifficultyAsComponent(800.0F).setUnlocalizedName("ancient_metal_sacred_piece").setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
+    public static final Item ancientMetalArmorPiece = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.ancient_metal_sacred).setCraftingDifficultyAsComponent(800.0F).setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
 
-    public static final ItemFood Agave = (ItemFood) (new ItemFood(getNextItemID(), Materials.agave, 1, 0, false, false, false, "agave")).setMaxStackSize(16).setAlwaysEdible();
+    public static final ItemFood agave = (ItemFood) (new ItemFood(getNextItemID(), Materials.agave, 1, 0, false, false, false, "agave")).setMaxStackSize(16).setAlwaysEdible();
 
-    public static final Item Pulque = (new ItemWine(getNextItemID())).setUnlocalizedName("pulque").setCreativeTab(CreativeTabs.tabFood);
+    public static final Item pulque = (new ItemWine(getNextItemID())).setUnlocalizedName("pulque").setCreativeTab(CreativeTabs.tabFood);
 
-    public static final Item Ale = (new ItemWine(getNextItemID())).setUnlocalizedName("ale").setCreativeTab(CreativeTabs.tabFood);
+    public static final Item ale = (new ItemWine(getNextItemID())).setUnlocalizedName("ale").setCreativeTab(CreativeTabs.tabFood);
 
     public static final ItemBow bowTungsten = new ITFBow(getNextItemID(), Materials.tungsten);
 
@@ -496,10 +497,11 @@ public class Items extends Item {
 
     public static final ItemBowl bowlHotWater = new ItemBowl(getNextItemID(), Materials.hot_water, "bowl_water");
 
-    public static final Item totemOfFlattening = ((ITFItem) (new ItemTotem(getNextItemID(), Material.dirt, "totem"))).setExtraInfo("据说能够平整16x16的土地");
+    public static final Item totemOfFlattening = ((ITFItem) new ItemTotem(getNextItemID(), Material.dirt, "totem")).setExtraInfo("据说能够平整16x16的土地");
+    public static final Item lootPackLich = new ItemLootPack(getNextItemID(), Material.leather, "lootPack", ITFLootTables.lichEntity, 6);
 
     private static int getNextItemID() {
-        if (!ITFConfig.FixID.getBooleanValue()) return IdUtil.getNextItemID();
+        if (!ITFConfig.FixedID.getBooleanValue()) return IdUtil.getNextItemID();
         return Constant.nextItemID++;
     }
 }

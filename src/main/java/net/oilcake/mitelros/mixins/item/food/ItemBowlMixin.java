@@ -4,12 +4,10 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.config.ITFConfig;
-import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.util.FoodDataList;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -75,26 +73,7 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
 
     @Inject(method = "getPeer", at = @At("HEAD"), cancellable = true)
     private static void itfPeer(Material vessel_material, Material contents, CallbackInfoReturnable<ItemVessel> cir) {
-        ItemVessel result = itfPeer(vessel_material, contents);
+        ItemVessel result = Materials.getITFBowl(vessel_material, contents);
         if (result != null) cir.setReturnValue(result);
-    }
-
-    @Unique
-    private static ItemVessel itfPeer(Material vessel_material, Material contents) {
-        if (vessel_material == Material.wood) {
-            if (contents == Materials.fish_soup)
-                return Items.bowlSalmonSoup;
-            if (contents == Materials.beetroot_soup)
-                return Items.bowlBeetrootSoup;
-            if (contents == Materials.lampchop_stew)
-                return Items.bowlLampchopStew;
-            if (contents == Materials.porkchop_stew)
-                return Items.bowlPorkchopStew;
-            if (contents == Materials.suspicious_water)
-                return Items.bowlWaterSuspicious;
-            if (contents == Materials.dangerous_water)
-                return Items.bowlWaterSwampland;
-        }
-        return null;
     }
 }

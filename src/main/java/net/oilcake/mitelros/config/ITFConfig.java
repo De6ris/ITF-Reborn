@@ -56,15 +56,13 @@ public class ITFConfig extends SimpleConfigs {
     public static final ConfigBoolean TagBenchingV2 = new ConfigBoolean("工作站废料回收");
     public static final ConfigBoolean FinalChallenge = new ConfigBoolean("终极挑战模式");
     public static final ConfigBoolean Realistic = new ConfigBoolean("真实状态模拟");
-    public static final ConfigBoolean TagMovingV2 = new ConfigBoolean("新移动模式");
-
 
     /* other */
     public static final ConfigBoolean TemperatureBar = new ConfigBoolean("绘画温度条", true);
     public static final ConfigBoolean NutritionBar = new ConfigBoolean("绘画营养条", true);
 
     //misc
-    public static final ConfigBoolean FixID = new ConfigBoolean("固定ID", false, "(整合包作者需考虑)固定物品ID以及方块ID");
+    public static final ConfigBoolean FixedID = new ConfigBoolean("固定ID", false, "(整合包作者需考虑)固定物品ID以及方块ID");
     public static final ConfigInteger ItemIDStart = new ConfigInteger("物品ID起始点", 4000, 4000, 10000, "明显需要重启, 且有崩档风险, 操作前请备份!");
     public static final ConfigInteger BlockIDStart = new ConfigInteger("方块ID起始点", 4095, 255, 4095, "明显需要重启, 且有崩档风险, 操作前请备份!");
 
@@ -94,10 +92,10 @@ public class ITFConfig extends SimpleConfigs {
         challenge.addAll(enemy);
         challenge.addAll(luck);
 
-        experimental = List.of(TagCreaturesV2, TagBenchingV2, FinalChallenge, Realistic, TagMovingV2, TagTemperature);
+        experimental = List.of(TagCreaturesV2, TagBenchingV2, FinalChallenge, Realistic, TagTemperature);
 
         info = List.of(TemperatureBar, NutritionBar);
-        misc = List.of(FixID, ItemIDStart, BlockIDStart);
+        misc = List.of(FixedID, ItemIDStart, BlockIDStart);
 
         others = new ArrayList<>();
         others.addAll(info);
@@ -175,7 +173,7 @@ public class ITFConfig extends SimpleConfigs {
                 ConfigUtils.readConfigBase(other, "信息显示", info);
                 ConfigUtils.readConfigBase(other, "杂项", misc);
             }
-            if (FixID.getBooleanValue()) {
+            if (FixedID.getBooleanValue()) {
                 Constant.nextItemID = ItemIDStart.get();
                 Constant.nextBlockID = BlockIDStart.get();
             }
