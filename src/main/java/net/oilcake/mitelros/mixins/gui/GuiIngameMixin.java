@@ -29,7 +29,7 @@ public class GuiIngameMixin extends Gui {
         ci.cancel();
     }
 
-    @Inject(locals = LocalCapture.CAPTURE_FAILHARD, method = "func_110327_a(II)V", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/Profiler;endStartSection(Ljava/lang/String;)V", args = "ldc=air", shift = At.Shift.BEFORE))
+    @Inject(locals = LocalCapture.CAPTURE_FAILHARD, method = "func_110327_a(II)V", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/Profiler;startSection(Ljava/lang/String;)V", args = "ldc=armor", shift = At.Shift.BEFORE))
     private void nutritionBar(int par1, int par2, CallbackInfo ci, boolean var3, int var4, int var5, FoodStats var7, int var8, AttributeInstance var10, int var11, int var12, int var13, float var14, float var15) {
         if (ITFConfig.NutritionBar.getBooleanValue()) {
             GuiInGameDrawer.drawNutrientsBar(this, this.mc, var12, var13);
