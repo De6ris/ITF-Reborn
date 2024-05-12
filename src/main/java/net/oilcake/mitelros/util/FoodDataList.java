@@ -74,7 +74,9 @@ public class FoodDataList {
         if (item_stack.getItem() instanceof ItemMeat meat) {
             if (meat.is_cooked) {
                 player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
-                player.addPotionEffect(new PotionEffect(PotionExtend.warm.id, 3000, 0));
+                if (ITFConfig.TagTemperature.getBooleanValue()) {
+                    player.addPotionEffect(new PotionEffect(PotionExtend.warm.id, 3000, 0));
+                }
             } else {
                 if (ITFConfig.TagDigest.get()) return;
                 if (ITFConfig.Realistic.get() || rand.nextInt(4) == 0) {

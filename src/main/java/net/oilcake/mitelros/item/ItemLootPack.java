@@ -21,9 +21,12 @@ public class ItemLootPack extends Item {
     @Override
     public boolean onItemRightClick(EntityPlayer player, float partial_tick, boolean ctrl_is_down) {
         if (player.onServer()) {
+            if (!player.isPlayerInCreative()) {
+                player.convertOneOfHeldItem(null);
+            }
             Random random = player.rand;
-            sendLootToPlayer(player, random , this.lootTableSupplier.get(), this.lootRolls);
-            player.makeSound( "random.orb", 0.1f, 0.5f * ((random.nextFloat() - random.nextFloat()) * 0.7f + 1.8f));
+            sendLootToPlayer(player, random, this.lootTableSupplier.get(), this.lootRolls);
+            player.makeSound("random.orb", 0.1f, 0.5f * ((random.nextFloat() - random.nextFloat()) * 0.7f + 1.8f));
         }
         return true;
     }

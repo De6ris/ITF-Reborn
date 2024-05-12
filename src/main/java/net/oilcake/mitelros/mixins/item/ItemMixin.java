@@ -6,6 +6,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.FoodDataList;
@@ -67,13 +68,15 @@ public abstract class ItemMixin implements ITFItem {
         } else if (this.foodWater < 0) {
             info.add(EnumChatFormatting.YELLOW + Translator.getFormatted("item.tooltip.water.minus", this.foodWater));
         }
-        if (ReflectHelper.dyCast(this) instanceof ItemMeat meat && meat.is_cooked) {
-            info.add(EnumChatFormatting.GOLD + Translator.getFormatted("item.tooltip.temperature.add", 1));
-        }
-        if (this.foodTemperature > 0) {
-            info.add(EnumChatFormatting.GOLD + Translator.getFormatted("item.tooltip.temperature.add", this.foodTemperature));
-        } else if (this.foodTemperature < 0) {
-            info.add(EnumChatFormatting.GREEN + Translator.getFormatted("item.tooltip.temperature.minus", -this.foodTemperature));
+        if (ITFConfig.TagTemperature.getBooleanValue()) {
+            if (ReflectHelper.dyCast(this) instanceof ItemMeat meat && meat.is_cooked) {
+                info.add(EnumChatFormatting.GOLD + Translator.getFormatted("item.tooltip.temperature.add", 1));
+            }
+            if (this.foodTemperature > 0) {
+                info.add(EnumChatFormatting.GOLD + Translator.getFormatted("item.tooltip.temperature.add", this.foodTemperature));
+            } else if (this.foodTemperature < 0) {
+                info.add(EnumChatFormatting.GREEN + Translator.getFormatted("item.tooltip.temperature.minus", -this.foodTemperature));
+            }
         }
     }
 

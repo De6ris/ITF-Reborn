@@ -92,9 +92,9 @@ public class ITFConfig extends SimpleConfigs {
         challenge.addAll(enemy);
         challenge.addAll(luck);
 
-        experimental = List.of(TagCreaturesV2, TagBenchingV2, FinalChallenge, Realistic, TagTemperature);
+        experimental = List.of(TagCreaturesV2, TagBenchingV2, FinalChallenge, Realistic);
 
-        info = List.of(TemperatureBar, NutritionBar);
+        info = List.of(NutritionBar);
         misc = List.of(FixedID, ItemIDStart, BlockIDStart);
 
         others = new ArrayList<>();
@@ -177,6 +177,8 @@ public class ITFConfig extends SimpleConfigs {
                 Constant.nextItemID = ItemIDStart.get();
                 Constant.nextBlockID = BlockIDStart.get();
             }
+            TagTemperature.setBooleanValue(false);
+            TemperatureBar.setBooleanValue(false);
         }
     }
 

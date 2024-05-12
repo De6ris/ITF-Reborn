@@ -1,6 +1,8 @@
 package net.oilcake.mitelros.mixins.item;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.config.ITFConfig;
+import net.oilcake.mitelros.enchantment.EnchantmentTemperature;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -72,6 +74,7 @@ public abstract class ItemEnchantedBookMixin extends Item {
 
     @Unique
     private static void removeEnchantmentsFromMapThatConflict(Map map, ArrayList enchantments) {
+
         for (int i = 0; i < enchantments.size(); ++i) {
             EnchantmentData enchantment_data = (EnchantmentData) enchantments.get(i);
             Enchantment enchantment = enchantment_data.enchantmentobj;
@@ -90,7 +93,7 @@ public abstract class ItemEnchantedBookMixin extends Item {
         HashMap map = new HashMap();
         for (int i = 0; i < Enchantment.enchantmentsList.length; ++i) {
             Enchantment enchantment = Enchantment.get(i);
-            if (enchantment != null) {
+            if (enchantment != null && (ITFConfig.TagTemperature.getBooleanValue() || !(enchantment instanceof EnchantmentTemperature))) {
                 if (enchantment.hasLevels()) {
                     for (int level = enchantment.getNumLevels(); level > 0; --level) {
                         if (enchantment.getMinEnchantmentLevelsCost(level) <= enchantment_levels) {

@@ -4,6 +4,7 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.api.ITFPlayer;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.network.C2SDecreaseWater;
 import net.oilcake.mitelros.util.DamageSourceExtend;
@@ -51,16 +52,18 @@ public class FoodStatsMixin implements ITFFoodStats {
     @Inject(method = "addFoodValue", at = @At("HEAD"))
     private void inject(Item item, CallbackInfo ci) {
         this.addWater(((ITFItem) item).getFoodWater());
-        int temperature = ((ITFItem) item).getFoodTemperature();
-        if (temperature > 0) {
-            player.addPotionEffect(new PotionEffect(PotionExtend.warm.id, 6000, temperature - 1));
-            if (player.getTemperatureManager().feelsCold()) {
-                player.getTemperatureManager().addBodyTemperature(temperature * 0.2D);
-            }
-        } else if (temperature < 0) {
-            player.addPotionEffect(new PotionEffect(PotionExtend.cool.id, 6000, -temperature - 1));
-            if (player.getTemperatureManager().feelsHot()) {
-                player.getTemperatureManager().addBodyTemperature(temperature * 0.2D);
+        if (ITFConfig.TagTemperature.getBooleanValue()) {
+            int temperature = ((ITFItem) item).getFoodTemperature();
+            if (temperature > 0) {
+                player.addPotionEffect(new PotionEffect(PotionExtend.warm.id, 6000, temperature - 1));
+                if (player.getTemperatureManager().feelsCold()) {
+                    player.getTemperatureManager().addBodyTemperature(temperature * 0.2D);
+                }
+            } else if (temperature < 0) {
+                player.addPotionEffect(new PotionEffect(PotionExtend.cool.id, 6000, -temperature - 1));
+                if (player.getTemperatureManager().feelsHot()) {
+                    player.getTemperatureManager().addBodyTemperature(temperature * 0.2D);
+                }
             }
         }
     }
