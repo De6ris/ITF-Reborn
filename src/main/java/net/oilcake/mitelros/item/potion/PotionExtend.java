@@ -14,7 +14,7 @@ public class PotionExtend extends Potion {
     public static final Potion stretch = new PotionExtend(getNextPotionID(), false, 114514).setIconIndex(5, 2).setPotionName("potion.extend.stretch");
     public static final Potion warm = new PotionExtend(getNextPotionID(), false, 16744448).setPotionName("potion.extend.warm");
     public static final Potion cool = new PotionExtend(getNextPotionID(), false, 10092544).setPotionName("potion.extend.cool");
-    public static final Potion frost_resistance = new PotionExtend(getNextPotionID(), false, 10092544).setIconIndex(6, 2).setPotionName("potion.extend.frost_resistance");
+    public static final Potion frostResistance = new PotionExtend(getNextPotionID(), false, 10092544).setIconIndex(6, 2).setPotionName("potion.extend.frost_resistance");
 
     public PotionExtend(int par1, boolean par2, int par3) {
         super(par1, par2, par3);

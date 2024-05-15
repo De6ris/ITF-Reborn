@@ -1,6 +1,6 @@
 package net.oilcake.mitelros;
 
-import fi.dy.masa.malilib.gui.screen.ModsScreen;
+import fi.dy.masa.malilib.config.ConfigManager;
 import net.fabricmc.api.ModInitializer;
 import net.oilcake.mitelros.client.ITFEvent;
 import net.oilcake.mitelros.config.ITFConfig;
@@ -13,6 +13,6 @@ public class ITFStart implements ModInitializer {
     @Override
     public void onInitialize() {
         MITEEvents.MITE_EVENT_BUS.register(new ITFEvent());
-        ModsScreen.getInstance().addConfig(ITFConfig.getInstance());
+        ConfigManager.getInstance().registerConfig(ITFConfig.getInstance());
     }
 }

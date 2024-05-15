@@ -2,21 +2,18 @@ package net.oilcake.mitelros.config;
 
 import fi.dy.masa.malilib.config.SimpleConfigs;
 import fi.dy.masa.malilib.config.interfaces.IConfigResettable;
-import fi.dy.masa.malilib.gui.screen.GuiScreenCommented;
 import fi.dy.masa.malilib.gui.screen.ValueScreen;
+import fi.dy.masa.malilib.gui.screen.interfaces.GuiScreenCommented;
 import net.minecraft.GuiButton;
 import net.minecraft.GuiScreen;
 import net.minecraft.GuiYesNoMITE;
 import net.minecraft.I18n;
 
 public class OtherScreen extends GuiScreenCommented {
-
-    private final GuiScreen parentScreen;
     private final SimpleConfigs configs;
 
     public OtherScreen(GuiScreen parentScreen) {
-        super("其它设置");
-        this.parentScreen = parentScreen;
+        super(parentScreen, "其它设置");
         this.configs = ITFConfig.getInstance();
     }
 
@@ -56,12 +53,5 @@ public class OtherScreen extends GuiScreenCommented {
             }
         }
         this.mc.displayGuiScreen(this);
-    }
-
-    @Override
-    protected void keyTyped(char par1, int par2) {
-        if (par2 == 1) {
-            this.mc.displayGuiScreen(this.parentScreen);
-        }
     }
 }

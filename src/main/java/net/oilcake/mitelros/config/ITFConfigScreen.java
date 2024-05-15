@@ -1,8 +1,8 @@
 package net.oilcake.mitelros.config;
 
 import fi.dy.masa.malilib.config.interfaces.IConfigResettable;
-import fi.dy.masa.malilib.gui.screen.GuiScreenCommented;
 import fi.dy.masa.malilib.gui.screen.ValueScreen;
+import fi.dy.masa.malilib.gui.screen.interfaces.GuiScreenCommented;
 import net.minecraft.GuiButton;
 import net.minecraft.GuiScreen;
 import net.minecraft.GuiYesNoMITE;
@@ -11,13 +11,10 @@ import net.minecraft.I18n;
 import static net.oilcake.mitelros.ITFStart.MOD_ID;
 
 public class ITFConfigScreen extends GuiScreenCommented {
-
-    private final GuiScreen parentScreen;
     private final ITFConfig configs;
 
     public ITFConfigScreen(GuiScreen parentScreen) {
-        super(MOD_ID);
-        this.parentScreen = parentScreen;
+        super(parentScreen, MOD_ID);
         this.configs = ITFConfig.getInstance();
     }
 
@@ -35,25 +32,19 @@ public class ITFConfigScreen extends GuiScreenCommented {
     protected void actionPerformed(GuiButton par1GuiButton) {
         GuiYesNoMITE var3;
         switch (par1GuiButton.id) {
-            case 0:
-                this.mc.displayGuiScreen(new ChallengeScreen(this));
-                break;
-            case 1:
-                this.mc.displayGuiScreen(new ValueScreen(this, "实验性玩法", this.configs.setValues(ITFConfig.experimental)));
-                break;
-            case 2:
-                this.mc.displayGuiScreen(new OtherScreen(this));
-                break;
-            case 3:
+            case 0 -> this.mc.displayGuiScreen(new ChallengeScreen(this));
+            case 1 ->
+                    this.mc.displayGuiScreen(new ValueScreen(this, "实验性玩法", this.configs.setValues(ITFConfig.experimental)));
+            case 2 -> this.mc.displayGuiScreen(new OtherScreen(this));
+            case 3 -> {
                 var3 = new GuiYesNoMITE(this, "真的要重置全部设置吗?", this.configs.getName(), "是", "否", 1);
                 this.mc.displayGuiScreen(var3);
-                break;
-            case 200:
-                this.mc.displayGuiScreen(this.parentScreen);
+            }
+            case 200 -> this.mc.displayGuiScreen(this.parentScreen);
         }
-
     }
 
+    @Override
     public void confirmClicked(boolean par1, int par2) {
         if (par1) {
             if (par2 == 1) {
@@ -62,12 +53,5 @@ public class ITFConfigScreen extends GuiScreenCommented {
             }
         }
         this.mc.displayGuiScreen(this);
-    }
-
-    @Override
-    protected void keyTyped(char par1, int par2) {
-        if (par2 == 1) {
-            this.mc.displayGuiScreen(this.parentScreen);
-        }
     }
 }

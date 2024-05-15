@@ -81,7 +81,7 @@ public class TemperatureManager {
         boolean invincible = this.player.inCreativeMode() ||
                 EnchantmentHelper.hasEnchantment(this.player.getCuirass(), Enchantments.enchantmentFrostResistance) ||
                 this.calcArmorHeat() > 7 ||
-                this.player.isPotionActive(PotionExtend.frost_resistance);
+                this.player.isPotionActive(PotionExtend.frostResistance);
 
         int freezeLevel = invincible ? -1 : (int) ((normalTemperature - this.bodyTemperature) / 3.0D);
 

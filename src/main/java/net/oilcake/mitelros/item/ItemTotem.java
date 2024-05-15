@@ -122,16 +122,16 @@ public class ItemTotem extends Item {
         int deepID = biome.isDesertBiome() ? Block.sandStone.blockID : Block.stone.blockID;
         for (int x = startX - range; x <= startX + range; x++) {
             for (int z = startZ - range; z <= startZ + range; z++) {
-                world.setBlock(x, y - 5, z, deepID, 0, 2);
-                world.setBlock(x, y - 4, z, deepID, 0, 2);
-                world.setBlock(x, y - 3, z, surfaceID, 0, 2);
-                world.setBlock(x, y - 2, z, surfaceID, 0, 2);
-                world.setBlock(x, y - 1, z, surfaceID, 0, 2);
                 world.setBlockToAir(x, y, z);
                 world.setBlockToAir(x, y + 1, z);
                 world.setBlockToAir(x, y + 2, z);
                 world.setBlockToAir(x, y + 3, z);
                 world.setBlockToAir(x, y + 4, z);
+                world.setBlock(x, y - 5, z, deepID, 0, 2);
+                world.setBlock(x, y - 4, z, deepID, 0, 2);
+                world.setBlock(x, y - 3, z, surfaceID, 0, 2);
+                world.setBlock(x, y - 2, z, surfaceID, 0, 2);
+                world.setBlock(x, y - 1, z, surfaceID, 0, 2);
             }
         }
     }

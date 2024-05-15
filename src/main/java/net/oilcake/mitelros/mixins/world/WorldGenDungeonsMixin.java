@@ -51,22 +51,16 @@ public abstract class WorldGenDungeonsMixin extends WorldGenerator {
     @Inject(method = "pickMobSpawner", at = @At("HEAD"), cancellable = true)
     private void pickMobSpawnerITF(World world, Random par1Random, int y, CallbackInfoReturnable<String> cir) {
         if ((ITFConfig.TagMiracleDisaster.get())) {
-            switch (par1Random.nextInt(7)) {
-                case 0:
-                    cir.setReturnValue("Zombie");
-                case 1:
-                    cir.setReturnValue("Ghoul");
-                case 2:
-                    cir.setReturnValue("Skeleton");
-                case 3:
-                    cir.setReturnValue("Spider");
-                case 4:
-                    cir.setReturnValue("Wight");
-                case 5:
-                    cir.setReturnValue("DemonSpider");
-                default:
-                    cir.setReturnValue("Hellhound");
-            }
+            String mob = switch (par1Random.nextInt(7)) {
+                case 0 -> "Zombie";
+                case 1 -> "Ghoul";
+                case 2 -> "Skeleton";
+                case 3 -> "Spider";
+                case 4 -> "Wight";
+                case 5 -> "DemonSpider";
+                default -> "Hellhound";
+            };
+            cir.setReturnValue(mob);
         }
     }
 }

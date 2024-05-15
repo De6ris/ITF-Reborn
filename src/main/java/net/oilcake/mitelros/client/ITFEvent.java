@@ -174,4 +174,21 @@ public class ITFEvent {
         event.register(TileEntityObserver.class, "Observer");
         event.register(TileEntityReceiver.class, "Receiver");
     }
+    @Subscribe
+    public void onSoundsRegister(SoundsRegisterEvent event) {
+        event.register("records/imported/damnation.ogg");
+        event.register("records/imported/connected.ogg");
+        event.register("sound/imported/random/totem_use.ogg");
+        event.register("sound/imported/meme/brainpower.ogg");
+        event.register("sound/imported/mob/spiderking/hit1.ogg");
+        event.register("sound/imported/mob/spiderking/hit1.ogg");
+        event.register("sound/imported/mob/spiderking/hit1.ogg");
+        event.register("sound/imported/mob/spiderking/hit1.ogg");
+        event.register("sound/imported/mob/spiderking/death.ogg");
+        event.register("sound/imported/mob/spiderking/say1.ogg");
+        event.register("sound/imported/mob/spiderking/say2.ogg");
+        event.register("sound/imported/mob/spiderking/say3.ogg");
+        event.register("sound/imported/random/melting.ogg");
+        event.register("sound/imported/random/warning.ogg");
+    }
 }

@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFTileEntityBeacon;
 import net.oilcake.mitelros.block.Blocks;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.xiaoyu233.fml.util.ReflectHelper;
@@ -39,7 +40,10 @@ public abstract class TileEntityBeaconMixin extends TileEntity implements ITFTil
 
     @Override
     public Potion[][] getITFEffectList() {
-        return new Potion[][]{{Potion.fireResistance, PotionExtend.frost_resistance}, {Potion.nightVision, Potion.waterBreathing}, {PotionExtend.stretch}, {Potion.field_76443_y}};
+        if (ITFConfig.TagTemperature.getBooleanValue()) {
+            return new Potion[][]{{Potion.fireResistance, PotionExtend.frostResistance}, {Potion.nightVision, Potion.waterBreathing}, {PotionExtend.stretch}, {Potion.field_76443_y}};
+        }
+        return new Potion[][]{{Potion.fireResistance, Potion.resistance}, {Potion.nightVision, Potion.waterBreathing}, {PotionExtend.stretch}, {Potion.field_76443_y}};
     }
 
     @Inject(method = "setPrimaryEffect", at = @At("HEAD"), cancellable = true)

@@ -4,9 +4,9 @@ import fi.dy.masa.malilib.config.SimpleConfigs;
 import fi.dy.masa.malilib.config.interfaces.IConfigResettable;
 import fi.dy.masa.malilib.config.options.ConfigBase;
 import fi.dy.masa.malilib.config.options.ConfigInteger;
-import fi.dy.masa.malilib.gui.button.GuiButtonCommented;
-import fi.dy.masa.malilib.gui.screen.GuiScreenCommented;
+import fi.dy.masa.malilib.gui.button.interfaces.GuiButtonCommented;
 import fi.dy.masa.malilib.gui.screen.ValueScreen;
+import fi.dy.masa.malilib.gui.screen.interfaces.GuiScreenCommented;
 import net.minecraft.GuiButton;
 import net.minecraft.GuiScreen;
 import net.minecraft.GuiYesNoMITE;
@@ -15,16 +15,14 @@ import net.minecraft.I18n;
 import java.util.function.Consumer;
 
 public class ChallengeScreen extends GuiScreenCommented {
-
-    private final GuiScreen parentScreen;
     private final SimpleConfigs configs;
 
     public ChallengeScreen(GuiScreen parentScreen) {
-        super("挑战设置");
-        this.parentScreen = parentScreen;
+        super(parentScreen,"挑战设置");
         this.configs = ITFConfig.getInstance();
     }
 
+    @Override
     public void initGui() {
         this.buttonList.clear();
 
@@ -37,6 +35,7 @@ public class ChallengeScreen extends GuiScreenCommented {
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, I18n.getString("gui.done")));
     }
 
+    @Override
     protected void actionPerformed(GuiButton par1GuiButton) {
         GuiYesNoMITE var3;
         switch (par1GuiButton.id) {
@@ -63,6 +62,7 @@ public class ChallengeScreen extends GuiScreenCommented {
 
     }
 
+    @Override
     public void confirmClicked(boolean par1, int par2) {
         if (par1) {
             if (par2 == 3) {
@@ -86,12 +86,5 @@ public class ChallengeScreen extends GuiScreenCommented {
             }
         }
         this.mc.displayGuiScreen(this);
-    }
-
-    @Override
-    protected void keyTyped(char par1, int par2) {
-        if (par2 == 1) {
-            this.mc.displayGuiScreen(this.parentScreen);
-        }
     }
 }
