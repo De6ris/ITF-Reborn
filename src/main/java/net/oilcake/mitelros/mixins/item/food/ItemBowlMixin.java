@@ -3,7 +3,6 @@ package net.oilcake.mitelros.mixins.item.food;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
-import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.util.FoodDataList;
@@ -25,31 +24,17 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
     @Inject(method = "onItemUseFinish", at = @At("HEAD"))
     private void itfDrink(ItemStack item_stack, World world, EntityPlayer player, CallbackInfo ci) {
         if (player.onServer()) {
-            if (ITFConfig.Realistic.get()) {
-                if (contains(Materials.dangerous_water)) {
-                    double rand = Math.random();
-                    player.addPotionEffect(new PotionEffect(Potion.poison.id, (int) (450.0D * (1.0D + rand)), 0));
-                    player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
-                }
-                if (contains(Materials.suspicious_water)) {
-                    double rand = Math.random();
-                    if (rand > 0.5D)
-                        player.addPotionEffect(new PotionEffect(Potion.poison.id, (int) (450.0D * (1.0D + rand)), 0));
-                    player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
-                }
-            } else {
-                if (contains(Materials.dangerous_water)) {
-                    double rand = Math.random();
-                    if (rand > 0.2D)
-                        player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
-                    player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
-                }
-                if (contains(Materials.suspicious_water)) {
-                    double rand = Math.random();
-                    if (rand > 0.8D)
-                        player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
-                    player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
-                }
+            if (contains(Materials.dangerous_water)) {
+                double rand = Math.random();
+                if (rand > 0.2D)
+                    player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
+                player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
+            }
+            if (contains(Materials.suspicious_water)) {
+                double rand = Math.random();
+                if (rand > 0.8D)
+                    player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
+                player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
             }
             if (!contains(Material.water) && !contains(Material.milk)) {
                 player.getFeastManager().update(this);

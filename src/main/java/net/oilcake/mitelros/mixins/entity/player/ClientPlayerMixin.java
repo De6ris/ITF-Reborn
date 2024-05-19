@@ -1,6 +1,5 @@
 package net.oilcake.mitelros.mixins.entity.player;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -10,7 +9,6 @@ import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.block.api.ITFWorkbench;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.block.enchantreserver.GuiEnchantReserver;
-import net.oilcake.mitelros.config.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -49,10 +47,5 @@ public abstract class ClientPlayerMixin extends AbstractClientPlayer implements 
             float modifier = ITFWorkbench.getCraftingSpeedModifier(benchMaterial);
             if (modifier != 0.0f) cir.setReturnValue(modifier);
         }
-    }
-
-    @ModifyExpressionValue(method = "setSprinting", at = @At(value = "INVOKE", target = "Lnet/minecraft/ClientPlayer;hasCurse(Lnet/minecraft/Curse;Z)Z"))
-    private boolean cantRun(boolean original) {
-        return original || (getHealth() / 5.0F < 1.0F && ITFConfig.Realistic.get());
     }
 }

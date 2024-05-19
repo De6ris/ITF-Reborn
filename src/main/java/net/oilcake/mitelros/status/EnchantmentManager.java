@@ -7,7 +7,7 @@ import net.oilcake.mitelros.item.potion.PotionExtend;
 import java.util.List;
 
 public class EnchantmentManager {
-    private EntityPlayer player;
+    private final EntityPlayer player;
 
     public EnchantmentManager(EntityPlayer player) {
         this.player = player;
@@ -100,7 +100,7 @@ public class EnchantmentManager {
     public void lightMendingUpdate() {
         if (this.player.isInSunlight()) {
             ItemStack holding = this.player.getHeldItemStack();
-            if (holding != null && holding.getItemDamage() > 0 && this.sunlight(holding)) {
+            if (holding != null && holding.getItemDamage() > 0 && this.sunlight(holding) && !this.player.isBlocking()) {
                 holding.setItemDamage(holding.getItemDamage() - 1);
             }
             ItemStack[] armors = this.player.getWornItems();
@@ -116,7 +116,7 @@ public class EnchantmentManager {
             int z = MathHelper.floor_double(this.player.posZ);
             if (!world.isDaytime() && world.canBlockSeeTheSky(x, y, z)) {
                 ItemStack holding = this.player.getHeldItemStack();
-                if (holding != null && holding.getItemDamage() > 0 && this.moonlight(holding)) {
+                if (holding != null && holding.getItemDamage() > 1 && this.moonlight(holding) && !this.player.isBlocking()) {
                     holding.setItemDamage(holding.getItemDamage() - 2);
                 }
                 ItemStack[] armors = this.player.getWornItems();

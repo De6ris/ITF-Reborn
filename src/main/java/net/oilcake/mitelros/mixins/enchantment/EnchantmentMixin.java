@@ -15,7 +15,8 @@ public abstract class EnchantmentMixin implements ITFEnchantment {
     @Final
     public int effectId;
 
-    @Shadow public EnumRarity rarity;
+    @Shadow
+    public EnumRarity rarity;
 
     @ModifyReturnValue(method = "getWeight", at = @At("RETURN"))
     private int resetWeight(int original) {
@@ -34,7 +35,6 @@ public abstract class EnchantmentMixin implements ITFEnchantment {
 
     @Override
     public boolean isTreasure() {
-        int id = this.effectId;
-        return id == Enchantment.silkTouch.effectId || id == Enchantment.fortune.effectId || id == Enchantment.looting.effectId;
+        return false;
     }
 }

@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Materials;
-import net.oilcake.mitelros.util.QualityHandler;
+import net.oilcake.mitelros.util.EnumQualityEffect;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -37,7 +37,7 @@ public abstract class ItemStackMixin {
     @Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/Item;addInformationBeforeEnchantments(Lnet/minecraft/ItemStack;Lnet/minecraft/EntityPlayer;Ljava/util/List;ZLnet/minecraft/Slot;)V"), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void inject(EntityPlayer par1EntityPlayer, boolean par2, Slot slot, CallbackInfoReturnable<List> cir, ArrayList var3, Item var4, String var5, boolean is_map) {
         if (par2 && var4.hasQuality()) {
-            String description = QualityHandler.getQualityInfo(var4, this.getQuality());
+            String description = EnumQualityEffect.getQualityInfo(var4, this.getQuality());
             if (description != null) {
                 var3.add(EnumChatFormatting.GRAY + description);
             }

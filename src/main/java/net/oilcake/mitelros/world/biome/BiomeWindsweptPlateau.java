@@ -16,22 +16,25 @@ public class BiomeWindsweptPlateau extends BiomeGenBase {
         removeEntityFromSpawnableLists(EntityPig.class);
         this.spawnableMonsterList.add(new SpawnListEntry(EntityStray.class, 100, 1, 4));
         this.spawnableCreatureList.add(new SpawnListEntry(EntityDireWolf.class, 20, 3, 6));
-        this.theBiomeDecorator.flowersPerChunk = -999;
+        this.theBiomeDecorator.flowersPerChunk = 0;
         this.theBiomeDecorator.grassPerChunk = 1;
-        ((ITFBiomeDecorator) this.theBiomeDecorator).setFlowersExtendPerChunk(-999);
+        ((ITFBiomeDecorator) this.theBiomeDecorator).setFlowersExtendPerChunk(0);
         this.topBlock = (byte) Block.grass.blockID;
         this.fillerBlock = (byte) Block.cobblestone.blockID;
         setColor(10526880);
         setBiomeName("WindsweptPlateau");
         setEnableSnow();
-        setMinMaxHeight(0.9F, 4.0F);
-        setTemperatureRainfall(0.0F, 0.5F);
+        this.minHeight = 0.9F;
+        this.maxHeight = 4.0F;
+        this.setTemperatureRainfall(0.0F, 0.5F);
     }
 
+    @Override
     public WorldGenerator getRandomWorldGenForTrees(Random par1Random) {
         return (par1Random.nextInt(3) == 0) ? new WorldGenTaiga1() : new WorldGenTaiga2(false);
     }
 
+    @Override
     public void decorate(World par1World, Random par2Random, int par3, int par4) {
         super.decorate(par1World, par2Random, par3, par4);
         if (par2Random.nextInt(150) == 0) {
@@ -81,19 +84,5 @@ public class BiomeWindsweptPlateau extends BiomeGenBase {
             int z = par4 + par2Random.nextInt(16);
             genMinable.generate(par1World, par2Random, x, y, z);
         }
-    }
-
-    private BiomeGenBase setMinMaxHeight(float par1, float par2) {
-        this.minHeight = par1;
-        this.maxHeight = par2;
-        return this;
-    }
-
-    private BiomeGenBase setTemperatureRainfall(float par1, float par2) {
-        if (par1 > 0.1F && par1 < 0.2F)
-            throw new IllegalArgumentException("Please avoid temperatures in the range 0.1 - 0.2 because of snow");
-        this.temperature = par1;
-        this.rainfall = par2;
-        return this;
     }
 }

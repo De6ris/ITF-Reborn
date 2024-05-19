@@ -9,8 +9,7 @@ import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
-import net.oilcake.mitelros.util.CurseExtend;
-import net.oilcake.mitelros.util.QualityHandler;
+import net.oilcake.mitelros.util.EnumQualityEffect;
 
 import java.util.List;
 
@@ -62,46 +61,11 @@ public class MiscManager {
             str_vs_block *= 1.0F - (player.getActivePotionEffect(PotionExtend.freeze).getAmplifier() + 1) * 0.5F;
         if (ITFConfig.FinalChallenge.get())
             str_vs_block *= 1.0F - Constant.calculateCurrentDifficulty() / 100.0F;
-        if (ITFConfig.Realistic.get())
-            str_vs_block *= Math.min((float) Math.pow(player.getHealth(), 2.0D) / 25.0F, 1.0F);
         ItemStack held_item = player.getHeldItemStack();
         if (held_item != null && held_item.getItem() instanceof ItemTool) {
-            str_vs_block *= 1.0F + (QualityHandler.getQualityAmplifier(held_item.getQuality()) * 3.0F) / 100.0F;
+            str_vs_block *= 1.0F + (EnumQualityEffect.getQualityMultiplier(held_item.getQuality(), EnumQualityEffect.Digging) / 100.0F);
         }
         return str_vs_block;
-    }
-
-    public boolean itfLadder() {
-        int x = MathHelper.floor_double(player.posX);
-        int y = MathHelper.floor_double(player.boundingBox.minY);
-        int z = MathHelper.floor_double(player.posZ);
-        int var0 = player.worldObj.getBlockId(x, y, z);
-        if (var0 == Block.ladder.blockID || var0 == Block.vine.blockID)
-            return true;
-        float yaw = player.rotationYaw % 360.0F;
-        if (yaw < -45.0F)
-            yaw += 360.0F;
-        int towards = (int) ((yaw + 45.0F) % 360.0F) / 90;
-        switch (towards) {
-            case 0:
-                z++;
-                break;
-            case 1:
-                x--;
-                break;
-            case 2:
-                z--;
-                break;
-            case 3:
-                x++;
-                break;
-            default:
-                Minecraft.setErrorMessage("isOnLadder: Undefined Facing : " + towards + ".");
-                break;
-        }
-        Block block1 = player.worldObj.getBlock(x, y, z);
-        Block block2 = player.worldObj.getBlock(x, y + 1, z);
-        return ((player.fallDistance == 0.0F && block1 != null && block1.isSolid(0) && block2 == null) || (block2 != null && !block2.isSolid(0)));
     }
 
     public void detectorUpdate() {
@@ -132,26 +96,6 @@ public class MiscManager {
                     detectorDelay += (int) (38.0F * range_div);
                 }
             }
-        }
-    }
-
-    public void dimmingUpdate() {
-        if (player.getHealth() < 5.0F && ITFConfig.Realistic.get()) {
-            player.vision_dimming = Math.max(player.vision_dimming, 1.0F - player.getHealthFraction());
-        }
-        if (player.vision_dimming > 0.1F && player.isPlayerInCreative()) {
-            player.vision_dimming = 0.05F;
-        }
-    }
-
-    public void curseUpdate() {
-        if (player.hasCurse(CurseExtend.fear_of_light)) {
-            float light_modifier = (18 - player.worldObj.getBlockLightValue(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY + player.yOffset), MathHelper.floor_double(player.posZ))) / 15.0F;
-            if (light_modifier >= 0.5F || player.hasCurse(CurseExtend.fear_of_light, true)) ;
-        }
-        if (player.hasCurse(CurseExtend.fear_of_darkness)) {
-            float light_modifier = (player.worldObj.getBlockLightValue(MathHelper.floor_double(player.posX), MathHelper.floor_double(player.posY + player.yOffset), MathHelper.floor_double(player.posZ)) + 3) / 15.0F;
-            if (light_modifier >= 0.5F || player.hasCurse(CurseExtend.fear_of_darkness, true)) ;
         }
     }
 

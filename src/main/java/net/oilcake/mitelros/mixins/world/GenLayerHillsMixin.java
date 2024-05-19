@@ -4,6 +4,7 @@ import net.minecraft.BiomeGenBase;
 import net.minecraft.GenLayer;
 import net.minecraft.GenLayerHills;
 import net.minecraft.IntCache;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.world.BiomeBases;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -41,19 +42,35 @@ public class GenLayerHillsMixin extends GenLayer {
                     int var10 = var9;
                     if (var9 == BiomeGenBase.desert.biomeID) {
                         var10 = BiomeGenBase.desertHills.biomeID;
-                    } else if (var9 == BiomeGenBase.forest.biomeID) {
-                        var10 = BiomeGenBase.forestHills.biomeID;
+                    } else if (var9 == BiomeGenBase.forest.biomeID) {// changed
+                        if (ITFConfig.TagBetterBiome.getBooleanValue()) {
+                            var10 = switch ((int) (this.chunkSeed % 3L)) {
+                                case 0 -> BiomeBases.BIOME_SAVANNA.biomeID;
+                                case 1 -> BiomeBases.BIOME_SAVANNA_PLEATU.biomeID;
+                                default -> BiomeGenBase.forestHills.biomeID;
+                            };
+                        } else {
+                            var10 = BiomeGenBase.forestHills.biomeID;
+                        }
                     } else if (var9 == BiomeGenBase.taiga.biomeID) {
                         var10 = BiomeGenBase.taigaHills.biomeID;
-                    } else if (var9 == BiomeGenBase.plains.biomeID) {
-                        var10 = BiomeGenBase.forest.biomeID;
+                    } else if (var9 == BiomeGenBase.plains.biomeID) {// changed
+                        if (ITFConfig.TagBetterBiome.getBooleanValue()) {
+                            var10 = switch ((int) (this.chunkSeed % 3L)) {
+                                case 0 -> BiomeBases.BIOME_SAVANNA.biomeID;
+                                case 1 -> BiomeBases.BIOME_SAVANNA_PLEATU.biomeID;
+                                default -> BiomeGenBase.forest.biomeID;
+                            };
+                        } else {
+                            var10 = BiomeGenBase.forest.biomeID;
+                        }
                     } else if (var9 == BiomeGenBase.icePlains.biomeID) {// TODO change start
                         var10 = (this.chunkSeed % 2L == 0L) ? BiomeBases.BIOME_WINDSWEPT_PLEATU.biomeID : BiomeGenBase.iceMountains.biomeID;
                     } else if (var9 == BiomeGenBase.jungle.biomeID) {
                         var10 = BiomeGenBase.jungleHills.biomeID;
                     } else if (var9 == BiomeBases.BIOME_SAVANNA.biomeID) {
                         var10 = BiomeBases.BIOME_SAVANNA_PLEATU.biomeID;
-                    }// TODO change end
+                    }// change end
                     if (var10 == var9) {
                         var6[var8 + var7 * par3] = var9;
                     } else {

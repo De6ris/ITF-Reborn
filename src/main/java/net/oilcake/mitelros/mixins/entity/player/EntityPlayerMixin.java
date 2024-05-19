@@ -30,9 +30,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @Shadow
     public InventoryPlayer inventory;
 
-    @Shadow
-    public abstract boolean hasFoodEnergy();
-
     @Unique
     public NewPlayerManager newPlayerManager = new NewPlayerManager();
 
@@ -65,22 +62,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         return original + (this.isPotionActive(PotionExtend.stretch) ? this.getActivePotionEffect(PotionExtend.stretch).getAmplifier() * 0.5F + 0.5F : 0.0F);
     }
 
-    @Inject(method = "jump", at = @At("HEAD"), cancellable = true)
-    private void cancel(CallbackInfo ci) {
-        if ((getHealth() > 5.0F && this.capabilities.getWalkSpeed() >= 0.05F && hasFoodEnergy()) || !ITFConfig.Realistic.get()) {
-            return;
-        }
-        ci.cancel();
-    }
-
-    @Override // TODO bad override
-    public boolean isOnLadder() {
-        if (ITFConfig.Realistic.get() && (getHealth() <= 5.0F || this.capabilities.getWalkSpeed() < 0.05F || !hasFoodEnergy())) {
-            return this.miscManager.itfLadder();
-        }
-        return super.isOnLadder();
-    }
-
     @Inject(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;isSprinting()Z"), cancellable = true)
     private void explosion(Entity target, CallbackInfo ci) {
         this.enchantmentManager.destroy(target);
@@ -95,7 +76,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Inject(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;heal(FLnet/minecraft/EnumEntityFX;)V", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void sweep(Entity target, CallbackInfo ci, boolean critical, float damage, int knockback, boolean was_set_on_fire, int fire_aspect, EntityDamageResult result, boolean target_was_harmed, int stunning) {
-        this.enchantmentManager.sweep(target,damage);
+        this.enchantmentManager.sweep(target, damage);
     }
 
     @ModifyExpressionValue(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Ljava/lang/Math;random()D"))
@@ -172,9 +153,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     private void injectTick(CallbackInfo ci) {
         if (!this.worldObj.isRemote) {
             this.miscManager.detectorUpdate();
-            this.miscManager.dimmingUpdate();
             this.diarrheaManager.update();
-//            this.miscManager.curseUpdate(); // TODO this do nothing
             this.huntManager.update();
             this.waterManager.update();
             this.drunkManager.update1();
@@ -274,11 +253,5 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @ModifyArg(method = "getCurrentPlayerStrVsBlock", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F"), index = 0)
     private float itfModify(float str_vs_block) {
         return this.miscManager.calculateITFStv(str_vs_block);
-    }
-
-    @Inject(method = "fall", at = @At("TAIL"))
-    private void TagMovingV2(float par1, CallbackInfo ci) {
-        if (ITFConfig.Realistic.get())
-            this.setSprinting(false);
     }
 }

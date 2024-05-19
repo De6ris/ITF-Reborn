@@ -23,7 +23,7 @@ public class FoodDataList {
     }
 
     public static int foodWater(int id, Material material) {// 137 carrot; it is called when initialize
-        if (material == Material.fruit | id == 137  || material == Materials.ice_sucker || material == Materials.melon_ice || material == Materials.chocolate_smoothie)
+        if (material == Material.fruit | id == 137 || material == Materials.ice_sucker || material == Materials.melon_ice || material == Materials.chocolate_smoothie)
             return ITFConfig.TagDryDilemma.get() ? 1 : 2;
         if (material == (Materials.glowberries) || material == Materials.peeledSugarcane || material == Materials.agave || material == Materials.mashedCactus)
             return 1;
@@ -79,7 +79,7 @@ public class FoodDataList {
                 }
             } else {
                 if (ITFConfig.TagDigest.get()) return;
-                if (ITFConfig.Realistic.get() || rand.nextInt(4) == 0) {
+                if (rand.nextInt(4) == 0) {
                     player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (120.0D * (1.0D + rand.nextDouble())), 0));
                 }
             }

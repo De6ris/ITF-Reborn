@@ -16,14 +16,9 @@ public class ItemPotionSuspicious extends Item {
     public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
         double rand = Math.random();
         if (player.onServer()) {
-            if (ITFConfig.Realistic.get()) {
-                player.addPotionEffect(new PotionEffect(Potion.poison.id, (int) (450.0D * (1.0D + rand)), 0));
-                player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
-            } else {
-                if (rand > (ITFConfig.TagDigest.get() ? 1.0D : 0.8D))
-                    player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
-                player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
-            }
+            if (rand > (ITFConfig.TagDigest.get() ? 1.0D : 0.8D))
+                player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
+            player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
             if (rand == 0.0D) {
                 player.getFoodStats().addNutrition(1);
                 player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("欢迎来到Double随机等于0的欧皇大殿").setColor(EnumChatFormatting.AQUA));

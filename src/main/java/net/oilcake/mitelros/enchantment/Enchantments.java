@@ -24,12 +24,12 @@ public class Enchantments {
 
     public static final Enchantment enchantmentSweeping = new EnchantmentSweeping(IdUtil.getNextEnchantmentID(), EnumRarity.rare, 10);
 
-    public static final Enchantment enchantmentMending = new EnchantmentMending(IdUtil.getNextEnchantmentID(), EnumRarity.epic, 20);// TODO deal with ultimate
+    public static final Enchantment enchantmentMending = new EnchantmentMending(IdUtil.getNextEnchantmentID(), EnumRarity.epic, 20);
     public static final Enchantment enchantmentSunlightMending = new EnchantmentMending(IdUtil.getNextEnchantmentID(), EnumRarity.epic, 20);
     public static final Enchantment enchantmentMoonlightMending = new EnchantmentMending(IdUtil.getNextEnchantmentID(), EnumRarity.epic, 20);
     public static final Enchantment enchantmentHeatResistance = new EnchantmentTemperature(IdUtil.getNextEnchantmentID(), EnumRarity.uncommon, 10);
 
-    public static void registerEnchantments(EnchantmentRegistryEvent event) {// TODO enchantments still work
+    public static void registerEnchantments(EnchantmentRegistryEvent event) {
 //        event.registerEnchantment(enchantmentMelting, enchantmentAbsorb, enchantmentVanishing, enchantmentDestroying, enchantmentCallofNether, enchantmentInfinity, enchantmentArrogance, enchantmentThresher, enchantmentSweeping, enchantmentMending);
     }
 }

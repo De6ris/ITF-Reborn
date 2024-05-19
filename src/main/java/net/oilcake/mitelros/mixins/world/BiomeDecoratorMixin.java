@@ -6,6 +6,7 @@ import net.minecraft.WorldGenMinable;
 import net.oilcake.mitelros.api.ITFBiomeDecorator;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.world.WorldGenFlowersExtend;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -64,14 +65,13 @@ public abstract class BiomeDecoratorMixin implements ITFBiomeDecorator {
         }
     }
 
-    @Inject(method = "decorate(Lnet/minecraft/World;Ljava/util/Random;II)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/BiomeDecorator;decorate()V", shift = At.Shift.AFTER))
-    private void Injector_world_decorate(CallbackInfo c) {
-        Random random_test = new Random();
+    @Inject(method = "decorate()V", at = @At(value = "FIELD", target = "Lnet/minecraft/BiomeDecorator;generateLakes:Z", opcode = Opcodes.GETFIELD))
+    private void flowerGen(CallbackInfo ci) {
         for (int var2 = 0; var2 < this.flowersExtendPerChunk; var2++) {
             int var3 = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
             int var4 = this.randomGenerator.nextInt(128);
             int var7 = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
-            this.flowerExtendGen.setMetadata(random_test.nextInt(8));
+            this.flowerExtendGen.setMetadata(this.randomGenerator.nextInt(8));
             this.flowerExtendGen.generate(this.currentWorld, this.randomGenerator, var3, var4, var7);
         }
     }

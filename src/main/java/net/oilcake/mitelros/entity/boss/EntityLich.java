@@ -264,8 +264,10 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
     @Override
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         this.dropItemStack(new ItemStack(Items.forgingnote.itemID, 1, 0), 0.0F);
-        ItemStack treasureBook = getRandomTreasureEnchantment(this.rand);
-        this.dropItemStack(treasureBook, 0.0F);
+        if (this.rand.nextBoolean()) {
+            ItemStack treasureBook = getRandomTreasureEnchantment(this.rand);
+            this.dropItemStack(treasureBook, 0.0F);
+        }
         this.dropItem(totems[this.rand.nextInt(totems.length)]);
         this.dropItemStack(new ItemStack(wands[this.rand.nextInt(wands.length)]).applyRandomItemStackDamageForChest());
         this.dropItemStack(new ItemStack(armors[this.rand.nextInt(armors.length)]).applyRandomItemStackDamageForChest());
@@ -281,21 +283,11 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
         ItemStack treasureBook = new ItemStack(Item.enchantedBook.itemID, 1, 0);
         Enchantment chosen;
         if (ITFConfig.TagTemperature.getBooleanValue()) {
-            chosen = switch (random.nextInt(4)) {
-                case 0 -> random.nextBoolean() ? Enchantment.silkTouch : Enchantment.fortune;
-                case 1 ->
-                        random.nextBoolean() ? Enchantments.enchantmentFrostResistance : Enchantments.enchantmentHeatResistance;
-                case 2 -> Enchantment.looting;
-                default ->
-                        random.nextBoolean() ? Enchantments.enchantmentMending : (random.nextBoolean() ? Enchantments.enchantmentMoonlightMending : Enchantments.enchantmentSunlightMending);
-            };
+            chosen = random.nextBoolean() ?
+                    (random.nextBoolean() ? Enchantments.enchantmentFrostResistance : Enchantments.enchantmentHeatResistance) :
+                    (random.nextBoolean() ? Enchantments.enchantmentMending : (random.nextBoolean() ? Enchantments.enchantmentMoonlightMending : Enchantments.enchantmentSunlightMending));
         } else {
-            chosen = switch (random.nextInt(3)) {
-                case 0 -> random.nextBoolean() ? Enchantment.silkTouch : Enchantment.fortune;
-                case 2 -> Enchantment.looting;
-                default ->
-                        random.nextBoolean() ? Enchantments.enchantmentMending : (random.nextBoolean() ? Enchantments.enchantmentMoonlightMending : Enchantments.enchantmentSunlightMending);
-            };
+            chosen = random.nextBoolean() ? Enchantments.enchantmentMending : (random.nextBoolean() ? Enchantments.enchantmentMoonlightMending : Enchantments.enchantmentSunlightMending);
         }
         Item.enchantedBook.addEnchantment(treasureBook, new EnchantmentData(chosen.effectId, chosen.getNumLevels()));
         return treasureBook;

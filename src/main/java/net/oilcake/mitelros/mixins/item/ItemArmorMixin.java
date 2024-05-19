@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Materials;
-import net.oilcake.mitelros.util.QualityHandler;
+import net.oilcake.mitelros.util.EnumQualityEffect;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -42,7 +42,7 @@ public abstract class ItemArmorMixin extends Item implements IDamageableItem {
 
     @Inject(method = "getMultipliedProtection", at = @At("RETURN"), cancellable = true)
     private void quality(ItemStack item_stack, CallbackInfoReturnable<Float> cir) {
-        float qualityAmplifier = item_stack != null && item_stack.getItem().hasQuality() ? QualityHandler.getQualityAmplifier(item_stack.getQuality()) : 0;
+        float qualityAmplifier = item_stack != null && item_stack.getItem().hasQuality() ? EnumQualityEffect.getQualityMultiplier(item_stack.getQuality(), EnumQualityEffect.Protection) : 0;
         cir.setReturnValue(cir.getReturnValue() * (1.0F + qualityAmplifier / 100.0F));
     }
 

@@ -1,14 +1,14 @@
 package net.oilcake.mitelros.mixins.util;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.api.ItemMorningStar;
+import net.oilcake.mitelros.util.EnumQualityEffect;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -16,6 +16,15 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class DamageMixin {
     @Shadow
     private float amount;
+
+    @ModifyConstant(method = "applyTargetDefenseModifiers", constant = @Constant(floatValue = 2.0f))
+    private float qualityEffect(float constant, @Local EntityPlayer player) {
+        ItemStack itemStack = player.getItemInUse();
+        if (!(itemStack.getItem() instanceof ItemSword)) return constant;
+        EnumQuality quality = itemStack.getQuality();
+        if (quality == null) return constant;
+        return 1.0f / (1.0f / constant - EnumQualityEffect.getQualityMultiplier(quality, EnumQualityEffect.Blocking));
+    }
 
     @ModifyExpressionValue(method = "applyTargetDefenseModifiers", at = @At(value = "INVOKE", target = "Lnet/minecraft/Enchantment;getLevelFraction(Lnet/minecraft/ItemStack;)F"))
     private float morningStar(float original) {
