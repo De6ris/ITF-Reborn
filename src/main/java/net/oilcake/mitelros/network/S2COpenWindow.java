@@ -16,7 +16,7 @@ public class S2COpenWindow extends Packet100OpenWindow {
     }
 
     public S2COpenWindow(int windowId, EnumInventoryType enumInventoryType, String windowTitle, int slotsCount, boolean useProvidedWindowTitle) {
-        super(windowId, 255, windowTitle, slotsCount, useProvidedWindowTitle);
+        super(windowId, 255, windowTitle, slotsCount, useProvidedWindowTitle);// 255 is dummy
         this.itf_inventoryType = enumInventoryType.getType();
     }
 
@@ -59,11 +59,6 @@ public class S2COpenWindow extends Packet100OpenWindow {
             par1DataOutput.writeInt(this.y);
             par1DataOutput.writeInt(this.z);
         }
-    }
-
-    @Override
-    public void processPacket(NetHandler netHandler) {
-        netHandler.handleOpenWindow(this);
     }
 
     @Override

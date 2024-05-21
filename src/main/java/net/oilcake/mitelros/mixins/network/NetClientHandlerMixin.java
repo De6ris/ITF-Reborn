@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(NetClientHandler.class)
 public abstract class NetClientHandlerMixin extends NetHandler implements ITFNetHandler {
     @Inject(method = "handleVehicleSpawn", at = @At("HEAD"), cancellable = true)
-    private void itfEntity(Packet23VehicleSpawn par1Packet23VehicleSpawn, CallbackInfo ci) {
+    private void addITFEntity(Packet23VehicleSpawn par1Packet23VehicleSpawn, CallbackInfo ci) {
         if (par1Packet23VehicleSpawn.type < 100 || par1Packet23VehicleSpawn.type > 102) {
             return;
         }
@@ -108,11 +108,6 @@ public abstract class NetClientHandlerMixin extends NetHandler implements ITFNet
         GuiScreen openingGUI = this.mc.currentScreen;
         if (openingGUI instanceof GuiEnchantment guiEnchantment)
             ((ITFGui) guiEnchantment).setEnchantmentInfo(packet.getInfo());
-    }
-
-    @Override
-    public void handleITFOpenWindow(S2COpenWindow packet) {
-        packet.handleOpenWindow(this.mc.thePlayer);
     }
 
     @Shadow

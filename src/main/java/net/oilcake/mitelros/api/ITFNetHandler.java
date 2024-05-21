@@ -14,7 +14,4 @@ public interface ITFNetHandler {
 
     default void handleEnchantmentInfo(S2CEnchantmentInfo packet) {
     }
-
-    default void handleITFOpenWindow(S2COpenWindow packet) {
-    }
 }
