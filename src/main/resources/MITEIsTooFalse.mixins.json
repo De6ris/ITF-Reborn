@@ -100,7 +100,6 @@
     "item.recipes.RecipesFoodMixin",
     "item.recipes.RecipesMITEMixin",
     "network.NetClientHandlerMixin",
-    "network.NetHandlerMixin",
     "network.NetServerHandlerMixin",
     "render.RenderBlocksMixin",
     "render.RenderSnowballMixin",

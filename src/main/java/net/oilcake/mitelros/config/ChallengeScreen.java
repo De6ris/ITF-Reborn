@@ -18,7 +18,7 @@ public class ChallengeScreen extends GuiScreenCommented {
     private final SimpleConfigs configs;
 
     public ChallengeScreen(GuiScreen parentScreen) {
-        super(parentScreen,"挑战设置");
+        super(parentScreen, "挑战设置");
         this.configs = ITFConfig.getInstance();
     }
 
@@ -40,13 +40,13 @@ public class ChallengeScreen extends GuiScreenCommented {
         GuiYesNoMITE var3;
         switch (par1GuiButton.id) {
             case 0:
-                this.mc.displayGuiScreen(new ValueScreen(this, "自然恶意", this.configs.setValues(ITFConfig.spite)));
+                this.mc.displayGuiScreen(new ValueScreen(this, "自然恶意", this.configs, ITFConfig.spite));
                 break;
             case 1:
-                this.mc.displayGuiScreen(new ValueScreen(this, "数值设置", this.configs.setValues(ITFConfig.enemy)));
+                this.mc.displayGuiScreen(new ValueScreen(this, "数值设置", this.configs, ITFConfig.enemy));
                 break;
             case 2:
-                this.mc.displayGuiScreen(new ValueScreen(this, "数值设置", this.configs.setValues(ITFConfig.luck)));
+                this.mc.displayGuiScreen(new ValueScreen(this, "数值设置", this.configs, ITFConfig.luck));
                 break;
             case 3:
                 var3 = new GuiYesNoMITE(this, "真的要重置全部挑战设置吗?", this.configs.getName(), "是", "否", 3);

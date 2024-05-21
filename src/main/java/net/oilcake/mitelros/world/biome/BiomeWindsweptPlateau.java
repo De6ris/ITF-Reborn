@@ -24,8 +24,7 @@ public class BiomeWindsweptPlateau extends BiomeGenBase {
         setColor(10526880);
         setBiomeName("WindsweptPlateau");
         setEnableSnow();
-        this.minHeight = 0.9F;
-        this.maxHeight = 4.0F;
+        setMinMaxHeight(0.9F, 4.0F);
         this.setTemperatureRainfall(0.0F, 0.5F);
     }
 

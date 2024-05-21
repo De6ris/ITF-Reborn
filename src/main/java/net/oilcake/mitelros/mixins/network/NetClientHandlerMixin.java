@@ -87,7 +87,7 @@ public abstract class NetClientHandlerMixin extends NetHandler implements ITFNet
     }
 
 
-    @SoftOverride
+    @Override
     public void processEnchantReserverInfo(S2CEnchantReserverInfo packet) {
         GuiScreen openingGUI = this.mc.currentScreen;
         if (openingGUI instanceof GuiEnchantReserver)

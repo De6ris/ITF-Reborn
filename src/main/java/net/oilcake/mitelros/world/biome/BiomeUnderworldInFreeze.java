@@ -102,18 +102,4 @@ public class BiomeUnderworldInFreeze extends BiomeGenUnderworld {
                 par1World.setBlock(count, temp, x, Block.oreEmerald.blockID, 0, 2);
         }
     }
-
-    private BiomeGenBase setMinMaxHeight(float par1, float par2) {
-        this.minHeight = par1;
-        this.maxHeight = par2;
-        return this;
-    }
-
-    private BiomeGenBase setTemperatureRainfall(float par1, float par2) {
-        if (par1 > 0.1F && par1 < 0.2F)
-            throw new IllegalArgumentException("Please avoid temperatures in the range 0.1 - 0.2 because of snow");
-        this.temperature = par1;
-        this.rainfall = par2;
-        return this;
-    }
 }

@@ -1,6 +1,5 @@
 package net.oilcake.mitelros.mixins.network;
 
-import net.minecraft.INetworkManager;
 import net.minecraft.NetHandler;
 import net.minecraft.NetServerHandler;
 import net.minecraft.ServerPlayer;
@@ -17,15 +16,5 @@ public abstract class NetServerHandlerMixin extends NetHandler implements ITFNet
     @Override
     public void handleDecreaseWater(C2SDecreaseWater packet) {
         (this.playerEntity.getAsPlayer()).decreaseWaterServerSide(packet.hungerWater);
-    }
-
-    @Shadow
-    public boolean isServerHandler() {
-        return false;
-    }
-
-    @Shadow
-    public INetworkManager getNetManager() {
-        return null;
     }
 }
