@@ -1,16 +1,27 @@
 package net.oilcake.mitelros.api;
 
-import net.minecraft.Item;
+import net.minecraft.IInventory;
+import net.minecraft.ItemStack;
 
 public interface ITFItem {
-    int getFoodWater();
+    default int getFoodWater() {
+        return 0;
+    }
 
-    void setFoodWater(int water);
+    default void setFoodWater(int water) {
+    }
 
-    int getFoodTemperature();
-    void setFoodTemperature(int temperature);
+    default int getFoodTemperature() {
+        return 0;
+    }
 
-    Item setExtraInfo(String info);
+    default void setFoodTemperature(int temperature) {
+    }
 
-    String getExtraInfo();
+    default void setExtraInfo(String info) {
+    }
+
+    default String getExtraInfo() {
+        return null;
+    }
 }

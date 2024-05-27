@@ -19,34 +19,42 @@ public class EntitySpiderKing extends EntityArachnid {
         this.gathering_troops = false;
     }
 
+    @Override
     protected String getLivingSound() {
         return "imported.mob.spiderking.say";
     }
 
+    @Override
     protected String getHurtSound() {
         return "imported.mob.spiderking.hit";
     }
 
+    @Override
     protected String getDeathSound() {
         return "imported.mob.spiderking.death";
     }
 
+    @Override
     protected float getSoundVolume(String sound) {
         return super.getSoundVolume(sound) * 1.3F;
     }
 
+    @Override
     protected float getSoundPitch(String sound) {
         return super.getSoundPitch(sound) * 0.6F;
     }
 
+    @Override
     public boolean peacefulDuringDay() {
         return false;
     }
 
+    @Override
     public float getNaturalDefense(DamageSource damage_source) {
         return super.getNaturalDefense(damage_source) + (damage_source.bypassesMundaneArmor() ? 0.0F : 3.0F);
     }
 
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         setEntityAttribute(SharedMonsterAttributes.maxHealth, 28.0D);
@@ -55,6 +63,7 @@ public class EntitySpiderKing extends EntityArachnid {
         setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.92D);
     }
 
+    @Override
     public EntityDamageResult attackEntityAsMob(Entity target) {
         EntityDamageResult result = super.attackEntityAsMob(target);
         if (result != null && !result.entityWasDestroyed()) {
@@ -67,17 +76,20 @@ public class EntitySpiderKing extends EntityArachnid {
         return result;
     }
 
+    @Override
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.spawnSums = par1NBTTagCompound.getByte("num_troops_summoned");
     }
 
+    @Override
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeEntityToNBT(par1NBTTagCompound);
         if (this.spawnSums > 0)
             par1NBTTagCompound.setByte("num_troops_summoned", (byte) this.spawnSums);
     }
 
+    @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
         if (!(getWorld()).isRemote) {
@@ -115,6 +127,7 @@ public class EntitySpiderKing extends EntityArachnid {
         }
     }
 
+    @Override
     public void onDeathUpdate() {
         super.onDeathUpdate();
         if (this.deathTime == 20) {
@@ -127,10 +140,12 @@ public class EntitySpiderKing extends EntityArachnid {
         }
     }
 
+    @Override
     public int getExperienceValue() {
         return super.getExperienceValue() * 6;
     }
 
+    @Override
     public int getMaxSpawnedInChunk() {
         return 1;
     }

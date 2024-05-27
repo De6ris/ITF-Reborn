@@ -6,6 +6,7 @@ import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.ContainerEnchantReserver;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.config.ITFConfig;
+import net.oilcake.mitelros.item.minePocket.ContainerMinePocket;
 import net.oilcake.mitelros.network.S2COpenWindow;
 import net.oilcake.mitelros.network.S2CUpdateNutrition;
 import net.oilcake.mitelros.status.EnchantmentManager;
@@ -121,10 +122,19 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     public void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
         incrementWindowID();
         TileEntity tile_entity = this.worldObj.getBlockTileEntity(x, y, z);
-        this.playerNetServerHandler.sendPacketToPlayer((new S2COpenWindow(this.currentWindowId, S2COpenWindow.EnumInventoryType.EnchantReserver, tile_entity.getCustomInvName(), 9, tile_entity.hasCustomName())).setCoords(x, y, z));
+        this.playerNetServerHandler.sendPacketToPlayer((new S2COpenWindow(this.currentWindowId, S2COpenWindow.EnumInventoryType.EnchantReserver, tile_entity.getCustomInvName(), 9, tile_entity.hasCustomName())).setCoords(x, y, z));// 9 is dummy
         this.openContainer = new ContainerEnchantReserver(slots, this, x, y, z);
         this.openContainer.windowId = this.currentWindowId;
         this.sendContainerAndContentsToPlayer(this.openContainer, ((ContainerEnchantReserver) this.openContainer).getInventory());
+        this.openContainer.addCraftingToCrafters(this);
+    }
+
+    @Override
+    public void displayGuiMinePocket(IInventory inventory) {
+        this.incrementWindowID();
+        this.playerNetServerHandler.sendPacketToPlayer(new S2COpenWindow(this.currentWindowId, S2COpenWindow.EnumInventoryType.MinePocket, inventory.getCustomNameOrUnlocalized(), 5, true));
+        this.openContainer = new ContainerMinePocket(this, inventory);
+        this.openContainer.windowId = this.currentWindowId;
         this.openContainer.addCraftingToCrafters(this);
     }
 

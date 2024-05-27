@@ -17,7 +17,7 @@ public class ConfigBooleanChallenge extends ConfigBoolean {
     }
 
     @Override
-    public String getText() {
+    public String getDisplayText() {
         String level = this.getColor() + String.format("(LVL%d)", this.level);
         String info = EnumChatFormatting.WHITE + this.getName() + ": " + (this.getBooleanValue() ? "开" : "关");
         return level + info;

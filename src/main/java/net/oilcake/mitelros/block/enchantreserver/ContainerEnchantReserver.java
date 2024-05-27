@@ -22,12 +22,6 @@ public class ContainerEnchantReserver extends Container {
 
     private final int blockZ;
 
-    private int lastEXP;
-
-    public void addSlot(Slot slot) {
-        addSlotToContainer(slot);
-    }
-
     public ContainerEnchantReserver(EnchantReserverSlots slots, EntityPlayer player, int x, int y, int z) {
         super(player);
         this.blockX = x;
@@ -44,12 +38,13 @@ public class ContainerEnchantReserver extends Container {
         int index;
         for (index = 0; index < 3; index++) {
             for (int var8 = 0; var8 < 9; var8++)
-                addSlot(new Slot(player.inventory, var8 + index * 9 + 9, 8 + var8 * 18, 84 + index * 18));
+                addSlotToContainer(new Slot(player.inventory, var8 + index * 9 + 9, 8 + var8 * 18, 84 + index * 18));
         }
         for (index = 0; index < 9; index++)
-            addSlot(new Slot(player.inventory, index, 8 + index * 18, 142));
+            addSlotToContainer(new Slot(player.inventory, index, 8 + index * 18, 142));
     }
 
+    @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
         ItemStack itemstack = null;
         Slot slot = (Slot) this.inventorySlots.get(index);
@@ -78,24 +73,20 @@ public class ContainerEnchantReserver extends Container {
         return itemstack;
     }
 
-    public List<ItemStack> getInventory() {
-        List<ItemStack> nonnulllist = new ArrayList<>();
-        for (Object o : this.inventorySlots)
-            nonnulllist.add(((Slot) o).getStack());
-        return nonnulllist;
-    }
-
+    @Override
     public void onContainerClosed(EntityPlayer par1EntityPlayer) {
         super.onContainerClosed(par1EntityPlayer);
         if (!this.world.isRemote)
             this.slots.onContainerClosed();
     }
 
-    void updateInfo() {
-        if (!this.world.isRemote)
+    public void updateInfo() {
+        if (!this.world.isRemote) {
             this.player.sendPacket(new S2CEnchantReserverInfo(this.tileEntityEnchantReserver.getEXP()));
+        }
     }
 
+    @Override
     public boolean canInteractWith(EntityPlayer player) {
         if (this.world.getBlock(this.blockX, this.blockY, this.blockZ) instanceof BlockEnchantReserver && this.world.getBlockTileEntity(this.blockX, this.blockY, this.blockZ) instanceof TileEntityEnchantReserver)
             return (player.getDistanceSq(this.blockX + 0.5D, this.blockY + 0.5D, this.blockZ + 0.5D) <= 64.0D);

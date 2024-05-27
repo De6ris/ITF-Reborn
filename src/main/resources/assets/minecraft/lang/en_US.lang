@@ -397,6 +397,8 @@ item.wand/thunder.name=Wand of Thunder
 
 item.loot_pack/lich.name=Lich Loot Pack
 
+item.pocket/mine.name=Mine Pocket
+
 itemarrow.tooltip.disable=Disabled by technical issue...
 itemtool.tooltip.slimeresistance=Bonus vs slime
 itemarmor.tooltip.slimeresistance=Bonus vs slime

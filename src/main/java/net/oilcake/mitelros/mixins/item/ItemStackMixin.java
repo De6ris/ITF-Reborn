@@ -26,6 +26,12 @@ public abstract class ItemStackMixin {
     public int itemID;
 
 
+    @Shadow
+    public abstract Item getItem();
+
+    @Shadow
+    public NBTTagCompound stackTagCompound;
+
     @Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemTool;getToolMaterial()Lnet/minecraft/Material;"))
     private void nickelInfo(EntityPlayer par1EntityPlayer, boolean par2, Slot slot, CallbackInfoReturnable<List> cir, @Local ArrayList<String> var3) {
         Item var4 = Item.itemsList[this.itemID];

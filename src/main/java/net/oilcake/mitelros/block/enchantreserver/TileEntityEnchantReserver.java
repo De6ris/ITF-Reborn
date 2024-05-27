@@ -64,20 +64,24 @@ public class TileEntityEnchantReserver extends TileEntity implements ISidedInven
         return 30000;
     }
 
+    @Override
     public int[] getAccessibleSlotsFromSide(int par1) {
         return (par1 == 0) ? slots_bottom : ((par1 == 1) ? slots_top : slots_sides);
     }
 
+    @Override
     public boolean canInsertItem(int par1, ItemStack par2ItemStack, int par3) {
         return isItemValidForSlot(par1, par2ItemStack);
     }
 
+    @Override
     public boolean canExtractItem(int par1, ItemStack par2ItemStack, int par3) {
         if (par3 == 0 && par1 == 1)
             return (!(par2ItemStack.getItem() instanceof net.minecraft.ItemNugget) && par2ItemStack.getItem() != Item.potion);
         return true;
     }
 
+    @Override
     public void updateEntity() {
         this.slots.updateInfo();
         if (!(getWorldObj()).isRemote) {
@@ -166,10 +170,12 @@ public class TileEntityEnchantReserver extends TileEntity implements ISidedInven
         }
     }
 
+    @Override
     public ItemStack getStackInSlot(int i) {
         return this.items[i];
     }
 
+    @Override
     public ItemStack decrStackSize(int index, int count) {
         if (this.items[index] != null) {
             ItemStack var3;
@@ -186,6 +192,7 @@ public class TileEntityEnchantReserver extends TileEntity implements ISidedInven
         return null;
     }
 
+    @Override
     public ItemStack getStackInSlotOnClosing(int par1) {
         if (this.items[par1] != null) {
             ItemStack var2 = this.items[par1];
@@ -195,41 +202,49 @@ public class TileEntityEnchantReserver extends TileEntity implements ISidedInven
         return null;
     }
 
+    @Override
     public void setInventorySlotContents(int var1, ItemStack var2) {
         this.items[var1] = var2;
     }
 
+    @Override
     public int getInventoryStackLimit() {
         return 64;
     }
 
+    @Override
     public boolean isUseableByPlayer(EntityPlayer player) {
         if (player.getWorld().getBlock(this.xCoord, this.yCoord, this.zCoord) instanceof BlockEnchantReserver && player.getWorld().getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) instanceof TileEntityEnchantReserver)
             return (player.getDistance(this.xCoord + 0.5D, this.yCoord + 0.5D, this.zCoord + 0.5D) <= 64.0D);
         return false;
     }
 
+    @Override
     public void openChest() {
         this.slots.updateInfo();
         this.isUsing = true;
     }
 
+    @Override
     public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readFromNBT(par1NBTTagCompound);
         this.EXP = par1NBTTagCompound.getInteger("EXP");
         this.slots.readFromNBT(par1NBTTagCompound, this);
     }
 
+    @Override
     public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("EXP", this.EXP);
         this.slots.writeToNBT(par1NBTTagCompound);
     }
 
+    @Override
     public void closeChest() {
         this.isUsing = false;
     }
 
+    @Override
     public boolean isItemValidForSlot(int var1, ItemStack var2) {
         return this.slots.isItemValidForSlot(var1, var2);
     }
@@ -238,6 +253,7 @@ public class TileEntityEnchantReserver extends TileEntity implements ISidedInven
         this.slots.dropItems(this.worldObj, this.xCoord, this.yCoord, this.zCoord);
     }
 
+    @Override
     public void destroyInventory() {
         Arrays.fill(this.items, null);
     }

@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.SimpleConfigs;
+import fi.dy.masa.malilib.config.interfaces.ConfigDisplayType;
 import fi.dy.masa.malilib.config.options.ConfigBase;
 import fi.dy.masa.malilib.config.options.ConfigBoolean;
 import fi.dy.masa.malilib.config.options.ConfigHotkey;
@@ -63,8 +64,8 @@ public class ITFConfig extends SimpleConfigs {
 
     //misc
     public static final ConfigBoolean FixedID = new ConfigBoolean("固定ID", false, "(整合包作者需考虑)固定物品ID以及方块ID");
-    public static final ConfigInteger ItemIDStart = new ConfigInteger("物品ID起始点", 4000, 4000, 10000, false, "明显需要重启, 且有崩档风险, 操作前请备份!");
-    public static final ConfigInteger BlockIDStart = new ConfigInteger("方块ID起始点", 4095, 255, 4095, false, "明显需要重启, 且有崩档风险, 操作前请备份!");
+    public static final ConfigInteger ItemIDStart = new ConfigInteger("物品ID起始点", 4000, 4000, 10000, ConfigDisplayType.TEXTBOX, "明显需要重启, 且有崩档风险, 操作前请备份!");
+    public static final ConfigInteger BlockIDStart = new ConfigInteger("方块ID起始点", 4095, 255, 4095, ConfigDisplayType.TEXTBOX, "明显需要重启, 且有崩档风险, 操作前请备份!");
 
     public static List<ConfigBase> challenge;
     public static List<ConfigBase> spite;

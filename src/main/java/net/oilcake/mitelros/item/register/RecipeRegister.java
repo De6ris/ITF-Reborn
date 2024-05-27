@@ -33,6 +33,9 @@ public class RecipeRegister extends Items {
         register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "SP", "S ", 'F', Item.flint, 'S', Item.stick, 'P', Item.silk);
         register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "S ", "SP", 'F', Item.flint, 'S', Item.stick, 'P', Item.silk);
         register.registerShapedRecipe(new ItemStack(stickKnife, 1), true, "S", "S", 'S', Item.stick);
+        register.registerShapedRecipe(new ItemStack(minePocket, 1), true, "SWS", "W W", "WWW", 'S', Item.silk, 'W', Items.wolf_fur);
+
+
         register.registerShapelessRecipe(new ItemStack(totemOfUnknown, 1), true, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon, Block.melon);
         register.registerShapelessRecipe(new ItemStack(peeledSugarcane, 2), false, Item.reed, Item.reed);
         register.registerShapelessRecipe(new ItemStack(sulphur, 9), true, new ItemStack(Blocks.blockSulphur, 1));
@@ -56,6 +59,7 @@ public class RecipeRegister extends Items {
         register.registerShapelessRecipe(new ItemStack(clayBowlRaw, 1), false, Item.clay);
         register.registerShapelessRecipe(new ItemStack(tungstenBucket, 1), false, tungstenBucketStone);//.resetDifficulty(100);
         register.registerShapelessRecipe(new ItemStack(nickelBucket, 1), false, nickelBucketStone);//.resetDifficulty(100);
+
 
         RecipesFood.registerFoodRecipe(register);
 

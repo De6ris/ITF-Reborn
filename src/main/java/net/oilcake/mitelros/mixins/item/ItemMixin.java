@@ -114,9 +114,8 @@ public abstract class ItemMixin implements ITFItem {
     }
 
     @Override
-    public Item setExtraInfo(String extraInfo) {
+    public void setExtraInfo(String extraInfo) {
         this.extraInfo = extraInfo;
-        return ReflectHelper.dyCast(this);
     }
 
     @Inject(method = "getRepairItem", at = @At("HEAD"), cancellable = true)

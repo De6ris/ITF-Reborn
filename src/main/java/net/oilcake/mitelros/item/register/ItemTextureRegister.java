@@ -245,5 +245,6 @@ public class ItemTextureRegister extends Items {
         event.register("bowls/hot_water", bowlHotWater).setUnlocalizedName("bowl_hot_water");
         event.register("totem/totem_of_flattening", totemOfFlattening);
         event.register("loot_pack/lich", lootPackLich);
+        event.register("pocket/mine", minePocket);
     }
 }

@@ -401,6 +401,8 @@ item.wand/thunder.name=轰击法杖
 
 item.loot_pack/lich.name=巫妖战利品袋
 
+item.pocket/mine.name=矿物口袋
+
 entity.EntityWitherBoneLord.name=凋零骷髅领主
 entity.EntityWitherBodyguard.name=衰败侍卫
 entity.EntityClusterSpider.name=集群蜘蛛

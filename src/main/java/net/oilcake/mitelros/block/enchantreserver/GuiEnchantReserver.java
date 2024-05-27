@@ -1,35 +1,20 @@
 package net.oilcake.mitelros.block.enchantreserver;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.block.enchantreserver.ContainerEnchantReserver;
+import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
+import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
-public class GuiEnchantReserver extends GuiContainer implements ICrafting {
+public class GuiEnchantReserver extends GuiContainer {
     private static final ResourceLocation ENCHANT_RESERVER_TEXTURE = new ResourceLocation("textures/gui/container/enchant_reserver.png");
-
-    private final ContainerEnchantReserver containerEnchantReserver;
 
     private final TileEntityEnchantReserver tileEntityEnchantReserver = new TileEntityEnchantReserver();
 
-    private final int x;
-
-    private final int y;
-
-    private final int z;
-
-    private final InventoryPlayer inventory;
-
-    private final EntityPlayer player;
-
     public GuiEnchantReserver(EntityPlayer player, int x, int y, int z, EnchantReserverSlots slots) {
         super(new ContainerEnchantReserver(slots, player, x, y, z));
-        this.containerEnchantReserver = (ContainerEnchantReserver) this.inventorySlots;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.inventory = player.inventory;
-        this.player = player;
     }
 
     @Override
@@ -83,15 +68,6 @@ public class GuiEnchantReserver extends GuiContainer implements ICrafting {
             this.fontRenderer.drawString(exp + "/" + maxExp, this.width / 2 + 8, this.height / 2 - 70, 14737632);
         }
 
-    }
-
-    public void sendContainerAndContentsToPlayer(Container container, List list) {
-    }
-
-    public void sendSlotContents(Container container, int i, ItemStack itemStack) {
-    }
-
-    public void sendProgressBarUpdate(Container container, int i, int i1) {
     }
 
     public void setEnchantInfo(int exp) {

@@ -9,6 +9,7 @@ import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.block.api.ITFWorkbench;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.block.enchantreserver.GuiEnchantReserver;
+import net.oilcake.mitelros.item.minePocket.GuiMinePocketInventory;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,6 +29,11 @@ public abstract class ClientPlayerMixin extends AbstractClientPlayer implements 
     @Override
     public void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
         this.mc.displayGuiScreen(new GuiEnchantReserver(this, x, y, z, slots));
+    }
+
+    @Override
+    public void displayGuiMinePocket(IInventory inventory) {
+        this.mc.displayGuiScreen(new GuiMinePocketInventory(this, inventory));
     }
 
     @WrapOperation(method = "getBenchAndToolsModifier", at = @At(value = "INVOKE", target = "Lnet/minecraft/BlockWorkbench;getToolMaterial(I)Lnet/minecraft/Material;"))

@@ -13,6 +13,7 @@ accessible method net/minecraft/Block setResistance (F)Lnet/minecraft/Block;
 accessible method net/minecraft/Block setTextureName (Ljava/lang/String;)Lnet/minecraft/Block;
 accessible method net/minecraft/Block setStepSound (Lnet/minecraft/StepSound;)Lnet/minecraft/Block;
 
+accessible method net/minecraft/Container addSlotToContainer (Lnet/minecraft/Slot;)Lnet/minecraft/Slot;
 accessible field net/minecraft/ContainerWorkbench x I
 accessible field net/minecraft/ContainerWorkbench y I
 accessible field net/minecraft/ContainerWorkbench z I

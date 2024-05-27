@@ -45,7 +45,7 @@ public class ItemTotem extends Item {
         } else if (itemID == Items.totemOfUnknown.itemID) {
             unknownEffect(player);
         } else if (itemID == Items.totemOfFlattening.itemID) {
-            flatten(player, player.worldObj, player.getBlockPosX(), player.getBlockPosY(), player.getBlockPosZ(), ITFConfig.TagTotemBlessing.getBooleanValue() ? 15 : 7);
+            flattenEffect(player, player.worldObj, player.getBlockPosX(), player.getBlockPosY(), player.getBlockPosZ(), ITFConfig.TagTotemBlessing.getBooleanValue() ? 15 : 7);
         } else {
             Minecraft.setErrorMessage("Undefined totem: " + totem.getItemDisplayName());
         }
@@ -113,7 +113,7 @@ public class ItemTotem extends Item {
 
     }
 
-    private static void flatten(EntityPlayer player, World world, int startX, int y, int startZ, int range) {
+    private static void flattenEffect(EntityPlayer player, World world, int startX, int y, int startZ, int range) {
         for (int i = 0; i < 8; i++) {
             player.entityFX(EnumEntityFX.smoke_and_steam);
         }

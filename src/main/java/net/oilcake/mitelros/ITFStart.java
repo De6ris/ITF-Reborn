@@ -2,7 +2,6 @@ package net.oilcake.mitelros;
 
 import fi.dy.masa.malilib.config.ConfigManager;
 import net.fabricmc.api.ModInitializer;
-import net.oilcake.mitelros.client.ITFEvent;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.xiaoyu233.fml.reload.event.MITEEvents;
 

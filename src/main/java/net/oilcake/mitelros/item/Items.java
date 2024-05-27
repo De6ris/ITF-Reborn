@@ -5,6 +5,7 @@ import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.api.*;
+import net.oilcake.mitelros.item.minePocket.ItemMinePocket;
 import net.oilcake.mitelros.item.potion.ItemPotionExperimental;
 import net.oilcake.mitelros.item.potion.ItemPotionSuspicious;
 import net.oilcake.mitelros.util.Constant;
@@ -405,7 +406,7 @@ public class Items extends Item {
 
     public static final Item totemOfPreserve = new ItemTotem(getNextItemID(), Material.iron, "totem");
 
-    public static final Item totemOfKnowledge = ((ITFItem) (new ItemTotem(getNextItemID(), Material.ancient_metal, "totem"))).setExtraInfo("右键提升20%经验");
+    public static final Item totemOfKnowledge = new ItemTotem(getNextItemID(), Material.ancient_metal, "totem");
 
     public static final ItemFlintAndSteel ignitionCopper = (ItemFlintAndSteel) new ItemFlintAndSteel(getNextItemID()).setMaterial(Material.flint, Material.copper).setMaxDamage((int) (2.0F * Material.copper.durability));
 
@@ -445,7 +446,7 @@ public class Items extends Item {
 
     public static final ItemBow bowUru = new ITFBow(getNextItemID(), Materials.uru);
 
-    public static final Item enderRod = ((ITFItem) (new ItemBrewingMisc(getNextItemID(), Material.ender_pearl, "ender_rod")).setPotionEffectExtend("+8+9+10+11&4-4+13").setReachBonus(0.5F)).setExtraInfo("似乎能提升触及距离, 还能酿药?");
+    public static final Item enderRod =  new ItemBrewingMisc(getNextItemID(), Material.ender_pearl, "ender_rod").setPotionEffectExtend("+8+9+10+11&4-4+13").setReachBonus(0.5F);
 
     public static final ItemMorningStar morningStarRustedIron = new ItemMorningStar(getNextItemID(), Material.rusted_iron);
 
@@ -489,7 +490,7 @@ public class Items extends Item {
 
     public static final ItemFood chocolate_smoothie = (ItemFood) (new ItemFood(getNextItemID(), Materials.chocolate_smoothie, 4, 2, 1000, false, false, true, "chocolate_smoothie")).setMaxStackSize(4);
 
-    public static final Item frostRod = ((ITFItem) (new ItemStandard(getNextItemID(), Materials.frost, "frost_rod")).setReachBonus(0.5F)).setExtraInfo("似乎能提升触及距离, 还能搓成粉?");
+    public static final Item frostRod = new ItemStandard(getNextItemID(), Materials.frost, "frost_rod").setReachBonus(0.5F);
 
     public static final Item frostPowder = new ItemBrewingMisc(getNextItemID(), Materials.frost, "frost_powder").setPotionEffectExtend("+8+9+10-11&4-4+13");
 
@@ -497,11 +498,21 @@ public class Items extends Item {
 
     public static final ItemBowl bowlHotWater = new ItemBowl(getNextItemID(), Materials.hot_water, "bowl_water");
 
-    public static final Item totemOfFlattening = ((ITFItem) new ItemTotem(getNextItemID(), Material.dirt, "totem")).setExtraInfo("据说能够平整16x16的土地");
+    public static final Item totemOfFlattening = new ItemTotem(getNextItemID(), Material.dirt, "totem");
+
     public static final Item lootPackLich = new ItemLootPack(getNextItemID(), Material.leather, "lootPack", ITFLootTables.lichEntity, 6);
+
+    public static final Item minePocket = new ItemMinePocket(getNextItemID(), Material.leather, "pocket");
 
     private static int getNextItemID() {
         if (!ITFConfig.FixedID.getBooleanValue()) return IdUtil.getNextItemID();
         return Constant.nextItemID++;
+    }
+
+    static {
+        ((ITFItem) totemOfKnowledge).setExtraInfo("右键提升20%经验");
+        ((ITFItem) totemOfFlattening).setExtraInfo("据说能够平整15x15的土地");
+        ((ITFItem) frostRod).setExtraInfo("似乎能提升触及距离, 还能搓成粉?");
+        ((ITFItem) enderRod).setExtraInfo("似乎能提升触及距离, 还能酿药?");
     }
 }

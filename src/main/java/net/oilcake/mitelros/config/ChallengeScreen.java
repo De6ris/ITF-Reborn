@@ -39,27 +39,19 @@ public class ChallengeScreen extends GuiScreenCommented {
     protected void actionPerformed(GuiButton par1GuiButton) {
         GuiYesNoMITE var3;
         switch (par1GuiButton.id) {
-            case 0:
-                this.mc.displayGuiScreen(new ValueScreen(this, "自然恶意", this.configs, ITFConfig.spite));
-                break;
-            case 1:
-                this.mc.displayGuiScreen(new ValueScreen(this, "数值设置", this.configs, ITFConfig.enemy));
-                break;
-            case 2:
-                this.mc.displayGuiScreen(new ValueScreen(this, "数值设置", this.configs, ITFConfig.luck));
-                break;
-            case 3:
+            case 0 -> this.mc.displayGuiScreen(new ValueScreen(this, "自然恶意", this.configs, ITFConfig.spite));
+            case 1 -> this.mc.displayGuiScreen(new ValueScreen(this, "数值设置", this.configs, ITFConfig.enemy));
+            case 2 -> this.mc.displayGuiScreen(new ValueScreen(this, "数值设置", this.configs, ITFConfig.luck));
+            case 3 -> {
                 var3 = new GuiYesNoMITE(this, "真的要重置全部挑战设置吗?", this.configs.getName(), "是", "否", 3);
                 this.mc.displayGuiScreen(var3);
-                break;
-            case 4:
+            }
+            case 4 -> {
                 var3 = new GuiYesNoMITE(this, "真的要启用终极挑战吗?", this.configs.getName(), "是", "否", 4);
                 this.mc.displayGuiScreen(var3);
-                break;
-            case 200:
-                this.mc.displayGuiScreen(this.parentScreen);
+            }
+            case 200 -> this.mc.displayGuiScreen(this.parentScreen);
         }
-
     }
 
     @Override

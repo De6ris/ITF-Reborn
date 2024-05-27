@@ -3,7 +3,6 @@ package net.oilcake.mitelros.block.enchantreserver;
 import net.minecraft.*;
 
 public class EnchantReserverSlots extends InventoryBasic {
-    public static final int slotSize = 2;
 
     public TileEntityEnchantReserver tileEntityEnchantReserver;
 
@@ -26,8 +25,9 @@ public class EnchantReserverSlots extends InventoryBasic {
     }
 
     public void updateInfo() {
-        if (this.container != null)
+        if (this.container != null) {
             this.container.updateInfo();
+        }
     }
 
     public EnchantReserverSlots(IInventory iInventory) {
@@ -112,15 +112,17 @@ public class EnchantReserverSlots extends InventoryBasic {
     }
 
     void onContainerClosed() {
-        if (!this.container.world.isRemote && this.tileEntityEnchantReserver != null)
+        if (!this.container.world.isRemote && this.tileEntityEnchantReserver != null) {
             this.tileEntityEnchantReserver.closeChest();
+        }
     }
 
     public void initSlots(ContainerEnchantReserver enchantReserver) {
-        enchantReserver.addSlot(this.input);
-        enchantReserver.addSlot(this.output);
-        if (this.tileEntityEnchantReserver != null)
+        enchantReserver.addSlotToContainer(this.input);
+        enchantReserver.addSlotToContainer(this.output);
+        if (this.tileEntityEnchantReserver != null) {
             this.tileEntityEnchantReserver.openChest();
+        }
         this.container = enchantReserver;
     }
 }

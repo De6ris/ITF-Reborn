@@ -194,10 +194,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         return drunkManager;
     }
 
-    @Override
-    public void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
-    }
-
     @Inject(method = "readEntityFromNBT", at = @At("HEAD"))
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound, CallbackInfo ci) {
         this.diarrheaManager.setDiarrheaCounter(par1NBTTagCompound.getInteger("diarrheaCounter"));
