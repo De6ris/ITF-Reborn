@@ -7,7 +7,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.status.*;
@@ -163,9 +162,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
             this.drunkManager.update2();
         }
         this.feastManager.achievementCheck();
-        this.enchantmentManager.arroganceUpdate();
-        this.enchantmentManager.mendingUpdate();
-        this.enchantmentManager.lightMendingUpdate();
+        this.enchantmentManager.update();
     }
 
     @Inject(method = "addExperience(IZZ)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/FoodStats;setNutrition(IZ)V"))

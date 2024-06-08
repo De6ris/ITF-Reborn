@@ -1,12 +1,7 @@
 package net.oilcake.mitelros.block.enchantreserver;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.block.enchantreserver.ContainerEnchantReserver;
-import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
-import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;
 import org.lwjgl.opengl.GL11;
-
-import java.util.List;
 
 public class GuiEnchantReserver extends GuiContainer {
     private static final ResourceLocation ENCHANT_RESERVER_TEXTURE = new ResourceLocation("textures/gui/container/enchant_reserver.png");

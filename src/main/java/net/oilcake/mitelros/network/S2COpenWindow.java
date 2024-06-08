@@ -3,14 +3,11 @@ package net.oilcake.mitelros.network;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
-import net.oilcake.mitelros.item.minePocket.ItemMinePocket;
 import net.oilcake.mitelros.item.minePocket.MinePocketInventory;
 
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 public class S2COpenWindow extends Packet100OpenWindow {
     public EnumInventoryType enumInventoryType;
@@ -109,7 +106,7 @@ public class S2COpenWindow extends Packet100OpenWindow {
         }
 
         public static EnumInventoryType getFromID(int id) {
-            return Arrays.stream(EnumInventoryType.values()).filter(x -> x.id == id).findFirst().orElseThrow(NoSuchElementException::new);
+            return EnumInventoryType.values()[id];
         }
     }
 }

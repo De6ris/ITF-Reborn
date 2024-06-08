@@ -13,7 +13,6 @@ import net.oilcake.mitelros.status.EnchantmentManager;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,8 +21,6 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.Random;
 
 @Mixin(ServerPlayer.class)
@@ -189,29 +186,5 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     private void itfAchievement(int par1, CallbackInfo ci) {
         if (Constant.calculateCurrentDifficulty() >= 12)
             triggerAchievement(AchievementExtend.stormStriker);
-    }
-
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite// Wont fix until I know why stat may be null TODO
-    public void readStatsFromNBT(NBTTagCompound par1NBTTagCompound) {
-        Collection tags = par1NBTTagCompound.getTags();
-        Iterator i = tags.iterator();
-
-        while (i.hasNext()) {
-            NBTBase tag = (NBTBase) i.next();
-            int id = Integer.valueOf(tag.getName());
-            StatBase stat = StatList.getStat(id);
-            if (stat == null) continue;
-            if (StatList.isEitherZeroOrOne(stat)) {
-                this.stats.put(id, par1NBTTagCompound.getByte(tag.getName()));
-            } else if (StatList.hasLongValue(stat)) {
-                this.stats.put(id, par1NBTTagCompound.getLong(tag.getName()));
-            } else {
-                this.stats.put(id, par1NBTTagCompound.getInteger(tag.getName()));
-            }
-        }
     }
 }

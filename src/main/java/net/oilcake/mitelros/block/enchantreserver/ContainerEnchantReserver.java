@@ -7,8 +7,6 @@ import net.minecraft.Slot;
 import net.oilcake.mitelros.network.S2CEnchantReserverInfo;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ContainerEnchantReserver extends Container {
     @Nullable

@@ -1,8 +1,5 @@
 package net.oilcake.mitelros.api;
 
-import net.minecraft.IInventory;
-import net.minecraft.ItemStack;
-
 public interface ITFItem {
     default int getFoodWater() {
         return 0;
