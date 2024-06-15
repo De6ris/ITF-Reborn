@@ -31,10 +31,10 @@ public class OtherScreen extends GuiScreenCommented {
         GuiYesNoMITE var3;
         switch (par1GuiButton.id) {
             case 0:
-                this.mc.displayGuiScreen(new ValueScreen(this, "信息显示", this.configs,ITFConfig.info));
+                this.mc.displayGuiScreen(new ValueScreen(this, "信息显示", this.configs, ITFConfig.info));
                 break;
             case 1:
-                this.mc.displayGuiScreen(new ValueScreen(this, "杂项", this.configs,ITFConfig.misc));
+                this.mc.displayGuiScreen(new ValueScreen(this, "杂项", this.configs, ITFConfig.misc));
                 break;
             case 3:
                 var3 = new GuiYesNoMITE(this, "真的要重置全部其它设置吗?", this.configs.getName(), "是", "否", 3);

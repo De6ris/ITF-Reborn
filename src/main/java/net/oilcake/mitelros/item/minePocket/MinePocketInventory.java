@@ -21,8 +21,6 @@ public class MinePocketInventory extends InventoryBasic {
                 int slot = nbtBase.getByte("Slot");
                 this.setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(nbtBase));
             }
-        } else {
-            Minecraft.setErrorMessage("null tag compound or has not key items?");
         }
     }
 

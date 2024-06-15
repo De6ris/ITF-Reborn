@@ -4,7 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.SimpleConfigs;
-import fi.dy.masa.malilib.config.interfaces.ConfigDisplayType;
 import fi.dy.masa.malilib.config.options.ConfigBase;
 import fi.dy.masa.malilib.config.options.ConfigBoolean;
 import fi.dy.masa.malilib.config.options.ConfigHotkey;
@@ -64,20 +63,20 @@ public class ITFConfig extends SimpleConfigs {
 
     //misc
     public static final ConfigBoolean FixedID = new ConfigBoolean("固定ID", false, "(整合包作者需考虑)固定物品ID以及方块ID");
-    public static final ConfigInteger ItemIDStart = new ConfigInteger("物品ID起始点", 4000, 4000, 10000, ConfigDisplayType.TEXTBOX, "明显需要重启, 且有崩档风险, 操作前请备份!");
-    public static final ConfigInteger BlockIDStart = new ConfigInteger("方块ID起始点", 4095, 255, 4095, ConfigDisplayType.TEXTBOX, "明显需要重启, 且有崩档风险, 操作前请备份!");
+    public static final ConfigInteger ItemIDStart = new ConfigInteger("物品ID起始点", 4000, 4000, 10000, false, "明显需要重启, 且有崩档风险, 操作前请备份!");
+    public static final ConfigInteger BlockIDStart = new ConfigInteger("方块ID起始点", 4095, 255, 4095, false, "明显需要重启, 且有崩档风险, 操作前请备份!");
 
-    public static List<ConfigBase> challenge;
-    public static List<ConfigBase> spite;
-    public static List<ConfigBase> enemy;
-    public static List<ConfigBase> luck;
-    public static List<ConfigBase> others;
-    public static List<ConfigBase> info;
-    public static List<ConfigBase> misc;
-    public static List<ConfigBase> experimental;
-    public static List<ConfigBase> values;
+    public static List<ConfigBase<?>> challenge;
+    public static List<ConfigBase<?>> spite;
+    public static List<ConfigBase<?>> enemy;
+    public static List<ConfigBase<?>> luck;
+    public static List<ConfigBase<?>> others;
+    public static List<ConfigBase<?>> info;
+    public static List<ConfigBase<?>> misc;
+    public static List<ConfigBase<?>> experimental;
+    public static List<ConfigBase<?>> values;
 
-    public ITFConfig(String name, List<ConfigHotkey> hotkeys, List<ConfigBase> values) {
+    public ITFConfig(String name, List<ConfigHotkey> hotkeys, List<ConfigBase<?>> values) {
         super(name, hotkeys, values);
     }
 
@@ -115,17 +114,17 @@ public class ITFConfig extends SimpleConfigs {
 
     private static int calculateUltimateDifficulty() {
         int difficulty = 0;
-        for (ConfigBase configBase : spite) {
-            if (configBase instanceof ConfigBooleanChallenge challenge) {
-                difficulty += challenge.getLevel();
+        for (ConfigBase<?> configBase : spite) {
+            if (configBase instanceof ConfigBooleanChallenge configBooleanChallenge) {
+                difficulty += configBooleanChallenge.getLevel();
             }
             if (configBase instanceof ConfigInteger configInteger) {
                 difficulty += configInteger.getMaxIntegerValue();
             }
         }
-        for (ConfigBase configBase : enemy) {
-            if (configBase instanceof ConfigBooleanChallenge challenge) {
-                difficulty += challenge.getLevel();
+        for (ConfigBase<?> configBase : enemy) {
+            if (configBase instanceof ConfigBooleanChallenge configBooleanChallenge) {
+                difficulty += configBooleanChallenge.getLevel();
             }
             if (configBase instanceof ConfigInteger configInteger) {
                 difficulty += configInteger.getMaxIntegerValue();
@@ -154,15 +153,15 @@ public class ITFConfig extends SimpleConfigs {
         JsonObject other = JsonUtils.getNestedObject(root, "其它", true);
         ConfigUtils.writeConfigBase(other, "信息显示", info);
         ConfigUtils.writeConfigBase(other, "杂项", misc);
-        JsonUtils.writeJsonToFile(root, this.getOptionsFile());
+        JsonUtils.writeJsonToFile(root, this.optionsFile);
     }
 
     @Override
     public void load() {
-        if (!this.getOptionsFile().exists()) {
+        if (!this.optionsFile.exists()) {
             this.save();
         } else {
-            JsonElement jsonElement = JsonUtils.parseJsonFile(this.getOptionsFile());
+            JsonElement jsonElement = JsonUtils.parseJsonFile(this.optionsFile);
             if (jsonElement != null && jsonElement.isJsonObject()) {
                 JsonObject root = jsonElement.getAsJsonObject();
                 JsonObject challenge = JsonUtils.getNestedObject(root, "挑战", true);
@@ -175,8 +174,8 @@ public class ITFConfig extends SimpleConfigs {
                 ConfigUtils.readConfigBase(other, "杂项", misc);
             }
             if (FixedID.getBooleanValue()) {
-                Constant.nextItemID = ItemIDStart.get();
-                Constant.nextBlockID = BlockIDStart.get();
+                Constant.nextItemID = ItemIDStart.getIntegerValue();
+                Constant.nextBlockID = BlockIDStart.getIntegerValue();
             }
         }
     }

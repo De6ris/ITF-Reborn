@@ -10,7 +10,7 @@ import net.oilcake.mitelros.item.potion.ItemPotionExperimental;
 import net.oilcake.mitelros.item.potion.ItemPotionSuspicious;
 import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.ITFLootTables;
-import net.xiaoyu233.fml.util.IdUtil;
+import net.xiaoyu233.fml.reload.utils.IdUtil;
 import net.xiaoyu233.fml.util.ReflectHelper;
 
 public class Items extends Item {
@@ -502,7 +502,7 @@ public class Items extends Item {
 
     public static final Item lootPackLich = new ItemLootPack(getNextItemID(), Material.leather, "lootPack", ITFLootTables.lichEntity, 6);
 
-    public static final Item minePocket = new ItemMinePocket(getNextItemID(), Material.leather, "pocket");
+    public static final Item minePocket = new ItemMinePocket(getNextItemID(), Material.leather, "pocket/mine");
 
     private static int getNextItemID() {
         if (!ITFConfig.FixedID.getBooleanValue()) return IdUtil.getNextItemID();

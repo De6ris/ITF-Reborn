@@ -4,7 +4,6 @@ import fi.dy.masa.malilib.config.options.ConfigBoolean;
 import net.minecraft.EnumChatFormatting;
 
 public class ConfigBooleanChallenge extends ConfigBoolean {
-
     private final int level;
 
     public ConfigBooleanChallenge(String name, String comment, int level) {

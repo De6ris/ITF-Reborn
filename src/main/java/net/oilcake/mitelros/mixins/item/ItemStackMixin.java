@@ -5,6 +5,7 @@ import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.EnumQualityEffect;
+import org.jetbrains.annotations.TestOnly;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,12 +26,10 @@ public abstract class ItemStackMixin {
     @Shadow
     public int itemID;
 
-
     @Shadow
     public abstract Item getItem();
 
-    @Shadow
-    public NBTTagCompound stackTagCompound;
+    @Shadow public abstract String getUnlocalizedName();
 
     @Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemTool;getToolMaterial()Lnet/minecraft/Material;"))
     private void nickelInfo(EntityPlayer par1EntityPlayer, boolean par2, Slot slot, CallbackInfoReturnable<List> cir, @Local ArrayList<String> var3) {
@@ -53,5 +52,11 @@ public abstract class ItemStackMixin {
     @ModifyArg(method = "tryDamageItem(Lnet/minecraft/DamageSource;ILnet/minecraft/EntityLivingBase;)Lnet/minecraft/ItemDamageResult;", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemStack;tryDamageItem(Lnet/minecraft/World;IZ)Lnet/minecraft/ItemDamageResult;", ordinal = 0), index = 1)
     private int corrosion(int damage) {
         return (int) ((ITFConfig.TagCorrosion.getIntegerValue() * 0.3f + 1.0f) * damage);
+    }
+
+    @TestOnly
+    @Inject(method = "setItemDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
+    private void test(int damage, CallbackInfoReturnable<ItemStack> cir) {
+        System.out.println(this.getUnlocalizedName());
     }
 }

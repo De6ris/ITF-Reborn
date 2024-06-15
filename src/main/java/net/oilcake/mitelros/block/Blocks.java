@@ -14,7 +14,9 @@ import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.api.block.AnvilBlock;
 import net.xiaoyu233.fml.reload.event.ItemRegistryEvent;
 import net.xiaoyu233.fml.reload.event.RecipeRegistryEvent;
-import net.xiaoyu233.fml.util.IdUtil;
+import net.xiaoyu233.fml.reload.utils.IdUtil;
+
+import static net.oilcake.mitelros.ITFStart.NameSpace;
 
 public class Blocks {
     private static int getNextBlockID() {
@@ -95,44 +97,45 @@ public class Blocks {
     public static final Block uruBeacon = new BlockUruBeacon(getNextBlockID());
 
     public static void registerBlocks(ItemRegistryEvent registryEvent) {
-        registryEvent.registerAnvil(anvilNickel, "nickel_anvil");
+        registryEvent.registerAnvil(NameSpace, "nickel_anvil", anvilNickel);
         anvilNickel.stepSound = Block.soundAnvilFootstep;
-        registryEvent.registerAnvil(anvilTungsten, "tungsten_anvil");
+        registryEvent.registerAnvil(NameSpace, "tungsten_anvil", anvilTungsten);
         anvilTungsten.stepSound = Block.soundAnvilFootstep;
-        registryEvent.registerItemBlock(blastFurnaceStoneIdle, "blastfurnace_stone_idle");
-        registryEvent.registerItemBlock(blastFurnaceObsidianIdle, "blastfurnace_obsidian_idle");
-        registryEvent.registerItemBlock(blastFurnaceNetherrackIdle, "blastfurnace_netherrack_idle");
-        registryEvent.registerItemBlock(blastFurnaceStoneBurning, "blastfurnace_stone_burning");
-        registryEvent.registerItemBlock(blastFurnaceObsidianBurning, "blastfurnace_obsidian_burning");
-        registryEvent.registerItemBlock(blastFurnaceNetherrackBurning, "blastfurnace_netherrack_burning");
-        registryEvent.registerItemBlock(blockEnchantReserver, "block_enchant_reserver");
-        registryEvent.registerItemBlock(oreNickel, "ore/nickel_ore");
-        registryEvent.registerItemBlock(blockNickel, "block/nickel_block");
-        registryEvent.registerItemBlock(fenceNickel, "bars/nickel_bars");
-        registryEvent.registerItemBlock(doorNickel, "door/door_nickel");
-        registryEvent.registerItemBlock(blockSmokerIdle, "block_smoker_idle");
-        registryEvent.registerItemBlock(blockSmokerBurning, "block_smoker_burning");
-        registryEvent.registerItemBlock(oreTungsten, "ore/tungsten_ore");
-        registryEvent.registerItemBlock(blockTungsten, "block/tungsten_block");
-        registryEvent.registerItemBlock(fenceTungsten, "bars/tungsten_bars");
-        registryEvent.registerItemBlock(doorTungsten, "door/door_tungsten");
-        registryEvent.registerItemBlock(flowerextend, "flowers/");
-        registryEvent.registerItemBlock(blockEnchantEnhancer, "block_enchant_enhancer");
-        registryEvent.registerItemBlock(oreUru, "ore/uru_ore");
-        registryEvent.registerItemBlock(beetroots, "beetroot");
-        registryEvent.registerItemBlock(beetrootsDead, "beetroot");
-        registryEvent.registerItemBlock(flowerPotExtend, "flower_pot");
-        registryEvent.registerItemBlock(blockAzurite, "azurite_block");
-        registryEvent.registerItemBlock(azuriteCluster, "azurite_cluster");
-        registryEvent.registerItemBlock(torchWoodIdle, "torch_idle");
-        registryEvent.registerItemBlock(torchWoodExtinguished, "torch_off");
-        registryEvent.registerItemBlock(blockSulphur, "sulphur");
-        registryEvent.registerItemBlock(blockObserver, "block_observer");
-        registryEvent.registerItemBlock(blockReceiver, "block_receiver");
-        registryEvent.registerItemBlock(blockEnchantPredicator, "block_enchant_predicator");
-        registryEvent.registerItemBlock(magicTable, "magic_table");
-        registryEvent.registerItemBlock(itfWorkBench, "crafting_table");
-        registryEvent.registerItemBlock(uruBeacon, "beacon");
+        registryEvent.registerItemBlock(NameSpace, "blastfurnace_stone_idle", blastFurnaceStoneIdle);
+        registryEvent.registerItemBlock(NameSpace, "blastfurnace_obsidian_idle", blastFurnaceObsidianIdle);
+        registryEvent.registerItemBlock(NameSpace, "blastfurnace_obsidian_idle", blastFurnaceObsidianIdle);
+        registryEvent.registerItemBlock(NameSpace, "blastfurnace_netherrack_idle", blastFurnaceNetherrackIdle);
+        registryEvent.registerItemBlock(NameSpace, "blastfurnace_stone_burning", blastFurnaceStoneBurning);
+        registryEvent.registerItemBlock(NameSpace, "blastfurnace_obsidian_burning", blastFurnaceObsidianBurning);
+        registryEvent.registerItemBlock(NameSpace, "blastfurnace_netherrack_burning", blastFurnaceNetherrackBurning);
+        registryEvent.registerItemBlock(NameSpace, "block_enchant_reserver", blockEnchantReserver);
+        registryEvent.registerItemBlock(NameSpace, "ore/nickel_ore", oreNickel);
+        registryEvent.registerItemBlock(NameSpace, "block/nickel_block", blockNickel);
+        registryEvent.registerItemBlock(NameSpace, "bars/nickel_bars", fenceNickel);
+        registryEvent.registerItemBlock(NameSpace, "door/door_nickel", doorNickel);
+        registryEvent.registerItemBlock(NameSpace, "block_smoker_idle", blockSmokerIdle);
+        registryEvent.registerItemBlock(NameSpace, "block_smoker_burning", blockSmokerBurning);
+        registryEvent.registerItemBlock(NameSpace, "ore/tungsten_ore", oreTungsten);
+        registryEvent.registerItemBlock(NameSpace, "block/tungsten_block", blockTungsten);
+        registryEvent.registerItemBlock(NameSpace, "bars/tungsten_bars", fenceTungsten);
+        registryEvent.registerItemBlock(NameSpace, "door/door_tungsten", doorTungsten);
+        registryEvent.registerItemBlock(NameSpace, "flowers/", flowerextend);
+        registryEvent.registerItemBlock(NameSpace, "block_enchant_enhancer", blockEnchantEnhancer);
+        registryEvent.registerItemBlock(NameSpace, "ore/uru_ore", oreUru);
+        registryEvent.registerItemBlock(NameSpace, "beetroot", beetroots);
+        registryEvent.registerItemBlock(NameSpace, "beetroot", beetrootsDead);
+        registryEvent.registerItemBlock(NameSpace, "flower_pot", flowerPotExtend);
+        registryEvent.registerItemBlock(NameSpace, "azurite_block", blockAzurite);
+        registryEvent.registerItemBlock(NameSpace, "azurite_cluster", azuriteCluster);
+        registryEvent.registerItemBlock(NameSpace, "torch_idle", torchWoodIdle);
+        registryEvent.registerItemBlock(NameSpace, "torch_off", torchWoodExtinguished);
+        registryEvent.registerItemBlock(NameSpace, "sulphur", blockSulphur);
+        registryEvent.registerItemBlock(NameSpace, "block_observer", blockObserver);
+        registryEvent.registerItemBlock(NameSpace, "block_receiver", blockReceiver);
+        registryEvent.registerItemBlock(NameSpace, "block_enchant_predicator", blockEnchantPredicator);
+        registryEvent.registerItemBlock(NameSpace, "magic_table", magicTable);
+        registryEvent.registerItemBlock(NameSpace, "crafting_table", itfWorkBench);
+        registryEvent.registerItemBlock(NameSpace, "beacon", uruBeacon);
         uruBeacon.setUnlocalizedName("uru_beacon");
     }
 

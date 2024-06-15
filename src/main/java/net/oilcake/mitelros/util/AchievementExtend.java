@@ -2,7 +2,7 @@ package net.oilcake.mitelros.util;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
-import net.xiaoyu233.fml.util.IdUtil;
+import net.xiaoyu233.fml.reload.utils.IdUtil;
 
 public class AchievementExtend {
     public static Achievement FragofMine;
