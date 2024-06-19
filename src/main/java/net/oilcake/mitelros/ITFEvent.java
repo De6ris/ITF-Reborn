@@ -7,6 +7,10 @@ import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;
 import net.oilcake.mitelros.block.observer.TileEntityObserver;
 import net.oilcake.mitelros.block.receiver.TileEntityReceiver;
+import net.oilcake.mitelros.command.CommandGenerate;
+import net.oilcake.mitelros.command.CommandHunger;
+import net.oilcake.mitelros.command.CommandSetStatus;
+import net.oilcake.mitelros.command.CommandStatus;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.entity.boss.EntityLich;
 import net.oilcake.mitelros.entity.misc.*;
@@ -20,6 +24,10 @@ import net.oilcake.mitelros.render.*;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.reload.event.*;
+import net.xiaoyu233.fml.reload.event.recipe.ShapelessRecipeModifier;
+
+import java.util.List;
+import java.util.Optional;
 
 public class ITFEvent {
     @Subscribe
@@ -76,18 +84,29 @@ public class ITFEvent {
         Blocks.registerBlocks(event);
     }
 
+//    @Subscribe
+//    public void onRecipeModify(RecipeModifyEvent event) {
+//        event.addModifier(new ShapelessRecipeModifier(new ItemStack(Item.cheese, 1), List.of(new ItemStack(Items.clayBowlMilk, 4)), false, Optional.of(1.0F)));
+//    }// TODO this crashes; and this is redundant, better set difficulty at RecipeRegistryEvent
+
+    @Subscribe
+    public void onCommandRegister(CommandRegisterEvent event) {
+        event.register(new CommandHunger());
+        event.register(new CommandSetStatus());
+        event.register(new CommandStatus());
+        event.register(new CommandGenerate());
+    }
+
     @Subscribe
     public void onRecipeRegister(RecipeRegistryEvent event) {
         RecipeRegister.registerRecipes(event);
         Blocks.registerRecipes(event);
     }
 
-
     @Subscribe
     public void onAchievementRegister(AchievementRegistryEvent event) {
         AchievementExtend.registerAchievements();
     }
-
 
     @Subscribe
     public void onPacketRegister(PacketRegisterEvent event) {
@@ -174,6 +193,7 @@ public class ITFEvent {
         event.register(TileEntityObserver.class, "Observer");
         event.register(TileEntityReceiver.class, "Receiver");
     }
+
     @Subscribe
     public void onSoundsRegister(SoundsRegisterEvent event) {
         event.register("records/imported/damnation.ogg");

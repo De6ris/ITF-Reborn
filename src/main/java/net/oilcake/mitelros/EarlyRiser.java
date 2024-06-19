@@ -8,7 +8,6 @@ import net.xiaoyu233.fml.util.EnumExtends;
 public class EarlyRiser implements PreLaunchEntrypoint {
     @Override
     public void onPreLaunch() {
-        ITFConfig.init();
         ITFConfig.getInstance().load();
         EnumExtends.EQUIPMENT_MATERIAL.addEnum("NICKEL", () -> new Object[]{8.0F, 30, EnumQuality.masterwork, "nickel"});
         EnumExtends.EQUIPMENT_MATERIAL.addEnum("TUNGSTEN", () -> new Object[]{128.0F, 50, EnumQuality.legendary, "tungsten"});

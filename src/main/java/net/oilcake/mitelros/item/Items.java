@@ -502,7 +502,7 @@ public class Items extends Item {
 
     public static final Item lootPackLich = new ItemLootPack(getNextItemID(), Material.leather, "lootPack", ITFLootTables.lichEntity, 6);
 
-    public static final Item minePocket = new ItemMinePocket(getNextItemID(), Material.leather, "pocket/mine");
+    public static final Item minePocket = new ItemMinePocket(getNextItemID(), Material.leather, "pocket");
 
     private static int getNextItemID() {
         if (!ITFConfig.FixedID.getBooleanValue()) return IdUtil.getNextItemID();

@@ -114,7 +114,6 @@
     "util.PlayerAbilitiesMixin",
     "util.PotionHelperMixin",
     "util.PotionMixin",
-    "util.ServerCommandManagerMixin",
     "util.SlotCraftingMixin",
     "util.SlotFurnaceMixin",
     "util.SoundsMITEMixin",

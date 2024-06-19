@@ -230,7 +230,6 @@ public class ItemTextureRegister extends Items {
         event.register(NameSpace, "totem/totem_of_sentry", totemOfSentry);
         event.register(NameSpace, "totem/totem_of_unknown", totemOfUnknown);
         event.register(NameSpace, "ignition/rusted_iron", ignitionRustedIron);
-        event.register(NameSpace, "tools/flint_hoe", hoeFlint);
         event.register(NameSpace, "tools/stick_knife", stickKnife);
         event.register(NameSpace, "wand/slime", slimeWand);
         event.register(NameSpace, "misc/ice_chunk", iceChunk);

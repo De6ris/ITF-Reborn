@@ -2,6 +2,7 @@ package net.oilcake.mitelros.config;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import fi.dy.masa.malilib.config.ConfigTab;
 import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.SimpleConfigs;
 import fi.dy.masa.malilib.config.options.ConfigBase;
@@ -9,7 +10,6 @@ import fi.dy.masa.malilib.config.options.ConfigBoolean;
 import fi.dy.masa.malilib.config.options.ConfigHotkey;
 import fi.dy.masa.malilib.config.options.ConfigInteger;
 import fi.dy.masa.malilib.util.JsonUtils;
-import net.minecraft.GuiScreen;
 import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.util.Constant;
 
@@ -66,27 +66,27 @@ public class ITFConfig extends SimpleConfigs {
     public static final ConfigInteger ItemIDStart = new ConfigInteger("物品ID起始点", 4000, 4000, 10000, false, "明显需要重启, 且有崩档风险, 操作前请备份!");
     public static final ConfigInteger BlockIDStart = new ConfigInteger("方块ID起始点", 4095, 255, 4095, false, "明显需要重启, 且有崩档风险, 操作前请备份!");
 
-    public static List<ConfigBase<?>> challenge;
-    public static List<ConfigBase<?>> spite;
-    public static List<ConfigBase<?>> enemy;
-    public static List<ConfigBase<?>> luck;
-    public static List<ConfigBase<?>> others;
-    public static List<ConfigBase<?>> info;
-    public static List<ConfigBase<?>> misc;
-    public static List<ConfigBase<?>> experimental;
-    public static List<ConfigBase<?>> values;
+    public static final List<ConfigBase<?>> challenge;
+    public static final List<ConfigBase<?>> spite;
+    public static final List<ConfigBase<?>> enemy;
+    public static final List<ConfigBase<?>> luck;
+    public static final List<ConfigBase<?>> others;
+    public static final List<ConfigBase<?>> info;
+    public static final List<ConfigBase<?>> misc;
+    public static final List<ConfigBase<?>> experimental;
+    public static final List<ConfigBase<?>> values;
 
     public ITFConfig(String name, List<ConfigHotkey> hotkeys, List<ConfigBase<?>> values) {
         super(name, hotkeys, values);
     }
 
-    public static ITFConfig Instance;
+    public static final List<ConfigTab> configTabs = new ArrayList<>();
+    public static final ITFConfig Instance;
 
-    public static void init() {
+    static {
         spite = List.of(TagUnstableConvection, TagExtremeClimate, TagDryDilemma, TagHeatStroke, TagDeadGeothermy, TagRejection, TagEternalRaining, TagApocalypse, TagDimensionInvade, TagCorrosion, TagBurnOut);
         enemy = List.of(TagMiracleDisaster, TagInvisibleFollower, TagUnderAlliance, TagPseudoVision, TagInstinctSurvival, TagFallenInMine, TagBattleSuffer, TagWorshipDark, TagDemonDescend, TagPillager);
         luck = List.of(TagDigest, TagArmament, TagWorkOfHeaven, TagTotemBlessing);
-
         challenge = new ArrayList<>();
         challenge.addAll(spite);
         challenge.addAll(enemy);
@@ -101,7 +101,6 @@ public class ITFConfig extends SimpleConfigs {
         others.addAll(info);
         others.addAll(misc);
 
-
         values = new ArrayList<>();
         values.addAll(challenge);
         values.addAll(experimental);
@@ -110,6 +109,14 @@ public class ITFConfig extends SimpleConfigs {
         Instance = new ITFConfig(ITFStart.MOD_ID, null, values);
 
         Constant.ultimateDifficulty = calculateUltimateDifficulty();
+
+
+        configTabs.add(new ConfigTab("自然恶意", spite));
+        configTabs.add(new ConfigTab("疯狂劲敌", enemy));
+        configTabs.add(new ConfigTab("天赐福星", luck));
+        configTabs.add(new ConfigTab("实验性玩法", experimental));
+        configTabs.add(new ConfigTab("信息显示", info));
+        configTabs.add(new ConfigTab("杂项", misc));
     }
 
     private static int calculateUltimateDifficulty() {
@@ -138,8 +145,8 @@ public class ITFConfig extends SimpleConfigs {
     }
 
     @Override
-    public GuiScreen getValueScreen(GuiScreen parentScreen) {
-        return new ITFConfigScreen(parentScreen);
+    public List<ConfigTab> getConfigTabs() {
+        return configTabs;
     }
 
     @Override

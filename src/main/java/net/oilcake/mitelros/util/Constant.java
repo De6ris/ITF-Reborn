@@ -12,7 +12,7 @@ public class Constant {
 
     public static int calculateCurrentDifficulty() {
         int difficulty = 0;
-        for (ConfigBase configBase : ITFConfig.challenge) {
+        for (ConfigBase<?> configBase : ITFConfig.challenge) {
             if (configBase instanceof ConfigBooleanChallenge challenge && challenge.getBooleanValue()) {
                 difficulty += challenge.getLevel();
             }
