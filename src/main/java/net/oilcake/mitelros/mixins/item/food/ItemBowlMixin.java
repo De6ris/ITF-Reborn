@@ -4,7 +4,6 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.item.Materials;
-import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.util.FoodDataList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,18 +23,7 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
     @Inject(method = "onItemUseFinish", at = @At("HEAD"))
     private void itfDrink(ItemStack item_stack, World world, EntityPlayer player, CallbackInfo ci) {
         if (player.onServer()) {
-            if (contains(Materials.dangerous_water)) {
-                double rand = Math.random();
-                if (rand > 0.2D)
-                    player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
-                player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
-            }
-            if (contains(Materials.suspicious_water)) {
-                double rand = Math.random();
-                if (rand > 0.8D)
-                    player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
-                player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
-            }
+            FoodDataList.onWaterDrunk(item_stack.getItem(), player);
             if (!contains(Material.water) && !contains(Material.milk)) {
                 player.getFeastManager().update(this);
             }

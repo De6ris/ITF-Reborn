@@ -27,11 +27,16 @@ public class RecipesFurnaceExtend extends Items {
         FurnaceRecipes.smelting().addSmelting(suspiciousPotion.itemID, new ItemStack(potion, 1, 0));
         FurnaceRecipes.smelting().addSmelting(horse_meat.itemID, new ItemStack(horse_meat_cooked));
         FurnaceRecipes.smelting().addSmelting(clayBowlRaw.itemID, new ItemStack(clayBowlEmpty));
-        Class[] tools = {
+        FurnaceRecipes.smelting().addSmelting(leatherKettleSuspicious.itemID, new ItemStack(leatherKettle));
+        FurnaceRecipes.smelting().addSmelting(leatherKettleSwampland.itemID, new ItemStack(leatherKettle));
+        FurnaceRecipes.smelting().addSmelting(hardenedClayJugSuspicious.itemID, new ItemStack(hardenedClayJug));
+        FurnaceRecipes.smelting().addSmelting(hardenedClayJugSwampland.itemID, new ItemStack(hardenedClayJug));
+        FurnaceRecipes.smelting().addSmelting(clayJug.itemID, new ItemStack(hardenedClayJug).setItemDamage(hardenedClayJug.getMaxDamage() - 1));
+        Class<?>[] tools = {
                 ItemSword.class, ItemAxe.class, ItemPickaxe.class, ItemHoe.class, ItemShovel.class, ItemWarHammer.class, ItemBattleAxe.class, ItemScythe.class, ItemDagger.class, ItemKnife.class,
                 ItemMorningStar.class, ItemHatchet.class, ItemShears.class, ItemMattock.class, ItemHelmet.class, ItemBoots.class, ItemLeggings.class, ItemCuirass.class};
         Material[] available_material = {Material.copper, Material.silver, Material.gold, Material.iron, Materials.nickel, Materials.tungsten, Material.ancient_metal, Material.rusted_iron};
-        for (Class tool : tools) {
+        for (Class<?> tool : tools) {
             for (Material material : available_material) {
                 Item matchingitem = Item.getMatchingItem(tool, material);
                 if (matchingitem != null) {

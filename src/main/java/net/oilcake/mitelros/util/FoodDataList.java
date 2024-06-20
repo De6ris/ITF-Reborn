@@ -58,6 +58,21 @@ public class FoodDataList {
         return 0;
     }
 
+    public static void onWaterDrunk(Item item, EntityPlayer player) {
+        if (item.hasMaterial(Materials.dangerous_water)) {
+            double rand = Math.random();
+            if (rand > 0.2D)
+                player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
+            player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
+        }
+        if (item.hasMaterial(Materials.suspicious_water)) {
+            double rand = Math.random();
+            if (rand > 0.8D)
+                player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
+            player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
+        }
+    }
+
     public static void onFoodEaten(ItemStack item_stack, EntityPlayer player) {
         Random rand = player.rand;
         if (item_stack.itemID == Item.rottenFlesh.itemID)

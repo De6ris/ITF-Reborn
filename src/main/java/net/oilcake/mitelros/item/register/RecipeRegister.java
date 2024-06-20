@@ -18,6 +18,7 @@ public class RecipeRegister extends Items {
         RecipesArmor.registerArmorRecipe(register);
         register.registerShapedRecipe(new ItemStack(fishingRodNickel), true, "  S", " SG", "SAG", 'A', nickelNugget, 'S', Item.stick, 'G', Item.silk);
         register.registerShapedRecipe(new ItemStack(fishingRodTungsten), true, "  S", " SG", "SAG", 'A', tungstenNugget, 'S', Item.stick, 'G', Item.silk);
+        register.registerShapedRecipe(new ItemStack(clayJug, 1), true, " C ", "C C", " C ", 'C', clay);
         register.registerShapedRecipe(new ItemStack(bowTungsten, 1), true, "#C ", "#EC", "#C ", '#', silk, 'E', tungstenIngot, 'C', stick);
         register.registerShapedRecipe(new ItemStack(ignitionWood, 1), true, "SW", "WW", 'S', silk, 'W', stick);
         register.registerShapedRecipe(new ItemStack(ignitionWood, 1), true, "SW", "WW", 'S', sinew, 'W', stick);

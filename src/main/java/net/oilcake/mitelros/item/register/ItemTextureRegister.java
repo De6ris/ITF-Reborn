@@ -247,5 +247,12 @@ public class ItemTextureRegister extends Items {
         event.register(NameSpace, "totem/totem_of_flattening", totemOfFlattening);
         event.register(NameSpace, "loot_pack/lich", lootPackLich);
         event.register(NameSpace, "pocket/mine", minePocket);
+        event.register(NameSpace, "kettle/leather", leatherKettle).setUnlocalizedName("leather_kettle");
+        event.register(NameSpace, "kettle/leather", leatherKettleSuspicious).setUnlocalizedName("leather_kettle_suspicious");
+        event.register(NameSpace, "kettle/leather", leatherKettleSwampland).setUnlocalizedName("leather_kettle_dangerous");
+        event.register(NameSpace, "jug/clay", clayJug).setUnlocalizedName("clay_jug");
+        event.register(NameSpace, "jug/hardened_clay", hardenedClayJug).setUnlocalizedName("hardened_clay_jug");
+        event.register(NameSpace, "jug/hardened_clay", hardenedClayJugSuspicious).setUnlocalizedName("hardened_clay_jug_suspicious");
+        event.register(NameSpace, "jug/hardened_clay", hardenedClayJugSwampland).setUnlocalizedName("hardened_clay_jug_dangerous");
     }
 }

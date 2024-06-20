@@ -88,6 +88,15 @@ item.armor/ice_chestplate.name=Ice Chestplate
 item.armor/ice_leggings.name=Ice Leggings
 item.armor/ice_boots.name=Ice Boots
 
+item.leather_kettle.name=Leather Kettle
+item.leather_kettle_suspicious.name=Leather Kettle Of Suspicious Water
+item.leather_kettle_dangerous.name=Leather Kettle Of Swampland Water
+
+item.clay_jug.name=Clay Jug
+item.hardened_clay_jug.name=Hardened Clay Jug
+item.hardened_clay_jug_suspicious.name=Hardened Clay Jug Of Suspicious Water
+item.hardened_clay_jug_dangerous.name=Hardened Clay Jug Of Suspicious Water
+
 enchantment.vanishing=Curse Of Vanishing
 enchantment.melting=Melting
 enchantment.absorb=Absorb

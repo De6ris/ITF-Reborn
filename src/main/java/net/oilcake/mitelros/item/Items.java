@@ -446,7 +446,7 @@ public class Items extends Item {
 
     public static final ItemBow bowUru = new ITFBow(getNextItemID(), Materials.uru);
 
-    public static final Item enderRod =  new ItemBrewingMisc(getNextItemID(), Material.ender_pearl, "ender_rod").setPotionEffectExtend("+8+9+10+11&4-4+13").setReachBonus(0.5F);
+    public static final Item enderRod = new ItemBrewingMisc(getNextItemID(), Material.ender_pearl, "ender_rod").setPotionEffectExtend("+8+9+10+11&4-4+13").setReachBonus(0.5F);
 
     public static final ItemMorningStar morningStarRustedIron = new ItemMorningStar(getNextItemID(), Material.rusted_iron);
 
@@ -503,6 +503,13 @@ public class Items extends Item {
     public static final Item lootPackLich = new ItemLootPack(getNextItemID(), Material.leather, "lootPack", ITFLootTables.lichEntity, 6);
 
     public static final Item minePocket = new ItemMinePocket(getNextItemID(), Material.leather, "pocket");
+    public static final ItemKettle leatherKettle = new ItemKettle(getNextItemID(), 13, Material.water, Material.leather);
+    public static final ItemKettle leatherKettleSuspicious = new ItemKettle(getNextItemID(), 13, Materials.suspicious_water, Material.leather);
+    public static final ItemKettle leatherKettleSwampland = new ItemKettle(getNextItemID(), 13, Materials.dangerous_water, Material.leather);
+    public static final ItemStandard clayJug = (ItemStandard) new ItemStandard(getNextItemID(), Material.clay, "clayJug").setMaxStackSize(1);
+    public static final ItemKettle hardenedClayJug = new ItemKettle(getNextItemID(), 19, Material.water, Material.hardened_clay);
+    public static final ItemKettle hardenedClayJugSuspicious = new ItemKettle(getNextItemID(), 19, Materials.suspicious_water, Material.hardened_clay);
+    public static final ItemKettle hardenedClayJugSwampland = new ItemKettle(getNextItemID(), 19, Materials.dangerous_water, Material.hardened_clay);
 
     private static int getNextItemID() {
         if (!ITFConfig.FixedID.getBooleanValue()) return IdUtil.getNextItemID();

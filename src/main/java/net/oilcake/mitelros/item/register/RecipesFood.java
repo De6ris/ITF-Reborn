@@ -32,6 +32,10 @@ public class RecipesFood extends Items {
             register.registerShapelessRecipe(new ItemStack(clayBowlEmpty, i), false, new ItemStack(clayBowlWaterSuspicious, i));
             register.registerShapelessRecipe(new ItemStack(clayBowlEmpty, i), false, new ItemStack(clayBowlWaterSwampland, i));
         }
+        register.registerShapelessRecipe(new ItemStack(leatherKettle).setItemDamage(18), false, new ItemStack(leatherKettleSwampland));
+        register.registerShapelessRecipe(new ItemStack(leatherKettle).setItemDamage(18), false, new ItemStack(leatherKettleSuspicious));
+        register.registerShapelessRecipe(new ItemStack(hardenedClayJug).setItemDamage(18), false, new ItemStack(hardenedClayJugSuspicious));
+        register.registerShapelessRecipe(new ItemStack(hardenedClayJug).setItemDamage(18), false, new ItemStack(hardenedClayJugSwampland));
     }
 
     public static void clayBowlMilkRecipes(RecipeRegistryEvent register) {

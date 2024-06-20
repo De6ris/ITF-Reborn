@@ -24,10 +24,6 @@ import net.oilcake.mitelros.render.*;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.reload.event.*;
-import net.xiaoyu233.fml.reload.event.recipe.ShapelessRecipeModifier;
-
-import java.util.List;
-import java.util.Optional;
 
 public class ITFEvent {
     @Subscribe
