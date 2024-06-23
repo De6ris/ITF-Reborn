@@ -35,7 +35,7 @@ public class RecipesFood extends Items {
         register.registerShapelessRecipe(new ItemStack(leatherKettle).setItemDamage(18), false, new ItemStack(leatherKettleSwampland));
         register.registerShapelessRecipe(new ItemStack(leatherKettle).setItemDamage(18), false, new ItemStack(leatherKettleSuspicious));
         register.registerShapelessRecipe(new ItemStack(hardenedClayJug).setItemDamage(18), false, new ItemStack(hardenedClayJugSuspicious));
-        register.registerShapelessRecipe(new ItemStack(hardenedClayJug).setItemDamage(18), false, new ItemStack(hardenedClayJugSwampland));
+        register.registerShapelessRecipe(new ItemStack(hardenedClayJug).setItemDamage(18), false, new ItemStack(hardenedClayJugSwampland));// TODO Warning: recipe for Leather Kettle, component crafting difficulty not set: Leather Kettle Of Swampland Water [4501]
     }
 
     public static void clayBowlMilkRecipes(RecipeRegistryEvent register) {

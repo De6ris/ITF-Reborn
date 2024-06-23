@@ -9,7 +9,7 @@ import net.oilcake.mitelros.entity.misc.EntityWandShockWave;
 import net.oilcake.mitelros.entity.misc.EntityWandSlimeBall;
 import net.oilcake.mitelros.network.S2CEnchantReserverInfo;
 import net.oilcake.mitelros.network.S2CEnchantmentInfo;
-import net.oilcake.mitelros.network.S2CUpdateNutrition;
+import net.oilcake.mitelros.network.S2CUpdateITFStatus;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -86,26 +86,23 @@ public abstract class NetClientHandlerMixin extends NetHandler implements ITFNet
 
 
     @Override
-    public void processEnchantReserverInfo(S2CEnchantReserverInfo packet) {
+    public void itf$ProcessEnchantReserverInfo(S2CEnchantReserverInfo packet) {
         GuiScreen openingGUI = this.mc.currentScreen;
         if (openingGUI instanceof GuiEnchantReserver)
             ((GuiEnchantReserver) openingGUI).setEnchantInfo(packet.getEXP());
     }
 
     @Override
-    public void handleUpdateNutrition(S2CUpdateNutrition packet) {
-        ITFClientPlayer clientPlayer = this.mc.thePlayer;
-        clientPlayer.setPhytonutrients(packet.getPhytonutrients());
-        clientPlayer.setProtein(packet.getProtein());
+    public void itf$HandleUpdateITFStatus(S2CUpdateITFStatus packet) {
         ((ITFFoodStats) this.mc.thePlayer.getFoodStats()).setSatiationWater(packet.getWater(), false);
         ((ITFPlayer) this.mc.thePlayer).getTemperatureManager().setBodyTemperature(packet.getTemp());
     }
 
     @Override
-    public void handleEnchantmentInfo(S2CEnchantmentInfo packet) {
+    public void itf$HandleEnchantmentInfo(S2CEnchantmentInfo packet) {
         GuiScreen openingGUI = this.mc.currentScreen;
         if (openingGUI instanceof GuiEnchantment guiEnchantment)
-            ((ITFGui) guiEnchantment).setEnchantmentInfo(packet.getInfo());
+            ((ITFGuiEnchantment) guiEnchantment).itf$SetEnchantmentInfo(packet.getInfo());
     }
 
     @Shadow

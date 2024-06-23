@@ -104,7 +104,7 @@ public class ITFEvent {
         event.register(true, false, S2CEnchantReserverInfo.class);//134
         event.register(false, true, C2SDecreaseWater.class);//135
         event.register(true, false, S2CEnchantmentInfo.class);//136
-        event.register(true, false, S2CUpdateNutrition.class);//137
+        event.register(true, false, S2CUpdateITFStatus.class);//137
         event.register(true, false, S2COpenWindow.class);//138
     }
 

@@ -59,7 +59,6 @@ public class ITFConfig extends SimpleConfigs {
 
     /* other */
     public static final ConfigBoolean TemperatureBar = new ConfigBoolean("绘画温度条", false);
-    public static final ConfigBoolean NutritionBar = new ConfigBoolean("绘画营养条", true);
 
     //misc
     public static final ConfigBoolean FixedID = new ConfigBoolean("固定ID", false, "(整合包作者需考虑)固定物品ID以及方块ID");
@@ -94,7 +93,7 @@ public class ITFConfig extends SimpleConfigs {
 
         experimental = List.of(TagBetterBiome, TagCreaturesV2, TagBenchingV2, FinalChallenge, TagTemperature);
 
-        info = List.of(NutritionBar, TemperatureBar);
+        info = List.of(TemperatureBar);
         misc = List.of(FixedID, ItemIDStart, BlockIDStart);
 
         others = new ArrayList<>();

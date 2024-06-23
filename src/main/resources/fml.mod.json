@@ -6,6 +6,9 @@
     "fishmodloader": ">=3.3.0",
     "many-lib": ">=2.0.0"
   },
+  "suggests": {
+    "bread_skin": "*"
+  },
   "environment": "*",
   "name": "MITE-ITF-Reborn",
   "description": "",
@@ -34,9 +37,6 @@
       ],
       "net/minecraft/Enchantment": [
         "net/oilcake/mitelros/api/ITFEnchantment"
-      ],
-      "net/minecraft/EntityClientPlayerMP": [
-        "net/oilcake/mitelros/api/ITFClientPlayer"
       ]
     }
   }

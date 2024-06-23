@@ -66,7 +66,7 @@ public class TemperatureManager {
         int freezeUnit = this.findFreezeSource();
         int heatUnit = this.findHeatSource();
         double commonFactor = this.calculateCommonFactor();
-        return (commonFactor + heatUnit - freezeUnit) * (ITFConfig.TagExtremeClimate.get() ? 3.0d : 1.0d);
+        return (commonFactor + heatUnit - freezeUnit) * (ITFConfig.TagExtremeClimate.getBooleanValue() ? 3.0d : 1.0d);
     }
 
     public boolean feelsHot() {
@@ -158,10 +158,14 @@ public class TemperatureManager {
         double result = 0.0d;
         int potionEffect = (this.player.isPotionActive(PotionExtend.warm) ? this.player.getActivePotionEffect(PotionExtend.warm).getAmplifier() + 1 : 0)
                 - (this.player.isPotionActive(PotionExtend.cool) ? this.player.getActivePotionEffect(PotionExtend.cool).getAmplifier() + 1 : 0);
-        if (potionEffect * (normalTemperature - this.bodyTemperature) > 0) result += potionEffect * 8;
+        if (potionEffect > 0 && normalTemperature - this.bodyTemperature > 1.0D) {
+            result += potionEffect * 8;
+        } else if (potionEffect < 0 && this.bodyTemperature - normalTemperature > 1.0D) {
+            result += potionEffect * 8;
+        }
         if (this.player.isBurning()) result += 16;
         result += this.calcArmorHeat();
-        result -= (this.bodyTemperature - normalTemperature) * (ITFConfig.TagExtremeClimate.get() ? 0.33D : 1.0D);
+        result -= (this.bodyTemperature - normalTemperature) * (ITFConfig.TagExtremeClimate.getBooleanValue() ? 0.33D : 1.0D);
         if (debug) System.out.println(result + "deltaed");
 
         World world = this.player.worldObj;
@@ -173,7 +177,7 @@ public class TemperatureManager {
                 return result - 4;
             }
             case -2 -> {
-                return result + heightFactor(this.player.getBlockPosY(), 128) + (ITFConfig.TagDeadGeothermy.get() ? -4 : 0);
+                return result + heightFactor(this.player.getBlockPosY(), 128) + (ITFConfig.TagDeadGeothermy.getBooleanValue() ? -4 : 0);
             }
         }
         boolean isOutdoors = this.player.isOutdoors();

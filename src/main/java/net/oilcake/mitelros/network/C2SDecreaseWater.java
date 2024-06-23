@@ -27,7 +27,7 @@ public class C2SDecreaseWater extends Packet {
     }
 
     public void processPacket(NetHandler net_handler) {
-        ((ITFNetHandler) net_handler).handleDecreaseWater(this);
+        ((ITFNetHandler) net_handler).itf$HandleDecreaseWater(this);
     }
 
     public int getPacketSize() {

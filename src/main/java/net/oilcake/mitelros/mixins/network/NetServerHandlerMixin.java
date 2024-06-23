@@ -14,7 +14,7 @@ public abstract class NetServerHandlerMixin extends NetHandler implements ITFNet
     public ServerPlayer playerEntity;
 
     @Override
-    public void handleDecreaseWater(C2SDecreaseWater packet) {
+    public void itf$HandleDecreaseWater(C2SDecreaseWater packet) {
         (this.playerEntity.getAsPlayer()).decreaseWaterServerSide(packet.hungerWater);
     }
 }

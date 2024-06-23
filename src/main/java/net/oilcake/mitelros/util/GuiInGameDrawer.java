@@ -10,56 +10,18 @@ import org.lwjgl.opengl.GL11;
 public class GuiInGameDrawer {
     public static final ResourceLocation icons_itf = new ResourceLocation("textures/gui/itf_icons.png");
 
-    public static void drawNutrientsBar(Gui gui, Minecraft mc, int var12, int var13) {
-        int protein = Math.max(mc.thePlayer.getProtein() - 800000, 0);
-        int phytonutrients = Math.max(mc.thePlayer.getPhytonutrients() - 800000, 0);
-        int var26 = var12 - 90;
-        int var25 = var13 + 32;
-        if (protein > phytonutrients) {
-            GL11.glPushMatrix();
-            GL11.glScalef(0.6F, 1.0F, 1.0F);
-            mc.getTextureManager().bindTexture(icons_itf);
-            gui.drawTexturedModalRect(var26 - 205, var25, 0, 106, 182, 6);
-            gui.drawTexturedModalRect(var26 - 205, var25, 0, 100, (int) (182.0F * getRateNutrient(protein)), 6);
-            GL11.glPopMatrix();
-            GL11.glPushMatrix();
-            GL11.glScalef(0.6F, 1.0F, 1.0F);
-            mc.getTextureManager().bindTexture(icons_itf);
-            gui.drawTexturedModalRect(var26 - 205, var25, 0, 94, (int) (182.0F * getRateNutrient(phytonutrients)), 6);
-            GL11.glPopMatrix();
-        } else {
-            GL11.glPushMatrix();
-            GL11.glScalef(0.6F, 1.0F, 1.0F);
-            mc.getTextureManager().bindTexture(icons_itf);
-            gui.drawTexturedModalRect(var26 - 205, var25, 0, 106, 182, 6);
-            gui.drawTexturedModalRect(var26 - 205, var25, 0, 94, (int) (182.0F * getRateNutrient(phytonutrients)), 6);
-            GL11.glPopMatrix();
-            GL11.glPushMatrix();
-            GL11.glScalef(0.6F, 1.0F, 1.0F);
-            mc.getTextureManager().bindTexture(icons_itf);
-            gui.drawTexturedModalRect(var26 - 205, var25, 0, 100, (int) (182.0F * getRateNutrient(protein)), 6);
-            GL11.glPopMatrix();
-        }
-    }
-
-    private static float getRateNutrient(long par1) {
-        par1 *= par1;
-        par1 /= 160000L;
-        return (float) par1 / 160000.0F;
-    }
-
     public static void drawTemperatureBar(Gui gui, Minecraft mc, int var12, int var13) {
-        int var26 = var12 - 90;
+        int var26 = var12 - 303;
         int var25 = var13 + 24;
         GL11.glPushMatrix();
         GL11.glScalef(0.6F, 1.0F, 1.0F);
         mc.getTextureManager().bindTexture(icons_itf);
-        gui.drawTexturedModalRect(var26 - 205, var25, 0, 106, 182, 6);
+        gui.drawTexturedModalRect(var26, var25, 0, 106, 182, 6);
         double temperature = ((ITFPlayer) mc.thePlayer).getTemperatureManager().getBodyTemperature();
         int length = (int) (91.0D * (((temperature - TemperatureManager.normalTemperature) * (temperature - TemperatureManager.normalTemperature) * (temperature > TemperatureManager.normalTemperature ? 1 : -1) / 9.0D) + 1.0D));
         if (length > 182) length = 182;
         if (length < 0) length = 1;
-        gui.drawTexturedModalRect(var26 - 205, var25, 0, 118, length, 6);
+        gui.drawTexturedModalRect(var26, var25, 0, 118, length, 6);
         GL11.glPopMatrix();
     }
 

@@ -40,7 +40,7 @@ public class S2CEnchantmentInfo extends Packet {
 
     @Override
     public void processPacket(NetHandler netHandler) {
-        ((ITFNetHandler) netHandler).handleEnchantmentInfo(this);
+        ((ITFNetHandler) netHandler).itf$HandleEnchantmentInfo(this);
     }
 
     @Override

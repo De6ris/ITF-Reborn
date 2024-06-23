@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.mixins.gui;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.api.ITFGui;
+import net.oilcake.mitelros.api.ITFGuiEnchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GuiEnchantment.class)
-public abstract class GuiEnchantmentMixin extends GuiContainer implements ITFGui {
+public abstract class GuiEnchantmentMixin extends GuiContainer implements ITFGuiEnchantment {
     @Unique
     private int[] info = null;
 
@@ -45,7 +45,7 @@ public abstract class GuiEnchantmentMixin extends GuiContainer implements ITFGui
     }
 
     @Override
-    public void setEnchantmentInfo(int[] info) {
+    public void itf$SetEnchantmentInfo(int[] info) {
         this.info = info;
     }
 }

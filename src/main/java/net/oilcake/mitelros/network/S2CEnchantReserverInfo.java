@@ -35,6 +35,6 @@ public class S2CEnchantReserverInfo extends Packet {
     }
 
     public void processPacket(NetHandler var1) {
-        ((ITFNetHandler) var1).processEnchantReserverInfo(this);
+        ((ITFNetHandler) var1).itf$ProcessEnchantReserverInfo(this);
     }
 }
