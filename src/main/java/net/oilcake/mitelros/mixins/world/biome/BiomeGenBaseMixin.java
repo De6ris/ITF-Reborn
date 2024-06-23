@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.entity.mob.*;
-import net.oilcake.mitelros.world.BiomeBases;
+import net.oilcake.mitelros.world.ITFBiomes;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -95,7 +95,7 @@ public abstract class BiomeGenBaseMixin {
 
     @Inject(method = "isHillyOrMountainous", at = @At("HEAD"), cancellable = true)
     private void inject(CallbackInfoReturnable<Boolean> cir) {
-        if (this.biomeID == BiomeBases.BIOME_WINDSWEPT_PLEATU.biomeID) {
+        if (this.biomeID == ITFBiomes.BIOME_WINDSWEPT_PLEATU.biomeID) {
             cir.setReturnValue(true);
         }
     }

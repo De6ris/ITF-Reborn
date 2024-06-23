@@ -170,7 +170,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         this.addWater(0);
     }
 
-    @ModifyVariable(method = "addExperience(IZZ)V", at = @At("HEAD"), ordinal = 0, argsOnly = true)// TODO need checking
+    @ModifyVariable(method = "addExperience(IZZ)V", at = @At("HEAD"), ordinal = 0, argsOnly = true)
     private int mending(int amount) {
         return this.enchantmentManager.onAddingEXP(amount);
     }

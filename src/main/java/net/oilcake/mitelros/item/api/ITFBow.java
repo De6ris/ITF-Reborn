@@ -14,20 +14,20 @@ public class ITFBow extends ItemBow {
     }
 
     public static int overridePullSpeed(ItemStack item_stack) {
-        int TicksPull;
+        int ticksPull;
         Material material = item_stack.getMaterialForRepairs();
         if (material == Materials.tungsten) {
-            TicksPull = 30;
+            ticksPull = 30;
         } else if (material == Materials.uru) {
-            TicksPull = 18;
+            ticksPull = 18;
         } else if (material == Material.mithril) {
-            TicksPull = 27;
+            ticksPull = 27;
         } else if (material == Material.ancient_metal) {
-            TicksPull = 24;
+            ticksPull = 24;
         } else {
-            TicksPull = 20;
+            return -1;
         }
-        return (int) (TicksPull * (1.0F - 0.5F * EnchantmentHelper.getEnchantmentLevelFraction(Enchantment.quickness, item_stack)));
+        return (int) (ticksPull * (1.0F - 0.5F * EnchantmentHelper.getEnchantmentLevelFraction(Enchantment.quickness, item_stack)));
     }
 
     public static int getArrowSpeedBonus(Material material) {

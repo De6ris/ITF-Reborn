@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.mixins.world;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.WontFix;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.entity.mob.*;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,8 +23,9 @@ public abstract class WorldServerMixin extends World {
      * @author
      * @reason
      */
-    @Overwrite// TODO hard to rewrite
-    public Class getSuitableCreature(EnumCreatureType creature_type, int x, int y, int z) {
+    @WontFix
+    @Overwrite
+    public Class<?> getSuitableCreature(EnumCreatureType creature_type, int x, int y, int z) {
         boolean check_depth = isOverworld();
         boolean is_blood_moon_up = isBloodMoon(true);
         boolean is_freezing_biome = getBiomeGenForCoords(x, z).isFreezing();
@@ -34,17 +36,17 @@ public abstract class WorldServerMixin extends World {
         boolean can_spawn_revenants_on_surface = is_blood_moon_up;
         boolean can_spawn_bone_lords_on_surface = is_blood_moon_up;
         for (int attempt = 0; attempt < 16; attempt++) {
-            List possible_creatures = getChunkProvider().getPossibleCreatures(creature_type, x, y, z);
+            List<?> possible_creatures = getChunkProvider().getPossibleCreatures(creature_type, x, y, z);
             if (possible_creatures == null || possible_creatures.isEmpty())
                 return null;
             SpawnListEntry entry = (SpawnListEntry) WeightedRandom.getRandomItem(this.rand, possible_creatures);
-            Class entity_class = entry.entityClass;
+            Class<?> entity_class = entry.entityClass;
             if (entity_class == EntityCreeper.class) {
                 if (!hasSkylight() || isDaytime() || this.rand.nextInt(4) == 0 || !isOutdoors(x, y, z)) {
                     if (this.rand.nextInt(40) >= y && this.rand.nextFloat() < 0.5F)
                         return EntityInfernalCreeper.class;
                     if (y <= 40)
-                        return ITFConfig.TagInvisibleFollower.get() ? EntityStalkerCreeper.class : entity_class;
+                        return ITFConfig.TagInvisibleFollower.getBooleanValue() ? EntityStalkerCreeper.class : entity_class;
                     return entity_class;
                 }
             } else if (entity_class == EntitySlime.class) {
@@ -149,12 +151,12 @@ public abstract class WorldServerMixin extends World {
 
     @ModifyConstant(method = "tickBlocksAndAmbiance", constant = @Constant(intValue = 20000))
     private int moreThunder(int constant) {
-        return ITFConfig.TagUnstableConvection.get() ? 5000 : 20000;
+        return ITFConfig.TagUnstableConvection.getBooleanValue() ? 5000 : 20000;
     }
 
     @ModifyConstant(method = "tickBlocksAndAmbiance", constant = @Constant(intValue = 100000))
     private int moreThunder1(int constant) {
-        return ITFConfig.TagUnstableConvection.get() ? 25000 : 100000;
+        return ITFConfig.TagUnstableConvection.getBooleanValue() ? 25000 : 100000;
     }
 
     @Shadow

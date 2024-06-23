@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.mixins.render;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.WontFix;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -14,7 +15,8 @@ public abstract class RenderVillagerMixin extends RenderLiving {
      * @author
      * @reason
      */
-    @Overwrite// Wont fix because all the villagers are rewritten TODO
+    @WontFix
+    @Overwrite
     protected ResourceLocation func_110902_a(EntityVillager par1EntityVillager) {
         return switch (par1EntityVillager.getProfession()) {
             case 1, 2, 3, 4, 5, 6 -> this.textures[1];

@@ -4,6 +4,7 @@ import net.minecraft.EntityArachnid;
 import net.minecraft.EntityMob;
 import net.minecraft.NBTTagCompound;
 import net.minecraft.World;
+import net.oilcake.mitelros.api.BadOverride;
 import net.oilcake.mitelros.api.ITFSpider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -41,7 +42,8 @@ public abstract class EntityArachnidMixin extends EntityMob implements ITFSpider
         this.counter = counter;
     }
 
-    @Override// TODO bad override
+    @BadOverride
+    @Override
     public boolean isFrenzied() {
         return (super.isFrenzied() || this.counter > 0);
     }

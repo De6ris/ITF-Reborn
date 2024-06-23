@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class EntitySpirit extends EntityMob {
     private int fx_counter;
-    private int max_num_evasions;// TODO fix this
+    private int max_num_evasions;
     private int num_evasions;
     private static final UUID attackingSpeedBoostModifierUUID = UUID.fromString("020E0DFB-87AE-4653-9556-831010E291A0");
     private static final AttributeModifier attackingSpeedBoostModifier;

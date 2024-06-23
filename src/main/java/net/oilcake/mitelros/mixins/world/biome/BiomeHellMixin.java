@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.mixins.world.biome;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.BadOverride;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.entity.mob.*;
 import net.oilcake.mitelros.world.WorldGenSulphur;
@@ -27,7 +28,7 @@ public abstract class BiomeHellMixin extends BiomeGenBase {
         this.spawnableMonsterList.add(new SpawnListEntry(EntityPigmanLord.class, 5, 1, 1));
         this.spawnableMonsterList.add(new SpawnListEntry(EntityPigmanGuard.class, 10, 1, 2));
         this.spawnableMonsterList.add(new SpawnListEntry(EntitySpirit.class, 10, 1, 2));
-        if (ITFConfig.TagDimensionInvade.get()) {
+        if (ITFConfig.TagDimensionInvade.getBooleanValue()) {
             this.spawnableMonsterList.add(new SpawnListEntry(EntitySpiderKing.class, 10, 1, 2));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityLongdeadGuardian.class, 40, 2, 4));
             this.spawnableMonsterList.add(new SpawnListEntry(EntityLongdead.class, 80, 4, 4));
@@ -46,7 +47,8 @@ public abstract class BiomeHellMixin extends BiomeGenBase {
         }
     }
 
-    @Override// TODO bad override
+    @BadOverride
+    @Override
     public void decorate(World par1World, Random par2Random, int par3, int par4) {
         super.decorate(par1World, par2Random, par3, par4);
         if (par2Random.nextInt(256) == 0) {

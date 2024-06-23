@@ -35,14 +35,14 @@ public class DamageMixin {
 
     @Inject(method = "applyTargetDefenseModifiers", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", ordinal = 1), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
     private void tagArmament(EntityLivingBase target, EntityDamageResult result, CallbackInfoReturnable<Float> cir, float total_protection, float amount_dealt_to_armor, float piercing, float effective_protection) {
-        if (ITFConfig.TagArmament.get() && target instanceof EntityPlayer && effective_protection >= this.amount) {
+        if (ITFConfig.TagArmament.getBooleanValue() && target instanceof EntityPlayer && effective_protection >= this.amount) {
             cir.setReturnValue(0.0F);
         }
     }
 
     @ModifyArg(method = "applyTargetDefenseModifiers", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", ordinal = 1), index = 1)
-    private float tagInstinctSurvival(float a) {// TODO needs checking
-        return ITFConfig.TagInstinctSurvival.get() ? 0.0F : 1.0F;
+    private float tagInstinctSurvival(float a) {
+        return ITFConfig.TagInstinctSurvival.getBooleanValue() ? 0.0F : 1.0F;
     }
 
     @Shadow

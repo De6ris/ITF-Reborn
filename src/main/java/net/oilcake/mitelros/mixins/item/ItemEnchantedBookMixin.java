@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.mixins.item;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.WontFix;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.enchantment.EnchantmentTemperature;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,30 +18,32 @@ public abstract class ItemEnchantedBookMixin extends Item {
     public abstract void addEnchantment(ItemStack par1ItemStack, EnchantmentData par2EnchantmentData);
 
     /**
-     * @author
-     * @reason
+     * @author Debris
+     * @reason rewrite
      */
-    @Overwrite// Wont Fix because I changed it entirely TODO
+    @WontFix
+    @Overwrite
     public WeightedRandomChestContent func_92112_a(Random par1Random, int par2, int par3, int par4) {
         ItemStack var6 = new ItemStack(this.itemID, 1, 0);
-        List var4 = buildEnchantmentList(par1Random, 75);
-        for (int var7 = 0; var7 < var4.size(); ++var7) {
-            EnchantmentData var8 = (EnchantmentData) var4.get(var7);
-            this.addEnchantment(var6, var8);
+        List<EnchantmentData> var4 = buildEnchantmentList(par1Random, 75);
+        if (var4 != null) {
+            for (EnchantmentData var8 : var4) {
+                this.addEnchantment(var6, var8);
+            }
         }
         return new WeightedRandomChestContent(var6, par2, par3, par4 * 2);
     }
 
 
     @Unique
-    private static List buildEnchantmentList(Random random, int enchantment_levels) {
+    private static List<EnchantmentData> buildEnchantmentList(Random random, int enchantment_levels) {
         float randomness = 1.0F + (random.nextFloat() - 0.5F) * 0.5F;
         int adjusted_enchantment_levels = (int) (enchantment_levels * randomness);
         if (adjusted_enchantment_levels < 1)
             adjusted_enchantment_levels = 1;
-        ArrayList<EnchantmentData> enchantments_for_item = new ArrayList();
-        while (adjusted_enchantment_levels > 0) {
-            Map all_possible_enchantments = mapEnchantmentData(adjusted_enchantment_levels);
+        ArrayList<EnchantmentData> enchantments_for_item = new ArrayList<>();
+        while (true) {
+            Map<Integer, EnchantmentData> all_possible_enchantments = mapEnchantmentData(adjusted_enchantment_levels);
             if (all_possible_enchantments == null)
                 break;
             removeEnchantmentsFromMapThatConflict(all_possible_enchantments, enchantments_for_item);
@@ -73,24 +76,16 @@ public abstract class ItemEnchantedBookMixin extends Item {
     }
 
     @Unique
-    private static void removeEnchantmentsFromMapThatConflict(Map map, ArrayList enchantments) {
-
-        for (int i = 0; i < enchantments.size(); ++i) {
-            EnchantmentData enchantment_data = (EnchantmentData) enchantments.get(i);
+    private static void removeEnchantmentsFromMapThatConflict(Map<Integer, EnchantmentData> map, ArrayList<EnchantmentData> enchantments) {
+        for (EnchantmentData enchantment_data : enchantments) {
             Enchantment enchantment = enchantment_data.enchantmentobj;
-            Iterator iterator = map.keySet().iterator();
-            while (iterator.hasNext()) {
-                int id = (int) iterator.next();
-                if (!enchantment.canApplyTogether(Enchantment.get(id))) {
-                    iterator.remove();
-                }
-            }
+            map.keySet().removeIf(id -> !enchantment.canApplyTogether(Enchantment.get(id)));
         }
     }
 
     @Unique
-    private static Map mapEnchantmentData(int enchantment_levels) {
-        HashMap map = new HashMap();
+    private static Map<Integer, EnchantmentData> mapEnchantmentData(int enchantment_levels) {
+        HashMap<Integer, EnchantmentData> map = new HashMap<>();
         for (int i = 0; i < Enchantment.enchantmentsList.length; ++i) {
             Enchantment enchantment = Enchantment.get(i);
             if (enchantment != null && (ITFConfig.TagTemperature.getBooleanValue() || !(enchantment instanceof EnchantmentTemperature))) {
@@ -106,7 +101,7 @@ public abstract class ItemEnchantedBookMixin extends Item {
                 }
             }
         }
-        return map.size() == 0 ? null : map;
+        return map.isEmpty() ? null : map;
     }
 
 }

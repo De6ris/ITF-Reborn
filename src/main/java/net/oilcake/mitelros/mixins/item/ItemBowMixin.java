@@ -54,8 +54,11 @@ public abstract class ItemBowMixin extends Item {
 
     @Inject(method = "getTicksForMaxPull", at = @At("HEAD"), cancellable = true)
     private static void setITFPullSpeed(ItemStack item_stack, CallbackInfoReturnable<Integer> cir) {
-        cir.setReturnValue(ITFBow.overridePullSpeed(item_stack));
-    }// TODO compatibility
+        int i = ITFBow.overridePullSpeed(item_stack);
+        if (i != -1) {
+            cir.setReturnValue(i);
+        }
+    }
 
     @ModifyExpressionValue(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;inCreativeMode()Z"))
     private boolean infinity(boolean original, @Local(argsOnly = true) EntityPlayer player) {

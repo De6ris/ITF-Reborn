@@ -59,7 +59,7 @@ public class MiscManager {
     public float calculateITFStv(float str_vs_block) {
         if (player.isPotionActive(PotionExtend.freeze))
             str_vs_block *= 1.0F - (player.getActivePotionEffect(PotionExtend.freeze).getAmplifier() + 1) * 0.5F;
-        if (ITFConfig.FinalChallenge.get())
+        if (ITFConfig.FinalChallenge.getBooleanValue())
             str_vs_block *= 1.0F - Constant.calculateCurrentDifficulty() / 100.0F;
         ItemStack held_item = player.getHeldItemStack();
         if (held_item != null && held_item.getItem() instanceof ItemTool) {
@@ -101,8 +101,8 @@ public class MiscManager {
 
     public float detectNearestMonstersDistance(List<Entity> targets) {
         float distance = -1.0F;
-        for (int i = 0; i < targets.size(); i++) {
-            EntityMob entityMonster = targets.get(i) instanceof EntityMob ? (EntityMob) targets.get(i) : null;
+        for (Entity target : targets) {
+            EntityMob entityMonster = target instanceof EntityMob ? (EntityMob) target : null;
             if (entityMonster != null) {
                 if (distance < 0.0F) {
                     distance = (float) entityMonster.getDistanceSqToEntity(this.player);
@@ -165,19 +165,25 @@ public class MiscManager {
     }
 
     public void broadcast() {
-        player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey(MOD_ID + "挂载成功,当前版本:").setColor(EnumChatFormatting.BLUE)
+        player.sendChatToPlayer(ChatMessageComponent.createFromText(MOD_ID + "挂载成功,当前版本:").setColor(EnumChatFormatting.BLUE)
                 .appendComponent(ChatMessageComponent.createFromText(ITFStart.MOD_Version).setColor(EnumChatFormatting.YELLOW))
-                .appendComponent(ChatMessageComponent.createFromTranslationKey(",作者:Lee074,Huix,Kalsey,由Debris移植到高版本FML,现由Debris和Xy_Lose共同维护")));
+                .appendComponent(ChatMessageComponent.createFromText(",作者:Lee074,Huix,Kalsey,由Debris移植到高版本FML,现由Debris和Xy_Lose共同维护")));
         int difficulty = Constant.calculateCurrentDifficulty();
         if (difficulty != 0) {
-            player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("[MITE-ITF]")
-                    .appendComponent(ChatMessageComponent.createFromTranslationKey("当前难度：" + difficulty)
-                            .setColor((difficulty >= 16) ? EnumChatFormatting.DARK_RED :
-                                    ((difficulty >= 12) ? EnumChatFormatting.RED :
-                                            ((difficulty >= 8) ? EnumChatFormatting.YELLOW :
-                                                    ((difficulty >= 4) ? EnumChatFormatting.GREEN :
-                                                            ((difficulty > 0) ? EnumChatFormatting.AQUA :
-                                                                    EnumChatFormatting.BLUE)))))));
+            player.sendChatToPlayer(ChatMessageComponent.createFromText("[MITE-ITF]").appendComponent(getDifficultyMessage(difficulty)));
         }
+    }
+
+    public static ChatMessageComponent getDifficultyMessage(int difficulty) {
+        return ChatMessageComponent.createFromText("当前难度：" + difficulty).setColor(getColor(difficulty));
+    }
+
+    private static EnumChatFormatting getColor(int difficulty) {
+        return (difficulty >= 16) ? EnumChatFormatting.DARK_RED :
+                ((difficulty >= 12) ? EnumChatFormatting.RED :
+                        ((difficulty >= 8) ? EnumChatFormatting.YELLOW :
+                                ((difficulty >= 4) ? EnumChatFormatting.GREEN :
+                                        ((difficulty > 0) ? EnumChatFormatting.AQUA :
+                                                EnumChatFormatting.BLUE))));
     }
 }

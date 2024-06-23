@@ -2,6 +2,7 @@ package net.oilcake.mitelros.mixins.tileentity;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFurnace;
+import net.oilcake.mitelros.api.WontFix;
 import net.oilcake.mitelros.block.BlockBlastFurnace;
 import net.oilcake.mitelros.block.BlockSmoker;
 import net.oilcake.mitelros.block.Blocks;
@@ -98,14 +99,17 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
         return getFurnaceBlock() instanceof BlockSmoker;
     }
 
+    @Unique
     public boolean canBurnbyItself() {
         return (getFuelHeatLevel() > 2);
     }
 
+    @Override
     public void activateFurnace() {
         this.activated = true;
     }
 
+    @Unique
     private boolean canNormallyWork() {
         return (this.activated && this.furnaceItemStacks[1] != null);
     }
@@ -114,7 +118,8 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
      * @author
      * @reason
      */
-    @Overwrite// Wont fix because change too much TODO
+    @WontFix
+    @Overwrite
     public void updateEntity() {
         if (!this.worldObj.isRemote && !isBurning() && this.activated && this.furnaceItemStacks[1] == null) {
             this.activated = false;

@@ -5,7 +5,7 @@ import net.minecraft.GenLayer;
 import net.minecraft.GenLayerBiome;
 import net.minecraft.WorldType;
 import net.oilcake.mitelros.config.ITFConfig;
-import net.oilcake.mitelros.world.BiomeBases;
+import net.oilcake.mitelros.world.ITFBiomes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,7 +24,7 @@ public class GenLayerBiomeMixin extends GenLayer {
     @Inject(method = "<init>(JLnet/minecraft/GenLayer;Lnet/minecraft/WorldType;)V", at = @At("RETURN"))
     private void itfBiomes(long par1, GenLayer par3GenLayer, WorldType par4WorldType, CallbackInfo callbackInfo) {
         if (!ITFConfig.TagBetterBiome.getBooleanValue()) {
-            this.allowedBiomes = new BiomeGenBase[]{BiomeGenBase.desert, BiomeGenBase.forest, BiomeGenBase.extremeHills, BiomeGenBase.swampland, BiomeGenBase.plains, BiomeGenBase.taiga, BiomeGenBase.jungle, BiomeBases.BIOME_SAVANNA};
+            this.allowedBiomes = new BiomeGenBase[]{BiomeGenBase.desert, BiomeGenBase.forest, BiomeGenBase.extremeHills, BiomeGenBase.swampland, BiomeGenBase.plains, BiomeGenBase.taiga, BiomeGenBase.jungle, ITFBiomes.BIOME_SAVANNA};
         }
     }
 

@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.mixins.entity.villager;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.WontFix;
 import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -38,7 +39,8 @@ public class EntityVillagerMixin extends EntityAgeable implements IMerchant, INp
      * @author
      * @reason
      */
-    @Overwrite// Wont fix because all the villagers are rewritten TODO
+    @WontFix
+    @Overwrite
     private void addDefaultEquipmentAndRecipies(int par1) {
         int var6, var3[], var4[], var5;
         if (this.buyingList != null) {

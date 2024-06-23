@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.mixins.entity.mob;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.BadOverride;
 import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.enchantment.Enchantments;
@@ -32,7 +33,6 @@ public class EntityMobMixin extends EntityCreature {
         if (EnchantmentHelper.hasEnchantment(held_item, Enchantments.enchantmentDestroying)) {
             int destorying = EnchantmentHelper.getEnchantmentLevel(Enchantments.enchantmentDestroying, held_item);
             target.worldObj.createExplosion(this, target.posX, target.posY, target.posZ, 0.0F, destorying * 0.5F, true);
-            //target.setFire(120); TODO why comment
         }
     }
 
@@ -84,13 +84,15 @@ public class EntityMobMixin extends EntityCreature {
         }
     }
 
-    @Override// TODO bad override
+    @BadOverride
+    @Override
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("modified_attribute", this.modified_attribute);
     }
 
-    @Override// TODO bad override
+    @BadOverride
+    @Override
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.modified_attribute = par1NBTTagCompound.getBoolean("modified_attribute");

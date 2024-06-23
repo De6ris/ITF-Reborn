@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.mixins.entity.villager;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.WontFix;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -15,7 +16,8 @@ public class ContainerMerchantMixin extends Container {
      * @author
      * @reason
      */
-    @Overwrite// Wont fix because all the villagers are rewritten TODO
+    @WontFix
+    @Overwrite
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2) {
         ItemStack var3 = null;
         Slot var4 = (Slot) this.inventorySlots.get(par2);

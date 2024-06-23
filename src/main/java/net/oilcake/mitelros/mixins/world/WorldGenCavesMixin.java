@@ -6,7 +6,7 @@ import net.minecraft.BiomeGenBase;
 import net.minecraft.MapGenBase;
 import net.minecraft.MapGenCaves;
 import net.minecraft.World;
-import net.oilcake.mitelros.world.BiomeBases;
+import net.oilcake.mitelros.world.ITFBiomes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,7 +27,7 @@ public class WorldGenCavesMixin extends MapGenBase {
                 return 1.5F;
             } else if (biome == BiomeGenBase.extremeHills) {
                 return 1.5F;
-            } else if (biome == BiomeBases.BIOME_WINDSWEPT_PLEATU) {
+            } else if (biome == ITFBiomes.BIOME_WINDSWEPT_PLEATU) {
                 return 2.5F;
             } else {
                 return 0.75F;

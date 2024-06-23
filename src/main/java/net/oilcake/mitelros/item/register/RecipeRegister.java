@@ -70,7 +70,7 @@ public class RecipeRegister extends Items {
         ItemCoin[] coins = {nickelCoin, tungstenCoin};
         for (ItemCoin coin : coins) {
             for (int plank_subtype = 1; plank_subtype <= 9; plank_subtype++) {
-                register.registerShapelessRecipe(new ItemStack(coin.getNuggetPeer(), plank_subtype), true, new ItemStack(coin, plank_subtype));//.resetDifficulty(25); TODO what is resetDifficulty
+                register.registerShapelessRecipe(new ItemStack(coin.getNuggetPeer(), plank_subtype), true, new ItemStack(coin, plank_subtype));//.resetDifficulty(25);
             }
             register.registerShapelessRecipe(new ItemStack(coin), true, new ItemStack(coin.getNuggetPeer()));
         }

@@ -7,7 +7,7 @@ import net.oilcake.mitelros.world.biome.BiomeUnderworldInFreeze;
 import net.oilcake.mitelros.world.biome.BiomeWindsweptPlateau;
 import net.xiaoyu233.fml.reload.utils.IdUtil;
 
-public class BiomeBases extends BiomeGenBase {
+public class ITFBiomes extends BiomeGenBase {
     static {
         getNextBiomeID();
     }
@@ -24,7 +24,7 @@ public class BiomeBases extends BiomeGenBase {
 
     public static final BiomeGenBase BIOME_SAVANNA_PLEATU = new BiomeSavannaPlateau(getNextBiomeID());
 
-    protected BiomeBases(int par1) {
+    protected ITFBiomes(int par1) {
         super(par1);
     }
 }

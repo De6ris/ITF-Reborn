@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.mixins.world.biome;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.BadOverride;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.entity.mob.EntityStray;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,7 +33,8 @@ public abstract class BiomeTaigaMixin extends BiomeGenBase {
         this.spawnableCreatureList.add(new SpawnListEntry(EntityDireWolf.class, 5, 4, 6));
     }
 
-    @Override// TODO bad override
+    @BadOverride
+    @Override
     public void decorate(World par1World, Random par2Random, int par3, int par4) {
         super.decorate(par1World, par2Random, par3, par4);
         int var5 = 3 + par2Random.nextInt(6);

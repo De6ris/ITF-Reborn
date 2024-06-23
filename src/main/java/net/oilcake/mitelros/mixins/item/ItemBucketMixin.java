@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
+import net.oilcake.mitelros.api.WontFix;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.DispenseBehaviorEmptyBucketRedirect;
@@ -39,7 +40,8 @@ public abstract class ItemBucketMixin extends ItemVessel {
      * @author
      * @reason
      */
-    @Overwrite// TODO hard to rewrite
+    @WontFix
+    @Overwrite
     public IBehaviorDispenseItem getDispenserBehavior() {
         return isEmpty() ? new DispenseBehaviorEmptyBucketRedirect((ItemBucket) getEmptyVessel())
                 : ((getContents() != Material.water && getContents() != Material.lava) ?

@@ -21,6 +21,7 @@ import net.oilcake.mitelros.item.register.ItemTextureRegister;
 import net.oilcake.mitelros.item.register.RecipeRegister;
 import net.oilcake.mitelros.network.*;
 import net.oilcake.mitelros.render.*;
+import net.oilcake.mitelros.status.MiscManager;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.reload.event.*;
@@ -63,13 +64,7 @@ public class ITFEvent {
         }
         if (par2Str.startsWith("difficulty")) {
             int difficulty = Constant.calculateCurrentDifficulty();
-            player.sendChatToPlayer(ChatMessageComponent.createFromText("当前难度: " + difficulty)
-                    .setColor(difficulty >= 16 ? EnumChatFormatting.DARK_RED :
-                            difficulty >= 12 ? EnumChatFormatting.RED :
-                                    difficulty >= 8 ? EnumChatFormatting.YELLOW :
-                                            difficulty >= 4 ? EnumChatFormatting.GREEN :
-                                                    difficulty > 0 ? EnumChatFormatting.AQUA :
-                                                            EnumChatFormatting.BLUE));
+            player.sendChatToPlayer(MiscManager.getDifficultyMessage(difficulty));
             event.setExecuteSuccess(true);
         }
     }
@@ -118,8 +113,6 @@ public class ITFEvent {
         ServerPlayer player = event.getPlayer();
         player.setHealth(player.getHealth());
         ((ITFPlayer) player).getMiscManager().broadcast();
-        if (!Minecraft.inDevMode())
-            player.vision_dimming = 1.25F;
         if (((ITFPlayer) player).getNewPlayerManager().getNew()) {
             ItemStack guide = new ItemStack(Items.guide);
             guide.setTagCompound(ItemGuideBook.generateBookContents());

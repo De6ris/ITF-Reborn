@@ -4,7 +4,7 @@ import net.minecraft.WorldChunkManagerHell;
 import net.minecraft.WorldProvider;
 import net.minecraft.WorldProviderUnderworld;
 import net.oilcake.mitelros.config.ITFConfig;
-import net.oilcake.mitelros.world.BiomeBases;
+import net.oilcake.mitelros.world.ITFBiomes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,7 +19,7 @@ public class WorldProviderUnderworldMixin extends WorldProvider {
     @Inject(method = "registerWorldChunkManager", at = @At("HEAD"), cancellable = true)
     public void registerWorldChunkManager(CallbackInfo ci) {
         if (ITFConfig.TagDeadGeothermy.get()) {
-            this.worldChunkMgr = new WorldChunkManagerHell(BiomeBases.BIOME_UNDERWORLD_IN_FREEZE, 1.0F, 0.0F);
+            this.worldChunkMgr = new WorldChunkManagerHell(ITFBiomes.BIOME_UNDERWORLD_IN_FREEZE, 1.0F, 0.0F);
             ci.cancel();
         }
     }

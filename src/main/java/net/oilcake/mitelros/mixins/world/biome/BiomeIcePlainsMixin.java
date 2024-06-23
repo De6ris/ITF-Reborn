@@ -1,9 +1,11 @@
 package net.oilcake.mitelros.mixins.world.biome;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.BadOverride;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.entity.mob.EntityStray;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -20,18 +22,21 @@ public class BiomeIcePlainsMixin extends BiomeGenBase {
     public void injectCtor(CallbackInfo callbackInfo) {
         removeEntityFromSpawnableLists(EntitySkeleton.class);
         this.spawnableMonsterList.add(new SpawnListEntry(EntityStray.class, 100, 1, 4));
-        if (ITFConfig.TagCreaturesV2.get())
-            RegenHostileAnimals();
+        if (ITFConfig.TagCreaturesV2.getBooleanValue()) {
+            regenHostileAnimals();
+        }
     }
 
-    private void RegenHostileAnimals() {
+    @Unique
+    private void regenHostileAnimals() {
         removeEntityFromSpawnableLists(EntityWolf.class);
         this.spawnableCreatureList.add(new SpawnListEntry(EntityWolf.class, 8, 4, 8));
         removeEntityFromSpawnableLists(EntityDireWolf.class);
         this.spawnableCreatureList.add(new SpawnListEntry(EntityDireWolf.class, 2, 4, 6));
     }
 
-    @Override// TODO bad override
+    @BadOverride
+    @Override
     public void decorate(World par1World, Random par2Random, int par3, int par4) {
         super.decorate(par1World, par2Random, par3, par4);
         int var5 = 3 + par2Random.nextInt(6);
@@ -40,8 +45,9 @@ public class BiomeIcePlainsMixin extends BiomeGenBase {
             int var8 = par2Random.nextInt(28) + 4;
             int var9 = par4 + par2Random.nextInt(16);
             int var10 = par1World.getBlockId(var7, var8, var9);
-            if (var10 == Block.stone.blockID)
+            if (var10 == Block.stone.blockID) {
                 par1World.setBlock(var7, var8, var9, Block.oreEmerald.blockID, 0, 2);
+            }
         }
     }
 }

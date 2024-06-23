@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.mixins.world.biome;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.BadOverride;
 import net.oilcake.mitelros.block.Blocks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,7 +21,8 @@ public class BiomeTheEndMixin extends BiomeGenBase {
         this.spawnableMonsterList.add(new SpawnListEntry(EntityPhaseSpider.class, 5, 1, 4));
     }
 
-    @Override// TODO bad override
+    @BadOverride
+    @Override
     public void decorate(World par1World, Random par2Random, int par3, int par4) {
         super.decorate(par1World, par2Random, par3, par4);
         WorldGenMinable genMinable = (new WorldGenMinable(Blocks.oreUru.blockID, 10, Block.whiteStone.blockID)).setMinableBlockMetadata(0);

@@ -2,7 +2,7 @@ package net.oilcake.mitelros.mixins.world.structure;
 
 import net.minecraft.BiomeGenBase;
 import net.minecraft.MapGenStronghold;
-import net.oilcake.mitelros.world.BiomeBases;
+import net.oilcake.mitelros.world.ITFBiomes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -33,9 +33,9 @@ public class MapGenStrongholdMixin {
         BiomeGenBase[] original = allowedBiomeGenBases;
         BiomeGenBase[] expanded = new BiomeGenBase[original.length + 3];
         System.arraycopy(original, 0, expanded, 0, original.length);
-        expanded[original.length] = BiomeBases.BIOME_SAVANNA;
-        expanded[original.length + 1] = BiomeBases.BIOME_SAVANNA_PLEATU;
-        expanded[original.length + 2] = BiomeBases.BIOME_WINDSWEPT_PLEATU;
+        expanded[original.length] = ITFBiomes.BIOME_SAVANNA;
+        expanded[original.length + 1] = ITFBiomes.BIOME_SAVANNA_PLEATU;
+        expanded[original.length + 2] = ITFBiomes.BIOME_WINDSWEPT_PLEATU;
         allowedBiomeGenBases = expanded;
     }
 }
