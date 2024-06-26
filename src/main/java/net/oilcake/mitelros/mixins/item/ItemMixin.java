@@ -11,10 +11,7 @@ import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.FoodDataList;
 import net.xiaoyu233.fml.util.ReflectHelper;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -34,6 +31,7 @@ public abstract class ItemMixin implements ITFItem {
     @Shadow
     @Final
     public int itemID;
+
     @Unique
     private int foodWater;
     @Unique
@@ -128,10 +126,6 @@ public abstract class ItemMixin implements ITFItem {
     @WrapOperation(method = "getExclusiveMaterial", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V", ordinal = 1))
     private void noError(String text, Operation<Void> original) {
     }// TODO why call to book?
-
-    @WrapOperation(method = "getMatchingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
-    private static void noError1(String text, Operation<Void> original) {
-    }// TODO blast furnace recipes
 
     @Inject(method = "<clinit>", at = @At("TAIL"))
     private static void setExtraAttributes(CallbackInfo ci) {

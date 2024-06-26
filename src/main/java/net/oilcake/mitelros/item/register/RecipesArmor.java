@@ -31,28 +31,16 @@ public class RecipesArmor extends Items {
     }
 
     public static void registerFullMetalToolRecipe(RecipeRegistryEvent register, Material material) {
-        registerBasicToolRecipes(register, material);
-        registerMITEToolRecipeForITFMaterial(register, material);
-    }
-
-    public static void registerBasicToolRecipes(RecipeRegistryEvent register, Material material) {
-        Item item = Item.getMatchingItem(ItemIngot.class, material);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemSword.class, material)), true, "A", "A", "S", 'A', item, 'S', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemHoe.class, material)), true, "AA", "S ", "S ", 'A', item, 'S', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemAxe.class, material)), true, "AA", "SA", "S ", 'A', item, 'S', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemShovel.class, material)), true, "A", "S", "S", 'A', item, 'S', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemPickaxe.class, material)), true, "AAA", " S ", " S ", 'A', item, 'S', Item.stick);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemShears.class, material)), true, "A ", " A", 'A', item);
-        registerArmorRecipe(register, item, material);
-    }
-
-    public static void registerMITEToolRecipeForITFMaterial(RecipeRegistryEvent register, Material material) {
-        Item item_ingot = Item.getMatchingItem(ItemIngot.class, material);
-        Item item_nugget = getMatchingItem(ItemNugget.class, item_ingot.getExclusiveMaterial());
         Item item_chain = Item.getMatchingItem(ItemChain.class, material);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemArrow.class, material)), true, "C", "B", "A", 'A', Item.feather, 'B', Item.stick, 'C', item_nugget);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemChain.class, material)), true, " A ", "A A", " A ", 'A', item_nugget);
         registerArmorRecipe(register, item_chain, material);
+        Item item_ingot = Item.getMatchingItem(ItemIngot.class, material);
+        registerArmorRecipe(register, item_ingot, material);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemSword.class, material)), true, "A", "A", "S", 'A', item_ingot, 'S', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemHoe.class, material)), true, "AA", "S ", "S ", 'A', item_ingot, 'S', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemAxe.class, material)), true, "AA", "SA", "S ", 'A', item_ingot, 'S', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemShovel.class, material)), true, "A", "S", "S", 'A', item_ingot, 'S', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemPickaxe.class, material)), true, "AAA", " S ", " S ", 'A', item_ingot, 'S', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemShears.class, material)), true, "A ", " A", 'A', item_ingot);
         register.registerShapedRecipe(new ItemStack(ItemBucket.getPeer(material, null)), true, "A A", " A ", 'A', item_ingot);
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemScythe.class, material)), true, "SA ", "S A", "S  ", 'A', item_ingot, 'S', Item.stick);
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemMattock.class, material)), true, "AAA", " SA", " S ", 'A', item_ingot, 'S', Item.stick);
@@ -61,6 +49,10 @@ public class RecipesArmor extends Items {
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemDagger.class, material)), true, " A ", " B ", 'A', item_ingot, 'B', Item.stick);
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemBattleAxe.class, material)), true, "A A", "ABA", " B ", 'A', item_ingot, 'B', Item.stick);
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemDoor.class, material)), true, "AA", "AA", "AA", 'A', item_ingot);
+
+        Item item_nugget = getMatchingItem(ItemNugget.class, item_ingot.getExclusiveMaterial());
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemArrow.class, material)), true, "C", "B", "A", 'A', Item.feather, 'B', Item.stick, 'C', item_nugget);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemChain.class, material)), true, " A ", "A A", " A ", 'A', item_nugget);
     }
 
     public static void registerITFToolRecipe(RecipeRegistryEvent register) {
@@ -71,7 +63,7 @@ public class RecipesArmor extends Items {
             Item item_nugget = getMatchingItem(ItemNugget.class, material);
             register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemMorningStar.class, material), 1), true, "###", "#*#", " # ", '#', item_nugget, '*', item);
             register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemFlintAndSteel.class, material)), true, "C ", " F", 'C', item_nugget, 'F', flint);
-            register.registerShapedRecipe(new ItemStack(leatherKettle, 1).setItemDamage(leatherKettle.getMaxDamage() - 1), false, "#N", "JL", 'J', Item.sinew, '#', Item.silk, 'N', item_nugget, 'L', Item.leather);// .resetDifficulty(2000);
+            register.registerShapedRecipe(new ItemStack(leatherKettle, 1).setItemDamage(leatherKettle.maxDamage - 1), false, "#N", "JL", 'J', Item.sinew, '#', Item.silk, 'N', item_nugget, 'L', Item.leather);// .resetDifficulty(2000);
         }
 
     }

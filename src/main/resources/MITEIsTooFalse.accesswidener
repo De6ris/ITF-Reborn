@@ -31,6 +31,7 @@ accessible field net/minecraft/EntitySkeleton frenzied_by_bone_lord_countdown I
 
 accessible method net/minecraft/GuiContainer drawCreativeTabHoveringText (Ljava/lang/String;II)V
 
+accessible field net/minecraft/Item maxDamage I
 accessible method net/minecraft/ItemStack isItemStackEqual (Lnet/minecraft/ItemStack;ZZZZ)Z
 accessible field net/minecraft/ItemVessel vessel_material Lnet/minecraft/Material;
 

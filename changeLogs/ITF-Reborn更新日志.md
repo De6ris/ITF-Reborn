@@ -14,6 +14,9 @@
 * 删除了多人游戏中, 进入游戏时的视野遮挡
 * 关于营养条的内容, 移至了模组`Bread Skin`, 且为它写了兼容
 * 略微调整了温暖和寒冷的作用条件, 修复了温度条鬼畜
+* 修复了不满的水壶在熔炉能够烧出满的水壶的bug
+* 修复高炉回收装备注册时getMatchingItem报错问题
+* 修复水壶`component crafting difficulty not set`报错问题
 
 ---
 

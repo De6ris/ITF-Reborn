@@ -5,7 +5,7 @@ import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.api.ItemMorningStar;
 
-public class RecipesFurnaceExtend extends Items {
+public class FurnaceRecipesExtend extends Items {
     public static void registerFurnaceRecipes() {
         FurnaceRecipes.smelting().addSmelting(pieceAdamantium.itemID, new ItemStack(adamantiumNugget));
         FurnaceRecipes.smelting().addSmelting(pieceCopper.itemID, new ItemStack(copperNugget));
@@ -31,26 +31,57 @@ public class RecipesFurnaceExtend extends Items {
         FurnaceRecipes.smelting().addSmelting(leatherKettleSwampland.itemID, new ItemStack(leatherKettle));
         FurnaceRecipes.smelting().addSmelting(hardenedClayJugSuspicious.itemID, new ItemStack(hardenedClayJug));
         FurnaceRecipes.smelting().addSmelting(hardenedClayJugSwampland.itemID, new ItemStack(hardenedClayJug));
-        FurnaceRecipes.smelting().addSmelting(clayJug.itemID, new ItemStack(hardenedClayJug).setItemDamage(hardenedClayJug.getMaxDamage() - 1));
+        FurnaceRecipes.smelting().addSmelting(clayJug.itemID, new ItemStack(hardenedClayJug).setItemDamage(hardenedClayJug.maxDamage - 1));
+        ItemFood.setCookingResult((ItemFood) horse_meat, (ItemFood) horse_meat_cooked, 6);
+        registerBlastFurnaceRecipes();
+    }
+
+    private static void registerBlastFurnaceRecipes() {
         Class<?>[] tools = {
-                ItemSword.class, ItemAxe.class, ItemPickaxe.class, ItemHoe.class, ItemShovel.class, ItemWarHammer.class, ItemBattleAxe.class, ItemScythe.class, ItemDagger.class, ItemKnife.class,
-                ItemMorningStar.class, ItemHatchet.class, ItemShears.class, ItemMattock.class, ItemHelmet.class, ItemBoots.class, ItemLeggings.class, ItemCuirass.class};
+                ItemSword.class, ItemAxe.class, ItemPickaxe.class, ItemHoe.class, ItemShovel.class,
+                ItemWarHammer.class, ItemBattleAxe.class, ItemScythe.class, ItemDagger.class, ItemKnife.class,
+                ItemMorningStar.class, ItemHatchet.class, ItemShears.class, ItemMattock.class};
+        Class<?>[] armors = {
+                ItemHelmet.class, ItemCuirass.class, ItemLeggings.class, ItemBoots.class
+        };
         Material[] available_material = {Material.copper, Material.silver, Material.gold, Material.iron, Materials.nickel, Materials.tungsten, Material.ancient_metal, Material.rusted_iron};
-        for (Class<?> tool : tools) {
-            for (Material material : available_material) {
-                Item matchingitem = Item.getMatchingItem(tool, material);
-                if (matchingitem != null) {
-                    if (matchingitem instanceof ItemArmor) {
-                        matchingitem = ItemArmor.getMatchingArmor(tool, material, false);
-                        FurnaceRecipes.smelting().addSmelting(matchingitem.itemID, new ItemStack(appleRed));
-                        matchingitem = ItemArmor.getMatchingArmor(tool, material, true);
-                        FurnaceRecipes.smelting().addSmelting(matchingitem.itemID, new ItemStack(appleRed));
-                    } else {
-                        FurnaceRecipes.smelting().addSmelting(matchingitem.itemID, new ItemStack(appleRed));
-                    }
-                }
+
+        for (Material material : available_material) {
+            for (Class<?> tool : tools) {
+                registerRecipeSafe(Item.getMatchingItem(tool, material), new ItemStack(appleRed));
+            }
+            for (Class<?> armor : armors) {
+                registerRecipeSafe(ItemArmor.getMatchingArmor(armor, material, false), new ItemStack(appleRed));
+                registerRecipeSafe(ItemArmor.getMatchingArmor(armor, material, true), new ItemStack(appleRed));
             }
         }
-        ItemFood.setCookingResult((ItemFood) horse_meat, (ItemFood) horse_meat_cooked, 6);
+    }
+
+    private static void registerRecipeSafe(Item item, ItemStack itemStack) {
+        if (item != null && itemStack != null) {
+            FurnaceRecipes.smelting().addSmelting(item.itemID, itemStack);
+        }
+    }
+
+    public static <T extends Item & IDamageableItem> ItemStack recycleArmors(ItemStack input_item_stack, T armor) {
+        float ingotToNugget = input_item_stack.getItem().isChainMail() ? 4.0F : 9.0F;
+        float durabilityRatio = (input_item_stack.getMaxDamage() - input_item_stack.getItemDamage()) / (float) input_item_stack.getMaxDamage();
+        float component = armor.getNumComponentsForDurability();
+        int quantity = (int) (durabilityRatio * component * ingotToNugget / 3.0F);
+        return armorItemStack(armor.getHardestMetalMaterial(), quantity, armor.getMaterialForRepairs());
+    }
+
+    private static ItemStack armorItemStack(Material hardestMaterial, int quantity, Material materialForRepair) {
+        ItemStack output;
+        if (hardestMaterial == Material.rusted_iron) {
+            quantity /= 3;
+            output = new ItemStack(Item.getMatchingItem(ItemNugget.class, Material.iron), quantity);
+        } else {
+            output = new ItemStack(Item.getMatchingItem(ItemNugget.class, materialForRepair), quantity);
+        }
+        if (quantity == 0) {
+            output.setStackSize(1);
+        }
+        return output;
     }
 }

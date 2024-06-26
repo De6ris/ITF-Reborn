@@ -74,6 +74,6 @@ public class RecipeRegister extends Items {
             }
             register.registerShapelessRecipe(new ItemStack(coin), true, new ItemStack(coin.getNuggetPeer()));
         }
-        RecipesFurnaceExtend.registerFurnaceRecipes();
+        FurnaceRecipesExtend.registerFurnaceRecipes();
     }
 }
