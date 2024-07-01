@@ -125,10 +125,10 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     }
 
     @Override
-    public void displayGuiMinePocket(IInventory inventory) {
+    public void displayGuiMinePocket(IInventory minePocketInventory) {
         this.incrementWindowID();
-        this.playerNetServerHandler.sendPacketToPlayer(new S2COpenWindow(this.currentWindowId, S2COpenWindow.EnumInventoryType.MinePocket, inventory.getCustomNameOrUnlocalized(), 5, true));
-        this.openContainer = new ContainerMinePocket(this, inventory);
+        this.playerNetServerHandler.sendPacketToPlayer(new S2COpenWindow(this.currentWindowId, S2COpenWindow.EnumInventoryType.MinePocket, minePocketInventory.getCustomNameOrUnlocalized(), 5, true));
+        this.openContainer = new ContainerMinePocket(this, minePocketInventory);
         this.openContainer.windowId = this.currentWindowId;
         this.openContainer.addCraftingToCrafters(this);
     }

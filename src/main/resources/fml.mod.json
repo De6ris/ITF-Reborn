@@ -7,7 +7,7 @@
     "many-lib": ">=2.0.0"
   },
   "suggests": {
-    "bread_skin": "*"
+    "bread_skin": ">=1.5.1"
   },
   "environment": "*",
   "name": "MITE-ITF-Reborn",

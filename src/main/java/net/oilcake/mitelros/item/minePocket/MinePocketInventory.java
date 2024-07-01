@@ -4,7 +4,6 @@ import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
 
 public class MinePocketInventory extends InventoryBasic {
-
     private final ItemStack itemStack;
 
     public MinePocketInventory(String par1Str, boolean par2, ItemStack itemStack) {

@@ -32,8 +32,8 @@ public abstract class ClientPlayerMixin extends AbstractClientPlayer implements 
     }
 
     @Override
-    public void displayGuiMinePocket(IInventory inventory) {
-        this.mc.displayGuiScreen(new GuiMinePocketInventory(this, inventory));
+    public void displayGuiMinePocket(IInventory minePocketInventory) {
+        this.mc.displayGuiScreen(new GuiMinePocketInventory(this, minePocketInventory));
     }
 
     @WrapOperation(method = "getBenchAndToolsModifier", at = @At(value = "INVOKE", target = "Lnet/minecraft/BlockWorkbench;getToolMaterial(I)Lnet/minecraft/Material;"))

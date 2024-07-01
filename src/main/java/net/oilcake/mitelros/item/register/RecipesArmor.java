@@ -8,33 +8,40 @@ import net.xiaoyu233.fml.reload.event.RecipeRegistryEvent;
 
 public class RecipesArmor extends Items {
     public static void registerArmorRecipe(RecipeRegistryEvent register) {
-        registerArmorRecipe(register, wolf_fur, Materials.wolf_fur);
-        registerArmorRecipe(register, iceChunk, Materials.ice_chunk);
+        registerArmorRecipe(register, wolf_fur, Materials.wolf_fur, false);
+        registerArmorRecipe(register, iceChunk, Materials.ice_chunk, false);
         registerITFToolRecipe(register);
         registerFullMetalToolRecipe(register, Materials.nickel);
         registerFullMetalToolRecipe(register, Materials.tungsten);
-        uruRecipes(register);
+        registerUruMetalRecipes(register);
     }
 
-    public static void registerArmorRecipe(RecipeRegistryEvent register, Item item, Material material) {
-        if (item instanceof ItemChain) {
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemHelmet.class, material, true)), true, "AAA", "A A", 'A', item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemCuirass.class, material, true)), true, "A A", "AAA", "AAA", 'A', item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemLeggings.class, material, true)), true, "AAA", "A A", "A A", 'A', item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemBoots.class, material, true)), true, "A A", "A A", 'A', item);
-        } else {
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemHelmet.class, material, false)), true, "AAA", "A A", 'A', item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemCuirass.class, material, false)), true, "A A", "AAA", "AAA", 'A', item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemLeggings.class, material, false)), true, "AAA", "A A", "A A", 'A', item);
-            register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemBoots.class, material, false)), true, "A A", "A A", 'A', item);
+    private static void registerArmorRecipe(RecipeRegistryEvent register, Item item, Material material, boolean isChainMail) {
+        register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemHelmet.class, material, isChainMail)), true, "AAA", "A A", 'A', item);
+        register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemCuirass.class, material, isChainMail)), true, "A A", "AAA", "AAA", 'A', item);
+        register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemLeggings.class, material, isChainMail)), true, "AAA", "A A", "A A", 'A', item);
+        register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemBoots.class, material, isChainMail)), true, "A A", "A A", 'A', item);
+    }
+
+    private static void registerITFToolRecipe(RecipeRegistryEvent register) {
+        Material[] materials = new Material[]{Material.copper, Material.silver, Material.gold, Material.iron, Materials.nickel, Material.ancient_metal, Material.mithril, Materials.tungsten, Material.adamantium};
+        for (Material material : materials) {
+            Item item = Item.getMatchingItem(ItemIngot.class, material);
+            Item item_nugget = getMatchingItem(ItemNugget.class, material);
+            register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemMorningStar.class, material), 1), true, "###", "#*#", " # ", '#', item_nugget, '*', item);
+            register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemFlintAndSteel.class, material)), true, "C ", " F", 'C', item_nugget, 'F', flint);
+            register.registerShapedRecipe(new ItemStack(leatherKettle, 1).setItemDamage(leatherKettle.maxDamage - 1), false, "#N", "JL", 'J', Item.sinew, '#', Item.silk, 'N', item_nugget, 'L', Item.leather);// .resetDifficulty(2000);
         }
     }
 
-    public static void registerFullMetalToolRecipe(RecipeRegistryEvent register, Material material) {
-        Item item_chain = Item.getMatchingItem(ItemChain.class, material);
-        registerArmorRecipe(register, item_chain, material);
+    private static void registerFullMetalToolRecipe(RecipeRegistryEvent register, Material material) {
         Item item_ingot = Item.getMatchingItem(ItemIngot.class, material);
-        registerArmorRecipe(register, item_ingot, material);
+        Item item_nugget = getMatchingItem(ItemNugget.class, item_ingot.getExclusiveMaterial());
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemArrow.class, material)), true, "C", "B", "A", 'A', Item.feather, 'B', Item.stick, 'C', item_nugget);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemChain.class, material)), true, " A ", "A A", " A ", 'A', item_nugget);
+        Item item_chain = Item.getMatchingItem(ItemChain.class, material);
+        registerArmorRecipe(register, item_chain, material, true);
+        registerArmorRecipe(register, item_ingot, material, false);
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemSword.class, material)), true, "A", "A", "S", 'A', item_ingot, 'S', Item.stick);
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemHoe.class, material)), true, "AA", "S ", "S ", 'A', item_ingot, 'S', Item.stick);
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemAxe.class, material)), true, "AA", "SA", "S ", 'A', item_ingot, 'S', Item.stick);
@@ -50,25 +57,9 @@ public class RecipesArmor extends Items {
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemBattleAxe.class, material)), true, "A A", "ABA", " B ", 'A', item_ingot, 'B', Item.stick);
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemDoor.class, material)), true, "AA", "AA", "AA", 'A', item_ingot);
 
-        Item item_nugget = getMatchingItem(ItemNugget.class, item_ingot.getExclusiveMaterial());
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemArrow.class, material)), true, "C", "B", "A", 'A', Item.feather, 'B', Item.stick, 'C', item_nugget);
-        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemChain.class, material)), true, " A ", "A A", " A ", 'A', item_nugget);
     }
 
-    public static void registerITFToolRecipe(RecipeRegistryEvent register) {
-        Material[] materials = new Material[]{Material.copper, Material.silver, Material.gold, Material.iron, Materials.nickel, Material.ancient_metal, Material.mithril, Materials.tungsten, Material.adamantium};
-
-        for (Material material : materials) {
-            Item item = Item.getMatchingItem(ItemIngot.class, material);
-            Item item_nugget = getMatchingItem(ItemNugget.class, material);
-            register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemMorningStar.class, material), 1), true, "###", "#*#", " # ", '#', item_nugget, '*', item);
-            register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemFlintAndSteel.class, material)), true, "C ", " F", 'C', item_nugget, 'F', flint);
-            register.registerShapedRecipe(new ItemStack(leatherKettle, 1).setItemDamage(leatherKettle.maxDamage - 1), false, "#N", "JL", 'J', Item.sinew, '#', Item.silk, 'N', item_nugget, 'L', Item.leather);// .resetDifficulty(2000);
-        }
-
-    }
-
-    public static void uruRecipes(RecipeRegistryEvent register) {
+    private static void registerUruMetalRecipes(RecipeRegistryEvent register) {
         register.registerShapelessRecipe(new ItemStack(forgingnote, 2), false, forgingnote, Item.writableBook);
         register.registerShapelessRecipe(new ItemStack(uruHelmet, 1), true, forgingnote, uruIngot, Item.helmetMithril, Item.ingotMithril);
         register.registerShapelessRecipe(new ItemStack(uruChestplate, 1), true, forgingnote, uruIngot, Item.plateMithril, Item.ingotMithril);

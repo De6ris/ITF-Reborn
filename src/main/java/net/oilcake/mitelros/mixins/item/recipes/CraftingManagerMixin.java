@@ -3,6 +3,7 @@ package net.oilcake.mitelros.mixins.item.recipes;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.*;
+import net.oilcake.mitelros.api.WontFix;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,9 +16,10 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(CraftingManager.class)
 public abstract class CraftingManagerMixin {
 
+    @WontFix(reason = "Too hard")
     @WrapOperation(method = "checkRecipe", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V"))
     private void noError(String text, Operation<Void> original) {
-    }// TODO fix it
+    }
 
     @Inject(method = "findMatchingRecipe", at = @At(value = "INVOKE", target = "Lnet/minecraft/InventoryCrafting;getEventHandler()Lnet/minecraft/Container;"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
     private void fixITFArmors(InventoryCrafting par1InventoryCrafting, World par2World, EntityPlayer player, CallbackInfoReturnable<CraftingResult> cir, int var3, ItemStack var4, ItemStack var5, int var6) {

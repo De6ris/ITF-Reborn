@@ -11,6 +11,13 @@ public class RecipesFood extends Items {
         woodBowlFeastRecipes(register);
         clayBowlFeastRecipes(register);
         bucketExtendRecipes(register);
+        register.registerShapelessRecipe(new ItemStack(peeledSugarcane, 2), false, Item.reed, Item.reed);
+        register.registerShapelessRecipe(new ItemStack(mashedCactus, 1), true, Block.cactus);
+        register.registerShapelessRecipe(new ItemStack(seedsBeetroot, 1), false, beetroot, beetroot);
+        register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 1), false, beetroot);
+        register.registerShapelessRecipe(new ItemStack(pulque, 1), true, Item.sugar, agave, new ItemStack(Item.potion, 1, 0));//.resetDifficulty(3200);
+        register.registerShapelessRecipe(new ItemStack(ale, 1), true, Item.sugar, Item.wheat, new ItemStack(Item.potion, 1, 0));//.resetDifficulty(3200);
+        register.registerShapelessRecipe(new ItemStack(clayBowlRaw, 1), false, Item.clay);
         register.registerShapelessRecipe(new ItemStack(lemonPie), true, Item.sugar, Item.egg, Item.flour, lemon);
         register.registerShapelessRecipe(new ItemStack(experimentalPotion, 1), true, Item.blazePowder, Item.netherStalkSeeds, new ItemStack(Item.potion, 1, 0), new ItemStack(Item.appleGold, 1, 0));
         register.registerShapelessRecipe(new ItemStack(Item.dough, 1), false, Item.flour, clayBowlWater);

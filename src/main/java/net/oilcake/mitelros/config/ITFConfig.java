@@ -59,6 +59,7 @@ public class ITFConfig extends SimpleConfigs {
 
     /* other */
     public static final ConfigBoolean TemperatureBar = new ConfigBoolean("绘画温度条", false);
+    public static final ConfigInteger TemperatureBarYOffset = new ConfigInteger("温度条Y轴偏移", 0, -128, 128);
 
     //misc
     public static final ConfigBoolean FixedID = new ConfigBoolean("固定ID", false, "(整合包作者需考虑)固定物品ID以及方块ID");
@@ -93,7 +94,7 @@ public class ITFConfig extends SimpleConfigs {
 
         experimental = List.of(TagBetterBiome, TagCreaturesV2, TagBenchingV2, FinalChallenge, TagTemperature);
 
-        info = List.of(TemperatureBar);
+        info = List.of(TemperatureBar, TemperatureBarYOffset);
         misc = List.of(FixedID, ItemIDStart, BlockIDStart);
 
         others = new ArrayList<>();

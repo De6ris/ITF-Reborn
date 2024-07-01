@@ -3,6 +3,7 @@ package net.oilcake.mitelros.util;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFPlayer;
+import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.status.TemperatureManager;
 import org.lwjgl.opengl.GL11;
@@ -12,7 +13,7 @@ public class GuiInGameDrawer {
 
     public static void drawTemperatureBar(Gui gui, Minecraft mc, int var12, int var13) {
         int var26 = var12 - 303;
-        int var25 = var13 + 24;
+        int var25 = var13 + 24 + ITFConfig.TemperatureBarYOffset.getIntegerValue();
         GL11.glPushMatrix();
         GL11.glScalef(0.6F, 1.0F, 1.0F);
         mc.getTextureManager().bindTexture(icons_itf);

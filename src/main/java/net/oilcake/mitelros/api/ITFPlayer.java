@@ -8,7 +8,7 @@ public interface ITFPlayer {
     default void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
     }
 
-    void displayGuiMinePocket(IInventory inventory);
+    void displayGuiMinePocket(IInventory minePocketInventory);
 
     NewPlayerManager getNewPlayerManager();
 

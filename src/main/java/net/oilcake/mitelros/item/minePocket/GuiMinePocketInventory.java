@@ -12,10 +12,10 @@ public class GuiMinePocketInventory extends GuiContainer {
     private final IInventory playerInventory;
     private final IInventory pocketInventory;
 
-    public GuiMinePocketInventory(EntityPlayer player, IInventory par2IInventory) {
-        super(new ContainerMinePocket(player, par2IInventory));
+    public GuiMinePocketInventory(EntityPlayer player, IInventory minePocketInventory) {
+        super(new ContainerMinePocket(player, minePocketInventory));
         this.playerInventory = player.inventory;
-        this.pocketInventory = par2IInventory;
+        this.pocketInventory = minePocketInventory;
         this.allowUserInput = false;
         this.ySize = 133;
     }
