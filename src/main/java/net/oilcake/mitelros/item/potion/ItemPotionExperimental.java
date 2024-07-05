@@ -24,7 +24,7 @@ public class ItemPotionExperimental extends Item {
                 player.addPotionEffect(new PotionEffect(Potion.resistance.id, 800, 0));
             if (rand > 0.9D)
                 player.addPotionEffect(new PotionEffect(Potion.poison.id, 400, 0));
-            ((ITFPlayer) player).addWater(((ITFItem) this).getFoodWater());
+            ((ITFPlayer) player).itf$AddWater(((ITFItem) this).getFoodWater());
         }
         super.onItemUseFinish(item_stack, world, player);
     }

@@ -23,7 +23,7 @@ public class ItemPotionSuspicious extends Item {
                 player.getFoodStats().addNutrition(1);
                 player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("欢迎来到Double随机等于0的欧皇大殿").setColor(EnumChatFormatting.AQUA));
             }
-            player.addWater(((ITFItem) this).getFoodWater());
+            player.itf$AddWater(((ITFItem) this).getFoodWater());
         }
         super.onItemUseFinish(item_stack, world, player);
     }

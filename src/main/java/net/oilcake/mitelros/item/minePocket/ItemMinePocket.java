@@ -17,7 +17,7 @@ public class ItemMinePocket extends Item implements ITFItem, IItemLocked {
         ItemStack heldItemStack = player.getHeldItemStack();
         if (heldItemStack.getItem() instanceof ItemMinePocket) {
             if (player.onServer()) {
-                ((ITFPlayer) player).displayGuiMinePocket(new MinePocketInventory(heldItemStack.getDisplayName(), false, heldItemStack));
+                ((ITFPlayer) player).itf$DisplayGuiMinePocket(new MinePocketInventory(heldItemStack.getDisplayName(), false, heldItemStack));
             }
             return true;
         }

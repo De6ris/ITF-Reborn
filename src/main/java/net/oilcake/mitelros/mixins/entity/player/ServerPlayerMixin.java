@@ -37,12 +37,6 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     @Unique
     private double last_temperature;
 
-    @Unique
-    private int last_phytonutrients;
-
-    @Unique
-    private int last_protein;
-
     @Shadow
     private int currentWindowId;
 
@@ -84,8 +78,8 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
             this.worldObj.getAsWorldServer().addCurse(getAsEntityPlayerMP(), temp, Curse.getRandomCurse(new Random((this.rand.nextInt() + username_hash))), 0);
             learnCurseEffect();
         }
-        int water = this.getWater();
-        double temperature = this.getTemperatureManager().getBodyTemperature();
+        int water = this.itf$GetWater();
+        double temperature = this.itf$GetTemperatureManager().getBodyTemperature();
         if (water != this.last_water || temperature != this.last_temperature) {
             this.playerNetServerHandler.sendPacketToPlayer(new S2CUpdateITFStatus(water, temperature));
             this.last_water = water;
@@ -114,7 +108,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     }
 
     @Override
-    public void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
+    public void itf$DisplayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
         incrementWindowID();
         TileEntity tile_entity = this.worldObj.getBlockTileEntity(x, y, z);
         this.playerNetServerHandler.sendPacketToPlayer((new S2COpenWindow(this.currentWindowId, S2COpenWindow.EnumInventoryType.EnchantReserver, tile_entity.getCustomInvName(), 9, tile_entity.hasCustomName())).setCoords(x, y, z));// 9 is dummy
@@ -125,7 +119,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     }
 
     @Override
-    public void displayGuiMinePocket(IInventory minePocketInventory) {
+    public void itf$DisplayGuiMinePocket(IInventory minePocketInventory) {
         this.incrementWindowID();
         this.playerNetServerHandler.sendPacketToPlayer(new S2COpenWindow(this.currentWindowId, S2COpenWindow.EnumInventoryType.MinePocket, minePocketInventory.getCustomNameOrUnlocalized(), 5, true));
         this.openContainer = new ContainerMinePocket(this, minePocketInventory);
@@ -144,7 +138,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     }
 
     @Override
-    public int malnourishedLevel() {
+    public int itf$MalnourishedLevel() {
         int min = Math.min(this.protein, this.phytonutrients);
         if (min < 160000) return 3;
         if (min < 320000) return 2;
@@ -152,7 +146,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
         return 0;
     }
 
-    public boolean isMalnourishedFinal() {
+    public boolean itf$IsMalnourishedFinal() {
         if (this.protein == 0)
             return true;
         return (this.phytonutrients == 0);
@@ -171,10 +165,10 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
         float oldFactor = this.isMalnourished() ? 0.5F : 0.0F;
         original -= oldFactor;
         float newFactor;
-        if (this.isMalnourishedFinal()) {
+        if (this.itf$IsMalnourishedFinal()) {
             newFactor = 31.0F;
         } else {
-            int level = this.malnourishedLevel();
+            int level = this.itf$MalnourishedLevel();
             newFactor = level == 3 ? 3.0F : (level == 2 ? 1.0F : (level == 1 ? 0.5F : 0.0F));
         }
         cir.setReturnValue(original + newFactor);

@@ -25,7 +25,7 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
         if (player.onServer()) {
             FoodDataList.onWaterDrunk(item_stack.getItem(), player);
             if (!contains(Material.water) && !contains(Material.milk)) {
-                player.getFeastManager().update(this);
+                player.itf$GetFeastManager().update(this);
             }
         }
     }

@@ -73,7 +73,7 @@ public class ItemTotem extends Item {
             return player.worldObj.getDimensionId() == 0 && player.getBlockPosY() >= 60;
         }
         if (itemTotem.itemID == Items.totemOfKnowledge.itemID) {
-            return ITFConfig.TagTotemBlessing.getBooleanValue() || ((ITFPlayer) player).getMiscManager().getKnowledgeTotemCounter() < 10;
+            return ITFConfig.TagTotemBlessing.getBooleanValue() || ((ITFPlayer) player).itf_GetMiscManager().getKnowledgeTotemCounter() < 10;
         }
         return true;
     }
@@ -81,8 +81,8 @@ public class ItemTotem extends Item {
     private static void huntingEffect(EntityPlayer player) {
         for (int i = 0; i < 8; i++)
             player.entityFX(EnumEntityFX.summoned);
-        player.getHuntManager().setHunt_counter(400);
-        player.getHuntManager().hunt_cap = true;
+        player.itf$GetHuntManager().setHunt_counter(400);
+        player.itf$GetHuntManager().hunt_cap = true;
         player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 400, (int) ((1.0F - player.getHealthFraction()) * 2.0F)));
     }
 
@@ -92,7 +92,7 @@ public class ItemTotem extends Item {
         int xpToAdd = player.experience / 5;
         player.addExperience(ITFConfig.TagTotemBlessing.getBooleanValue() ? xpToAdd : Math.min(xpToAdd, 30000));
         if (!ITFConfig.TagTotemBlessing.getBooleanValue()) {
-            ((ITFPlayer) player).getMiscManager().addKnowledgeTotemCounter();
+            ((ITFPlayer) player).itf_GetMiscManager().addKnowledgeTotemCounter();
         }
     }
 

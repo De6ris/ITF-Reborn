@@ -1,15 +1,15 @@
 package net.oilcake.mitelros.api;
 
 public interface ITFFoodStats {
-    int getWater();
+    int itf$GetWater();
 
-    int addWater(int water);
+    int itf$AddWater(int water);
 
-    void decreaseWater(float water);
+    void itf$DecreaseWater(float water);
 
-    void decreaseWaterServerSide(float hungerWater);
+    void itf$DecreaseWaterServerSide(float hungerWater);
 
-    int getWaterLimit();
+    int itf$GetWaterLimit();
 
-    void setSatiationWater(int water, boolean check_limit);
+    void itf$SetSatiationWater(int water, boolean check_limit);
 }

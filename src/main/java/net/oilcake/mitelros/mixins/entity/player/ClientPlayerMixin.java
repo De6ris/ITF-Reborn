@@ -27,12 +27,12 @@ public abstract class ClientPlayerMixin extends AbstractClientPlayer implements 
     }
 
     @Override
-    public void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
+    public void itf$DisplayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
         this.mc.displayGuiScreen(new GuiEnchantReserver(this, x, y, z, slots));
     }
 
     @Override
-    public void displayGuiMinePocket(IInventory minePocketInventory) {
+    public void itf$DisplayGuiMinePocket(IInventory minePocketInventory) {
         this.mc.displayGuiScreen(new GuiMinePocketInventory(this, minePocketInventory));
     }
 

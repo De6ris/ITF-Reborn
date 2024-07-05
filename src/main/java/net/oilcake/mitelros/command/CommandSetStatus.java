@@ -51,13 +51,13 @@ public class CommandSetStatus extends CommandBase {
                 iCommandListener.sendChatToPlayer(ChatMessageComponent.createFromText("目前玩家的植物营养素为" + player.getPhytonutrients()).setColor(EnumChatFormatting.WHITE));
             }
             case "water" -> {
-                ((ITFFoodStats) player.getFoodStats()).setSatiationWater(parseInt(iCommandListener, strings[1]), true);
-                iCommandListener.sendChatToPlayer(ChatMessageComponent.createFromText("水分值现在为" + ((ITFPlayer) player).getWater()).setColor(EnumChatFormatting.WHITE));
+                ((ITFFoodStats) player.getFoodStats()).itf$SetSatiationWater(parseInt(iCommandListener, strings[1]), true);
+                iCommandListener.sendChatToPlayer(ChatMessageComponent.createFromText("水分值现在为" + ((ITFPlayer) player).itf$GetWater()).setColor(EnumChatFormatting.WHITE));
             }
             case "temperature" -> {
                 if (ITFConfig.TagTemperature.getBooleanValue()) {
                     double temp = parseDouble(iCommandListener, strings[1]);
-                    ((ITFPlayer) player).getTemperatureManager().setBodyTemperature(temp);
+                    ((ITFPlayer) player).itf$GetTemperatureManager().setBodyTemperature(temp);
                     iCommandListener.sendChatToPlayer(ChatMessageComponent.createFromText("温度现在为" + temp).setColor(EnumChatFormatting.WHITE));
                 } else {
                     throw new WrongUsageException("commands.setStatus.usage");

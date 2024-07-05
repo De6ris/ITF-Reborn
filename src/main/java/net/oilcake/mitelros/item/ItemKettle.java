@@ -81,7 +81,7 @@ public class ItemKettle extends Item implements IDamageableItem {
     @Override
     public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
         if (player.onServer()) {
-            player.addWater(2);
+            player.itf$AddWater(2);
             FoodDataList.onWaterDrunk(item_stack.getItem(), player);
             player.getHeldItemStack().tryDamageItem(world, drinkUnit, true);
         }

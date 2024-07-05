@@ -14,7 +14,7 @@ public class DedicatedServerMixin {
     @Inject(method = "playerLoggedIn(Lnet/minecraft/ServerPlayer;)V", at = @At("RETURN"))
     public void playerLoggedIn(ServerPlayer player, CallbackInfo callbackInfo) {
         player.setHealth(player.getHealth());
-        ((ITFPlayer)player).getMiscManager().broadcast();
+        ((ITFPlayer)player).itf_GetMiscManager().broadcast();
         if (!Minecraft.inDevMode())
             player.vision_dimming = 1.25F;
     }

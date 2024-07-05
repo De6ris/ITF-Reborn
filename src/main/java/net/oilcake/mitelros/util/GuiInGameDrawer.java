@@ -18,7 +18,7 @@ public class GuiInGameDrawer {
         GL11.glScalef(0.6F, 1.0F, 1.0F);
         mc.getTextureManager().bindTexture(icons_itf);
         gui.drawTexturedModalRect(var26, var25, 0, 106, 182, 6);
-        double temperature = ((ITFPlayer) mc.thePlayer).getTemperatureManager().getBodyTemperature();
+        double temperature = ((ITFPlayer) mc.thePlayer).itf$GetTemperatureManager().getBodyTemperature();
         int length = (int) (91.0D * (((temperature - TemperatureManager.normalTemperature) * (temperature - TemperatureManager.normalTemperature) * (temperature > TemperatureManager.normalTemperature ? 1 : -1) / 9.0D) + 1.0D));
         if (length > 182) length = 182;
         if (length < 0) length = 1;
@@ -32,7 +32,7 @@ public class GuiInGameDrawer {
         FoodStats foodStats = mc.thePlayer.getFoodStats();
         mc.getTextureManager().bindTexture(icons_itf);
         mc.mcProfiler.endStartSection("water");
-        int water = ((ITFFoodStats) foodStats).getWater();
+        int water = ((ITFFoodStats) foodStats).itf$GetWater();
         for (int temp = 0; temp < 10; temp++) {
             int var28 = var13 - 9;
             int var25 = 16;
@@ -42,7 +42,7 @@ public class GuiInGameDrawer {
                 var25 += 27;
                 var36 = 3;
             }
-            if (temp < ((ITFFoodStats) mc.thePlayer.getFoodStats()).getWaterLimit() / 2)
+            if (temp < ((ITFFoodStats) mc.thePlayer.getFoodStats()).itf$GetWaterLimit() / 2)
                 gui.drawTexturedModalRect(var27, var28, 16 + var36 * 9, 54, 9, 9);
             if (temp * 2 + 1 < water)
                 gui.drawTexturedModalRect(var27, var28, var25 + 9, 54, 9, 9);

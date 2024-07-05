@@ -94,8 +94,8 @@ public abstract class NetClientHandlerMixin extends NetHandler implements ITFNet
 
     @Override
     public void itf$HandleUpdateITFStatus(S2CUpdateITFStatus packet) {
-        ((ITFFoodStats) this.mc.thePlayer.getFoodStats()).setSatiationWater(packet.getWater(), false);
-        ((ITFPlayer) this.mc.thePlayer).getTemperatureManager().setBodyTemperature(packet.getTemp());
+        ((ITFFoodStats) this.mc.thePlayer.getFoodStats()).itf$SetSatiationWater(packet.getWater(), false);
+        ((ITFPlayer) this.mc.thePlayer).itf$GetTemperatureManager().setBodyTemperature(packet.getTemp());
     }
 
     @Override

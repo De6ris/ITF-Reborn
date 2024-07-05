@@ -81,11 +81,11 @@ public class S2COpenWindow extends Packet100OpenWindow {
 
         switch (this.enumInventoryType) {
             case EnchantReserver -> {
-                ((ITFPlayer) player).displayGUIEnchantReserver(this.x, this.y, this.z, new EnchantReserverSlots(new InventoryBasic(this.windowTitle, this.useProvidedWindowTitle, this.slotsCount)));
+                ((ITFPlayer) player).itf$DisplayGUIEnchantReserver(this.x, this.y, this.z, new EnchantReserverSlots(new InventoryBasic(this.windowTitle, this.useProvidedWindowTitle, this.slotsCount)));
                 player.openContainer.windowId = this.windowId;
             }
             case MinePocket -> {
-                ((ITFPlayer) player).displayGuiMinePocket(new MinePocketInventory(this.windowTitle, false, player.getHeldItemStack()));
+                ((ITFPlayer) player).itf$DisplayGuiMinePocket(new MinePocketInventory(this.windowTitle, false, player.getHeldItemStack()));
                 player.openContainer.windowId = this.windowId;
             }
             default -> Minecraft.setErrorMessage("handleOpenWindow: type not handled " + this.enumInventoryType);

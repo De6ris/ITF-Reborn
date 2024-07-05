@@ -35,7 +35,7 @@ public class CommandStatus extends CommandBase {
                 ", 蛋白质: " + player.getProtein() +
                 ", 植物营养素: " + player.getPhytonutrients();
         if (ITFConfig.TagTemperature.getBooleanValue()) {
-            stringBuilder += ", 体温: " + String.format("%.2f", ((ITFPlayer) player).getTemperatureManager().getBodyTemperature());
+            stringBuilder += ", 体温: " + String.format("%.2f", ((ITFPlayer) player).itf$GetTemperatureManager().getBodyTemperature());
         }
         iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(stringBuilder));
     }

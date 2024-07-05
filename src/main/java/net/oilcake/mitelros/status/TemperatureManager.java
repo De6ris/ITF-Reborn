@@ -140,8 +140,8 @@ public class TemperatureManager {
             this.player.triggerAchievement(AchievementExtend.hyperthermia);
             if (this.heatWarning > 600) {
                 this.player.attackEntityFrom(new Damage(DamageSourceExtend.heat, 1.0F));
-                if (((ITFPlayer) this.player).getWater() > 0) {
-                    ((ITFFoodStats) this.player.getFoodStats()).addWater(-1);
+                if (((ITFPlayer) this.player).itf$GetWater() > 0) {
+                    ((ITFFoodStats) this.player.getFoodStats()).itf$AddWater(-1);
                 } else {
                     this.player.attackEntityFrom(new Damage(DamageSourceExtend.heat, 1.0F));
                 }
@@ -224,7 +224,7 @@ public class TemperatureManager {
     public int findFreezeSource() {
         World world = this.player.worldObj;
         int freeze = 0;
-        if (this.player.getDrunkManager().isDrunk()) {
+        if (this.player.itf$GetDrunkManager().isDrunk()) {
             freeze += 1;
         }
         if (this.player.isInWater()) {

@@ -33,7 +33,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     public NewPlayerManager newPlayerManager = new NewPlayerManager();
 
     @Override
-    public NewPlayerManager getNewPlayerManager() {
+    public NewPlayerManager itf_GetNewPlayerManager() {
         return newPlayerManager;
     }
 
@@ -47,7 +47,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     private final HuntManager huntManager = new HuntManager(ReflectHelper.dyCast(this));
 
     @Override
-    public HuntManager getHuntManager() {
+    public HuntManager itf$GetHuntManager() {
         return huntManager;
     }
 
@@ -101,24 +101,24 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     }
 
     @Unique
-    public int getWater() {
-        return ((ITFFoodStats) this.foodStats).getWater();
+    public int itf$GetWater() {
+        return ((ITFFoodStats) this.foodStats).itf$GetWater();
     }
 
     @Unique
-    public int addWater(int water) {
-        return ((ITFFoodStats) this.foodStats).addWater(water);
+    public int itf$AddWater(int water) {
+        return ((ITFFoodStats) this.foodStats).itf$AddWater(water);
     }
 
     @Unique
-    public void decreaseWaterServerSide(float hungerWater) {
+    public void itf$DecreaseWaterServerSide(float hungerWater) {
         if (!this.capabilities.isCreativeMode && !this.capabilities.disableDamage)
-            ((ITFFoodStats) this.foodStats).decreaseWaterServerSide(hungerWater);
+            ((ITFFoodStats) this.foodStats).itf$DecreaseWaterServerSide(hungerWater);
     }
 
     @ModifyReturnValue(method = "hasFoodEnergy", at = @At("RETURN"))
     private boolean needWater(boolean original) {
-        return original && this.getWater() != 0;
+        return original && this.itf$GetWater() != 0;
     }
 
     @WrapOperation(method = "attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
@@ -134,7 +134,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @Unique
     private EnchantmentManager enchantmentManager = new EnchantmentManager(ReflectHelper.dyCast(this));
 
-    public MiscManager getMiscManager() {
+    public MiscManager itf_GetMiscManager() {
         return miscManager;
     }
 
@@ -144,7 +144,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @Unique
     private TemperatureManager temperatureManager = new TemperatureManager(ReflectHelper.dyCast(this));
 
-    public TemperatureManager getTemperatureManager() {
+    public TemperatureManager itf$GetTemperatureManager() {
         return temperatureManager;
     }
 
@@ -167,7 +167,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Inject(method = "addExperience(IZZ)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/FoodStats;setNutrition(IZ)V"))
     private void updateWater(int amount, boolean suppress_healing, boolean suppress_sound, CallbackInfo ci) {
-        this.addWater(0);
+        this.itf$AddWater(0);
     }
 
     @ModifyVariable(method = "addExperience(IZZ)V", at = @At("HEAD"), ordinal = 0, argsOnly = true)
@@ -179,7 +179,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     private FeastManager feastManager = new FeastManager(ReflectHelper.dyCast(this));
 
     @Unique
-    public FeastManager getFeastManager() {
+    public FeastManager itf$GetFeastManager() {
         return feastManager;
     }
 
@@ -187,7 +187,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     private DrunkManager drunkManager = new DrunkManager(ReflectHelper.dyCast(this));
 
     @Override
-    public DrunkManager getDrunkManager() {
+    public DrunkManager itf$GetDrunkManager() {
         return drunkManager;
     }
 
@@ -239,7 +239,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
 
     @Inject(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
     private void inject_1(Damage damage, CallbackInfoReturnable<EntityDamageResult> cir) {
-        if (ITFConfig.FinalChallenge.get())
+        if (ITFConfig.FinalChallenge.getBooleanValue())
             damage.scaleAmount(1.0F + Constant.calculateCurrentDifficulty() / 50.0F);
     }
 

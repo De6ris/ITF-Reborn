@@ -20,7 +20,6 @@
     "block.BlockOreMixin",
     "block.BlockStemMixin",
     "block.BlockTorchMixin",
-    "compat.BreadSkinMixin",
     "container.ContainerEnchantmentMixin",
     "container.ContainerRepairINNER2Mixin",
     "container.ContainerRepairMixin",

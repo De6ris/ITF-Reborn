@@ -27,12 +27,12 @@ public class WaterManager {
         if (this.water_duration > 160) {
             this.water_duration = 0;
             if (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland) {
-                ((ITFFoodStats) player.getFoodStats()).addWater(1);
+                ((ITFFoodStats) player.getFoodStats()).itf$AddWater(1);
                 player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
             } else if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) {
-                ((ITFFoodStats) player.getFoodStats()).addWater(2);
+                ((ITFFoodStats) player.getFoodStats()).itf$AddWater(2);
             } else {
-                ((ITFFoodStats) player.getFoodStats()).addWater(1);
+                ((ITFFoodStats) player.getFoodStats()).itf$AddWater(1);
                 player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, 160, 0));
             }
         }
@@ -42,7 +42,7 @@ public class WaterManager {
         if (player.isPotionActive(PotionExtend.thirsty))
             this.dry_resist += Math.min(80.0D, (player.getActivePotionEffect(PotionExtend.thirsty).getAmplifier() + 1) * 10.0D);
         if (this.dry_resist > 12800.0D) {
-            ((ITFFoodStats) player.getFoodStats()).addWater(-1);
+            ((ITFFoodStats) player.getFoodStats()).itf$AddWater(-1);
             this.dry_resist = 0.0D;
         }
     }

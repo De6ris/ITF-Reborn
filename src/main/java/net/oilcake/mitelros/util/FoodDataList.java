@@ -80,11 +80,11 @@ public class FoodDataList {
         if (item_stack.hasMaterial(Material.bread) || item_stack.hasMaterial(Material.desert))
             player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
         if (rand.nextFloat() < chanceOfDecreaseWater(item_stack.itemID)) {
-            player.addWater(-1);
+            player.itf$AddWater(-1);
         }
         if (item_stack.itemID == Item.egg.itemID) {
             if (rand.nextDouble() > (ITFConfig.TagDryDilemma.get() ? 0.5D : 0.25D))
-                player.addWater(1);
+                player.itf$AddWater(1);
         }
         if (item_stack.getItem() instanceof ItemMeat meat) {
             if (meat.is_cooked) {

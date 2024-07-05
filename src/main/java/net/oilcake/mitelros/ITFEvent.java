@@ -112,12 +112,12 @@ public class ITFEvent {
     public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
         ServerPlayer player = event.getPlayer();
         player.setHealth(player.getHealth());
-        ((ITFPlayer) player).getMiscManager().broadcast();
-        if (((ITFPlayer) player).getNewPlayerManager().getNew()) {
+        ((ITFPlayer) player).itf_GetMiscManager().broadcast();
+        if (((ITFPlayer) player).itf_GetNewPlayerManager().getNew()) {
             ItemStack guide = new ItemStack(Items.guide);
             guide.setTagCompound(ItemGuideBook.generateBookContents());
             player.inventory.addItemStackToInventoryOrDropIt(guide);
-            ((ITFPlayer) player).getNewPlayerManager().setNew(false);
+            ((ITFPlayer) player).itf_GetNewPlayerManager().setNew(false);
         }
     }
 

@@ -20,12 +20,12 @@ public class ItemWine extends Item {
     public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
         if (player.onServer()) {
             if (ITFConfig.TagTemperature.getBooleanValue()) {
-                ((ITFPlayer) player).getTemperatureManager().addFreezingCoolDown(-6000);
+                ((ITFPlayer) player).itf$GetTemperatureManager().addFreezingCoolDown(-6000);
             }
-            ((ITFPlayer) player).getDrunkManager().setHasdrunked(true);
+            ((ITFPlayer) player).itf$GetDrunkManager().setHasdrunked(true);
             player.addPotionEffect(new PotionEffect(Potion.confusion.id, 400, 0));
             player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 2560, 0));
-            ((ITFPlayer) player).addWater(((ITFItem) this).getFoodWater());
+            ((ITFPlayer) player).itf$AddWater(((ITFItem) this).getFoodWater());
         }
         super.onItemUseFinish(item_stack, world, player);
     }

@@ -17,7 +17,7 @@ public class ItemPotionMixin extends Item {
     @Inject(method = "onItemUseFinish", at = @At(value = "INVOKE", target = "Lnet/minecraft/Item;onItemUseFinish(Lnet/minecraft/ItemStack;Lnet/minecraft/World;Lnet/minecraft/EntityPlayer;)V"))
     private void addWater(ItemStack item_stack, World world, EntityPlayer player, CallbackInfo ci) {
         if (player.onServer()) {
-            player.addWater(((ITFItem) this).getFoodWater());
+            player.itf$AddWater(((ITFItem) this).getFoodWater());
         }
     }
 }

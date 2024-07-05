@@ -5,30 +5,30 @@ import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
 import net.oilcake.mitelros.status.*;
 
 public interface ITFPlayer {
-    default void displayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
+    default void itf$DisplayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
     }
 
-    void displayGuiMinePocket(IInventory minePocketInventory);
+    void itf$DisplayGuiMinePocket(IInventory minePocketInventory);
 
-    NewPlayerManager getNewPlayerManager();
+    NewPlayerManager itf_GetNewPlayerManager();
 
-    MiscManager getMiscManager();
+    MiscManager itf_GetMiscManager();
 
-    TemperatureManager getTemperatureManager();
+    TemperatureManager itf$GetTemperatureManager();
 
-    int getWater();
+    int itf$GetWater();
 
-    int addWater(int water);
+    int itf$AddWater(int water);
 
-    FeastManager getFeastManager();
+    FeastManager itf$GetFeastManager();
 
-    void decreaseWaterServerSide(float hungerWater);
+    void itf$DecreaseWaterServerSide(float hungerWater);
 
-    boolean isMalnourishedFinal();
+    boolean itf$IsMalnourishedFinal();
 
-    int malnourishedLevel();
+    int itf$MalnourishedLevel();
 
-    DrunkManager getDrunkManager();
+    DrunkManager itf$GetDrunkManager();
 
-    HuntManager getHuntManager();
+    HuntManager itf$GetHuntManager();
 }

@@ -28,7 +28,7 @@ public class FoodStatsMixin implements ITFFoodStats {
 
     @Inject(method = "<init>(Lnet/minecraft/EntityPlayer;)V", at = @At("RETURN"))
     private void injectInit(CallbackInfo callbackInfo) {
-        this.water = getWaterLimit();
+        this.water = itf$GetWaterLimit();
     }
 
     @Inject(method = "readNBT(Lnet/minecraft/NBTTagCompound;)V", at = @At("RETURN"))
@@ -45,39 +45,39 @@ public class FoodStatsMixin implements ITFFoodStats {
         par1NBTTagCompound.setFloat("water_for_nutrition_only", this.water_for_nutrition_only);
     }
 
-    public int getWater() {
+    public int itf$GetWater() {
         return this.water;
     }
 
     @Inject(method = "addFoodValue", at = @At("HEAD"))
     private void inject(Item item, CallbackInfo ci) {
-        this.addWater(((ITFItem) item).getFoodWater());
+        this.itf$AddWater(((ITFItem) item).getFoodWater());
         if (ITFConfig.TagTemperature.getBooleanValue()) {
             int temperature = ((ITFItem) item).getFoodTemperature();
             if (temperature > 0) {
                 player.addPotionEffect(new PotionEffect(PotionExtend.warm.id, 6000, temperature - 1));
-                if (player.getTemperatureManager().feelsCold()) {
-                    player.getTemperatureManager().addBodyTemperature(temperature * 0.2D);
+                if (player.itf$GetTemperatureManager().feelsCold()) {
+                    player.itf$GetTemperatureManager().addBodyTemperature(temperature * 0.2D);
                 }
             } else if (temperature < 0) {
                 player.addPotionEffect(new PotionEffect(PotionExtend.cool.id, 6000, -temperature - 1));
-                if (player.getTemperatureManager().feelsHot()) {
-                    player.getTemperatureManager().addBodyTemperature(temperature * 0.2D);
+                if (player.itf$GetTemperatureManager().feelsHot()) {
+                    player.itf$GetTemperatureManager().addBodyTemperature(temperature * 0.2D);
                 }
             }
         }
     }
 
-    public void setSatiationWater(int water, boolean check_limit) {
+    public void itf$SetSatiationWater(int water, boolean check_limit) {
         if (check_limit) {
-            this.water = Math.min(water, getWaterLimit());
+            this.water = Math.min(water, itf$GetWaterLimit());
         } else {
             this.water = water;
         }
     }
 
-    public int addWater(int water) {
-        setSatiationWater(this.water + water, true);
+    public int itf$AddWater(int water) {
+        itf$SetSatiationWater(this.water + water, true);
         return this.water;
     }
 
@@ -89,7 +89,7 @@ public class FoodStatsMixin implements ITFFoodStats {
         return 0.002F;
     }
 
-    public void decreaseWater(float water) {
+    public void itf$DecreaseWater(float water) {
         if (!this.player.capabilities.isCreativeMode && !this.player.capabilities.disableDamage && !this.player.isGhost() && !this.player.isZevimrgvInTournament()) {
             water *= this.global_water_rate;
             this.hungerWater = Math.min(this.hungerWater + water, 40.0F);
@@ -100,21 +100,21 @@ public class FoodStatsMixin implements ITFFoodStats {
         }
     }
 
-    public void decreaseWaterServerSide(float hungerWater) {
+    public void itf$DecreaseWaterServerSide(float hungerWater) {
         if (this.player.worldObj.isRemote) {
             Minecraft.setErrorMessage("addHungerServerSide: cannot decrease Water to server if remote");
         } else {
-            decreaseWater(hungerWater);
+            itf$DecreaseWater(hungerWater);
         }
     }
 
-    public int getWaterLimit() {
+    public int itf$GetWaterLimit() {
         return Math.max(Math.min(6 + this.player.getExperienceLevel() / 5 * 2, 20), 6);
     }
 
     @Inject(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/ServerPlayer;decrementInsulinResistance()V"))
     private void inject(ServerPlayer par1EntityPlayer, CallbackInfo ci) {
-        this.decreaseWaterServerSide(getWaterPerTick());
+        this.itf$DecreaseWaterServerSide(getWaterPerTick());
         if (!par1EntityPlayer.inCreativeMode())
             this.water_for_nutrition_only += getWaterPerTick() * 0.3F;
         if (this.water < 0) {
@@ -124,7 +124,7 @@ public class FoodStatsMixin implements ITFFoodStats {
 
     @Inject(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/ServerPlayer;heal(F)V"))
     private void inject_1(ServerPlayer par1EntityPlayer, CallbackInfo ci) {
-        this.decreaseWaterServerSide(1.0F);
+        this.itf$DecreaseWaterServerSide(1.0F);
     }
 
     @Inject(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;isStarving()Z"), cancellable = true)
@@ -138,7 +138,7 @@ public class FoodStatsMixin implements ITFFoodStats {
                 this.starve_progress--;
                 this.hunger_for_nutrition_only = 0.0F;
             }
-        } else if (this.player.getWater() == 0) {
+        } else if (this.player.itf$GetWater() == 0) {
             this.heal_progress = 0.0F;
             this.dehydration_progress += 0.002F;
             if (this.dehydration_progress >= 1.0F) {
@@ -146,7 +146,7 @@ public class FoodStatsMixin implements ITFFoodStats {
                 this.dehydration_progress--;
                 this.water_for_nutrition_only = 0.0F;
             }
-        } else if (((ITFPlayer) par1EntityPlayer).isMalnourishedFinal()) {
+        } else if (((ITFPlayer) par1EntityPlayer).itf$IsMalnourishedFinal()) {
             this.heal_progress = 0.0F;
             this.malnourished_progress += 0.002F;
             if (this.malnourished_progress >= 1.0F) {
@@ -154,7 +154,7 @@ public class FoodStatsMixin implements ITFFoodStats {
                 this.malnourished_progress--;
             }
         } else {
-            int malnourishedLevel = ((ITFPlayer) par1EntityPlayer).malnourishedLevel();
+            int malnourishedLevel = ((ITFPlayer) par1EntityPlayer).itf$MalnourishedLevel();
             float factor = malnourishedLevel > 1 ? 0.0F : (malnourishedLevel == 1 ? 0.25F : 1.0F);
             this.heal_progress += (4.0E-4F + this.nutrition * 2.0E-5F)
                     * factor
@@ -164,7 +164,7 @@ public class FoodStatsMixin implements ITFFoodStats {
                 if (this.heal_progress >= 1.0F) {
                     par1EntityPlayer.heal(1.0F);
                     addHungerServerSide(1.0F);
-                    decreaseWaterServerSide(1.0F);
+                    itf$DecreaseWaterServerSide(1.0F);
                     this.heal_progress--;
                 }
             } else {

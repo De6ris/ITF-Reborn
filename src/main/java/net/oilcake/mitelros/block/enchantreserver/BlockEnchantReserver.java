@@ -64,7 +64,7 @@ public class BlockEnchantReserver extends Block implements ITileEntityProvider {
         if (player.onServer()) {
             TileEntityEnchantReserver tile_entity = (TileEntityEnchantReserver) world.getBlockTileEntity(x, y, z);
             if (tile_entity != null && !tile_entity.isUsing()) {
-                player.displayGUIEnchantReserver(x, y, z, tile_entity.getSlots());
+                player.itf$DisplayGUIEnchantReserver(x, y, z, tile_entity.getSlots());
             } else {
                 return false;
             }
