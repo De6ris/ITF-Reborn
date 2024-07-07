@@ -3,7 +3,7 @@
   "id": "mite-itf-reborn",
   "version": "${version}",
   "depends": {
-    "fishmodloader": ">=3.3.0",
+    "fishmodloader": ">=3.3.2",
     "many-lib": ">=2.0.0"
   },
   "environment": "*",

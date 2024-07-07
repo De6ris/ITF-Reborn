@@ -15,8 +15,8 @@ public class RecipesFood extends Items {
         register.registerShapelessRecipe(new ItemStack(mashedCactus, 1), true, Block.cactus);
         register.registerShapelessRecipe(new ItemStack(seedsBeetroot, 1), false, beetroot, beetroot);
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 1), false, beetroot);
-        register.registerShapelessRecipe(new ItemStack(pulque, 1), true, Item.sugar, agave, new ItemStack(Item.potion, 1, 0));//.resetDifficulty(3200);
-        register.registerShapelessRecipe(new ItemStack(ale, 1), true, Item.sugar, Item.wheat, new ItemStack(Item.potion, 1, 0));//.resetDifficulty(3200);
+        register.registerShapelessRecipe(new ItemStack(pulque, 1), true, Item.sugar, agave, new ItemStack(Item.potion, 1, 0)).difficulty(3200);
+        register.registerShapelessRecipe(new ItemStack(ale, 1), true, Item.sugar, Item.wheat, new ItemStack(Item.potion, 1, 0)).difficulty(3200);
         register.registerShapelessRecipe(new ItemStack(clayBowlRaw, 1), false, Item.clay);
         register.registerShapelessRecipe(new ItemStack(lemonPie), true, Item.sugar, Item.egg, Item.flour, lemon);
         register.registerShapelessRecipe(new ItemStack(experimentalPotion, 1), true, Item.blazePowder, Item.netherStalkSeeds, new ItemStack(Item.potion, 1, 0), new ItemStack(Item.appleGold, 1, 0));
@@ -46,8 +46,8 @@ public class RecipesFood extends Items {
     }
 
     public static void clayBowlMilkRecipes(RecipeRegistryEvent register) {
-        register.registerShapelessRecipe(new ItemStack(Item.cheese, 1), false, new ItemStack(clayBowlMilk, 4));//.resetDifficulty(6400);
-        register.registerShapelessRecipe(new ItemStack(Item.cheese, 2), false, new ItemStack(clayBowlMilk, 8));//.resetDifficulty(6400);
+        register.registerShapelessRecipe(new ItemStack(Item.cheese, 1), false, new ItemStack(clayBowlMilk, 4)).difficulty(6400);
+        register.registerShapelessRecipe(new ItemStack(Item.cheese, 2), false, new ItemStack(clayBowlMilk, 8)).difficulty(6400);
         register.registerShapelessRecipe(new ItemStack(Item.cake), false, Item.flour, Item.sugar, Item.egg, clayBowlMilk);
     }
 
@@ -87,18 +87,18 @@ public class RecipesFood extends Items {
             register.registerShapelessRecipe(new ItemStack(Item.cake), false, Item.flour, Item.sugar, Item.egg, milkBucket);
             int i1;
             for (i1 = 1; i1 <= 9; i1++) {
-                register.registerShapelessRecipe(new ItemStack(Item.cheese, i1), false, new ItemStack(milkBucket, i1));//.resetDifficulty(6400);
+                register.registerShapelessRecipe(new ItemStack(Item.cheese, i1), false, new ItemStack(milkBucket, i1)).difficulty(6400);
             }
             for (i1 = 1; i1 <= 4; i1++) {
-                register.registerShapelessRecipe(new ItemStack(Item.bowlMilk, i1), true, milkBucket, new ItemStack(Item.bowlEmpty, i1));//.resetDifficulty(25);
+                register.registerShapelessRecipe(new ItemStack(Item.bowlMilk, i1), true, milkBucket, new ItemStack(Item.bowlEmpty, i1)).difficulty(25);
             }
             for (i1 = 1; i1 <= 4; i1++) {
-                register.registerShapelessRecipe(new ItemStack(clayBowlMilk, i1), true, milkBucket, new ItemStack(clayBowlEmpty, i1));//.resetDifficulty(25);
+                register.registerShapelessRecipe(new ItemStack(clayBowlMilk, i1), true, milkBucket, new ItemStack(clayBowlEmpty, i1)).difficulty(25);
             }
             register.registerShapelessRecipe(new ItemStack(milkBucket), true, milkBucket
-                    .getEmptyVessel(), Item.bowlMilk, Item.bowlMilk, Item.bowlMilk, Item.bowlMilk);//.resetDifficulty(25);
+                    .getEmptyVessel(), Item.bowlMilk, Item.bowlMilk, Item.bowlMilk, Item.bowlMilk).difficulty(25);
             register.registerShapelessRecipe(new ItemStack(milkBucket), true, milkBucket
-                    .getEmptyVessel(), clayBowlMilk, clayBowlMilk, clayBowlMilk, clayBowlMilk);//.resetDifficulty(25);
+                    .getEmptyVessel(), clayBowlMilk, clayBowlMilk, clayBowlMilk, clayBowlMilk).difficulty(25);
         }
         ItemBucket[] water_buckets = {Item.bucketCopperWater, Item.bucketSilverWater, Item.bucketGoldWater, Item.bucketIronWater, Item.bucketAncientMetalWater, Item.bucketMithrilWater, Item.bucketAdamantiumWater, nickelBucketWater, tungstenBucketWater};
         for (ItemBucket waterBucket : water_buckets) {
@@ -106,32 +106,32 @@ public class RecipesFood extends Items {
             for (i1 = 1; i1 <= 4; i1++) {
                 register.registerShapelessRecipe(new ItemStack(Item.dough, i1), false, waterBucket, new ItemStack(Item.flour, i1));
                 register.registerShapelessRecipe(new ItemStack(Item.cookie, i1 * 4), false, waterBucket, new ItemStack(Item.flour, i1), new ItemStack(Item.chocolate, i1));
-                register.registerShapelessRecipe(new ItemStack(Item.bowlWater, i1), true, waterBucket, new ItemStack(Item.bowlEmpty, i1));//.resetDifficulty(25);
-                register.registerShapelessRecipe(new ItemStack(clayBowlWater, i1), true, waterBucket, new ItemStack(clayBowlEmpty, i1));//.resetDifficulty(25);
+                register.registerShapelessRecipe(new ItemStack(Item.bowlWater, i1), true, waterBucket, new ItemStack(Item.bowlEmpty, i1)).difficulty(25);
+                register.registerShapelessRecipe(new ItemStack(clayBowlWater, i1), true, waterBucket, new ItemStack(clayBowlEmpty, i1)).difficulty(25);
             }
             for (i1 = 1; i1 <= 2; i1++) {
                 register.registerShapelessRecipe(new ItemStack(Item.cookie, i1 * 4), false, waterBucket, new ItemStack(Item.flour, i1), new ItemStack(Item.dyePowder, i1, 3), new ItemStack(Item.sugar, i1));
             }
-            register.registerShapelessRecipe(new ItemStack(waterBucket), true, waterBucket.getEmptyVessel(), new ItemStack(Item.bowlWater, 4));//.resetDifficulty(25);
-            register.registerShapelessRecipe(new ItemStack(waterBucket), true, waterBucket.getEmptyVessel(), new ItemStack(clayBowlWater, 4));//.resetDifficulty(25);
+            register.registerShapelessRecipe(new ItemStack(waterBucket), true, waterBucket.getEmptyVessel(), new ItemStack(Item.bowlWater, 4)).difficulty(25);
+            register.registerShapelessRecipe(new ItemStack(waterBucket), true, waterBucket.getEmptyVessel(), new ItemStack(clayBowlWater, 4)).difficulty(25);
         }
         ItemBucket[] suspicious_water_buckets = {copperBucketWaterSuspicious, silverBucketWaterSuspicious, goldBucketWaterSuspicious, ironBucketWaterSuspicious, ancientmetalBucketWaterSuspicious, mithrilBucketWaterSuspicious, adamantiumBucketWaterSuspicious, nickelBucketWaterSuspicious, tungstenBucketWaterSuspicious};
         for (ItemBucket susWaterBucket : suspicious_water_buckets) {
             for (int i1 = 1; i1 <= 4; i1++) {
-                register.registerShapelessRecipe(new ItemStack(bowlWaterSuspicious, i1), true, susWaterBucket, new ItemStack(Item.bowlEmpty, i1));//.resetDifficulty(25);
-                register.registerShapelessRecipe(new ItemStack(clayBowlWaterSuspicious, i1), true, susWaterBucket, new ItemStack(clayBowlEmpty, i1));//.resetDifficulty(25);
+                register.registerShapelessRecipe(new ItemStack(bowlWaterSuspicious, i1), true, susWaterBucket, new ItemStack(Item.bowlEmpty, i1)).difficulty(25);
+                register.registerShapelessRecipe(new ItemStack(clayBowlWaterSuspicious, i1), true, susWaterBucket, new ItemStack(clayBowlEmpty, i1)).difficulty(25);
             }
-            register.registerShapelessRecipe(new ItemStack(susWaterBucket), true, susWaterBucket.getEmptyVessel(), new ItemStack(bowlWaterSuspicious, 4));//.resetDifficulty(25);
-            register.registerShapelessRecipe(new ItemStack(susWaterBucket), true, susWaterBucket.getEmptyVessel(), new ItemStack(clayBowlWaterSuspicious, 4));//.resetDifficulty(25);
+            register.registerShapelessRecipe(new ItemStack(susWaterBucket), true, susWaterBucket.getEmptyVessel(), new ItemStack(bowlWaterSuspicious, 4)).difficulty(25);
+            register.registerShapelessRecipe(new ItemStack(susWaterBucket), true, susWaterBucket.getEmptyVessel(), new ItemStack(clayBowlWaterSuspicious, 4)).difficulty(25);
         }
         ItemBucket[] dangerous_water_buckets = {copperBucketWaterDangerous, silverBucketWaterDangerous, goldBucketWaterDangerous, ironBucketWaterDangerous, ancientmetalBucketWaterDangerous, mithrilBucketWaterDangerous, adamantiumBucketWaterDangerous, nickelBucketWaterDangerous, tungstenBucketWaterDangerous};
         for (ItemBucket smpWaterBucket : dangerous_water_buckets) {
             for (int i1 = 1; i1 <= 4; i1++) {
-                register.registerShapelessRecipe(new ItemStack(bowlWaterSwampland, i1), true, smpWaterBucket, new ItemStack(Item.bowlEmpty, i1));//.resetDifficulty(25);
-                register.registerShapelessRecipe(new ItemStack(clayBowlWaterSwampland, i1), true, smpWaterBucket, new ItemStack(clayBowlEmpty, i1));//.resetDifficulty(25);
+                register.registerShapelessRecipe(new ItemStack(bowlWaterSwampland, i1), true, smpWaterBucket, new ItemStack(Item.bowlEmpty, i1)).difficulty(25);
+                register.registerShapelessRecipe(new ItemStack(clayBowlWaterSwampland, i1), true, smpWaterBucket, new ItemStack(clayBowlEmpty, i1)).difficulty(25);
             }
-            register.registerShapelessRecipe(new ItemStack(smpWaterBucket), true, smpWaterBucket.getEmptyVessel(), new ItemStack(bowlWaterSwampland, 4));//.resetDifficulty(25);
-            register.registerShapelessRecipe(new ItemStack(smpWaterBucket), true, smpWaterBucket.getEmptyVessel(), new ItemStack(clayBowlWaterSwampland, 4));//.resetDifficulty(25);
+            register.registerShapelessRecipe(new ItemStack(smpWaterBucket), true, smpWaterBucket.getEmptyVessel(), new ItemStack(bowlWaterSwampland, 4)).difficulty(25);
+            register.registerShapelessRecipe(new ItemStack(smpWaterBucket), true, smpWaterBucket.getEmptyVessel(), new ItemStack(clayBowlWaterSwampland, 4)).difficulty(25);
         }
     }
 

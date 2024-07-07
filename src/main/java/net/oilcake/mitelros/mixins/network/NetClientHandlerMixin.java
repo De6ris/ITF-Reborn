@@ -1,7 +1,10 @@
 package net.oilcake.mitelros.mixins.network;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.api.*;
+import net.oilcake.mitelros.api.ITFFoodStats;
+import net.oilcake.mitelros.api.ITFGuiEnchantment;
+import net.oilcake.mitelros.api.ITFNetHandler;
+import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.GuiEnchantReserver;
 import net.oilcake.mitelros.entity.misc.EntityWandFireBall;
 import net.oilcake.mitelros.entity.misc.EntityWandIceBall;

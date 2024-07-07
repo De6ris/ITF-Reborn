@@ -27,8 +27,8 @@ public class RecipeRegister extends Items {
         register.registerShapelessRecipe(new ItemStack(nickelIngot, 1), true, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget, nickelNugget);
         register.registerShapelessRecipe(new ItemStack(tungstenIngot, 1), true, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget, tungstenNugget);
         register.registerShapelessRecipe(new ItemStack(uruIngot, 1), true, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget);
-        register.registerShapelessRecipe(new ItemStack(tungstenBucket, 1), false, tungstenBucketStone);//.resetDifficulty(100);
-        register.registerShapelessRecipe(new ItemStack(nickelBucket, 1), false, nickelBucketStone);//.resetDifficulty(100);
+        register.registerShapelessRecipe(new ItemStack(tungstenBucket, 1), false, tungstenBucketStone).difficulty(100);
+        register.registerShapelessRecipe(new ItemStack(nickelBucket, 1), false, nickelBucketStone).difficulty(100);
         register.registerShapelessRecipe(new ItemStack(helmetAncientMetalSacred, 1), true, forgingnote, Item.ingotGold, Item.helmetAncientMetal);
         register.registerShapelessRecipe(new ItemStack(chestplateAncientMetalSacred, 1), true, forgingnote, Item.ingotGold, Item.plateAncientMetal);
         register.registerShapelessRecipe(new ItemStack(leggingsAncientMetalSacred, 1), true, forgingnote, Item.ingotGold, Item.legsAncientMetal);
@@ -43,7 +43,7 @@ public class RecipeRegister extends Items {
         ItemCoin[] coins = {nickelCoin, tungstenCoin};
         for (ItemCoin coin : coins) {
             for (int num = 1; num <= 9; num++) {
-                register.registerShapelessRecipe(new ItemStack(coin.getNuggetPeer(), num), true, new ItemStack(coin, num));//.resetDifficulty(25);
+                register.registerShapelessRecipe(new ItemStack(coin.getNuggetPeer(), num), true, new ItemStack(coin, num)).difficulty(25);
             }
             register.registerShapelessRecipe(new ItemStack(coin), true, new ItemStack(coin.getNuggetPeer()));
         }

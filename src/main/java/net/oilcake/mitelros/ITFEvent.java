@@ -26,6 +26,8 @@ import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.reload.event.*;
 
+import static net.oilcake.mitelros.ITFStart.NameSpace;
+
 public class ITFEvent {
     @Subscribe
     public void handleChatCommand(HandleChatCommandEvent event) {
@@ -75,11 +77,6 @@ public class ITFEvent {
         Blocks.registerBlocks(event);
     }
 
-//    @Subscribe
-//    public void onRecipeModify(RecipeModifyEvent event) {
-//        event.addModifier(new ShapelessRecipeModifier(new ItemStack(Item.cheese, 1), List.of(new ItemStack(Items.clayBowlMilk, 4)), false, Optional.of(1.0F)));
-//    }// TODO this crashes; and this is redundant, better set difficulty at RecipeRegistryEvent
-
     @Subscribe
     public void onCommandRegister(CommandRegisterEvent event) {
         event.register(new CommandHunger());
@@ -128,31 +125,31 @@ public class ITFEvent {
 
     @Subscribe
     public void onEntityRegister(EntityRegisterEvent event) {
-        event.register(EntityWitherBoneLord.class, "EntityWitherBoneLord", 541, 1314564, 13003008);
-        event.register(EntityClusterSpider.class, "EntityClusterSpider", 542, 15474675, 5051227);
-        event.register(EntityWitherBodyguard.class, "EntityWitherBodyguard", 543, 1314564, 7039851);
-        event.register(EntitySpiderKing.class, "EntitySpiderKing", 544, 3419431, 15790120);
-        event.register(EntityStray.class, "EntityStray", 545, 10862020, 871004);
-        event.register(EntityHusk.class, "EntityHusk", 546, 9798412, 3940871);
-        event.register(EntityPigmanLord.class, "EntityPigManlord", 547, 15373203, 5066061);
-        event.register(EntityLich.class, "EntityLich", 548, 13422277, 14008320);
-        event.register(EntityLichShadow.class, "EntityLichShadow", 549, 13422277, 7699821);
-        event.register(EntityStalkerCreeper.class, "EntityStalkerCreeper", 550, 10921638, 0);
-        event.register(EntityWandFireBall.class, "EntityWandFireBall", 551);
-        event.register(EntityWandIceBall.class, "EntityWandIceBall", 552);
-        event.register(EntityWandShockWave.class, "EntityWandShockWave", 553);
-        event.register(EntityZombieLord.class, "EntityZombieLord?", 554, 44975, 7969893);
-        event.register(EntityRetinueZombie.class, "EntityZombieRetinue", 555, 44975, 7969893);
-        event.register(EntityBoneBodyguard.class, "EntityBoneBodyguard", 556, 12698049, 4802889);
-        event.register(EntityGhost.class, "EntityGhost", 557, 9539985, 6629376);
-        event.register(EntityEvil.class, "EntityEvil", 558, 9539985, 14008320);
-        event.register(EntityUndeadGuard.class, "EntityUndeadGuard", 559, 12698049, 4802889);
-        event.register(EntityPigmanGuard.class, "EntityPigManGuard", 560, 15373203, 5066061);
-        event.register(EntityCastleGuard.class, "EntityCastleGuard", 561, 0x565656, 0x999999);
-        event.register(EntitySpirit.class, "EntitySpirit", 562, 0xFFFFFFF, 0xFFAD0000);
-        event.register(EntityLongdeadSentry.class, "EntityLongdeadSentry", 563, 13422277, 7699821);
-        event.register(EntityWandSlimeBall.class, "EntityWandSlimeBall", 564);
-        event.register(EntityUnknown.class, "null", 1895);
+        event.register(EntityWitherBoneLord.class, NameSpace, "EntityWitherBoneLord", 541, 1314564, 13003008);
+        event.register(EntityClusterSpider.class, NameSpace, "EntityClusterSpider", 542, 15474675, 5051227);
+        event.register(EntityWitherBodyguard.class, NameSpace, "EntityWitherBodyguard", 543, 1314564, 7039851);
+        event.register(EntitySpiderKing.class, NameSpace, "EntitySpiderKing", 544, 3419431, 15790120);
+        event.register(EntityStray.class, NameSpace, "EntityStray", 545, 10862020, 871004);
+        event.register(EntityHusk.class, NameSpace, "EntityHusk", 546, 9798412, 3940871);
+        event.register(EntityPigmanLord.class, NameSpace, "EntityPigManlord", 547, 15373203, 5066061);
+        event.register(EntityLich.class, NameSpace, "EntityLich", 548, 13422277, 14008320);
+        event.register(EntityLichShadow.class, NameSpace, "EntityLichShadow", 549, 13422277, 7699821);
+        event.register(EntityStalkerCreeper.class, NameSpace, "EntityStalkerCreeper", 550, 10921638, 0);
+        event.register(EntityWandFireBall.class, NameSpace, "EntityWandFireBall", 551);
+        event.register(EntityWandIceBall.class, NameSpace, "EntityWandIceBall", 552);
+        event.register(EntityWandShockWave.class, NameSpace, "EntityWandShockWave", 553);
+        event.register(EntityZombieLord.class, NameSpace, "EntityZombieLord?", 554, 44975, 7969893);
+        event.register(EntityRetinueZombie.class, NameSpace, "EntityZombieRetinue", 555, 44975, 7969893);
+        event.register(EntityBoneBodyguard.class, NameSpace, "EntityBoneBodyguard", 556, 12698049, 4802889);
+        event.register(EntityGhost.class, NameSpace, "EntityGhost", 557, 9539985, 6629376);
+        event.register(EntityEvil.class, NameSpace, "EntityEvil", 558, 9539985, 14008320);
+        event.register(EntityUndeadGuard.class, NameSpace, "EntityUndeadGuard", 559, 12698049, 4802889);
+        event.register(EntityPigmanGuard.class, NameSpace, "EntityPigManGuard", 560, 15373203, 5066061);
+        event.register(EntityCastleGuard.class, NameSpace, "EntityCastleGuard", 561, 0x565656, 0x999999);
+        event.register(EntitySpirit.class, NameSpace, "EntitySpirit", 562, 0xFFFFFFF, 0xFFAD0000);
+        event.register(EntityLongdeadSentry.class, NameSpace, "EntityLongdeadSentry", 563, 13422277, 7699821);
+        event.register(EntityWandSlimeBall.class, NameSpace, "EntityWandSlimeBall", 564);
+        event.register(EntityUnknown.class, NameSpace, "null", 1895);
     }
 
     @Subscribe
