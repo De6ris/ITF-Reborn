@@ -9,7 +9,7 @@ public class Enchantments {
     private static int getNextEnchantmentID() {
         return IdUtil.getNextEnchantmentID();
     }
-    
+
     public static final Enchantment enchantmentMelting = new EnchantmentMelting(getNextEnchantmentID(), EnumRarity.rare, 10);
 
     public static final Enchantment enchantmentAbsorb = new EnchantmentAbsorb(getNextEnchantmentID(), EnumRarity.rare, 10);

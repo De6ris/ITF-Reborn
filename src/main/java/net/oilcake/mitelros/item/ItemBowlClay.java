@@ -7,6 +7,7 @@ public class ItemBowlClay extends ItemBowl {
         super(id, contents, texture);
         this.vessel_material = Material.hardened_clay;
         this.setMaterial(Material.hardened_clay);
+        this.addMaterial(contents);
         this.setContainerItem(Items.clayBowlEmpty);
         this.setTextureName("hardened_clay_bowls/" + texture);
     }

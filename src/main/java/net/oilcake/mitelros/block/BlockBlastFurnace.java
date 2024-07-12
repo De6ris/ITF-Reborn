@@ -4,7 +4,7 @@ import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
 
 public class BlockBlastFurnace extends BlockFurnace {
-    private Material material;
+    private final Material material;
 
     protected BlockBlastFurnace(int par1, Material par2, boolean par3) {
         super(par1, par2, par3);
@@ -34,7 +34,7 @@ public class BlockBlastFurnace extends BlockFurnace {
 
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
         Block furnace_block = Block.getBlock(getIdleBlockID());
-        if (ITFConfig.TagBenchingV2.get()) {
+        if (ITFConfig.TagBenchingV2.getBooleanValue()) {
             if (!info.wasExploded()) {
                 if (furnace_block == Blocks.blastFurnaceNetherrackIdle) {
                     dropBlockAsEntityItem(info, Block.netherrack.blockID, 0, 8, 1.0F);

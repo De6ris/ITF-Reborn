@@ -411,6 +411,7 @@ item.pocket/mine.name=Mine Pocket
 itemarrow.tooltip.disable=Disabled by technical issue...
 itemtool.tooltip.slimeresistance=Bonus vs slime
 itemarmor.tooltip.slimeresistance=Bonus vs slime
+itemwine.tooltip.warning=Excessive drinking is not advisable.
 
 entity.EntityWitherBoneLord.name=Wither Bonelord
 entity.EntityWitherBodyguard.name=Wither Bodyguard

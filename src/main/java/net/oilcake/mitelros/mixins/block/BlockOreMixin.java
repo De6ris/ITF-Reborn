@@ -31,40 +31,45 @@ public abstract class BlockOreMixin extends Block {
     @Inject(method = "dropBlockAsEntityItem", at = @At(value = "FIELD", target = "Lnet/minecraft/BlockOre;blockID:I", ordinal = 2))
     private void changeDrop1(BlockBreakInfo info, CallbackInfoReturnable<Integer> cir, @Local(ordinal = 0) LocalIntRef id_dropped, @Local(ordinal = 2) LocalIntRef quantity_dropped) {
         if (info.wasExploded()) {
-            if (this == Blocks.blockAzurite) {
-                id_dropped.set(-1);
-            } else if (this == Block.oreGold) {
-                id_dropped.set(info.getMetadata() == 2 ? Items.pieceGoldNether.itemID : Items.pieceGold.itemID);
-                quantity_dropped.set(1 + info.world.rand.nextInt(2));
-            } else if (this.oreToPiece() != 0) {
-                id_dropped.set(this.oreToPiece());
-                quantity_dropped.set(1 + info.world.rand.nextInt(2));
+            if (this.vulnerableToExplosion()) {
+                id_dropped.set(0);
+            } else {
+                int pieceID = this.oreToPieceID(info.getMetadata());
+                if (pieceID != 0) {
+                    id_dropped.set(pieceID);
+                    quantity_dropped.set(1 + info.world.rand.nextInt(2));
+                }
             }
         } else {
             boolean hasAbsorb = EnchantmentHelper.hasEnchantment(info.responsible_item_stack, Enchantments.enchantmentAbsorb);
-            if (this == Block.oreEmerald) {
-                id_dropped.set(hasAbsorb ? 0 : Item.shardEmerald.itemID);
-                info.getResponsiblePlayer().triggerAchievement(AchievementList.emeralds);
-                quantity_dropped.set(4 + info.world.rand.nextInt(4));
-            } else if (this.blockID == Block.oreDiamond.blockID) {
-                id_dropped.set(hasAbsorb ? 0 : Item.shardDiamond.itemID);
-                info.getResponsiblePlayer().triggerAchievement(AchievementList.diamonds);
-                quantity_dropped.set(4 + info.world.rand.nextInt(4));
-            } else if (this == Block.oreGold) {
-                id_dropped.set(info.getMetadata() == 2 ? Items.pieceGoldNether.itemID : Items.pieceGold.itemID);
-                quantity_dropped.set(4 + info.world.rand.nextInt(4));
-            } else if (this.oreToPiece() != 0) {
-                id_dropped.set(this.oreToPiece());
-                quantity_dropped.set(4 + info.world.rand.nextInt(4));
+            if (hasAbsorb && this.canAbsorb()) {
+                id_dropped.set(0);
+                if (this == Block.oreEmerald) {
+                    info.getResponsiblePlayer().triggerAchievement(AchievementList.emeralds);
+                } else if (this == Block.oreDiamond) {
+                    info.getResponsiblePlayer().triggerAchievement(AchievementList.diamonds);
+                }
+            } else {
+                int pieceID = this.oreToPieceID(info.getMetadata());
+                if (pieceID != 0) {
+                    id_dropped.set(pieceID);
+                    quantity_dropped.set(4 + info.world.rand.nextInt(4));
+                }
             }
         }
     }
 
     @Unique
-    private int oreToPiece() {
+    private boolean vulnerableToExplosion() {
+        return this == Blocks.blockAzurite;
+    }
+
+    @Unique
+    private int oreToPieceID(int metadata) {
         if (this == Block.oreCopper) return Items.pieceCopper.itemID;
         if (this == Block.oreSilver) return Items.pieceSilver.itemID;
         if (this == Block.oreIron) return Items.pieceIron.itemID;
+        if (this == Block.oreGold) return metadata == 2 ? Items.pieceGoldNether.itemID : Items.pieceGold.itemID;
         if (this == Block.oreMithril) return Items.pieceMithril.itemID;
         if (this == Block.oreAdamantium) return Items.pieceAdamantium.itemID;
         if (this == Block.oreNetherQuartz) return Item.shardNetherQuartz.itemID;
@@ -98,9 +103,9 @@ public abstract class BlockOreMixin extends Block {
     @ModifyArg(method = "dropBlockAsEntityItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/Block;dropBlockAsEntityItem(Lnet/minecraft/BlockBreakInfo;IIIF)I"), index = 1)
     private int smelt(int id_dropped, @Local(argsOnly = true) BlockBreakInfo info, @Local boolean suppress_fortune) {
         float chance = suppress_fortune ? 1.0F : (1.0F + info.getHarvesterFortune() * 0.2F);
-        if (EnchantmentHelper.hasEnchantment(info.responsible_item_stack, Enchantments.enchantmentAbsorb)) {
+        if (this.canAbsorb() && EnchantmentHelper.hasEnchantment(info.responsible_item_stack, Enchantments.enchantmentAbsorb)) {
             int xp = this.calcAbsorbXP(chance);
-            if (xp != 0) dropXpOnBlockBreak(info.world, info.x, info.y, info.z, xp);
+            this.dropXpOnBlockBreak(info.world, info.x, info.y, info.z, xp);
         }
         if (EnchantmentHelper.hasEnchantment(info.responsible_item_stack, Enchantments.enchantmentMelting)) {
             float melting_chance = EnchantmentHelper.getEnchantmentLevelFraction(Enchantments.enchantmentMelting, info.responsible_item_stack);
@@ -110,6 +115,12 @@ public abstract class BlockOreMixin extends Block {
             }
         }
         return id_dropped;
+    }
+
+    @Unique
+    private boolean canAbsorb() {
+        return this.calcAbsorbXP(1.0F) != 0;
+//        return this == Block.oreDiamond || this == Block.oreEmerald || this == Blocks.blockAzurite || this == Block.oreNetherQuartz || this == Block.oreLapis;
     }
 
     @Unique

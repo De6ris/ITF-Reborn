@@ -401,6 +401,7 @@ item.misc/ancient_metal_armor_piece.name=镶金远古金属铠甲残片
 itemarrow.tooltip.disable=因为技术原因被禁用
 itemtool.tooltip.slimeresistance=腐蚀抗性
 itemarmor.tooltip.slimeresistance=腐蚀抗性
+itemwine.tooltip.warning=未成年人禁止饮酒！
 
 item.arrows/magical_arrow.name=魔法箭
 

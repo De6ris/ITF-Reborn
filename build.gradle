@@ -21,7 +21,7 @@ repositories {
 loom {
     accessWidenerPath = file("src/main/resources/MITEIsTooFalse.accesswidener")
     mergedMinecraftJar()
-    setFML(new File("libs\\FishModLoader-v3.3.0.jar"))
+    setFML(new File("libs\\FishModLoader-v3.3.2.jar"))
     mods {
         "MITE-ITF-Reborn" {
             sourceSet sourceSets.main
@@ -40,7 +40,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     implementation files(loom.getFML().toPath())
-    implementation fileTree(dir: file('libs'), include: ['*.jar'])
+    implementation files("libs\\ManyLib-2.0.1.jar")
 }
 
 processResources {

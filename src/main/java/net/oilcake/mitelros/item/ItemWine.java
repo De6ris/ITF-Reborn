@@ -17,6 +17,7 @@ public class ItemWine extends Item {
         ((ITFItem) this).setFoodWater(2);
     }
 
+    @Override
     public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
         if (player.onServer()) {
             if (ITFConfig.TagTemperature.getBooleanValue()) {
@@ -30,14 +31,17 @@ public class ItemWine extends Item {
         super.onItemUseFinish(item_stack, world, player);
     }
 
+    @Override
     public int getMaxItemUseDuration(ItemStack par1ItemStack) {
         return 32;
     }
 
+    @Override
     public boolean isDrinkable(int item_subtype) {
         return true;
     }
 
+    @Override
     public Item getItemProducedOnItemUseFinish() {
         return glassBottle;
     }
@@ -45,6 +49,6 @@ public class ItemWine extends Item {
     @Override
     public void addInformation(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot) {
         if (extended_info)
-            info.add(EnumChatFormatting.RED + Translator.getFormatted("未成年人禁止饮酒！", new Object[0]));
+            info.add(EnumChatFormatting.RED + Translator.getFormatted("itemwine.tooltip.warning", new Object[0]));
     }
 }

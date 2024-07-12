@@ -20,7 +20,8 @@ public class ContainerMinePocket extends Container {
             this.addSlotToContainer(new Slot(minePocketInventory, var4, 44 + var4 * 18, 20) {
                 @Override
                 public boolean isItemValid(ItemStack itemStack) {
-                    return itemStack.getItem() instanceof ItemNugget || itemStack.getItem() instanceof ItemPieces;
+                    Item item = itemStack.getItem();
+                    return item instanceof ItemNugget || item instanceof ItemPieces || item instanceof ItemShard;
                 }
             });
         }

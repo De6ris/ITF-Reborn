@@ -11,12 +11,16 @@ import net.oilcake.mitelros.util.DispenseBehaviorEmptyBucketRedirect;
 import net.oilcake.mitelros.util.DispenseBehaviorFilledBucketRedirect;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemBucket.class)
 public abstract class ItemBucketMixin extends ItemVessel {
+    @Shadow
+    public abstract float getChanceOfMeltingWhenFilledWithLava();
+
     @Unique
     private static final int xpNeeded = 250;
 
@@ -177,5 +181,10 @@ public abstract class ItemBucketMixin extends ItemVessel {
     @ModifyConstant(method = "addInformation", constant = @Constant(intValue = 100))
     private int itfXp(int constant) {
         return xpNeeded;
+    }
+
+    @ModifyArg(method = "addInformation", at = @At(value = "INVOKE", target = "Lnet/minecraft/Translator;getFormatted(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;"), index = 1)
+    private Object[] fixChances(Object[] par1ArrayOfObj) {
+        return new Object[]{Math.round(this.getChanceOfMeltingWhenFilledWithLava() * 100.0f)};
     }
 }

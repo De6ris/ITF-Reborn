@@ -6,7 +6,7 @@ import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.AchievementExtend;
 
 public class FeastManager {
-    private EntityPlayer player;
+    private final EntityPlayer player;
     public boolean Feast_trigger_salad;
 
     public boolean Feast_trigger_porridge;

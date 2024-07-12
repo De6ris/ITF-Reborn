@@ -24,7 +24,7 @@ public class FoodDataList {
 
     public static int foodWater(int id, Material material) {// 137 carrot; it is called when initialize
         if (material == Material.fruit | id == 137 || material == Materials.ice_sucker || material == Materials.melon_ice || material == Materials.chocolate_smoothie)
-            return ITFConfig.TagDryDilemma.get() ? 1 : 2;
+            return ITFConfig.TagDryDilemma.getBooleanValue() ? 1 : 2;
         if (material == (Materials.glowberries) || material == Materials.peeledSugarcane || material == Materials.agave || material == Materials.mashedCactus)
             return 1;
         if (material == Material.cheese || id == 88 || material == Material.bread || material == Material.desert)
@@ -70,6 +70,8 @@ public class FoodDataList {
             if (rand > 0.8D)
                 player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
             player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
+        } else {
+            System.out.println("no suspicious water?");
         }
     }
 
@@ -83,7 +85,7 @@ public class FoodDataList {
             player.itf$AddWater(-1);
         }
         if (item_stack.itemID == Item.egg.itemID) {
-            if (rand.nextDouble() > (ITFConfig.TagDryDilemma.get() ? 0.5D : 0.25D))
+            if (rand.nextDouble() > (ITFConfig.TagDryDilemma.getBooleanValue() ? 0.5D : 0.25D))
                 player.itf$AddWater(1);
         }
         if (item_stack.getItem() instanceof ItemMeat meat) {
@@ -93,7 +95,7 @@ public class FoodDataList {
                     player.addPotionEffect(new PotionEffect(PotionExtend.warm.id, 3000, 0));
                 }
             } else {
-                if (ITFConfig.TagDigest.get()) return;
+                if (ITFConfig.TagDigest.getBooleanValue()) return;
                 if (rand.nextInt(4) == 0) {
                     player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (120.0D * (1.0D + rand.nextDouble())), 0));
                 }
@@ -102,8 +104,8 @@ public class FoodDataList {
     }
 
     public static float chanceOfDecreaseWater(int itemID) {
-        if (itemID == Items.agave.itemID) return ITFConfig.TagDryDilemma.get() ? 0.8F : 0.6F;
-        if (itemID == Items.glowberries.itemID) return ITFConfig.TagDryDilemma.get() ? 0.5F : 0.0F;
+        if (itemID == Items.agave.itemID) return ITFConfig.TagDryDilemma.getBooleanValue() ? 0.8F : 0.6F;
+        if (itemID == Items.glowberries.itemID) return ITFConfig.TagDryDilemma.getBooleanValue() ? 0.5F : 0.0F;
         return 0.0F;
     }
 }

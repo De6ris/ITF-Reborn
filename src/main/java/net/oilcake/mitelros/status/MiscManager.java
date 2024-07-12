@@ -41,13 +41,12 @@ public class MiscManager {
     public float getNickelArmorCoverage() {
         float coverage = 0.0F;
         ItemStack[] worn_items = this.player.getWornItems();
-        for (int i = 0; i < worn_items.length; i++) {
-            ItemStack item_stack = worn_items[i];
+        for (ItemStack item_stack : worn_items) {
             if (item_stack != null)
                 if (item_stack.isArmor()) {
-                    ItemArmor barding = item_stack.getItem().getAsArmor();
-                    if (barding.getArmorMaterial() == Materials.nickel)
-                        coverage += barding.getCoverage() * barding.getDamageFactor(item_stack, this.player);
+                    ItemArmor itemArmor = item_stack.getItem().getAsArmor();
+                    if (itemArmor.getArmorMaterial() == Materials.nickel)
+                        coverage += itemArmor.getCoverage() * itemArmor.getDamageFactor(item_stack, this.player);
                 } else if (item_stack.getItem() instanceof ItemHorseArmor var6) {
                     if (var6.getArmorMaterial() == Materials.nickel)
                         coverage += var6.getCoverage();
