@@ -443,3 +443,10 @@ death.extend.attack.sacrificed=Burned out the life
 
 material.nickel.name=Nickel
 material.tungsten.name=Tungsten
+
+gui.repair.no_available_enchantment=No Available Enchantment
+gui.repair.enchantment_conflict=Enchantment Conflict
+gui.repair.lack_xp=Lack XP: >=%d Levels
+gui.repair.effectLessThanOneLevel=Combining them will effect you <1 level.
+gui.repair.costMoreThanOneLevel=Combining them will cost you %d levels.
+gui.repair.rewardMoreThanOneLevel=Combining them will reward you %d levels.

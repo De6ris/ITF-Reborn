@@ -8,10 +8,6 @@ import net.oilcake.mitelros.world.biome.BiomeWindsweptPlateau;
 import net.xiaoyu233.fml.reload.utils.IdUtil;
 
 public class ITFBiomes extends BiomeGenBase {
-    static {
-        getNextBiomeID();
-    }
-
     private static int getNextBiomeID() {
         return IdUtil.getNextBiomeId();
     }

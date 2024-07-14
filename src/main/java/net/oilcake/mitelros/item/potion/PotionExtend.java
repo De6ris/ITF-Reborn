@@ -14,8 +14,7 @@ public class PotionExtend extends Potion implements ITFPotion {
     public static final Potion stretch = new PotionExtend(getNextPotionID(), false, 114514, "stretch").setPotionName("potion.extend.stretch");
     public static final Potion warm = new PotionExtend(getNextPotionID(), false, 16744448).setPotionName("potion.extend.warm");
     public static final Potion cool = new PotionExtend(getNextPotionID(), false, 10092544).setPotionName("potion.extend.cool");
-    public static final Potion frostResistance = cool;//dummy
-//    public static final Potion frostResistance = new PotionExtend(getNextPotionID(), false, 10092544, "frost_resistance").setPotionName("potion.extend.frost_resistance");
+    public static final Potion frostResistance = new PotionExtend(getNextPotionID(), false, 10092544, "frost_resistance").setPotionName("potion.extend.frost_resistance");
 
     public PotionExtend(int id, boolean isBadEffect, int effectiveness) {
         super(id, isBadEffect, effectiveness);

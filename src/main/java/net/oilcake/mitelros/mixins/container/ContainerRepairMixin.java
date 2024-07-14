@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
+import net.oilcake.mitelros.api.AnvilStatus;
 import net.oilcake.mitelros.api.ITFContainerRepair;
 import net.oilcake.mitelros.api.ITFEnchantment;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,10 +23,17 @@ public abstract class ContainerRepairMixin extends Container implements ITFConta
     private IInventory inputSlots;
     @Unique
     private int xpDifference;
+    @Unique
+    private AnvilStatus anvilStatus = AnvilStatus.EnchantmentConflict;
 
     @Override
-    public int getXPDifference() {
+    public int itf$GetXPDifference() {
         return this.xpDifference;
+    }
+
+    @Override
+    public AnvilStatus itf$GetAnvilStatus() {
+        return this.anvilStatus;
     }
 
     public ContainerRepairMixin(EntityPlayer player) {
@@ -44,10 +52,14 @@ public abstract class ContainerRepairMixin extends Container implements ITFConta
 
     @ModifyExpressionValue(method = "updateRepairOutput", at = @At(value = "INVOKE", target = "Lnet/minecraft/EnchantmentHelper;hasValidEnchantmentForItem(Lnet/minecraft/NBTTagList;Lnet/minecraft/Item;)Z"))
     private boolean itfValidEnchantment(boolean original, @Local NBTTagList enchantmentsOfBook) {
+        if (!original) {
+            this.anvilStatus = AnvilStatus.NoAvailableEnchantment;
+            return false;
+        }
         int xpDifference = 0;
         ItemStack item_stack_in_first_slot = this.inputSlots.getStackInSlot(0);
         Map enchantmentOnItem = EnchantmentHelper.getEnchantmentsMap(item_stack_in_first_slot);
-        int xpMultiplier = enchantmentOnItem.isEmpty() ? 20 : 100;
+        int xpMultiplier = enchantmentOnItem.isEmpty() ? 20 : 100;// if not enchanted, we take less
         for (int i = 0; i < enchantmentsOfBook.tagCount(); ++i) {
             NBTTagCompound tag = (NBTTagCompound) enchantmentsOfBook.tagAt(i);
             int id = tag.getShort("id");
@@ -67,7 +79,19 @@ public abstract class ContainerRepairMixin extends Container implements ITFConta
             }
         }
         this.xpDifference = xpDifference;
-        return original && xpDifference != 0 && this.player.experience + xpDifference > 0;
+        boolean needsXP = xpDifference < 0;
+        boolean rewardsXP = xpDifference > 0;
+        if (rewardsXP) {
+            this.anvilStatus = AnvilStatus.Satisfied;
+            return true;
+        } else if (needsXP) {
+            boolean enoughXP = this.player.experience + xpDifference >= 0;
+            this.anvilStatus = enoughXP ? AnvilStatus.Satisfied : AnvilStatus.LackExp;
+            return enoughXP;
+        } else {
+            this.anvilStatus = AnvilStatus.EnchantmentConflict;
+            return false;
+        }
     }
 
     @ModifyExpressionValue(method = "updateRepairOutput", at = @At(value = "INVOKE", target = "Lnet/minecraft/Enchantment;canEnchantItem(Lnet/minecraft/Item;)Z"))

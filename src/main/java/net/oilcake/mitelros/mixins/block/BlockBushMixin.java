@@ -17,6 +17,6 @@ public abstract class BlockBushMixin extends BlockGrowingPlant {
 
     @ModifyConstant(method = "getGrowthRate", constant = @Constant(floatValue = 0.1F))
     private float itfSeason(float constant, @Local(argsOnly = true) World world) {
-        return constant + ((((ITFWorld) world).getWorldSeason() == 2) ? 0.15F : 0.0F);
+        return constant + ((((ITFWorld) world).itf$GetWorldSeason() == 2) ? 0.15F : 0.0F);
     }
 }

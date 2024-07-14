@@ -54,7 +54,7 @@ public class EntityMobMixin extends EntityCreature {
         ItemStack held_item = attacker.getHeldItemStack();
         if (EnchantmentHelper.hasEnchantment(held_item, Enchantments.enchantmentDestroying)) {
             int destorying = EnchantmentHelper.getEnchantmentLevel(Enchantments.enchantmentDestroying, held_item);
-            ((ITFWorld) target.worldObj).newExplosionC(attacker, target.posX, target.posY, target.posZ, 0.0F, destorying * 0.5F, true);
+            ((ITFWorld) target.worldObj).itf$ExplosionC(attacker, target.posX, target.posY, target.posZ, 0.0F, destorying * 0.5F, true);
         }
     }
 

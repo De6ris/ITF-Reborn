@@ -16,11 +16,6 @@ public interface ITFPlayer {
 
     TemperatureManager itf$GetTemperatureManager();
 
-    // for compat with ITF-Extra
-    default TemperatureManager getTemperatureManager() {
-        return this.itf$GetTemperatureManager();
-    }
-
     int itf$GetWater();
 
     int itf$AddWater(int water);

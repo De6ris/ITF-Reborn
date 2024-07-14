@@ -26,7 +26,7 @@ public abstract class ContainerRepairINNER2Mixin extends Slot {
     @Inject(method = "onPickupFromSlot", at = @At("HEAD"))
     private void modifyXP(EntityPlayer par1EntityPlayer, ItemStack after, CallbackInfo ci) {
         if (this.field_135071_a.isRemote) return;
-        int xpDifference = ((ITFContainerRepair) this.repairContainer).getXPDifference();
+        int xpDifference = ((ITFContainerRepair) this.repairContainer).itf$GetXPDifference();
         if (xpDifference == 0) return;
         par1EntityPlayer.addExperience(xpDifference);
     }

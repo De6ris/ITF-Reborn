@@ -1,9 +1,11 @@
 package net.oilcake.mitelros.mixins.gui;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.AnvilStatus;
 import net.oilcake.mitelros.api.ITFContainerRepair;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -25,19 +27,31 @@ public abstract class GuiRepairMixin
         if (itemStack.itemID != Item.enchantedBook.itemID && itemStack.itemID != Item.bottleOfDisenchanting.itemID)
             return;
         if (this.isMouseOverSlot(this.repairContainer.getSlot(2), mouse_x, mouse_y)) {
-            int xpDifference = ((ITFContainerRepair) this.repairContainer).getXPDifference();
-            EntityPlayer player = this.repairContainer.player;
-            int hypothetical_level = player.getExperienceLevel(player.experience + xpDifference);
-            int level_cost = player.getExperienceLevel() - hypothetical_level;
-            String text;
-            if (level_cost < 0) {
-                text = EnumChatFormatting.YELLOW + "此操作将让你提升" + -level_cost + "等级";
-            } else if (level_cost > 0) {
-                text = EnumChatFormatting.YELLOW + "此操作将让你消耗" + level_cost + "等级";
-            } else {
-                text = EnumChatFormatting.YELLOW + "此操作对你等级的影响小于一级";
-            }
+            AnvilStatus anvilStatus = ((ITFContainerRepair) this.repairContainer).itf$GetAnvilStatus();
+            String text = switch (anvilStatus) {
+                case NoAvailableEnchantment -> I18n.getString("gui.repair.no_available_enchantment");
+                case EnchantmentConflict -> I18n.getString("gui.repair.enchantment_conflict");
+                case Satisfied -> this.getString(((ITFContainerRepair) this.repairContainer).itf$GetXPDifference());
+                case LackExp ->
+                        I18n.getStringParams("gui.repair.lack_xp", this.repairContainer.player.getExperienceLevel(-((ITFContainerRepair) this.repairContainer).itf$GetXPDifference()));
+            };
             this.drawCreativeTabHoveringText(text, mouse_x, mouse_y);
         }
+    }
+
+    @Unique
+    private String getString(int xpDifference) {
+        EntityPlayer player = this.repairContainer.player;
+        int hypothetical_level = player.getExperienceLevel(player.experience + xpDifference);
+        int level_cost = player.getExperienceLevel() - hypothetical_level;
+        String text;
+        if (level_cost < 0) {
+            text = I18n.getStringParams("gui.repair.rewardMoreThanOneLevel", -level_cost);
+        } else if (level_cost > 0) {
+            text = I18n.getStringParams("gui.repair.costMoreThanOneLevel", level_cost);
+        } else {
+            text = I18n.getString("gui.repair.effectLessThanOneLevel");
+        }
+        return EnumChatFormatting.YELLOW + text;
     }
 }

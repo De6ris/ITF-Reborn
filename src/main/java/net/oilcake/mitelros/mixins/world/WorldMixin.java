@@ -30,7 +30,7 @@ public abstract class WorldMixin implements ITFWorld {
         this.provider = provider;
     }
 
-    public Explosion newExplosionC(Entity exploder, double posX, double posY, double posZ, float explosion_size_vs_blocks, float explosion_size_vs_living_entities, boolean b) {
+    public Explosion itf$ExplosionC(Entity exploder, double posX, double posY, double posZ, float explosion_size_vs_blocks, float explosion_size_vs_living_entities, boolean b) {
         Explosion explosion = new Explosion(this.getWorld(), exploder, posX, posY, posZ, explosion_size_vs_blocks, explosion_size_vs_living_entities);
         explosion.doExplosionA();
         explosion.affectedBlockPositions.clear();
@@ -43,7 +43,7 @@ public abstract class WorldMixin implements ITFWorld {
         int duration_static = 6000 * (ITFConfig.TagEternalRaining.get() ? 6 : 1);
         int duration_random = original.call(instance, i) * (ITFConfig.TagEternalRaining.get() ? 2 : 1);
         int duration = duration_random + duration_static;
-        duration = (int) (duration * getRainDurationModify(getWorldSeason()));
+        duration = (int) (duration * getRainDurationModify(itf$GetWorldSeason()));
         return duration - 6000;
     }
 
@@ -54,7 +54,7 @@ public abstract class WorldMixin implements ITFWorld {
     }
 
     @Unique
-    public int getWorldSeason() {
+    public int itf$GetWorldSeason() {
         return (this.getDayOfWorld() % 128) / 32;
     }
 
@@ -75,18 +75,18 @@ public abstract class WorldMixin implements ITFWorld {
     }
 
     @Unique
-    public float getSeasonGrowthModifier() {
+    public float itf$GetSeasonGrowthModifier() {
         return (float) Math.sin(0.0490873852123 * (this.getDayOfWorld() - 16));
     }
 
     @ModifyConstant(method = "canSnowAt", constant = @Constant(floatValue = 0.15F))
     private float itfSnow(float constant) {
-        return (this.getWorldSeason() == 3) ? 1.0F : 0.15F;
+        return (this.itf$GetWorldSeason() == 3) ? 1.0F : 0.15F;
     }
 
     @Inject(method = "isFreezing", at = @At("HEAD"), cancellable = true)
     private void itfFreezing(int x, int z, CallbackInfoReturnable<Boolean> cir) {
-        if (getBiomeGenForCoords(x, z).temperature <= ((getWorldSeason() == 3) ? 1.0F : 0.15F))
+        if (getBiomeGenForCoords(x, z).temperature <= ((itf$GetWorldSeason() == 3) ? 1.0F : 0.15F))
             cir.setReturnValue(true);
     }
 

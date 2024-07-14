@@ -443,3 +443,10 @@ death.extend.attack.sacrificed=赴死如归
 
 material.nickel.name=镍
 material.tungsten.name=钨钢
+
+gui.repair.no_available_enchantment=无可用附魔
+gui.repair.enchantment_conflict=附魔冲突
+gui.repair.lack_xp=缺少经验值:至少需要%d级
+gui.repair.effectLessThanOneLevel=合并它们对你的影响小于1级.
+gui.repair.costMoreThanOneLevel=合并它们会消耗你%d级.
+gui.repair.rewardMoreThanOneLevel=合并它们会提升你%d级.
