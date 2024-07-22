@@ -3,10 +3,10 @@ package net.oilcake.mitelros.status;
 import net.minecraft.*;
 import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.config.ITFConfig;
-import net.oilcake.mitelros.item.ItemTotem;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
+import net.oilcake.mitelros.item.totem.ItemTotem;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.EnumQualityEffect;
@@ -116,9 +116,9 @@ public class MiscManager {
     public EntityDamageResult totemCheckOnDeath(EntityDamageResult entityDamageResult) {
         if (entityDamageResult != null && player.getHealthFraction() <= 0.1D && !entityDamageResult.entityWasDestroyed()) {
             ItemStack var5 = player.getHeldItemStack();
-            if (var5 != null && var5.getItem() instanceof ItemTotem) {
+            if (var5 != null && var5.getItem() instanceof ItemTotem totem) {
                 entityDamageResult.entity_was_destroyed = false;
-                ItemTotem.trigger(this.player, false);
+                totem.trigger(this.player, false);
                 player.setHeldItemStack(null);
             }
         }

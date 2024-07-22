@@ -14,11 +14,11 @@ public class ItemFoodMixin extends Item {
     private void injectInit(int id, Material material, int satiation, int nutrition, int sugar_content, boolean has_protein, boolean has_essential_fats, boolean has_phytonutrients, String texture, CallbackInfo callbackInfo) {
         int water = FoodDataList.foodWater(id, material);
         if (water != 0) {
-            ((ITFItem) this).setFoodWater(water);
+            ((ITFItem) this).itf$SetFoodWater(water);
         }
         int temperature = FoodDataList.foodTemperature(material);
         if (temperature != 0) {
-            ((ITFItem) this).setFoodTemperature(temperature);
+            ((ITFItem) this).itf$SetFoodTemperature(temperature);
         }
     }
 

@@ -11,13 +11,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ItemPotionMixin extends Item {
     @Inject(method = "<init>(I)V", at = @At("RETURN"))
     private void injectCtor(CallbackInfo callback) {
-        ((ITFItem) this).setFoodWater(3);
+        ((ITFItem) this).itf$SetFoodWater(3);
     }
 
     @Inject(method = "onItemUseFinish", at = @At(value = "INVOKE", target = "Lnet/minecraft/Item;onItemUseFinish(Lnet/minecraft/ItemStack;Lnet/minecraft/World;Lnet/minecraft/EntityPlayer;)V"))
     private void addWater(ItemStack item_stack, World world, EntityPlayer player, CallbackInfo ci) {
         if (player.onServer()) {
-            player.itf$AddWater(((ITFItem) this).getFoodWater());
+            player.itf$AddWater(((ITFItem) this).itf$GetFoodWater());
         }
     }
 }

@@ -8,6 +8,7 @@ import net.oilcake.mitelros.item.api.*;
 import net.oilcake.mitelros.item.minePocket.ItemMinePocket;
 import net.oilcake.mitelros.item.potion.ItemPotionExperimental;
 import net.oilcake.mitelros.item.potion.ItemPotionSuspicious;
+import net.oilcake.mitelros.item.totem.*;
 import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.ITFLootTables;
 import net.xiaoyu233.fml.reload.utils.IdUtil;
@@ -382,7 +383,7 @@ public class Items extends Item {
 
     public static final ItemBowlClay clayBowlBeetrootSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.beetroot_soup, "beetroot_soup")).setFoodValue(15, 6, 6000, false, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("beetrootSoup");
 
-    public static final Item totemOfFecund = new ItemTotem(getNextItemID(), Material.gold, "totem");
+    public static final Item totemOfFecund = new ItemTotemFecund(getNextItemID());
 
     public static final ItemArmor helmetCustom_b = new ItemHelmet(getNextItemID(), Materials.custom_b, false);
 
@@ -402,11 +403,11 @@ public class Items extends Item {
 
     public static final ItemPotionSuspicious suspiciousPotion = (ItemPotionSuspicious) (new ItemPotionSuspicious(getNextItemID())).setUnlocalizedName("suspiciousPotion").setCreativeTab(CreativeTabs.tabMisc);
 
-    public static final Item totemOfDestroy = new ItemTotem(getNextItemID(), Materials.tungsten, "totem");
+    public static final Item totemOfDestroy = new ItemTotemDestroy(getNextItemID());
 
-    public static final Item totemOfPreserve = new ItemTotem(getNextItemID(), Material.iron, "totem");
+    public static final Item totemOfPreserve = new ItemTotemPreserve(getNextItemID());
 
-    public static final Item totemOfKnowledge = new ItemTotem(getNextItemID(), Material.ancient_metal, "totem");
+    public static final Item totemOfKnowledge = new ItemTotemKnowledge(getNextItemID());
 
     public static final ItemFlintAndSteel ignitionCopper = (ItemFlintAndSteel) new ItemFlintAndSteel(getNextItemID()).setMaterial(Material.flint, Material.copper).setMaxDamage((int) (2.0F * Material.copper.durability));
 
@@ -430,7 +431,7 @@ public class Items extends Item {
 
     public static final ItemGuideBook guide = new ItemGuideBook(getNextItemID());
 
-    public static final Item totemOfHunting = new ItemTotem(getNextItemID(), Materials.nickel, "totem");
+    public static final Item totemOfHunting = new ItemTotemHunting(getNextItemID());
 
     public static final ItemClub uruMorningStar = ReflectHelper.createInstance(ItemClub.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.uru);
 
@@ -464,9 +465,9 @@ public class Items extends Item {
 
     public static final ItemFood peeledSugarcane = (new ItemFood(getNextItemID(), Materials.peeledSugarcane, 0, 1, 1000, false, false, true, "peeledSugarcane")).setPlantProduct();
 
-    public static final Item totemOfSentry = new ItemTotem(getNextItemID(), Material.adamantium, "totem");
+    public static final Item totemOfSentry = new ItemTotemSentry(getNextItemID());
 
-    public static final Item totemOfUnknown = new ItemTotem(getNextItemID(), Material.rusted_iron, "totem");
+    public static final Item totemOfUnknown = new ItemTotemUnknown(getNextItemID());
 
     public static final ItemFlintAndSteel ignitionRustedIron = (ItemFlintAndSteel) new ItemFlintAndSteel(getNextItemID()).setMaterial(Material.flint, Material.rusted_iron).setMaxDamage((int) (2.0F * Material.rusted_iron.durability));
 
@@ -498,7 +499,7 @@ public class Items extends Item {
 
     public static final ItemBowl bowlHotWater = new ItemBowl(getNextItemID(), Materials.hot_water, "bowl_water");
 
-    public static final Item totemOfFlattening = new ItemTotem(getNextItemID(), Material.dirt, "totem");
+    public static final Item totemOfFlattening = new ItemTotemFlattening(getNextItemID());
 
     public static final Item lootPackLich = new ItemLootPack(getNextItemID(), Material.leather, "lootPack", ITFLootTables.lichEntity, 6);
 
@@ -517,9 +518,9 @@ public class Items extends Item {
     }
 
     static {
-        ((ITFItem) totemOfKnowledge).setExtraInfo("右键提升20%经验");
-        ((ITFItem) totemOfFlattening).setExtraInfo("据说能够平整15x15的土地");
-        ((ITFItem) frostRod).setExtraInfo("似乎能提升触及距离, 还能搓成粉?");
-        ((ITFItem) enderRod).setExtraInfo("似乎能提升触及距离, 还能酿药?");
+        ((ITFItem) totemOfKnowledge).itf$SetExtraInfo("右键提升20%经验");
+        ((ITFItem) totemOfFlattening).itf$SetExtraInfo("据说能够平整15x15的土地");
+        ((ITFItem) frostRod).itf$SetExtraInfo("似乎能提升触及距离, 还能搓成粉?");
+        ((ITFItem) enderRod).itf$SetExtraInfo("似乎能提升触及距离, 还能酿药?");
     }
 }

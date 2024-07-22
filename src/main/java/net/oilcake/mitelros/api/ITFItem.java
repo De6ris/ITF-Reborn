@@ -1,24 +1,26 @@
 package net.oilcake.mitelros.api;
 
+import java.util.Optional;
+
 public interface ITFItem {
-    default int getFoodWater() {
+    default int itf$GetFoodWater() {
         return 0;
     }
 
-    default void setFoodWater(int water) {
+    default void itf$SetFoodWater(int water) {
     }
 
-    default int getFoodTemperature() {
+    default int itf$GetFoodTemperature() {
         return 0;
     }
 
-    default void setFoodTemperature(int temperature) {
+    default void itf$SetFoodTemperature(int temperature) {
     }
 
-    default void setExtraInfo(String info) {
+    default void itf$SetExtraInfo(String info) {
     }
 
-    default String getExtraInfo() {
-        return null;
+    default Optional<String> itf$GetExtraInfo() {
+        return Optional.empty();
     }
 }

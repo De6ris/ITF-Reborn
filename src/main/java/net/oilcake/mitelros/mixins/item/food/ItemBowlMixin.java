@@ -16,8 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
     @Inject(method = "<init>(ILnet/minecraft/Material;Ljava/lang/String;)V", at = @At("RETURN"))
     private void injectCtor(CallbackInfo callback) {
-        this.setFoodWater(FoodDataList.bowlFoodWater(this.getContents()));
-        this.setFoodTemperature(FoodDataList.bowlFoodTemperature(this.getContents()));
+        this.itf$SetFoodWater(FoodDataList.bowlFoodWater(this.getContents()));
+        this.itf$SetFoodTemperature(FoodDataList.bowlFoodTemperature(this.getContents()));
     }
 
     @Inject(method = "onItemUseFinish", at = @At("HEAD"))

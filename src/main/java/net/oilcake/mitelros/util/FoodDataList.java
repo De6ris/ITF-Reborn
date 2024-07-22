@@ -22,8 +22,8 @@ public class FoodDataList {
         return 0;
     }
 
-    public static int foodWater(int id, Material material) {// 137 carrot; it is called when initialize
-        if (material == Material.fruit | id == 137 || material == Materials.ice_sucker || material == Materials.melon_ice || material == Materials.chocolate_smoothie)
+    public static int foodWater(int id, Material material) {// 135 carrot, 88 egg; it is called at init
+        if (material == Material.fruit | id == 135 || material == Materials.ice_sucker || material == Materials.melon_ice || material == Materials.chocolate_smoothie)
             return ITFConfig.TagDryDilemma.getBooleanValue() ? 1 : 2;
         if (material == (Materials.glowberries) || material == Materials.peeledSugarcane || material == Materials.agave || material == Materials.mashedCactus)
             return 1;

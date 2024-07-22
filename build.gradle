@@ -41,6 +41,16 @@ dependencies {
 
     implementation files(loom.getFML().toPath())
     implementation files("libs\\ManyLib-2.0.1.jar")
+
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\ModernMite.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\OhMyMiteClient.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\GammaFree.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\MITEDevHackMod-FML3.0.0.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\Neodymium.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\FPSPlus.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\DebrisHUD.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\CraftGuide.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\Hwite.jar")
 }
 
 processResources {

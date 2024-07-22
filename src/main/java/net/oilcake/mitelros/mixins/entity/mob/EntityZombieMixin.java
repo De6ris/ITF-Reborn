@@ -34,13 +34,14 @@ public class EntityZombieMixin extends EntityAnimalWatcher {
 
     @Inject(method = "onUpdate()V", at = @At("RETURN"))
     public void ModifyAIInjector(CallbackInfo callbackInfo) {
-        if (ITFConfig.TagWorshipDark.get())
+        if (ITFConfig.TagWorshipDark.getBooleanValue()) {
             tryDisableNearbyLightSource();
+        }
     }
 
     @Inject(method = "onSpawnWithEgg(Lnet/minecraft/EntityLivingData;)Lnet/minecraft/EntityLivingData;", at = @At("RETURN"))
     public void ModifyAIInjector(EntityLivingData par1EntityLivingData, CallbackInfoReturnable<EntityLivingData> callbackInfo) {
-        if (ITFConfig.TagWorshipDark.get()) {
+        if (ITFConfig.TagWorshipDark.getBooleanValue()) {
             this.tasks.addTask(4, new EntityAISeekLitTorch(this, 1.0F));
         }
     }

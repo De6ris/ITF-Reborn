@@ -6,18 +6,60 @@ import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.entity.mob.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TimeZone;
 
 @Mixin(WorldServer.class)
 public abstract class WorldServerMixin extends World {
     public WorldServerMixin(ISaveHandler par1ISaveHandler, String par2Str, WorldProvider par3WorldProvider, WorldSettings par4WorldSettings, Profiler par5Profiler, ILogAgent par6ILogAgent, long world_creation_time, long total_world_time) {
         super(par1ISaveHandler, par2Str, par3WorldProvider, par4WorldSettings, par5Profiler, par6ILogAgent, world_creation_time, total_world_time);
     }
+
+    @Unique
+    private Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
+
+//    @ModifyReturnValue(method = "getSuitableCreature", at = @At("RETURN"))
+//    private Class<?> mobSpawnConditions(Class<?> entity_class, @Local(argsOnly = true, ordinal = 1) int y) {
+//        boolean check_depth = this.isOverworld();
+//        boolean is_blood_moon_up = isBloodMoon(true);
+//        if (entity_class == EntityCreeper.class) {
+//            if (y <= 40 && ITFConfig.TagInvisibleFollower.getBooleanValue()) {
+//                return EntityStalkerCreeper.class;
+//            }
+//        } else if (entity_class == EntityRevenant.class) {
+//            if ((this.calendar.get(Calendar.MONTH) + 1) == 4 && this.calendar.get(Calendar.DATE) == 1) {
+//                return EntityZombieLord.class;
+//            }
+//        } else if (entity_class == EntityInvisibleStalker.class) {
+//            if (this.rand.nextInt(40) >= y && this.rand.nextFloat() < 0.5F) {
+//                return EntityGhost.class;
+//            }
+//        } else if (entity_class == EntityRetinueZombie.class) {
+//            if (!check_depth || y <= 32) {
+//                return entity_class;
+//            }
+//        } else if (entity_class == EntityBoneBodyguard.class) {
+//            if (!check_depth || y <= 32) {
+//                return entity_class;
+//            }
+//        } else if (entity_class == EntityZombie.class) {
+//            if (!check_depth || (y <= 32 && this.rand.nextFloat() <= 0.25F) || is_blood_moon_up) {
+//                return EntityRetinueZombie.class;
+//            }
+//        } else if (entity_class == EntitySkeleton.class) {
+//            if (!check_depth || (y <= 32 && this.rand.nextFloat() <= 0.25F) || is_blood_moon_up) {
+//                return EntityBoneBodyguard.class;
+//            }
+//        }
+//        return entity_class;
+//    }
+
 
     /**
      * @author
@@ -66,7 +108,11 @@ public abstract class WorldServerMixin extends World {
                     return entity_class;
             } else if (entity_class == EntityRevenant.class) {
                 if (!check_depth || y <= 44 || can_spawn_revenants_on_surface) {
-                    return entity_class;
+                    if ((calendar.get(Calendar.MONTH) + 1) == 4 && calendar.get(Calendar.DATE) == 1) {
+                        return EntityZombieLord.class;
+                    } else {
+                        return entity_class;
+                    }
                 }
             } else {
                 if (entity_class == EntityClusterSpider.class)
@@ -157,15 +203,5 @@ public abstract class WorldServerMixin extends World {
     @ModifyConstant(method = "tickBlocksAndAmbiance", constant = @Constant(intValue = 100000))
     private int moreThunder1(int constant) {
         return ITFConfig.TagUnstableConvection.getBooleanValue() ? 25000 : 100000;
-    }
-
-    @Shadow
-    protected IChunkProvider createChunkProvider() {
-        return null;
-    }
-
-    @Shadow
-    public Entity getEntityByID(int i) {
-        return null;
     }
 }

@@ -43,7 +43,6 @@ public class ITFConfig extends SimpleConfigs {
 
 
     // luck
-
     public static final ConfigBooleanChallenge TagDigest = new ConfigBooleanChallenge("原生代谢", "玩家食用生肉/饮用水获得概率性debuff的概率降低100%", -2);
     public static final ConfigBooleanChallenge TagArmament = new ConfigBooleanChallenge("战备军械", "玩家的护甲值在耐久低于25%时才会减少，且不再受到低于自身护甲值的伤害", -2);
     public static final ConfigBooleanChallenge TagWorkOfHeaven = new ConfigBooleanChallenge("巧夺天工", "品质装备的效果增强一倍", -2);
@@ -52,7 +51,6 @@ public class ITFConfig extends SimpleConfigs {
 
     /* experimentalConfig */
     public static final ConfigBoolean TagTemperature = new ConfigBoolean("温度机制", false);
-    public static final ConfigBoolean TagBetterBiome = new ConfigBoolean("更好的群系", true, "更贴近原版的群系生成");
     public static final ConfigBoolean TagCreaturesV2 = new ConfigBoolean("新动物生成机制");
     public static final ConfigBoolean TagBenchingV2 = new ConfigBoolean("工作站废料回收");
     public static final ConfigBoolean FinalChallenge = new ConfigBoolean("终极挑战模式");
@@ -70,7 +68,6 @@ public class ITFConfig extends SimpleConfigs {
     public static final List<ConfigBase<?>> spite;
     public static final List<ConfigBase<?>> enemy;
     public static final List<ConfigBase<?>> luck;
-    public static final List<ConfigBase<?>> others;
     public static final List<ConfigBase<?>> info;
     public static final List<ConfigBase<?>> misc;
     public static final List<ConfigBase<?>> experimental;
@@ -92,19 +89,16 @@ public class ITFConfig extends SimpleConfigs {
         challenge.addAll(enemy);
         challenge.addAll(luck);
 
-        experimental = List.of(TagBetterBiome, TagCreaturesV2, TagBenchingV2, FinalChallenge, TagTemperature);
+        experimental = List.of(TagCreaturesV2, TagBenchingV2, FinalChallenge);
 
         info = List.of(TemperatureBar, TemperatureBarYOffset);
         misc = List.of(FixedID, ItemIDStart, BlockIDStart);
 
-        others = new ArrayList<>();
-        others.addAll(info);
-        others.addAll(misc);
-
         values = new ArrayList<>();
         values.addAll(challenge);
         values.addAll(experimental);
-        values.addAll(others);
+//        values.addAll(info);
+        values.addAll(misc);
 
         Instance = new ITFConfig(ITFStart.MOD_ID, null, values);
 
@@ -115,7 +109,7 @@ public class ITFConfig extends SimpleConfigs {
         configTabs.add(new ConfigTab("疯狂劲敌", enemy));
         configTabs.add(new ConfigTab("天赐福星", luck));
         configTabs.add(new ConfigTab("实验性玩法", experimental));
-        configTabs.add(new ConfigTab("信息显示", info));
+//        configTabs.add(new ConfigTab("信息显示", info));
         configTabs.add(new ConfigTab("杂项", misc));
     }
 
@@ -157,9 +151,7 @@ public class ITFConfig extends SimpleConfigs {
         ConfigUtils.writeConfigBase(challenge, "疯狂劲敌", enemy);
         ConfigUtils.writeConfigBase(challenge, "天赐福星", luck);
         ConfigUtils.writeConfigBase(root, "实验性玩法", experimental);
-        JsonObject other = JsonUtils.getNestedObject(root, "其它", true);
-        ConfigUtils.writeConfigBase(other, "信息显示", info);
-        ConfigUtils.writeConfigBase(other, "杂项", misc);
+        ConfigUtils.writeConfigBase(root, "杂项", misc);
         JsonUtils.writeJsonToFile(root, this.optionsFile);
     }
 
@@ -176,9 +168,7 @@ public class ITFConfig extends SimpleConfigs {
                 ConfigUtils.readConfigBase(challenge, "疯狂劲敌", enemy);
                 ConfigUtils.readConfigBase(challenge, "天赐福星", luck);
                 ConfigUtils.readConfigBase(root, "实验性玩法", experimental);
-                JsonObject other = JsonUtils.getNestedObject(root, "其它", true);
-                ConfigUtils.readConfigBase(other, "信息显示", info);
-                ConfigUtils.readConfigBase(other, "杂项", misc);
+                ConfigUtils.readConfigBase(root, "杂项", misc);
             }
             if (FixedID.getBooleanValue()) {
                 Constant.nextItemID = ItemIDStart.getIntegerValue();

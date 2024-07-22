@@ -12,11 +12,8 @@ import net.oilcake.mitelros.util.DamageSourceExtend;
 
 public class TemperatureManager {
     private final EntityPlayer player;
-
     public int heatResistance;
-
     public int freezingCoolDown;
-
     public int freezingWarning;
     public int heatWarning;
     public static final double normalTemperature = 37.2D;
@@ -290,8 +287,8 @@ public class TemperatureManager {
         for (ItemStack wornItem : this.player.getWornItems()) {
             if (wornItem != null) {
                 heat -= 1;
-                if (wornItem.hasMaterial(Materials.wolf_fur)) heat += 3.4;
-                if (wornItem.hasMaterial(Material.leather)) heat += 2.2;
+                if (wornItem.hasMaterial(Materials.wolf_fur)) heat += 3.4f;
+                if (wornItem.hasMaterial(Material.leather)) heat += 2.2f;
                 if (wornItem.hasMaterial(Materials.ice_chunk)) heat -= 1.4f;
             }
         }

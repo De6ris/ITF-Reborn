@@ -20,7 +20,6 @@ public abstract class BiomeHellMixin extends BiomeGenBase {
 
     @Inject(method = "<init>(I)V", at = @At("RETURN"))
     public void injectCtor(CallbackInfo callbackInfo) {
-        this.spawnableMonsterList.clear();
         this.spawnableMonsterList.add(new SpawnListEntry(EntityInfernalCreeper.class, 20, 1, 3));
         this.spawnableMonsterList.add(new SpawnListEntry(EntityDemonSpider.class, 20, 1, 4));
         this.spawnableMonsterList.add(new SpawnListEntry(EntityHellhound.class, 20, 1, 4));

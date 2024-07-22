@@ -51,9 +51,9 @@ public class FoodStatsMixin implements ITFFoodStats {
 
     @Inject(method = "addFoodValue", at = @At("HEAD"))
     private void inject(Item item, CallbackInfo ci) {
-        this.itf$AddWater(((ITFItem) item).getFoodWater());
+        this.itf$AddWater(((ITFItem) item).itf$GetFoodWater());
         if (ITFConfig.TagTemperature.getBooleanValue()) {
-            int temperature = ((ITFItem) item).getFoodTemperature();
+            int temperature = ((ITFItem) item).itf$GetFoodTemperature();
             if (temperature > 0) {
                 player.addPotionEffect(new PotionEffect(PotionExtend.warm.id, 6000, temperature - 1));
                 if (player.itf$GetTemperatureManager().feelsCold()) {

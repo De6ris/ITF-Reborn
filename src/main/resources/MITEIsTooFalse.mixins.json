@@ -118,7 +118,6 @@
     "util.SoundsMITEMixin",
     "world.BiomeDecoratorMixin",
     "world.ChunkProviderGenerateMixin",
-    "world.GenLayerBiomeMixin",
     "world.GenLayerHillsMixin",
     "world.MapGenNetherBridgeMixin",
     "world.SpawnerAnimalsMixin",

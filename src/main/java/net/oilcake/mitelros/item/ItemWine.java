@@ -14,7 +14,7 @@ public class ItemWine extends Item {
         setMaxStackSize(1);
         setCraftingDifficultyAsComponent(512.0F);
         setCreativeTab(CreativeTabs.tabMisc);
-        ((ITFItem) this).setFoodWater(2);
+        ((ITFItem) this).itf$SetFoodWater(2);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ItemWine extends Item {
             ((ITFPlayer) player).itf$GetDrunkManager().setHasdrunked(true);
             player.addPotionEffect(new PotionEffect(Potion.confusion.id, 400, 0));
             player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 2560, 0));
-            ((ITFPlayer) player).itf$AddWater(((ITFItem) this).getFoodWater());
+            ((ITFPlayer) player).itf$AddWater(((ITFItem) this).itf$GetFoodWater());
         }
         super.onItemUseFinish(item_stack, world, player);
     }

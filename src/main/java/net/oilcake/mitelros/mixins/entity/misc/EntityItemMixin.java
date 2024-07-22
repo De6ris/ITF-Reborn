@@ -16,6 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.Optional;
+
 @Mixin(EntityItem.class)
 public abstract class EntityItemMixin extends Entity {
 
@@ -72,16 +74,18 @@ public abstract class EntityItemMixin extends Entity {
 
     @WrapOperation(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemStack;canDouseFire()Z"))
     private boolean protectWaterBowl(ItemStack instance, Operation<Boolean> original) {
-        if (FireCookHandler.getCookResult(instance) != null || FireCookHandler.isCookResult(instance)) return false;
+        FireCookHandler fireCookHandler = FireCookHandler.getInstance();
+        if (fireCookHandler.getCookResult(instance).isPresent() || fireCookHandler.isCookResult(instance)) return false;
         return original.call(instance);
     }
 
     @Inject(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityDamageResult;startTrackingHealth(F)V", ordinal = 1), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
     private void itfCookItemEntity(Damage damage, CallbackInfoReturnable<EntityDamageResult> cir, EntityDamageResult result) {
         ItemStack item_stack = this.getEntityItem();
-        ItemStack cooked_item_stack = FireCookHandler.getCookResult(item_stack);
-        if (damage.isFireDamage() && (cooked_item_stack != null || FireCookHandler.isCookResult(item_stack))) {
-            if (cooked_item_stack != null) {
+        FireCookHandler fireCookHandler = FireCookHandler.getInstance();
+        Optional<ItemStack> cookResult = fireCookHandler.getCookResult(item_stack);
+        if (damage.isFireDamage() && (cookResult.isPresent() || fireCookHandler.isCookResult(item_stack))) {
+            if (cookResult.isPresent()) {
                 int x = this.getBlockPosX();
                 int y = this.getBlockPosY();
                 int z = this.getBlockPosZ();
@@ -95,12 +99,12 @@ public abstract class EntityItemMixin extends Entity {
             }
             this.cooking_progress += damage.getAmount() * 3.0f;
             if (this.cooking_progress >= 100.0f) {
-                if (cooked_item_stack == null) {
+                if (cookResult.isEmpty()) {
                     this.setDead();
                     cir.setReturnValue(result.setEntityWasDestroyed());
                     return;
                 }
-                this.setEntityItemStack(cooked_item_stack);
+                this.setEntityItemStack(cookResult.get());
             }
             cir.setReturnValue(result.setEntityWasAffected());
         }

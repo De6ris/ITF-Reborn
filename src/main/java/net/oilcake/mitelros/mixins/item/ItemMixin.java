@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Optional;
 
 @Mixin(Item.class)
 public abstract class ItemMixin implements ITFItem {
@@ -84,38 +85,35 @@ public abstract class ItemMixin implements ITFItem {
     @Inject(method = "addInformation", at = @At("TAIL"))
     private void extraInfo(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
         if (extended_info) {
-            String string = ((ITFItem) this).getExtraInfo();
-            if (string != null) {
-                info.add(EnumChatFormatting.LIGHT_GRAY + string);
-            }
+            ((ITFItem) this).itf$GetExtraInfo().ifPresent(string -> info.add(EnumChatFormatting.LIGHT_GRAY + string));
         }
     }
 
-    public int getFoodWater() {
+    public int itf$GetFoodWater() {
         return this.foodWater;
     }
 
-    public void setFoodWater(int water) {
+    public void itf$SetFoodWater(int water) {
         this.foodWater = water;
     }
 
     @Override
-    public int getFoodTemperature() {
+    public int itf$GetFoodTemperature() {
         return this.foodTemperature;
     }
 
     @Override
-    public void setFoodTemperature(int temperature) {
+    public void itf$SetFoodTemperature(int temperature) {
         this.foodTemperature = temperature;
     }
 
     @Override
-    public String getExtraInfo() {
-        return extraInfo;
+    public Optional<String> itf$GetExtraInfo() {
+        return extraInfo.describeConstable();
     }
 
     @Override
-    public void setExtraInfo(String extraInfo) {
+    public void itf$SetExtraInfo(String extraInfo) {
         this.extraInfo = extraInfo;
     }
 
