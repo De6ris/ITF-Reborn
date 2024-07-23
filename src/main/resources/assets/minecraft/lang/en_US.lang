@@ -67,8 +67,6 @@ item.tooltip.water.add=Water+%d
 item.tooltip.water.minus=Water%d
 item.tooltip.water.chance=%d%%Water+1
 item.tooltip.reach.add=Reach+%d
-item.tooltip.temperature.add=Warm+%d
-item.tooltip.temperature.minus=Cool+%d
 
 item.armor/nickel_helmet.name=Nickel Helmet
 item.armor/nickel_chestplate.name=Nickel Chestplate
@@ -101,8 +99,6 @@ enchantment.vanishing=Curse Of Vanishing
 enchantment.melting=Melting
 enchantment.absorb=Absorb
 enchantment.destroying=Destroying
-enchantment.temperature.frost_immunity=Frost Immunity
-enchantment.temperature.heat_immunity=Heat Immunity
 enchantment.infinity=Infinity
 enchantment.arrogance=Curse Of Arrogance
 enchantment.sweeping=Sweeping

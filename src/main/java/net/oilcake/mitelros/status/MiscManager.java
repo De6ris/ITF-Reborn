@@ -5,7 +5,6 @@ import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
-import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.item.totem.ItemTotem;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
@@ -56,8 +55,6 @@ public class MiscManager {
     }
 
     public float calculateITFStv(float str_vs_block) {
-        if (player.isPotionActive(PotionExtend.freeze))
-            str_vs_block *= 1.0F - (player.getActivePotionEffect(PotionExtend.freeze).getAmplifier() + 1) * 0.5F;
         if (ITFConfig.FinalChallenge.getBooleanValue())
             str_vs_block *= 1.0F - Constant.calculateCurrentDifficulty() / 100.0F;
         ItemStack held_item = player.getHeldItemStack();

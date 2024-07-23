@@ -2,7 +2,6 @@ package net.oilcake.mitelros.command;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.config.ITFConfig;
 
 public class CommandStatus extends CommandBase {
     @Override
@@ -33,10 +32,8 @@ public class CommandStatus extends CommandBase {
         }
         String stringBuilder = "胰岛素抗性: " + player.getInsulinResistance() +
                 ", 蛋白质: " + player.getProtein() +
-                ", 植物营养素: " + player.getPhytonutrients();
-        if (ITFConfig.TagTemperature.getBooleanValue()) {
-            stringBuilder += ", 体温: " + String.format("%.2f", ((ITFPlayer) player).itf$GetTemperatureManager().getBodyTemperature());
-        }
+                ", 植物营养素: " + player.getPhytonutrients() +
+                ", 水分: " + ((ITFPlayer) player).itf$GetWater();
         iCommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(stringBuilder));
     }
 }

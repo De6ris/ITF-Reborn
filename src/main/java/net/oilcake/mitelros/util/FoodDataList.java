@@ -32,32 +32,6 @@ public class FoodDataList {
         return 0;
     }
 
-    public static int foodTemperature(Material material) {
-        if (material == Material.fruit) return -1;
-        if (material == Materials.ice_sucker || material == Materials.melon_ice) return -2;
-        if (material == Materials.chocolate_smoothie) return -3;
-        return 0;
-    }
-
-    public static int bowlFoodTemperature(Material material) {
-        if (material == (Material.water) || material == (Materials.dangerous_water)
-                || material == (Materials.suspicious_water) || material == (Material.milk)
-                || material == (Materials.lemonade)) {
-            return -1;
-        } else if (material == (Materials.ice_cream) || material == (Materials.sorbet)) {
-            return -2;
-        } else if (material == (Materials.porkchop_stew) || material == (Materials.lampchop_stew)
-                || material == (Material.beef_stew) || material == (Material.chicken_soup)
-                || material == (Materials.beetroot_soup) || material == (Material.vegetable_soup)
-                || material == (Materials.fish_soup) || material == (Material.mushroom_stew)
-                || material == (Material.porridge) || material == (Materials.cereal)) {
-            return 3;
-        } else if (material == (Materials.hot_water) || material == (Material.cream_of_mushroom_soup) || material == (Material.cream_of_vegetable_soup)) {
-            return 2;
-        }
-        return 0;
-    }
-
     public static void onWaterDrunk(Item item, EntityPlayer player) {
         if (item.hasMaterial(Materials.dangerous_water)) {
             double rand = Math.random();
@@ -70,8 +44,6 @@ public class FoodDataList {
             if (rand > 0.8D)
                 player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
             player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
-        } else {
-            System.out.println("no suspicious water?");
         }
     }
 
@@ -91,9 +63,6 @@ public class FoodDataList {
         if (item_stack.getItem() instanceof ItemMeat meat) {
             if (meat.is_cooked) {
                 player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
-                if (ITFConfig.TagTemperature.getBooleanValue()) {
-                    player.addPotionEffect(new PotionEffect(PotionExtend.warm.id, 3000, 0));
-                }
             } else {
                 if (ITFConfig.TagDigest.getBooleanValue()) return;
                 if (rand.nextInt(4) == 0) {

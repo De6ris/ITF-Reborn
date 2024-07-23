@@ -6,11 +6,9 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
-import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.FoodDataList;
-import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -38,8 +36,6 @@ public abstract class ItemMixin implements ITFItem {
 
     @Unique
     private int foodWater;
-    @Unique
-    private int foodTemperature;
 
     @Unique
     private String extraInfo;
@@ -70,16 +66,6 @@ public abstract class ItemMixin implements ITFItem {
         } else if (this.foodWater < 0) {
             info.add(EnumChatFormatting.YELLOW + Translator.getFormatted("item.tooltip.water.minus", this.foodWater));
         }
-        if (ITFConfig.TagTemperature.getBooleanValue()) {
-            if (ReflectHelper.dyCast(this) instanceof ItemMeat meat && meat.is_cooked) {
-                info.add(EnumChatFormatting.GOLD + Translator.getFormatted("item.tooltip.temperature.add", 1));
-            }
-            if (this.foodTemperature > 0) {
-                info.add(EnumChatFormatting.GOLD + Translator.getFormatted("item.tooltip.temperature.add", this.foodTemperature));
-            } else if (this.foodTemperature < 0) {
-                info.add(EnumChatFormatting.GREEN + Translator.getFormatted("item.tooltip.temperature.minus", -this.foodTemperature));
-            }
-        }
     }
 
     @Inject(method = "addInformation", at = @At("TAIL"))
@@ -98,18 +84,8 @@ public abstract class ItemMixin implements ITFItem {
     }
 
     @Override
-    public int itf$GetFoodTemperature() {
-        return this.foodTemperature;
-    }
-
-    @Override
-    public void itf$SetFoodTemperature(int temperature) {
-        this.foodTemperature = temperature;
-    }
-
-    @Override
     public Optional<String> itf$GetExtraInfo() {
-        return extraInfo.describeConstable();
+        return Optional.ofNullable(this.extraInfo);
     }
 
     @Override

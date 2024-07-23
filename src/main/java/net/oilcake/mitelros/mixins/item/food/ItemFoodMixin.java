@@ -16,10 +16,6 @@ public class ItemFoodMixin extends Item {
         if (water != 0) {
             ((ITFItem) this).itf$SetFoodWater(water);
         }
-        int temperature = FoodDataList.foodTemperature(material);
-        if (temperature != 0) {
-            ((ITFItem) this).itf$SetFoodTemperature(temperature);
-        }
     }
 
     @Inject(method = "onItemUseFinish", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;addFoodValue(Lnet/minecraft/Item;)V"))

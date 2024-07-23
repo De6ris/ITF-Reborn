@@ -3,7 +3,6 @@ package net.oilcake.mitelros.command;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.config.ITFConfig;
 
 import java.util.List;
 
@@ -24,12 +23,7 @@ public class CommandSetStatus extends CommandBase {
 
     @Override
     public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr) {
-        String[] candidates;
-        if (ITFConfig.TagTemperature.getBooleanValue()) {
-            candidates = new String[]{"insulin", "protein", "phytonutrients", "water", "temperature"};
-        } else {
-            candidates = new String[]{"insulin", "protein", "phytonutrients", "water"};
-        }
+        String[] candidates = new String[]{"insulin", "protein", "phytonutrients", "water"};
         return (par2ArrayOfStr.length == 1) ? getListOfStringsMatchingLastWord(par2ArrayOfStr, candidates) : null;
     }
 
@@ -54,15 +48,7 @@ public class CommandSetStatus extends CommandBase {
                 ((ITFFoodStats) player.getFoodStats()).itf$SetSatiationWater(parseInt(iCommandListener, strings[1]), true);
                 iCommandListener.sendChatToPlayer(ChatMessageComponent.createFromText("水分值现在为" + ((ITFPlayer) player).itf$GetWater()).setColor(EnumChatFormatting.WHITE));
             }
-            case "temperature" -> {
-                if (ITFConfig.TagTemperature.getBooleanValue()) {
-                    double temp = parseDouble(iCommandListener, strings[1]);
-                    ((ITFPlayer) player).itf$GetTemperatureManager().setBodyTemperature(temp);
-                    iCommandListener.sendChatToPlayer(ChatMessageComponent.createFromText("温度现在为" + temp).setColor(EnumChatFormatting.WHITE));
-                } else {
-                    throw new WrongUsageException("commands.setStatus.usage");
-                }
-            }
+            default -> throw new WrongUsageException("commands.setStatus.usage");
         }
     }
 

@@ -2,29 +2,10 @@ package net.oilcake.mitelros.util;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
-import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.status.TemperatureManager;
-import org.lwjgl.opengl.GL11;
 
 public class GuiInGameDrawer {
     public static final ResourceLocation icons_itf = new ResourceLocation("textures/gui/itf_icons.png");
-
-    public static void drawTemperatureBar(Gui gui, Minecraft mc, int var12, int var13) {
-        int var26 = var12 - 303;
-        int var25 = var13 + 24 + ITFConfig.TemperatureBarYOffset.getIntegerValue();
-        GL11.glPushMatrix();
-        GL11.glScalef(0.6F, 1.0F, 1.0F);
-        mc.getTextureManager().bindTexture(icons_itf);
-        gui.drawTexturedModalRect(var26, var25, 0, 106, 182, 6);
-        double temperature = ((ITFPlayer) mc.thePlayer).itf$GetTemperatureManager().getBodyTemperature();
-        int length = (int) (91.0D * (((temperature - TemperatureManager.normalTemperature) * (temperature - TemperatureManager.normalTemperature) * (temperature > TemperatureManager.normalTemperature ? 1 : -1) / 9.0D) + 1.0D));
-        if (length > 182) length = 182;
-        if (length < 0) length = 1;
-        gui.drawTexturedModalRect(var26, var25, 0, 118, length, 6);
-        GL11.glPopMatrix();
-    }
 
     public static void drawWater(Gui gui, Minecraft mc, int par1, int par2) {
         int var12 = par1 / 2 + 91;

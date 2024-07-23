@@ -1,6 +1,5 @@
 package net.oilcake.mitelros.util;
 
-import net.minecraft.Block;
 import net.minecraft.BlockLog;
 import net.minecraft.Item;
 import net.minecraft.ItemStack;
@@ -20,7 +19,8 @@ public class FireCookHandler {
     }
 
     public Optional<ItemStack> getCookResult(ItemStack input) {
-        if (isBlockLog(input)) {
+        Item item = input.getItem();
+        if (item.isBlock() && item.getAsItemBlock().getBlock() instanceof BlockLog) {
             return Optional.of(new ItemStack(Item.coal, input.stackSize, 1));
         }
 //        else if (input.itemID == Item.bowlWater.itemID) {
@@ -29,9 +29,5 @@ public class FireCookHandler {
 //            return new ItemStack(Items.clayBowlHotWater, input.stackSize);
 //        }
         return Optional.empty();
-    }
-
-    private static boolean isBlockLog(ItemStack input) {
-        return input.itemID < 4096 && Block.blocksList[input.itemID] instanceof BlockLog;
     }
 }

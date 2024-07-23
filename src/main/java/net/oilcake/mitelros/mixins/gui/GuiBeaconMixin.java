@@ -16,6 +16,6 @@ public class GuiBeaconMixin {
 
     @ModifyExpressionValue(method = "updateScreen", at = @At(value = "FIELD", target = "Lnet/minecraft/TileEntityBeacon;effectsList:[[Lnet/minecraft/Potion;"))
     private Potion[][] itfEffectList(Potion[][] original) {
-        return ((ITFTileEntityBeacon) this.beacon).getIsAdvanced() ? ((ITFTileEntityBeacon) this.beacon).getITFEffectList() : original;
+        return ((ITFTileEntityBeacon) this.beacon).itf$GetIsAdvanced() ? ((ITFTileEntityBeacon) this.beacon).itf$GetITFEffectList() : original;
     }
 }

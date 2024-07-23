@@ -31,7 +31,7 @@ public class S2CEnchantReserverInfo extends Packet {
     }
 
     public int getPacketSize() {
-        return 2;
+        return 4;
     }
 
     public void processPacket(NetHandler var1) {

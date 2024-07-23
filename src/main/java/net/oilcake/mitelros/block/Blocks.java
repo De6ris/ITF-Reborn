@@ -202,7 +202,7 @@ public class Blocks {
     public static void shapelessRecipe(RecipeRegistryEvent register) {
         register.registerShapelessRecipe(new ItemStack(Items.glowberries, 1), true, new ItemStack(flowerextend, 1, 0));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 7), true, new ItemStack(flowerextend, 1, 1));
-        register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 4), true, new ItemStack(flowerextend, 1, 2));
+//        register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 4), true, new ItemStack(flowerextend, 1, 2));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 7), true, new ItemStack(flowerextend, 1, 3));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 9), true, new ItemStack(flowerextend, 1, 4));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 7), true, new ItemStack(flowerextend, 1, 5));

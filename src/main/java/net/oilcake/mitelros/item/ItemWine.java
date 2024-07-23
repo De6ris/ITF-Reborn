@@ -3,7 +3,6 @@ package net.oilcake.mitelros.item;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 
 import java.util.List;
@@ -20,9 +19,6 @@ public class ItemWine extends Item {
     @Override
     public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
         if (player.onServer()) {
-            if (ITFConfig.TagTemperature.getBooleanValue()) {
-                ((ITFPlayer) player).itf$GetTemperatureManager().addFreezingCoolDown(-6000);
-            }
             ((ITFPlayer) player).itf$GetDrunkManager().setHasdrunked(true);
             player.addPotionEffect(new PotionEffect(Potion.confusion.id, 400, 0));
             player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 2560, 0));

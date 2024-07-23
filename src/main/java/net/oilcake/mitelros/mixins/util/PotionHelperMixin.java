@@ -27,9 +27,9 @@ public class PotionHelperMixin {
         potionRequirements.put(Potion.resistance.getId(), "0 & 1 & 2 & !3 & 2+6");
         potionRequirements.put(Potion.wither.getId(), "0 & !1 & 2 & 3 & 2+6");
         potionRequirements.put(PotionExtend.stretch.getId(), "8 & 9 & 10 & 11 & 8+6");
-        potionRequirements.put(PotionExtend.frostResistance.getId(), "8 & 9 & 10 & !11 & 8+6");
+//        potionRequirements.put(PotionExtend.frostResistance.getId(), "8 & 9 & 10 & !11 & 8+6");
         potionAmplifiers.put(Potion.wither.getId(), "5");
         potionAmplifiers.put(PotionExtend.stretch.getId(), "5");
-        potionAmplifiers.put(PotionExtend.frostResistance.getId(), "5");
+//        potionAmplifiers.put(PotionExtend.frostResistance.getId(), "5");
     }
 }

@@ -493,7 +493,7 @@ public class Items extends Item {
 
     public static final Item frostRod = new ItemStandard(getNextItemID(), Materials.frost, "frost_rod").setReachBonus(0.5F);
 
-    public static final Item frostPowder = new ItemBrewingMisc(getNextItemID(), Materials.frost, "frost_powder").setPotionEffectExtend("+8+9+10-11&4-4+13");
+    public static final Item frostPowder = new ItemBrewingMisc(getNextItemID(), Materials.frost, "frost_powder");//.setPotionEffectExtend("+8+9+10-11&4-4+13");
 
     public static final ItemBowlClay clayBowlHotWater = new ItemBowlClay(getNextItemID(), Materials.hot_water, "bowl_hot_water");
 

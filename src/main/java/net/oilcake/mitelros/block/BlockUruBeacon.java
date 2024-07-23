@@ -15,6 +15,6 @@ public class BlockUruBeacon extends BlockBeacon {
 
     @Override
     public TileEntity createNewTileEntity(World par1World) {
-        return ((ITFTileEntityBeacon) (new TileEntityBeacon())).setIsAdvanced(true);
+        return ((ITFTileEntityBeacon) (new TileEntityBeacon())).itf$SetIsAdvanced(true);
     }
 }

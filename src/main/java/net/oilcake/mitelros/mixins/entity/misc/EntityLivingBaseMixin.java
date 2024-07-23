@@ -16,19 +16,6 @@ public abstract class EntityLivingBaseMixin extends Entity {
         super(par1World);
     }
 
-    @ModifyReturnValue(method = "getArmSwingAnimationEnd", at = @At("RETURN"))
-    private int modify(int original) {
-        if (original != 6) return original;
-        if (isPotionActive(PotionExtend.freeze))
-            return (6 + (1 + getActivePotionEffect(PotionExtend.freeze).getAmplifier()) * 4);
-        return 6;
-    }
-
-    @Shadow
-    public boolean isPotionActive(Potion par1Potion) {
-        return false;
-    }
-
     @Shadow
     public PotionEffect getActivePotionEffect(Potion par1Potion) {
         return null;
@@ -37,11 +24,9 @@ public abstract class EntityLivingBaseMixin extends Entity {
     @ModifyReturnValue(method = "getSpeedBoostVsSlowDown", at = @At("RETURN"))
     private float itfEffects(float original) {
         if (original < 0) original /= (1.0F - this.getResistanceToParalysis());
-        PotionEffect freeze_effect = getActivePotionEffect(PotionExtend.freeze);
         PotionEffect stunning_effect = this.getActivePotionEffect(PotionExtend.stunning);
-        float freeze_amount = (freeze_effect == null) ? 0.0F : ((freeze_effect.getAmplifier() + 1) * -0.24F);
         float stunning_amount = stunning_effect == null ? 0.0F : (float) (stunning_effect.getAmplifier() + 99) * -0.5F;
-        double overall_speed_modifier = original + freeze_amount + stunning_amount;
+        double overall_speed_modifier = original + stunning_amount;
         if (overall_speed_modifier < 0.0D)
             overall_speed_modifier *= (1.0F - this.getResistanceToParalysis());
         return (float) overall_speed_modifier;
@@ -61,5 +46,4 @@ public abstract class EntityLivingBaseMixin extends Entity {
 
     @Shadow
     public int deathTime;
-
 }

@@ -2,8 +2,6 @@ package net.oilcake.mitelros.mixins.item;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.WontFix;
-import net.oilcake.mitelros.config.ITFConfig;
-import net.oilcake.mitelros.enchantment.EnchantmentTemperature;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -88,7 +86,7 @@ public abstract class ItemEnchantedBookMixin extends Item {
         HashMap<Integer, EnchantmentData> map = new HashMap<>();
         for (int i = 0; i < Enchantment.enchantmentsList.length; ++i) {
             Enchantment enchantment = Enchantment.get(i);
-            if (enchantment != null && (ITFConfig.TagTemperature.getBooleanValue() || !(enchantment instanceof EnchantmentTemperature))) {
+            if (enchantment != null) {
                 if (enchantment.hasLevels()) {
                     for (int level = enchantment.getNumLevels(); level > 0; --level) {
                         if (enchantment.getMinEnchantmentLevelsCost(level) <= enchantment_levels) {

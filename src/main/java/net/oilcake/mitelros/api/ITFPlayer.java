@@ -14,8 +14,6 @@ public interface ITFPlayer {
 
     MiscManager itf_GetMiscManager();
 
-    TemperatureManager itf$GetTemperatureManager();
-
     int itf$GetWater();
 
     int itf$AddWater(int water);

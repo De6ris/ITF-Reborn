@@ -4,9 +4,9 @@ import net.minecraft.Potion;
 import net.minecraft.TileEntityBeacon;
 
 public interface ITFTileEntityBeacon {
-    TileEntityBeacon setIsAdvanced(boolean isAdvanced);
+    TileEntityBeacon itf$SetIsAdvanced(boolean isAdvanced);
 
-    boolean getIsAdvanced();
+    boolean itf$GetIsAdvanced();
 
-    Potion[][] getITFEffectList();
+    Potion[][] itf$GetITFEffectList();
 }

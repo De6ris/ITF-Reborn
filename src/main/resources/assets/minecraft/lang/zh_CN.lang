@@ -67,8 +67,6 @@ item.tooltip.water.add=水分+%d
 item.tooltip.water.minus=水分%d
 item.tooltip.water.chance=%d%%水分+1
 item.tooltip.reach.add=触及距离+%d
-item.tooltip.temperature.add=温暖+%d
-item.tooltip.temperature.minus=凉爽+%d
 
 item.armor/nickel_helmet.name=镍头盔
 item.armor/nickel_chestplate.name=镍胸甲
@@ -101,8 +99,6 @@ enchantment.vanishing=消失诅咒
 enchantment.melting=熔毁
 enchantment.absorb=汲取
 enchantment.destroying=毁灭
-enchantment.temperature.frost_immunity=寒霜免疫
-enchantment.temperature.heat_immunity=炎热免疫
 enchantment.infinity=无限
 enchantment.arrogance=傲慢诅咒
 enchantment.sweeping=横扫

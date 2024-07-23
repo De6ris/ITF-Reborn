@@ -141,13 +141,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @Unique
     private WaterManager waterManager = new WaterManager(ReflectHelper.dyCast(this));
 
-    @Unique
-    private TemperatureManager temperatureManager = new TemperatureManager(ReflectHelper.dyCast(this));
-
-    public TemperatureManager itf$GetTemperatureManager() {
-        return temperatureManager;
-    }
-
     @Inject(method = "onLivingUpdate()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;onLivingUpdate()V", shift = At.Shift.AFTER))
     private void injectTick(CallbackInfo ci) {
         if (!this.worldObj.isRemote) {
@@ -156,9 +149,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
             this.huntManager.update();
             this.waterManager.update();
             this.drunkManager.update1();
-            if (ITFConfig.TagTemperature.getBooleanValue()) {
-                this.temperatureManager.update();
-            }
             this.drunkManager.update2();
         }
         this.feastManager.achievementCheck();
@@ -197,11 +187,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         this.huntManager.hunt_cap = par1NBTTagCompound.getBoolean("UsedTotemOfHunt");
         this.huntManager.hunt_counter = par1NBTTagCompound.getInteger("TotemDyingCounter");
         this.newPlayerManager.setNew(par1NBTTagCompound.getBoolean("isNewPlayer"));
-        this.temperatureManager.freezingCoolDown = par1NBTTagCompound.getInteger("FreezingCooldown");
-        this.temperatureManager.freezingWarning = par1NBTTagCompound.getInteger("FreezingWarning");
-        this.temperatureManager.heatResistance = par1NBTTagCompound.getInteger("HeatResistance");
-        this.temperatureManager.heatWarning = par1NBTTagCompound.getInteger("HeatWarning");
-        this.temperatureManager.setBodyTemperature(par1NBTTagCompound.getFloat("BodyTemperature"));
         this.drunkManager.setDrunk_duration(par1NBTTagCompound.getInteger("DrunkDuration"));
         this.miscManager.setKnowledgeTotemCounter(par1NBTTagCompound.getByte("KnowledgeTotemUsed"));
     }
@@ -212,11 +197,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         par1NBTTagCompound.setBoolean("UsedTotemOfHunt", this.huntManager.hunt_cap);
         par1NBTTagCompound.setInteger("TotemDyingCounter", this.huntManager.hunt_counter);
         par1NBTTagCompound.setBoolean("isNewPlayer", this.newPlayerManager.getNew());
-        par1NBTTagCompound.setInteger("FreezingCooldown", this.temperatureManager.freezingCoolDown);
-        par1NBTTagCompound.setInteger("FreezingWarning", this.temperatureManager.freezingWarning);
-        par1NBTTagCompound.setInteger("HeatResistance", this.temperatureManager.heatResistance);
-        par1NBTTagCompound.setInteger("HeatWarning", this.temperatureManager.heatWarning);
-        par1NBTTagCompound.setFloat("BodyTemperature", ((float) this.temperatureManager.getBodyTemperature()));
         par1NBTTagCompound.setInteger("DrunkDuration", this.drunkManager.getDrunk_duration());
         par1NBTTagCompound.setByte("KnowledgeTotemUsed", this.miscManager.getKnowledgeTotemCounter());
     }

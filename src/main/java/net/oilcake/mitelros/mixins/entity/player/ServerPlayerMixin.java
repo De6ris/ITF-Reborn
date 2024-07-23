@@ -34,8 +34,6 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
 
     @Unique
     private int last_water;
-    @Unique
-    private double last_temperature;
 
     @Shadow
     private int currentWindowId;
@@ -79,11 +77,9 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
             learnCurseEffect();
         }
         int water = this.itf$GetWater();
-        double temperature = this.itf$GetTemperatureManager().getBodyTemperature();
-        if (water != this.last_water || temperature != this.last_temperature) {
-            this.playerNetServerHandler.sendPacketToPlayer(new S2CUpdateITFStatus(water, temperature));
+        if (water != this.last_water) {
+            this.playerNetServerHandler.sendPacketToPlayer(new S2CUpdateITFStatus(water));
             this.last_water = water;
-            this.last_temperature = temperature;
         }
     }
 
