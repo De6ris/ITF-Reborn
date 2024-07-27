@@ -15,7 +15,7 @@ public class ItemFlintAndSteelMixin extends Item {
     private void activateFurnace(EntityPlayer player, float partial_tick, boolean ctrl_is_down, CallbackInfoReturnable<Boolean> cir, @Local RaycastCollision rc) {
         if (rc.getBlockHit() instanceof BlockFurnace) {
             TileEntityFurnace furnace = (TileEntityFurnace) rc.world.getBlockTileEntity(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
-            ((ITFFurnace) furnace).activateFurnace();
+            ((ITFFurnace) furnace).itf$ActivateFurnace();
             if (player.onClient()) {
                 player.swingArm();
             } else {

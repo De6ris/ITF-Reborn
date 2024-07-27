@@ -50,7 +50,7 @@ public class ITFLootTables {
             new WeightedRandomChestContent(Items.totemOfFlattening.itemID, 0, 1, 1, 1)
     };
 
-    public static final Supplier<WeightedRandomChestContent[]> fortressExtra = () -> new WeightedRandomChestContent[] {
+    public static final Supplier<WeightedRandomChestContent[]> fortressExtra = () -> new WeightedRandomChestContent[]{
             new WeightedRandomChestContent(Items.tungstenIngot.itemID, 0, 1, 1, 5),
             new WeightedRandomChestContent(Items.tungstenNugget.itemID, 0, 3, 7, 10),
             new WeightedRandomChestContent(Items.tungstenSword.itemID, 0, 1, 1, 5),
@@ -66,6 +66,19 @@ public class ITFLootTables {
             new WeightedRandomChestContent(Items.ignitionGold.itemID, 0, 1, 1, 18),
             new WeightedRandomChestContent(Items.ignitionTungsten.itemID, 0, 1, 1, 2),
             new WeightedRandomChestContent(Items.totemOfDestroy.itemID, 0, 1, 1, 5)
+    };
 
+    public static final Supplier<WeightedRandomChestContent[]> dungeonOverworldExtra = () -> new WeightedRandomChestContent[]{
+            new WeightedRandomChestContent(Items.beetroot.itemID, 0, 1, 1, 5),
+            new WeightedRandomChestContent(Items.morningStarCopper.itemID, 0, 1, 1, 1),
+            new WeightedRandomChestContent(Items.warHammerRustedIron.itemID, 0, 1, 1, 2),
+            new WeightedRandomChestContent(Items.morningStarRustedIron.itemID, 0, 1, 1, 2),
+            new WeightedRandomChestContent(Items.ignitionRustedIron.itemID, 0, 1, 1, 1)
+    };
+
+    public static final Supplier<WeightedRandomChestContent[]> dungeonUnderworldExtra = () -> new WeightedRandomChestContent[]{
+            new WeightedRandomChestContent(Items.ancientMetalArmorPiece.itemID, 0, 1, 2, 10),
+            new WeightedRandomChestContent(Items.morningStarAncientMetal.itemID, 0, 1, 1, 2),
+            new WeightedRandomChestContent(Items.ignitionAncientMetal.itemID, 0, 1, 1, 2)
     };
 }

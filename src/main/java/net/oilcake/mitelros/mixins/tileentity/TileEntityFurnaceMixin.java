@@ -27,11 +27,6 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
     protected abstract boolean canSmelt(int heat_level);
 
     @Shadow
-    public static int getHeatLevelRequired(int item_id) {
-        return 0;
-    }
-
-    @Shadow
     private ItemStack[] furnaceItemStacks = new ItemStack[3];
 
     @Shadow
@@ -71,31 +66,28 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
 
     @Unique
     private boolean checkSmelt(int heat_level) {
-        if (this.getInputItemStack().getItem() instanceof ItemFood && this.isBlastFurnace()) {
+        if (this.getInputItemStack().getItem() instanceof ItemFood && this.itf$IsBlastFurnace()) {
             return false;
         }
-        if (this.getInputItemStack().getItem() instanceof ItemArmor && !this.isBlastFurnace()) {
+        if (this.getInputItemStack().getItem() instanceof ItemArmor && !this.itf$IsBlastFurnace()) {
             return false;
         }
-        if (this.getInputItemStack().getItem() instanceof ItemTool && !this.isBlastFurnace()) {
+        if (this.getInputItemStack().getItem() instanceof ItemTool && !this.itf$IsBlastFurnace()) {
             return false;
         }
-        if (!(this.getInputItemStack().getItem() instanceof ItemFood) && this.isSmoker()) {
-            return false;
-        }
-        if (heat_level > getHeatLevelRequired((this.getInputItemStack().getItem()).itemID) + 1) {
+        if (!(this.getInputItemStack().getItem() instanceof ItemFood) && this.itf$IsSmoker()) {
             return false;
         }
         return true;
     }
 
     @Override
-    public boolean isBlastFurnace() {
+    public boolean itf$IsBlastFurnace() {
         return getFurnaceBlock() instanceof BlockBlastFurnace;
     }
 
     @Override
-    public boolean isSmoker() {
+    public boolean itf$IsSmoker() {
         return getFurnaceBlock() instanceof BlockSmoker;
     }
 
@@ -105,7 +97,7 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
     }
 
     @Override
-    public void activateFurnace() {
+    public void itf$ActivateFurnace() {
         this.activated = true;
     }
 
@@ -147,13 +139,13 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
                                 Item var3 = this.furnaceItemStacks[1].getItem().getContainerItem();
                                 this.furnaceItemStacks[1] = (var3 != null) ? new ItemStack(var3) : null;
                             }
-                            if (isBlastFurnace())
+                            if (itf$IsBlastFurnace())
                                 this.worldObj.playSoundEffect((this.xCoord + 0.5F), (this.yCoord + 0.5F), (this.zCoord + 0.5F), "imported.random.melting");
                         }
                     }
                 }
                 if (isBurning() && canSmelt(this.heat_level)) {
-                    activateFurnace();
+                    itf$ActivateFurnace();
                     int temp = 200;
                     int item_id = (getInputItemStack()).itemID;
                     int speed_bonus = 1;

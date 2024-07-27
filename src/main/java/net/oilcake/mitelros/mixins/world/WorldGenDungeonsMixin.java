@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
+import net.oilcake.mitelros.util.ITFLootTables;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -29,18 +30,8 @@ public abstract class WorldGenDungeonsMixin extends WorldGenerator {
 
     @Inject(method = "<clinit>", at = @At("TAIL"))
     private static void addITFLoot(CallbackInfo ci) {
-        field_111189_a = WeightedRandomChestContent.func_92080_a(field_111189_a,
-                new WeightedRandomChestContent(Items.beetroot.itemID, 0, 1, 1, 5),
-                new WeightedRandomChestContent(Items.morningStarCopper.itemID, 0, 1, 1, 1),
-                new WeightedRandomChestContent(Items.warHammerRustedIron.itemID, 0, 1, 1, 2),
-                new WeightedRandomChestContent(Items.morningStarRustedIron.itemID, 0, 1, 1, 2),
-                new WeightedRandomChestContent(Items.ignitionRustedIron.itemID, 0, 1, 1, 1)
-        );
-        chest_contents_for_underworld = WeightedRandomChestContent.func_92080_a(chest_contents_for_underworld,
-                new WeightedRandomChestContent(Items.ancientMetalArmorPiece.itemID, 0, 1, 2, 10),
-                new WeightedRandomChestContent(Items.morningStarAncientMetal.itemID, 0, 1, 1, 2),
-                new WeightedRandomChestContent(Items.ignitionAncientMetal.itemID, 0, 1, 1, 2)
-        );
+        field_111189_a = WeightedRandomChestContent.func_92080_a(field_111189_a, ITFLootTables.dungeonOverworldExtra.get());
+        chest_contents_for_underworld = WeightedRandomChestContent.func_92080_a(chest_contents_for_underworld, ITFLootTables.dungeonUnderworldExtra.get());
     }
 
     @ModifyExpressionValue(method = "generate", at = @At(value = "INVOKE", target = "Lnet/minecraft/WeightedRandomChestContent;func_92080_a([Lnet/minecraft/WeightedRandomChestContent;[Lnet/minecraft/WeightedRandomChestContent;)[Lnet/minecraft/WeightedRandomChestContent;"))
@@ -50,7 +41,7 @@ public abstract class WorldGenDungeonsMixin extends WorldGenerator {
 
     @Inject(method = "pickMobSpawner", at = @At("HEAD"), cancellable = true)
     private void pickMobSpawnerITF(World world, Random par1Random, int y, CallbackInfoReturnable<String> cir) {
-        if ((ITFConfig.TagMiracleDisaster.get())) {
+        if (ITFConfig.TagMiracleDisaster.getBooleanValue() && world.isOverworld()) {
             String mob = switch (par1Random.nextInt(7)) {
                 case 0 -> "Zombie";
                 case 1 -> "Ghoul";

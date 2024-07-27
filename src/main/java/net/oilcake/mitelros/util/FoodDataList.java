@@ -22,12 +22,12 @@ public class FoodDataList {
         return 0;
     }
 
-    public static int foodWater(int id, Material material) {// 135 carrot, 88 egg; it is called at init
+    public static int foodWater(int id, Material material) {// 135 carrot; it is called at init
         if (material == Material.fruit | id == 135 || material == Materials.ice_sucker || material == Materials.melon_ice || material == Materials.chocolate_smoothie)
             return ITFConfig.TagDryDilemma.getBooleanValue() ? 1 : 2;
         if (material == (Materials.glowberries) || material == Materials.peeledSugarcane || material == Materials.agave || material == Materials.mashedCactus)
             return 1;
-        if (material == Material.cheese || id == 88 || material == Material.bread || material == Material.desert)
+        if (material == Material.cheese || material == Material.bread || material == Material.desert)
             return -1;
         return 0;
     }
@@ -55,10 +55,6 @@ public class FoodDataList {
             player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
         if (rand.nextFloat() < chanceOfDecreaseWater(item_stack.itemID)) {
             player.itf$AddWater(-1);
-        }
-        if (item_stack.itemID == Item.egg.itemID) {
-            if (rand.nextDouble() > (ITFConfig.TagDryDilemma.getBooleanValue() ? 0.5D : 0.25D))
-                player.itf$AddWater(1);
         }
         if (item_stack.getItem() instanceof ItemMeat meat) {
             if (meat.is_cooked) {

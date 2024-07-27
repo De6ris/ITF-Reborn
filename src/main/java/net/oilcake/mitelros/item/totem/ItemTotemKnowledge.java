@@ -24,7 +24,7 @@ public class ItemTotemKnowledge extends ItemTotem {
             player.entityFX(EnumEntityFX.curse_effect_learned);
         }
         int xpToAdd = player.experience / 5;
-        player.addExperience(ITFConfig.TagTotemBlessing.getBooleanValue() ? xpToAdd : Math.min(xpToAdd, 30000));
+        player.addExperience(Math.min(xpToAdd, 30000));
         if (!ITFConfig.TagTotemBlessing.getBooleanValue()) {
             ((ITFPlayer) player).itf_GetMiscManager().addKnowledgeTotemCounter();
         }

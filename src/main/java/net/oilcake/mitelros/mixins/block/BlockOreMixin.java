@@ -22,16 +22,17 @@ public abstract class BlockOreMixin extends Block {
     }
 
     @WrapOperation(method = "dropBlockAsEntityItem", at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I"))
-    private int preventLapisLazuiDropping(Random instance, int i, Operation<Integer> original, @Local(argsOnly = true) BlockBreakInfo info) {
-        if (EnchantmentHelper.hasEnchantment(info.responsible_item_stack, Enchantments.enchantmentAbsorb))
+    private int preventLapisLazuiDroppingIfAbsorbed(Random instance, int i, Operation<Integer> original, @Local(argsOnly = true) BlockBreakInfo info) {
+        if (EnchantmentHelper.hasEnchantment(info.responsible_item_stack, Enchantments.enchantmentAbsorb)) {
             return -3;
+        }
         return original.call(instance, i);
     }
 
     @Inject(method = "dropBlockAsEntityItem", at = @At(value = "FIELD", target = "Lnet/minecraft/BlockOre;blockID:I", ordinal = 2))
     private void changeDrop1(BlockBreakInfo info, CallbackInfoReturnable<Integer> cir, @Local(ordinal = 0) LocalIntRef id_dropped, @Local(ordinal = 2) LocalIntRef quantity_dropped) {
         if (info.wasExploded()) {
-            if (this.vulnerableToExplosion()) {
+            if (this.isVulnerableToExplosion()) {
                 id_dropped.set(0);
             } else {
                 int pieceID = this.oreToPieceID(info.getMetadata());
@@ -40,27 +41,27 @@ public abstract class BlockOreMixin extends Block {
                     quantity_dropped.set(1 + info.world.rand.nextInt(2));
                 }
             }
+            return;
+        }
+        boolean hasAbsorb = EnchantmentHelper.hasEnchantment(info.responsible_item_stack, Enchantments.enchantmentAbsorb);
+        if (hasAbsorb && this.canAbsorb()) {
+            id_dropped.set(0);
+            if (this == Block.oreEmerald) {
+                info.getResponsiblePlayer().triggerAchievement(AchievementList.emeralds);
+            } else if (this == Block.oreDiamond) {
+                info.getResponsiblePlayer().triggerAchievement(AchievementList.diamonds);
+            }
         } else {
-            boolean hasAbsorb = EnchantmentHelper.hasEnchantment(info.responsible_item_stack, Enchantments.enchantmentAbsorb);
-            if (hasAbsorb && this.canAbsorb()) {
-                id_dropped.set(0);
-                if (this == Block.oreEmerald) {
-                    info.getResponsiblePlayer().triggerAchievement(AchievementList.emeralds);
-                } else if (this == Block.oreDiamond) {
-                    info.getResponsiblePlayer().triggerAchievement(AchievementList.diamonds);
-                }
-            } else {
-                int pieceID = this.oreToPieceID(info.getMetadata());
-                if (pieceID != 0) {
-                    id_dropped.set(pieceID);
-                    quantity_dropped.set(4 + info.world.rand.nextInt(4));
-                }
+            int pieceID = this.oreToPieceID(info.getMetadata());
+            if (pieceID != 0) {
+                id_dropped.set(pieceID);
+                quantity_dropped.set(4 + info.world.rand.nextInt(4));
             }
         }
     }
 
     @Unique
-    private boolean vulnerableToExplosion() {
+    private boolean isVulnerableToExplosion() {
         return this == Blocks.blockAzurite;
     }
 
@@ -73,6 +74,8 @@ public abstract class BlockOreMixin extends Block {
         if (this == Block.oreMithril) return Items.pieceMithril.itemID;
         if (this == Block.oreAdamantium) return Items.pieceAdamantium.itemID;
         if (this == Block.oreNetherQuartz) return Item.shardNetherQuartz.itemID;
+        if (this == Block.oreDiamond) return Item.shardDiamond.itemID;
+        if (this == Block.oreEmerald) return Item.shardEmerald.itemID;
         if (this == Blocks.oreNickel) return Items.pieceNickel.itemID;
         if (this == Blocks.oreTungsten) return Items.pieceTungsten.itemID;
         if (this == Blocks.oreUru) return Items.pieceUru.itemID;

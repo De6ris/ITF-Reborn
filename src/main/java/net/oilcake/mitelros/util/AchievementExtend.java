@@ -18,9 +18,6 @@ public class AchievementExtend {
 
     public static Achievement mashedCactus;
 
-    public static Achievement hypothermia;
-    public static Achievement hyperthermia;
-
     public static Achievement feast;
 
     public static Achievement SoundofUnder;
@@ -54,8 +51,6 @@ public class AchievementExtend {
         getWitherSkull = (new Achievement(getNextAchievementID(), "getWitherSkull", 4, 11, new ItemStack(Block.skull, 1, 1), AchievementList.portalToNether)).registerAchievement();
         getBeacon = (new Achievement(getNextAchievementID(), "getBeacon", 6, 11, Block.beacon, getWitherSkull)).setSpecial().registerAchievement();
         mashedCactus = (new Achievement(getNextAchievementID(), "mashedCactus", -3, -3, Items.glowberries, AchievementList.seeds)).registerAchievement();
-        hypothermia = (new Achievement(getNextAchievementID(), "Hypothermia", -4, 2, Block.ice, AchievementList.openInventory)).registerAchievement();
-        hyperthermia = (new Achievement(getNextAchievementID(), "Hyperthermia", -4, 3, Block.ice, AchievementList.openInventory)).registerAchievement();
         feast = (new Achievement(getNextAchievementID(), "Feast", 1, -3, Item.bowlBeefStew, AchievementList.fineDining)).setSpecial().registerAchievement();
         SoundofUnder = (new Achievement(getNextAchievementID(), "SoundofUnder", 6, 13, Item.recordUnderworld, AchievementList.portal)).setSpecial().registerAchievement();
         nochoice = (new Achievement(getNextAchievementID(), "NoChoice", 0, 11, Items.experimentalPotion, AchievementList.portal)).registerAchievement();
