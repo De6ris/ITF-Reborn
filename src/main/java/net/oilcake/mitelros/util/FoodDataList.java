@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class FoodDataList {
     public static int bowlFoodWater(Material material) {
-        if (material == (Material.water) || material == (Material.cereal) || material == (Material.ice_cream) || material == (Material.milk) || material == Materials.hot_water) {
+        if (material == (Material.water) || material == (Material.cereal) || material == (Material.ice_cream) || material == (Material.milk)) {
             return 2;
         } else if (material == (Materials.dangerous_water) || material == (Materials.suspicious_water)) {
             return 1;

@@ -55,7 +55,6 @@ public class Materials extends Material {
     public static final Material melon_ice;
     public static final Material chocolate_smoothie;
     public static final Material frost;
-    public static final Material hot_water;
 
     static {
         nickel = (Materials) (new Materials(EnumEquipmentMaterials.NICKEL)).setRequiresTool().setMetal(false).setMinHarvestLevel(3);
@@ -87,7 +86,6 @@ public class Materials extends Material {
         melon_ice = new MaterialFood("melon_ice");
         chocolate_smoothie = new MaterialFood("chocolate_smoothie");
         frost = new Material("frost");
-        hot_water = new MaterialLiquid("hot_water", MapColor.waterColor).setCanDouseFire().setDrinkable();
     }
 
     public Materials(EnumEquipmentMaterial enum_crafting_material) {
@@ -136,8 +134,6 @@ public class Materials extends Material {
                 return Items.bowlWaterSuspicious;
             if (contents == Materials.dangerous_water)
                 return Items.bowlWaterSwampland;
-            if (contents == Materials.hot_water)
-                return Items.bowlHotWater;
         }
         if (vessel_material == Material.hardened_clay) {
             if (contents == null)
@@ -176,8 +172,6 @@ public class Materials extends Material {
                 return Items.clayBowlWaterSuspicious;
             if (contents == Materials.dangerous_water)
                 return Items.clayBowlWaterSwampland;
-            if (contents == Materials.hot_water)
-                return Items.clayBowlHotWater;
         }
         return null;
     }

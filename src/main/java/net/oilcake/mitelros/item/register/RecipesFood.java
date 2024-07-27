@@ -52,32 +52,32 @@ public class RecipesFood extends Items {
     }
 
     public static void woodBowlFeastRecipes(RecipeRegistryEvent register) {
-        register.registerShapelessRecipe(new ItemStack(bowlBeetrootSoup, 1, 0), false, beetroot, beetroot, beetroot, beetroot, beetroot, beetroot, bowlHotWater);
-        register.registerShapelessRecipe(new ItemStack(bowlPorkchopStew, 1), true, bowlHotWater, Item.porkCooked, Item.carrot, Item.potato, Block.mushroomBrown);
-        register.registerShapelessRecipe(new ItemStack(bowlLampchopStew, 1), true, bowlHotWater, Item.lambchopCooked, Item.onion, Item.potato);
-        register.registerShapelessRecipe(new ItemStack(bowlSalmonSoup, 1), true, Item.fishLargeCooked, beetroot, Block.mushroomBrown, bowlHotWater);
+        register.registerShapelessRecipe(new ItemStack(bowlBeetrootSoup, 1, 0), false, beetroot, beetroot, beetroot, beetroot, beetroot, beetroot, bowlWater);
+        register.registerShapelessRecipe(new ItemStack(bowlPorkchopStew, 1), true, bowlWater, Item.porkCooked, Item.carrot, Item.potato, Block.mushroomBrown);
+        register.registerShapelessRecipe(new ItemStack(bowlLampchopStew, 1), true, bowlWater, Item.lambchopCooked, Item.onion, Item.potato);
+        register.registerShapelessRecipe(new ItemStack(bowlSalmonSoup, 1), true, Item.fishLargeCooked, beetroot, Block.mushroomBrown, bowlWater);
         register.registerShapelessRecipe(new ItemStack(bowlLemonade, 1), true, Item.sugar, lemon, Item.bowlWater);
     }
 
     public static void clayBowlFeastRecipes(RecipeRegistryEvent register) {
-        register.registerShapelessRecipe(new ItemStack(clayBowlBeefStew), false, Item.beefCooked, Block.mushroomBrown, Item.potato, clayBowlHotWater);
-        register.registerShapelessRecipe(new ItemStack(clayBowlChickenSoup), false, Item.chickenCooked, Item.carrot, Item.onion, clayBowlHotWater);
-        register.registerShapelessRecipe(new ItemStack(clayBowlVegetableSoup), false, Item.potato, Item.carrot, Item.onion, clayBowlHotWater);
+        register.registerShapelessRecipe(new ItemStack(clayBowlBeefStew), false, Item.beefCooked, Block.mushroomBrown, Item.potato, clayBowlWater);
+        register.registerShapelessRecipe(new ItemStack(clayBowlChickenSoup), false, Item.chickenCooked, Item.carrot, Item.onion, clayBowlWater);
+        register.registerShapelessRecipe(new ItemStack(clayBowlVegetableSoup), false, Item.potato, Item.carrot, Item.onion, clayBowlWater);
         register.registerShapelessRecipe(new ItemStack(clayBowlIceCream), false, Item.chocolate, clayBowlMilk, Item.snowball);
         register.registerShapelessRecipe(new ItemStack(clayBowlIceCream), false, new ItemStack(Item.dyePowder, 1, 3), Item.sugar, clayBowlMilk, Item.snowball);
         register.registerShapelessRecipe(new ItemStack(clayBowlSalad), false, Block.plantYellow, Block.plantYellow, Block.plantYellow, clayBowlEmpty);
         register.registerShapelessRecipe(new ItemStack(clayBowlCreamOfMushroomSoup), false, Block.mushroomBrown, Block.mushroomBrown, clayBowlMilk);
         register.registerShapelessRecipe(new ItemStack(clayBowlCreamOfVegetableSoup), false, Item.potato, Item.carrot, Item.onion, clayBowlMilk);
-        register.registerShapelessRecipe(new ItemStack(clayBowlPumpkinSoup), false, Block.pumpkin, clayBowlHotWater);
+        register.registerShapelessRecipe(new ItemStack(clayBowlPumpkinSoup), false, Block.pumpkin, clayBowlWater);
         register.registerShapelessRecipe(new ItemStack(clayBowlMashedPotato), false, Item.bakedPotato, Item.cheese, clayBowlMilk);
         register.registerShapelessRecipe(new ItemStack(clayBowlSorbet), false, Item.orange, Item.sugar, Item.snowball, clayBowlEmpty);
-        register.registerShapelessRecipe(new ItemStack(clayBowlPorridge), false, Item.seeds, Item.blueberries, Item.sugar, clayBowlHotWater);
+        register.registerShapelessRecipe(new ItemStack(clayBowlPorridge), false, Item.seeds, Item.blueberries, Item.sugar, clayBowlWater);
         register.registerShapelessRecipe(new ItemStack(clayBowlCereal), false, Item.wheat, Item.sugar, clayBowlMilk);
-        register.registerShapelessRecipe(new ItemStack(clayBowlMushroomStew), false, Block.mushroomBrown, Block.mushroomRed, clayBowlHotWater);
-        register.registerShapelessRecipe(new ItemStack(clayBowlBeetrootSoup, 1, 0), false, beetroot, beetroot, beetroot, beetroot, beetroot, beetroot, clayBowlHotWater);
-        register.registerShapelessRecipe(new ItemStack(clayBowlPorkchopStew, 1), true, clayBowlHotWater, Item.porkCooked, Item.carrot, Item.potato, Block.mushroomBrown);
-        register.registerShapelessRecipe(new ItemStack(clayBowlLampchopSoup, 1), true, clayBowlHotWater, Item.lambchopCooked, Item.onion, Item.potato);
-        register.registerShapelessRecipe(new ItemStack(clayBowlSalmonSoup, 1), true, Item.fishLargeCooked, beetroot, Block.mushroomBrown, clayBowlHotWater);
+        register.registerShapelessRecipe(new ItemStack(clayBowlMushroomStew), false, Block.mushroomBrown, Block.mushroomRed, clayBowlWater);
+        register.registerShapelessRecipe(new ItemStack(clayBowlBeetrootSoup, 1, 0), false, beetroot, beetroot, beetroot, beetroot, beetroot, beetroot, clayBowlWater);
+        register.registerShapelessRecipe(new ItemStack(clayBowlPorkchopStew, 1), true, clayBowlWater, Item.porkCooked, Item.carrot, Item.potato, Block.mushroomBrown);
+        register.registerShapelessRecipe(new ItemStack(clayBowlLampchopSoup, 1), true, clayBowlWater, Item.lambchopCooked, Item.onion, Item.potato);
+        register.registerShapelessRecipe(new ItemStack(clayBowlSalmonSoup, 1), true, Item.fishLargeCooked, beetroot, Block.mushroomBrown, clayBowlWater);
         register.registerShapelessRecipe(new ItemStack(clayBowlLemonade, 1), true, Item.sugar, lemon, clayBowlWater);
     }
 

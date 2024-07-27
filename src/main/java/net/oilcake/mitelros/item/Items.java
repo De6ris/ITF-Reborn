@@ -495,9 +495,9 @@ public class Items extends Item {
 
     public static final Item frostPowder = new ItemBrewingMisc(getNextItemID(), Materials.frost, "frost_powder");//.setPotionEffectExtend("+8+9+10-11&4-4+13");
 
-    public static final ItemBowlClay clayBowlHotWater = new ItemBowlClay(getNextItemID(), Materials.hot_water, "bowl_hot_water");
+    public static final ItemBowlClay clayBowlHotWater = new ItemBowlClay(getNextItemID(), Materials.water, "clay_bowl_hot_water");
 
-    public static final ItemBowl bowlHotWater = new ItemBowl(getNextItemID(), Materials.hot_water, "bowl_water");
+    public static final ItemBowl bowlHotWater = new ItemBowl(getNextItemID(), Materials.water, "bowl_water");
 
     public static final Item totemOfFlattening = new ItemTotemFlattening(getNextItemID());
 

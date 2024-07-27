@@ -242,8 +242,8 @@ public class ItemTextureRegister extends Items {
         event.register(NameSpace, "food/chocolate_smoothie", chocolate_smoothie);
         event.register(NameSpace, "misc/frost_rod", frostRod);
         event.register(NameSpace, "misc/frost_powder", frostPowder);
-        event.register(NameSpace, "hardened_clay_bowls/hot_water", clayBowlHotWater).setUnlocalizedName("bowl_hot_water");
-        event.register(NameSpace, "bowls/hot_water", bowlHotWater).setUnlocalizedName("bowl_hot_water");
+        event.register(NameSpace, "hardened_clay_bowls/bowl_water", clayBowlHotWater).setUnlocalizedName("clay_bowl_hot_water");
+        event.register(NameSpace, "bowls/bowl_water", bowlHotWater).setUnlocalizedName("bowl_hot_water");
         event.register(NameSpace, "totem/totem_of_flattening", totemOfFlattening);
         event.register(NameSpace, "loot_pack/lich", lootPackLich);
         event.register(NameSpace, "pocket/mine", minePocket);
