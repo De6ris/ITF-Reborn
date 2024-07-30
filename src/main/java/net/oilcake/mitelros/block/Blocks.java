@@ -95,6 +95,7 @@ public class Blocks {
     public static final Block itfWorkBench = new ITFWorkbench(getNextBlockID());
 
     public static final Block uruBeacon = new BlockUruBeacon(getNextBlockID());
+    public static final BlockRunestone tungstenRuneStone = (BlockRunestone) new BlockRunestone(getNextBlockID(), Materials.tungsten).setHardness(2.4f).setResistance(20.0f).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("runestone").setTextureName("obsidian");
 
     public static void registerBlocks(ItemRegistryEvent registryEvent) {
         registryEvent.registerAnvil(NameSpace, "nickel_anvil", anvilNickel);
@@ -137,6 +138,7 @@ public class Blocks {
         registryEvent.registerItemBlock(NameSpace, "crafting_table", itfWorkBench);
         registryEvent.registerItemBlock(NameSpace, "beacon", uruBeacon);
         uruBeacon.setUnlocalizedName("uru_beacon");
+        registryEvent.registerItemBlock(NameSpace, "tungsten_runestone", tungstenRuneStone);
     }
 
     public static void registerRecipes(RecipeRegistryEvent register) {
@@ -180,16 +182,18 @@ public class Blocks {
                 'X', Block.cobblestone, 'S', Items.shardAzurite,
                 'B', Item.redstone);
         register.registerShapedRecipe(new ItemStack(blockEnchantPredicator), true, "XDX", "ABA", "OAO",
-                'A', Item.ingotMithril, 'B', Items.forgingnote,
+                'A', Item.ingotMithril, 'B', Items.forgingNote,
                 'D', Item.diamond, 'O', Block.obsidian,
                 'X', Item.expBottle);
         register.registerShapedRecipe(new ItemStack(magicTable), true, "MBM", "HTP", "MEM",
                 'M', Item.ingotMithril, 'T', Block.enchantmentTable,
                 'H', blockEnchantEnhancer, 'P', blockEnchantPredicator,
-                'B', Items.forgingnote, 'E', Item.eyeOfEnder);
+                'B', Items.forgingNote, 'E', Item.eyeOfEnder);
         register.registerShapedRecipe(new ItemStack(uruBeacon), true, "UNU", "UBU", "UUU",
                 'U', Items.uruIngot, 'B', Block.beacon,
-                'N', Items.forgingnote);
+                'N', Items.forgingNote);
+        register.registerShapedRecipe(new ItemStack(tungstenRuneStone), true, " n ", "n#n", " n ",
+                '#', Block.obsidian, 'n', Item.mithrilNugget);
 
         for (int i = 0; i < Blocks.itfWorkBench.getNumSubBlocks(); ++i) {
             Material tool_material = ITFWorkbench.getToolMaterial(i);

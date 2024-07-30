@@ -31,6 +31,8 @@ achievement.Invincible=势不可挡
 achievement.Invincible.desc=现在没什么能阻挡你了
 achievement.StormStriker=不畏苦暗
 achievement.StormStriker.desc=克服绝境并征服MITE-ITF
+achievement.obtainUruBeacon=带乌鲁金属信标回家
+achievement.obtainUruBeacon.desc=获取乌鲁金属信标
 achievement.DeathCheater=超越生死
 achievement.DeathCheater.desc=使用图腾来避免死亡
 achievement.Pull=一泻千里
@@ -399,6 +401,7 @@ item.arrows/magical_arrow.name=魔法箭
 item.wand/lava.name=熔岩法杖
 item.wand/ice.name=寒霜法杖
 item.wand/thunder.name=轰击法杖
+item.wand/ender.name=末影法杖
 
 item.loot_pack/lich.name=巫妖战利品袋
 

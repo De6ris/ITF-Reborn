@@ -5,7 +5,7 @@ import net.minecraft.EntityPlayer;
 public class DrunkManager {
     private final EntityPlayer player;
 
-    public boolean Hasdrunked = false;
+    public boolean hasDrunk = false;
 
     private int drunk_duration = 0;
 
@@ -13,22 +13,19 @@ public class DrunkManager {
         this.player = player;
     }
 
-    public void setHasdrunked(boolean hasdrunked) {
-        this.Hasdrunked = hasdrunked;
+    public void setHasDrunk(boolean hasDrunk) {
+        this.hasDrunk = hasDrunk;
     }
 
     public boolean isDrunk() {
         return this.drunk_duration > 0;
     }
 
-    public void update1() {
-        if (this.Hasdrunked) {
+    public void update() {
+        if (this.hasDrunk) {
             this.drunk_duration = 6000;
-            this.Hasdrunked = false;
+            this.hasDrunk = false;
         }
-    }
-
-    public void update2() {
         this.decrease();
     }
 

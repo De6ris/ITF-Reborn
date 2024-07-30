@@ -18,7 +18,7 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
     private final EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 
     private final static Item[] totems = new Item[]{Items.totemOfFlattening, Items.totemOfSentry, Items.totemOfKnowledge};
-    private final static Item[] wands = new Item[]{Items.freezeWand, Items.lavaWand};
+    private final static Item[] wands = new Item[]{Items.freezeWand, Items.lavaWand, Items.enderWand};
     private final static Item[] armors = new Item[]{Items.helmetAncientMetalSacred, Items.chestplateAncientMetalSacred, Items.leggingsAncientMetalSacred, Items.bootsAncientMetalSacred};
 
     private int max_num_evasions;
@@ -262,7 +262,7 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
 
     @Override
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
-        this.dropItemStack(new ItemStack(Items.forgingnote.itemID, 1, 0), 0.0F);
+        this.dropItemStack(new ItemStack(Items.forgingNote.itemID, 1, 0), 0.0F);
         if (this.rand.nextBoolean()) {
             ItemStack treasureBook = getRandomTreasureEnchantment(this.rand);
             this.dropItemStack(treasureBook, 0.0F);

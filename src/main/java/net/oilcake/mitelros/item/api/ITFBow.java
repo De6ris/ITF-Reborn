@@ -2,6 +2,8 @@ package net.oilcake.mitelros.item.api;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Materials;
+import net.oilcake.mitelros.util.quality.EnumEffectEntry;
+import net.oilcake.mitelros.util.quality.EnumToolType;
 
 public class ITFBow extends ItemBow {
     public ITFBow(int id, Material reinforcement_material) {
@@ -27,7 +29,9 @@ public class ITFBow extends ItemBow {
         } else {
             return -1;
         }
-        return (int) (ticksPull * (1.0F - 0.5F * EnchantmentHelper.getEnchantmentLevelFraction(Enchantment.quickness, item_stack)));
+        return (int) (ticksPull *
+                (1.0F - 0.5F * EnchantmentHelper.getEnchantmentLevelFraction(Enchantment.quickness, item_stack)) /
+                EnumToolType.getMultiplierForEntry(item_stack, EnumEffectEntry.PullSpeed));
     }
 
     public static int getArrowSpeedBonus(Material material) {

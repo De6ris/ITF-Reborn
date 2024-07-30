@@ -1,12 +1,8 @@
-package net.oilcake.mitelros.item;
+package net.oilcake.mitelros.item.wand;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.entity.misc.EntityWandFireBall;
-import net.oilcake.mitelros.entity.misc.EntityWandIceBall;
-import net.oilcake.mitelros.entity.misc.EntityWandShockWave;
-import net.oilcake.mitelros.entity.misc.EntityWandSlimeBall;
 
-public class ItemWand extends ItemTool implements IDamageableItem {
+public abstract class ItemWand extends ItemTool {
     private final Material reinforcement_material;
 
     public ItemWand(int id, Material material) {
@@ -38,21 +34,16 @@ public class ItemWand extends ItemTool implements IDamageableItem {
         return true;
     }
 
-    public static int getTicksForMaxPull(ItemStack item_stack) {
-        return 40;
-    }
-
-    public static int getTicksPulled(ItemStack item_stack, int item_in_use_count) {
+    private int getTicksPulled(ItemStack item_stack, int item_in_use_count) {
         return item_stack.getMaxItemUseDuration() - item_in_use_count;
     }
 
-    public static float getFractionPulled(ItemStack item_stack, int item_in_use_count) {
-        return Math.min((float) getTicksPulled(item_stack, item_in_use_count) / getTicksForMaxPull(item_stack), 1.0F);
+    private float getFractionPulled(ItemStack item_stack, int item_in_use_count) {
+        return Math.min((float) this.getTicksPulled(item_stack, item_in_use_count) / this.getTicksForMaxPull(), 1.0F);
     }
 
-    @Override
-    public int getMaxItemUseDuration(ItemStack par1ItemStack) {
-        return 72000;
+    public int getTicksForMaxPull() {
+        return 40;
     }
 
     @Override
@@ -70,32 +61,25 @@ public class ItemWand extends ItemTool implements IDamageableItem {
     }
 
     @Override
+    public int getMaxItemUseDuration(ItemStack par1ItemStack) {
+        return 300;
+    }
+
+    @Override
     public void onPlayerStoppedUsing(ItemStack item_stack, World world, EntityPlayer player, int item_in_use_count) {
         if (!world.isRemote) {
-            float fraction_pulled = getFractionPulled(item_stack, item_in_use_count);
+            float fraction_pulled = this.getFractionPulled(item_stack, item_in_use_count);
             fraction_pulled = (fraction_pulled * fraction_pulled + fraction_pulled * 2.0F) / 3.0F;
             if (fraction_pulled >= 0.25F) {
-                if (this.itemID == Items.lavaWand.itemID) {
-                    world.playSoundAtEntity(player, "mob.ghast.fireball", 1.0F, 1.0F);
-                    world.spawnEntityInWorld(new EntityWandFireBall(world, player));
-                }
-                if (this.itemID == Items.freezeWand.itemID) {
-                    world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-                    world.spawnEntityInWorld(new EntityWandIceBall(world, player));
-                }
-                if (this.itemID == Items.shockWand.itemID) {
-                    world.playSoundAtEntity(player, "ambient.weather.thunder", 1.0F, 1.0F);
-                    world.spawnEntityInWorld(new EntityWandShockWave(world, player));
-                }
-                if (this.itemID == Items.slimeWand.itemID) {
-                    world.playSoundAtEntity(player, "mob.slime.big1", 1.0F, 1.0F);
-                    world.spawnEntityInWorld(new EntityWandSlimeBall(world, player));
-                }
+                this.onUseSuccess(item_stack, world, player);
             }
-            if (!player.isPlayerInCreative())
+            if (!player.isPlayerInCreative()) {
                 player.tryDamageHeldItem(DamageSource.generic, 1);
+            }
         }
     }
+
+    public abstract void onUseSuccess(ItemStack item_stack, World world, EntityPlayer player);
 
     @Override
     public float getBaseDamageVsEntity() {

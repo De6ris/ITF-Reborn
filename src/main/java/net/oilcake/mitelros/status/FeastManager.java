@@ -72,6 +72,11 @@ public class FeastManager {
     }
 
     public void achievementCheck() {
+        this.feastCheck();
+        this.potionCheck();
+    }
+
+    private void feastCheck() {
         boolean success = (this.Feast_trigger_sorbet && this.Feast_trigger_cereal && this.Feast_trigger_chestnut_soup && this.Feast_trigger_chicken_soup && this.Feast_trigger_beef_stew && this.Feast_trigger_cream_mushroom_soup && this.Feast_trigger_cream_vegetable_soup && this.Feast_trigger_ice_cream && this.Feast_trigger_lemonade && this.Feast_trigger_mashed_potatoes && this.Feast_trigger_porkchop_stew && this.Feast_trigger_salad && this.Feast_trigger_pumpkin_soup && this.Feast_trigger_porridge && this.Feast_trigger_mushroom_soup && this.Feast_trigger_vegetable_soup && this.Feast_trigger_salmon_soup && this.Feast_trigger_beetroot_soup && !this.rewarded_disc_damnation);
         if (!success) {
             return;
@@ -82,7 +87,9 @@ public class FeastManager {
         EntityItem RewardingRecord = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, new ItemStack(Items.recordDamnation.itemID, 1));
         player.worldObj.spawnEntityInWorld(RewardingRecord);
         RewardingRecord.entityFX(EnumEntityFX.summoned);
+    }
 
+    private void potionCheck() {
         if (player.isPotionActive(Potion.moveSpeed) && player.isPotionActive(Potion.regeneration) &&
                 player.isPotionActive(Potion.fireResistance) && player.isPotionActive(Potion.nightVision) &&
                 player.isPotionActive(Potion.damageBoost) && player.isPotionActive(Potion.resistance) &&
@@ -94,7 +101,6 @@ public class FeastManager {
             player.worldObj.spawnEntityInWorld(RewardingRecord2);
             RewardingRecord2.entityFX(EnumEntityFX.summoned);
         }
-
     }
 
     public void update(ItemVessel itemVessel) {

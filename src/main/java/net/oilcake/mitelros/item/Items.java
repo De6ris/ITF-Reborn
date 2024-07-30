@@ -9,6 +9,7 @@ import net.oilcake.mitelros.item.minePocket.ItemMinePocket;
 import net.oilcake.mitelros.item.potion.ItemPotionExperimental;
 import net.oilcake.mitelros.item.potion.ItemPotionSuspicious;
 import net.oilcake.mitelros.item.totem.*;
+import net.oilcake.mitelros.item.wand.*;
 import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.ITFLootTables;
 import net.xiaoyu233.fml.reload.utils.IdUtil;
@@ -225,7 +226,7 @@ public class Items extends Item {
 
     public static final ItemArmor wolfBoots = new ItemBoots(getNextItemID(), Materials.wolf_fur, false);
 
-    public static final Item goldenAppleLegend = (new ItemGoldenAppleLegend(getNextItemID(), 2, 1, "goldapple")).setAlwaysEdible().setPotionEffect(Potion.regeneration.id, 30, 4, 1.0F).setUnlocalizedName("wtfk").useVanillaTexture("apple_golden_legend");
+    public static final Item goldenAppleLegend = (new ItemGoldenAppleLegend(getNextItemID(), 2, 1, "goldapple")).setAlwaysEdible().setUnlocalizedName("wtfk").useVanillaTexture("apple_golden_legend");
 
     public static final ItemBowl bowlLemonade = (ItemBowl) (new ItemBowl(getNextItemID(), Materials.lemonade, "lemonade")).setFoodValue(4, 1, false, true, true).setPlantProduct().setUnlocalizedName("lemonade");
 
@@ -253,11 +254,11 @@ public class Items extends Item {
 
     public static final ItemArrow arrowMagical = new ItemArrow(getNextItemID(), Materials.magical);
 
-    public static final ItemWand lavaWand = new ItemWand(getNextItemID(), Materials.tungsten);
+    public static final ItemWand lavaWand = new ItemWandLava(getNextItemID());
 
-    public static final ItemWand freezeWand = new ItemWand(getNextItemID(), Materials.nickel);
+    public static final ItemWand freezeWand = new ItemWandFreeze(getNextItemID());
 
-    public static final ItemWand shockWand = new ItemWand(getNextItemID(), Material.ancient_metal);
+    public static final ItemWand shockWand = new ItemWandShock(getNextItemID());
 
     public static final Item experimentalPotion = (new ItemPotionExperimental(getNextItemID())).setUnlocalizedName("experimentalPotion").setCreativeTab(CreativeTabs.tabMisc);
 
@@ -325,7 +326,7 @@ public class Items extends Item {
 
     public static final ItemPieces pieceUru = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceAdamantium");
 
-    public static final Item forgingnote = new ItemStandard(getNextItemID(), Materials.paper, "forging_note");
+    public static final Item forgingNote = new ItemStandard(getNextItemID(), Materials.paper, "forging_note");
 
     public static final ItemSeeds seedsBeetroot = new ItemSeeds(getNextItemID(), 1, 1, false, false, false, Blocks.beetroots.blockID, Block.tilledField.blockID, "Beetrootseeds");
 
@@ -473,7 +474,7 @@ public class Items extends Item {
 
     public static final ItemKnife stickKnife = ReflectHelper.createInstance(ItemKnife.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.wood);
 
-    public static final ItemWand slimeWand = new ItemWand(getNextItemID(), Material.copper);
+    public static final ItemWand slimeWand = new ItemWandSlime(getNextItemID());
 
     public static final Item iceChunk = new ItemStandard(getNextItemID(), Materials.ice_chunk, "ice_chunk").setCraftingDifficultyAsComponent(50.0F);
 
@@ -491,7 +492,7 @@ public class Items extends Item {
 
     public static final ItemFood chocolate_smoothie = (ItemFood) (new ItemFood(getNextItemID(), Materials.chocolate_smoothie, 4, 2, 1000, false, false, true, "chocolate_smoothie")).setMaxStackSize(4);
 
-    public static final Item frostRod = new ItemStandard(getNextItemID(), Materials.frost, "frost_rod").setReachBonus(0.5F);
+    public static final Item frostRod = new ItemBrewingMisc(getNextItemID(), Materials.frost, "frost_rod").setPotionEffectExtend("+8+9+10+11&4-4+13").setReachBonus(0.5F);
 
     public static final Item frostPowder = new ItemBrewingMisc(getNextItemID(), Materials.frost, "frost_powder");//.setPotionEffectExtend("+8+9+10-11&4-4+13");
 
@@ -511,6 +512,7 @@ public class Items extends Item {
     public static final ItemKettle hardenedClayJug = new ItemKettle(getNextItemID(), 19, Material.water, Material.hardened_clay);
     public static final ItemKettle hardenedClayJugSuspicious = new ItemKettle(getNextItemID(), 19, Materials.suspicious_water, Material.hardened_clay);
     public static final ItemKettle hardenedClayJugSwampland = new ItemKettle(getNextItemID(), 19, Materials.dangerous_water, Material.hardened_clay);
+    public static final ItemWand enderWand = new ItemWandEnder(getNextItemID());
 
     private static int getNextItemID() {
         if (!ITFConfig.FixedID.getBooleanValue()) return IdUtil.getNextItemID();
@@ -518,8 +520,8 @@ public class Items extends Item {
     }
 
     static {
-        ((ITFItem) totemOfKnowledge).itf$SetExtraInfo("右键提升20%经验");
-        ((ITFItem) totemOfFlattening).itf$SetExtraInfo("据说能够平整15x15的土地");
+        ((ITFItem) totemOfKnowledge).itf$SetExtraInfo("使用后提升20%经验");
+        ((ITFItem) totemOfFlattening).itf$SetExtraInfo("据说能够平整15x15的土地, 在图腾得到祝福时, 能加强为29x29的范围");
         ((ITFItem) frostRod).itf$SetExtraInfo("似乎能提升触及距离, 还能搓成粉?");
         ((ITFItem) enderRod).itf$SetExtraInfo("似乎能提升触及距离, 还能酿药?");
     }

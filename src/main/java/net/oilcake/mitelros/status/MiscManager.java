@@ -8,7 +8,8 @@ import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.totem.ItemTotem;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
-import net.oilcake.mitelros.util.EnumQualityEffect;
+import net.oilcake.mitelros.util.quality.EnumEffectEntry;
+import net.oilcake.mitelros.util.quality.EnumToolType;
 
 import java.util.List;
 
@@ -57,11 +58,11 @@ public class MiscManager {
     public float calculateITFStv(float str_vs_block) {
         if (ITFConfig.FinalChallenge.getBooleanValue())
             str_vs_block *= 1.0F - Constant.calculateCurrentDifficulty() / 100.0F;
-        ItemStack held_item = player.getHeldItemStack();
-        if (held_item != null && held_item.getItem() instanceof ItemTool) {
-            str_vs_block *= 1.0F + (EnumQualityEffect.getQualityMultiplier(held_item.getQuality(), EnumQualityEffect.Digging) / 100.0F);
-        }
-        return str_vs_block;
+        return str_vs_block * EnumToolType.getMultiplierForEntry(this.player.getHeldItemStack(), EnumEffectEntry.Digging);
+    }
+
+    public void update() {
+        this.detectorUpdate();
     }
 
     public void detectorUpdate() {

@@ -60,19 +60,29 @@ public class RecipesArmor extends Items {
     }
 
     private static void registerUruMetalRecipes(RecipeRegistryEvent register) {
-        register.registerShapelessRecipe(new ItemStack(forgingnote, 2), false, forgingnote, Item.writableBook);
-        register.registerShapelessRecipe(new ItemStack(uruHelmet, 1), true, forgingnote, uruIngot, Item.helmetMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruChestplate, 1), true, forgingnote, uruIngot, Item.plateMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruLeggings, 1), true, forgingnote, uruIngot, Item.legsMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruBoots, 1), true, forgingnote, uruIngot, Item.bootsMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruSword, 1), true, forgingnote, uruIngot, Item.swordMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruScythe, 1), true, forgingnote, uruIngot, Item.scytheMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruBattleAxe, 1), true, forgingnote, uruIngot, Item.battleAxeMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruWarHammer, 1), true, forgingnote, uruIngot, Item.warHammerMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruMattock, 1), true, forgingnote, uruIngot, Item.mattockMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruMorningStar, 1), true, forgingnote, uruIngot, morningStarMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(bowUru, 1), true, forgingnote, uruIngot, Item.bowMithril, Item.ingotMithril);
-        register.registerShapelessRecipe(new ItemStack(uruPickaxe, 1), true, forgingnote, uruIngot, Item.pickaxeMithril, Item.ingotMithril);
+        register.registerShapelessRecipe(new ItemStack(forgingNote, 2), false, forgingNote, Item.writableBook);
+
+        registerUruItem(register, uruHelmet, helmetMithril);
+        registerUruItem(register, uruChestplate, plateMithril);
+        registerUruItem(register, uruLeggings, legsMithril);
+        registerUruItem(register, uruBoots, bootsMithril);
+        registerUruItem(register, uruSword, swordMithril);
+        registerUruItem(register, uruScythe, scytheMithril);
+        registerUruItem(register, uruBattleAxe, battleAxeMithril);
+        registerUruItem(register, uruWarHammer, warHammerMithril);
+        registerUruItem(register, uruMattock, mattockMithril);
+        registerUruItem(register, uruMorningStar, morningStarMithril);
+        registerUruItem(register, bowUru, bowMithril);
+        registerUruItem(register, uruPickaxe, pickaxeMithril);
+
         register.registerShapelessRecipe(new ItemStack(uruNugget, 9), true, uruIngot);
+    }
+
+    // 25600 is the difficulty of adamantium ingot
+    private static <T extends Item & IDamageableItem> void registerUruItem(RecipeRegistryEvent register, T uruItem, Item mithrilItem) {
+        register.registerShapelessRecipe(new ItemStack(uruItem),
+                        true,
+                        forgingNote, uruIngot, mithrilItem, Item.ingotMithril)
+                .difficulty(uruItem.getNumComponentsForDurability() * 25600.0F);
     }
 }

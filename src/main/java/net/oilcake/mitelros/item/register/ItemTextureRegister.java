@@ -161,7 +161,7 @@ public class ItemTextureRegister extends Items {
         event.register(NameSpace, "armor/uru_chestplate", uruChestplate);
         event.register(NameSpace, "armor/uru_leggings", uruLeggings);
         event.register(NameSpace, "armor/uru_boots", uruBoots);
-        event.register(NameSpace, "misc/forging_note", forgingnote);
+        event.register(NameSpace, "misc/forging_note", forgingNote);
         event.register(NameSpace, "ingots/uru", uruIngot);
         event.register(NameSpace, "nuggets/uru", uruNugget);
         event.register(NameSpace, "tools/uru_battle_axe", uruBattleAxe);
@@ -254,5 +254,6 @@ public class ItemTextureRegister extends Items {
         event.register(NameSpace, "jug/hardened_clay", hardenedClayJug).setUnlocalizedName("hardened_clay_jug");
         event.register(NameSpace, "jug/hardened_clay", hardenedClayJugSuspicious).setUnlocalizedName("hardened_clay_jug_suspicious");
         event.register(NameSpace, "jug/hardened_clay", hardenedClayJugSwampland).setUnlocalizedName("hardened_clay_jug_dangerous");
+        event.register(NameSpace, "wand/ender", enderWand);
     }
 }

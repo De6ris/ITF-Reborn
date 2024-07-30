@@ -26,7 +26,7 @@ public class EnchantmentMending extends Enchantment implements ITFEnchantment {
     }
 
     public boolean canEnchantItem(Item item) {
-        return (item instanceof net.minecraft.ItemTool || item instanceof net.minecraft.ItemArmor);
+        return (item instanceof ItemTool || item instanceof ItemArmor || item instanceof ItemBow);
     }
 
     @Override

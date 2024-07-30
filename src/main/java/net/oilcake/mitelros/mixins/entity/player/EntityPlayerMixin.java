@@ -11,6 +11,8 @@ import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.status.*;
 import net.oilcake.mitelros.util.Constant;
+import net.oilcake.mitelros.util.quality.EnumEffectEntry;
+import net.oilcake.mitelros.util.quality.EnumToolType;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -129,6 +131,9 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @Shadow
     protected FoodStats foodStats;
 
+    @Shadow
+    public abstract ItemStack getHeldItemStack();
+
     @Unique
     private MiscManager miscManager = new MiscManager(ReflectHelper.dyCast(this));
     @Unique
@@ -144,12 +149,11 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @Inject(method = "onLivingUpdate()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;onLivingUpdate()V", shift = At.Shift.AFTER))
     private void injectTick(CallbackInfo ci) {
         if (!this.worldObj.isRemote) {
-            this.miscManager.detectorUpdate();
+            this.miscManager.update();
             this.diarrheaManager.update();
             this.huntManager.update();
             this.waterManager.update();
-            this.drunkManager.update1();
-            this.drunkManager.update2();
+            this.drunkManager.update();
         }
         this.feastManager.achievementCheck();
         this.enchantmentManager.update();
@@ -226,5 +230,10 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @ModifyArg(method = "getCurrentPlayerStrVsBlock", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F"), index = 0)
     private float itfModify(float str_vs_block) {
         return this.miscManager.calculateITFStv(str_vs_block);
+    }
+
+    @ModifyReturnValue(method = "calcRawMeleeDamageVs(Lnet/minecraft/Entity;ZZ)F", at = @At("RETURN"))
+    private float applyQuality(float original) {
+        return original * EnumToolType.getMultiplierForEntry(this.getHeldItemStack(), EnumEffectEntry.Attack);
     }
 }

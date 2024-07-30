@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Materials;
-import net.oilcake.mitelros.util.EnumQualityEffect;
+import net.oilcake.mitelros.util.quality.EnumToolType;
 import org.jetbrains.annotations.TestOnly;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -29,7 +29,8 @@ public abstract class ItemStackMixin {
     @Shadow
     public abstract Item getItem();
 
-    @Shadow public abstract String getUnlocalizedName();
+    @Shadow
+    public abstract String getUnlocalizedName();
 
     @Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemTool;getToolMaterial()Lnet/minecraft/Material;"))
     private void nickelInfo(EntityPlayer par1EntityPlayer, boolean par2, Slot slot, CallbackInfoReturnable<List> cir, @Local ArrayList<String> var3) {
@@ -42,8 +43,8 @@ public abstract class ItemStackMixin {
     @Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/Item;addInformationBeforeEnchantments(Lnet/minecraft/ItemStack;Lnet/minecraft/EntityPlayer;Ljava/util/List;ZLnet/minecraft/Slot;)V"), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void inject(EntityPlayer par1EntityPlayer, boolean par2, Slot slot, CallbackInfoReturnable<List> cir, ArrayList var3, Item var4, String var5, boolean is_map) {
         if (par2 && var4.hasQuality()) {
-            String description = EnumQualityEffect.getQualityInfo(var4, this.getQuality());
-            if (description != null) {
+            List<String> descriptions = EnumToolType.getQualityInfo(var4, this.getQuality());
+            for (String description : descriptions) {
                 var3.add(EnumChatFormatting.GRAY + description);
             }
         }

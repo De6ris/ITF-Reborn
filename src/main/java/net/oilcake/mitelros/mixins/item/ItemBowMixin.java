@@ -6,6 +6,8 @@ import net.minecraft.*;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.api.ITFBow;
+import net.oilcake.mitelros.util.quality.EnumEffectEntry;
+import net.oilcake.mitelros.util.quality.EnumToolType;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -72,14 +74,17 @@ public abstract class ItemBowMixin extends Item {
 
     @Inject(method = "onPlayerStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;tryDamageHeldItem(Lnet/minecraft/DamageSource;I)Lnet/minecraft/ItemDamageResult;"), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void modifyDamage(ItemStack item_stack, World world, EntityPlayer player, int item_in_use_count, CallbackInfo ci, ItemArrow arrow, float fraction_pulled, EntityArrow entity_arrow, int power, int punch) {
+        double damageAfterPower = entity_arrow.getDamage();
         if (power > 0) {
-            entity_arrow.setDamage(entity_arrow.getDamage() - (double) ((float) power * 0.5F) - 0.5);
+            damageAfterPower -= ((double) ((float) power * 0.5F) + 0.5);
         }
         Material material = item_stack.getMaterialForRepairs();
-        entity_arrow.setDamage(entity_arrow.getDamage() * ITFBow.getDamageModifier(material));
+        damageAfterPower *= ITFBow.getDamageModifier(material);
         if (power > 0) {
-            entity_arrow.setDamage(entity_arrow.getDamage() + (double) ((float) power * 0.5F) + 0.5);
+            damageAfterPower += (double) ((float) power * 0.5F) + 0.5;
         }
+        damageAfterPower *= EnumToolType.getMultiplierForEntry(item_stack, EnumEffectEntry.ArrowDamage);
+        entity_arrow.setDamage(damageAfterPower);
     }// TODO compatibility
 
     @ModifyConstant(method = "addInformation", constant = @Constant(intValue = 10))

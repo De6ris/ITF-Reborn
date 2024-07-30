@@ -29,10 +29,10 @@ public class RecipeRegister extends Items {
         register.registerShapelessRecipe(new ItemStack(uruIngot, 1), true, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget, uruNugget);
         register.registerShapelessRecipe(new ItemStack(tungstenBucket, 1), false, tungstenBucketStone).difficulty(100);
         register.registerShapelessRecipe(new ItemStack(nickelBucket, 1), false, nickelBucketStone).difficulty(100);
-        register.registerShapelessRecipe(new ItemStack(helmetAncientMetalSacred, 1), true, forgingnote, Item.ingotGold, Item.helmetAncientMetal);
-        register.registerShapelessRecipe(new ItemStack(chestplateAncientMetalSacred, 1), true, forgingnote, Item.ingotGold, Item.plateAncientMetal);
-        register.registerShapelessRecipe(new ItemStack(leggingsAncientMetalSacred, 1), true, forgingnote, Item.ingotGold, Item.legsAncientMetal);
-        register.registerShapelessRecipe(new ItemStack(bootsAncientMetalSacred, 1), true, forgingnote, Item.ingotGold, Item.bootsAncientMetal);
+        register.registerShapelessRecipe(new ItemStack(helmetAncientMetalSacred, 1), true, forgingNote, Item.ingotGold, Item.helmetAncientMetal);
+        register.registerShapelessRecipe(new ItemStack(chestplateAncientMetalSacred, 1), true, forgingNote, Item.ingotGold, Item.plateAncientMetal);
+        register.registerShapelessRecipe(new ItemStack(leggingsAncientMetalSacred, 1), true, forgingNote, Item.ingotGold, Item.legsAncientMetal);
+        register.registerShapelessRecipe(new ItemStack(bootsAncientMetalSacred, 1), true, forgingNote, Item.ingotGold, Item.bootsAncientMetal);
         register.registerShapelessRecipe(new ItemStack(tungstenNugget, 1), false, arrowTungsten);
         register.registerShapelessRecipe(new ItemStack(nickelNugget, 1), false, arrowNickel);
         register.registerShapedRecipe(new ItemStack(bowTungsten, 1), true, "#C ", "#EC", "#C ", '#', silk, 'E', tungstenIngot, 'C', stick);

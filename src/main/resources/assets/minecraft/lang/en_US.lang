@@ -31,6 +31,8 @@ achievement.Invincible=UNSHAKABLE
 achievement.Invincible.desc=Brew!Brew!Brew!
 achievement.StormStriker=Storm Striker
 achievement.StormStriker.desc=Beat MITE-ITF.
+achievement.obtainUruBeacon=Take uru beacon home
+achievement.obtainUruBeacon.desc=Obtain uru beacon
 achievement.DeathCheater=Postmortal
 achievement.DeathCheater.desc=Use the totem to cheat death.
 achievement.Pull=Oh s**t!
@@ -394,6 +396,7 @@ item.arrows/magical_arrow.name=Magical Arrow
 item.wand/lava.name=Wand of Lava
 item.wand/ice.name=Wand of Ice
 item.wand/thunder.name=Wand of Thunder
+item.wand/ender.name=Wand of Ender
 
 item.loot_pack/lich.name=Lich Loot Pack
 

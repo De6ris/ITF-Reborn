@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.mixins.util;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.ItemBowlClay;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.util.AchievementExtend;
@@ -22,17 +23,19 @@ public abstract class SlotCraftingMixin extends Slot {
     }
 
     @Inject(method = "onCrafting(Lnet/minecraft/ItemStack;)V", at = @At("HEAD"))
-    private void inject(ItemStack par1ItemStack, CallbackInfo ci) {
+    private void addCraftingAchievements(ItemStack par1ItemStack, CallbackInfo ci) {
         Item item = par1ItemStack.getItem();
         Block block = (item instanceof ItemBlock) ? ((ItemBlock) item).getBlock() : null;
         if (item == Items.leggingsAncientMetalSacred || item == Items.chestplateAncientMetalSacred || item == Items.helmetAncientMetalSacred || item == Items.bootsAncientMetalSacred)
             this.thePlayer.addStat(AchievementExtend.forgingLegend, 1);
-        if (item == Items.forgingnote)
+        if (item == Items.forgingNote)
             this.thePlayer.addStat(AchievementExtend.copying, 1);
         if (item == Items.bowTungsten)
             this.thePlayer.addStat(AchievementExtend.Arbalistic, 1);
         if (block == Block.beacon)
             this.thePlayer.addStat(AchievementExtend.getBeacon, 1);
+        if (block == Blocks.uruBeacon)
+            this.thePlayer.addStat(AchievementExtend.obtainUruBeacon, 1);
         if (item == Items.mashedCactus)
             this.thePlayer.addStat(AchievementList.seeds, 1);
         if (item == Items.glowberries || item == Items.agave)

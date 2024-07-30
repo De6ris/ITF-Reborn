@@ -5,27 +5,13 @@ import net.oilcake.mitelros.api.ITFItem;
 
 import java.util.List;
 
-public class ItemGoldenAppleLegend extends ItemFood {
+public class ItemGoldenAppleLegend extends ItemAppleGold {
     public ItemGoldenAppleLegend(int id, int satiation, int nutrition, String texture) {
-        super(id, Material.fruit, satiation, nutrition, 1000, false, false, true, texture);
-        addMaterial(Material.gold);
-        setPlantProduct();
+        super(id, satiation, nutrition, texture);
         ((ITFItem) this).itf$SetFoodWater(-8);
     }
 
-    public boolean hasEffect(ItemStack par1ItemStack) {
-        return (par1ItemStack.getItemSubtype() > 0);
-    }
-
-    public EnumRarity f(ItemStack par1ItemStack) {
-        return (par1ItemStack.getItemSubtype() == 0) ? EnumRarity.rare : EnumRarity.uncommon;
-    }
-
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List) {
-        par3List.add(new ItemStack(par1, 1, 0));
-        par3List.add(new ItemStack(par1, 1, 1));
-    }
-
+    @Override
     public String getUnlocalizedName(ItemStack item_stack) {
         return isEnchantedGoldenApple(item_stack) ? "item.appleGold.enchanted" : super.getUnlocalizedName(item_stack);
     }
@@ -42,21 +28,18 @@ public class ItemGoldenAppleLegend extends ItemFood {
         return (isGoldenApple(item_stack) && item_stack.getItemSubtype() > 0);
     }
 
+    @Override
     protected void onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
-        if (par1ItemStack.getItemSubtype() == 0 && !par2World.isRemote)
-            par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.regeneration.id, 600, 4));
-        if (par1ItemStack.getItemSubtype() > 0) {
-            if (!par2World.isRemote) {
-                par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.regeneration.id, 600, 4));
-                par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.resistance.id, 6000, 1));
-                par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 6000, 1));
-            }
-        } else {
-            super.onEaten(par1ItemStack, par2World, par3EntityPlayer);
+        if (par1ItemStack.getItemSubtype() == 0 && !par2World.isRemote) {
+            par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, 600, 3));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.regeneration.id, 600, 3));
         }
-    }
-
-    public void onItemUseFinish(ItemStack item_stack, World world, EntityPlayer player) {
-        super.onItemUseFinish(item_stack, world, player);
+        if (par1ItemStack.getItemSubtype() > 0 && !par2World.isRemote) {
+            par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, 600, 3));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.regeneration.id, 600, 3));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.resistance.id, 6000, 1));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 6000, 1));
+        }
+        // I dont call super.onEaten because golden apple gives effects again
     }
 }
