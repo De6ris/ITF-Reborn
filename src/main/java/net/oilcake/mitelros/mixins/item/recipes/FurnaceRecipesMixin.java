@@ -19,8 +19,13 @@ public class FurnaceRecipesMixin {
             result_item_stack = FurnaceRecipesExtend.recycleArmors(input_item_stack, armor);
         } else if (input_item_stack.getItem() instanceof ItemTool tool) {
             result_item_stack = FurnaceRecipesExtend.recycleArmors(input_item_stack, tool);
-        } else if (input_item_id == Items.clayBowlRaw.itemID && input_item_stack.stackSize >= 4) {
-            result_item_stack = new ItemStack(Items.clayBowlEmpty, 4);
+        } else if (input_item_id == Items.clayBowlRaw.itemID) {
+            if (input_item_stack.stackSize >= 4) {
+                result_item_stack = new ItemStack(Items.clayBowlEmpty, 4);
+            } else {
+                cir.setReturnValue(null);
+                return;
+            }
         } else if (input_item_stack.getItem() instanceof ItemKettle) {
             result_item_stack = ItemKettle.boil(input_item_stack);
         }

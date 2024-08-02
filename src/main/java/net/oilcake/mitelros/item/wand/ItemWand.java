@@ -43,7 +43,7 @@ public abstract class ItemWand extends ItemTool {
     }
 
     public int getTicksForMaxPull() {
-        return 40;
+        return 15;
     }
 
     @Override
@@ -61,16 +61,10 @@ public abstract class ItemWand extends ItemTool {
     }
 
     @Override
-    public int getMaxItemUseDuration(ItemStack par1ItemStack) {
-        return 300;
-    }
-
-    @Override
     public void onPlayerStoppedUsing(ItemStack item_stack, World world, EntityPlayer player, int item_in_use_count) {
         if (!world.isRemote) {
             float fraction_pulled = this.getFractionPulled(item_stack, item_in_use_count);
-            fraction_pulled = (fraction_pulled * fraction_pulled + fraction_pulled * 2.0F) / 3.0F;
-            if (fraction_pulled >= 0.25F) {
+            if (fraction_pulled >= 0.85F) {
                 this.onUseSuccess(item_stack, world, player);
             }
             if (!player.isPlayerInCreative()) {

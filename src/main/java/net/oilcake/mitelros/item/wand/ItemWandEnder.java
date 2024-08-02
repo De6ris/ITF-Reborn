@@ -9,7 +9,7 @@ public class ItemWandEnder extends ItemWand {
 
     @Override
     public int getTicksForMaxPull() {
-        return 160;
+        return 60;
     }
 
     @Override

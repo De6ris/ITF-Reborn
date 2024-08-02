@@ -138,7 +138,8 @@ public class Blocks {
         registryEvent.registerItemBlock(NameSpace, "crafting_table", itfWorkBench);
         registryEvent.registerItemBlock(NameSpace, "beacon", uruBeacon);
         uruBeacon.setUnlocalizedName("uru_beacon");
-        registryEvent.registerItemBlock(NameSpace, "tungsten_runestone", tungstenRuneStone);
+        registryEvent.registerItemBlock(NameSpace, "obsidian", tungstenRuneStone);
+        tungstenRuneStone.setUnlocalizedName("runestone");
     }
 
     public static void registerRecipes(RecipeRegistryEvent register) {
@@ -193,7 +194,7 @@ public class Blocks {
                 'U', Items.uruIngot, 'B', Block.beacon,
                 'N', Items.forgingNote);
         register.registerShapedRecipe(new ItemStack(tungstenRuneStone), true, " n ", "n#n", " n ",
-                '#', Block.obsidian, 'n', Item.mithrilNugget);
+                '#', Block.obsidian, 'n', Items.tungstenNugget);
 
         for (int i = 0; i < Blocks.itfWorkBench.getNumSubBlocks(); ++i) {
             Material tool_material = ITFWorkbench.getToolMaterial(i);
