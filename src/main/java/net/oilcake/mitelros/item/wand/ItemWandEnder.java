@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.item.wand;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.entity.misc.EntityWandPearl;
 
 public class ItemWandEnder extends ItemWand {
     public ItemWandEnder(int id) {
@@ -15,6 +16,6 @@ public class ItemWandEnder extends ItemWand {
     @Override
     public void onUseSuccess(ItemStack item_stack, World world, EntityPlayer player) {
         world.playSoundAtEntity(player, "random.bow", 0.5f, 0.4f / (itemRand.nextFloat() * 0.4f + 0.8f));
-        world.spawnEntityInWorld(new EntityEnderPearl(world, player));
+        world.spawnEntityInWorld(new EntityWandPearl(world, player));
     }
 }

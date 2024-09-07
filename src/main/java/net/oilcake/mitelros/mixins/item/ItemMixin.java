@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import fi.dy.masa.malilib.util.StringUtils;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.item.Items;
@@ -58,7 +59,7 @@ public abstract class ItemMixin implements ITFItem {
 
     @Inject(method = "addInformation", at = @At(value = "INVOKE", target = "Lnet/minecraft/Item;getNutrition()I"))
     private void itfFoodInfo(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
-        float chanceOfDecreaseWater = FoodDataList.chanceOfDecreaseWater(item_stack.itemID);
+        float chanceOfDecreaseWater = FoodDataList.chanceOfDecreaseWater(item_stack.getItem());
         if (chanceOfDecreaseWater > 0) {
             info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.chance", Math.round(100.0f * (1.0f - chanceOfDecreaseWater))));
         } else if (this.foodWater > 0) {
@@ -71,7 +72,7 @@ public abstract class ItemMixin implements ITFItem {
     @Inject(method = "addInformation", at = @At("TAIL"))
     private void extraInfo(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
         if (extended_info) {
-            ((ITFItem) this).itf$GetExtraInfo().ifPresent(string -> info.add(EnumChatFormatting.LIGHT_GRAY + string));
+            ((ITFItem) this).itf$GetExtraInfo().ifPresent(string -> info.add(EnumChatFormatting.LIGHT_GRAY + StringUtils.getTranslatedOrFallback(string, string)));
         }
     }
 

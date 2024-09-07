@@ -149,6 +149,7 @@ public class ITFEvent {
         event.register(EntitySpirit.class, NameSpace, "EntitySpirit", 562, 0xFFFFFFF, 0xFFAD0000);
         event.register(EntityLongdeadSentry.class, NameSpace, "EntityLongdeadSentry", 563, 13422277, 7699821);
         event.register(EntityWandSlimeBall.class, NameSpace, "EntityWandSlimeBall", 564);
+        event.register(EntityWandPearl.class, NameSpace, "EntityPearlITF", 565);
         event.register(EntityUnknown.class, NameSpace, "null", 1895);
     }
 
@@ -171,6 +172,7 @@ public class ITFEvent {
         event.register(EntitySpirit.class, new RenderSpirit());
         event.register(EntityWandSlimeBall.class, new RenderSnowball(Item.slimeBall));
         event.register(EntityUnknown.class, new RenderUnknown());
+        event.register(EntityWandPearl.class, new RenderSnowball(Item.enderPearl));
     }
 
     @Subscribe

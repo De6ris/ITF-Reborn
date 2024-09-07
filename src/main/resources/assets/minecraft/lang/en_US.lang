@@ -444,3 +444,16 @@ gui.repair.lack_xp=Lack XP: >=%d Levels
 gui.repair.effectLessThanOneLevel=Combining them will effect you <1 level.
 gui.repair.costMoreThanOneLevel=Combining them will cost you %d levels.
 gui.repair.rewardMoreThanOneLevel=Combining them will reward you %d levels.
+
+gui.enchantReserver.slotTop.tooltip=Put in items with exp, like diamonds
+gui.enchantReserver.slotBottom.tooltip=Put in items stores exp, like bottles and nuggets
+
+itf.item.totem_of_knowledge.info=Adds 20% XP
+itf.item.totem_of_flattening.info=May flatten 15x15 area, when totem is blessed, it comes with 29x29
+itf.item.frost_rod.info=Seems able to improve reach, and grind to dust
+itf.item.ender_rod.info=Seems able to improve reach, and brew potions
+
+emi.category.itf.enchant_reserver.in=Transform
+emi.category.itf.enchant_reserver.out=Reserve
+itf.exp.provides=Transforms into %d xp
+itf.exp.consumes=Consumes %d xp

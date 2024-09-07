@@ -40,10 +40,13 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     implementation files(loom.getFML().toPath())
-    implementation files("libs\\ManyLib-2.0.1.jar")
+    implementation files("libs\\ManyLib-2.2.0.jar")
+    implementation files("libs\\EMI-1.0.5.jar")
+    implementation files("libs\\PinIn-Lib.jar")
+    implementation files("libs\\ModMenu-1.0.0.jar")
 
     implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\ModernMite.jar")
-    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\OhMyMiteClient.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\ommc.jar")
     implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\GammaFree.jar")
     implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\MITEDevHackMod-FML3.0.0.jar")
     implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\Neodymium.jar")

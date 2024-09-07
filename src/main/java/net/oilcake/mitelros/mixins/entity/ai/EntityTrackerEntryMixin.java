@@ -4,10 +4,7 @@ import net.minecraft.Entity;
 import net.minecraft.EntityTrackerEntry;
 import net.minecraft.Packet;
 import net.minecraft.Packet23VehicleSpawn;
-import net.oilcake.mitelros.entity.misc.EntityWandFireBall;
-import net.oilcake.mitelros.entity.misc.EntityWandIceBall;
-import net.oilcake.mitelros.entity.misc.EntityWandShockWave;
-import net.oilcake.mitelros.entity.misc.EntityWandSlimeBall;
+import net.oilcake.mitelros.entity.misc.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,6 +28,9 @@ public abstract class EntityTrackerEntryMixin {
         }
         if (this.myEntity instanceof EntityWandSlimeBall) {
             cir.setReturnValue(new Packet23VehicleSpawn(this.myEntity, 103));
+        }
+        if (this.myEntity instanceof EntityWandPearl) {
+            cir.setReturnValue(new Packet23VehicleSpawn(this.myEntity, 104));
         }
     }
 }

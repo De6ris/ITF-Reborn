@@ -26,14 +26,8 @@ public class BlockLeavesMixin extends BlockLeavesBase {
         return (new Random()).nextInt(2) == 0 ? par2 : Items.lemon;
     }
 
-    @ModifyConstant(method = "dropBlockAsEntityItem", constant = @Constant(intValue = 3))
-    private int itfLeafKind(int constant) {
-        return 4;
-    }
-
-    @ModifyArg(method = "dropBlockAsEntityItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/BlockLeaves;dropBlockAsEntityItem(Lnet/minecraft/BlockBreakInfo;IIIF)I"), index = 1)
+    @ModifyArg(method = "dropBlockAsEntityItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/BlockLeaves;dropBlockAsEntityItem(Lnet/minecraft/BlockBreakInfo;IIIF)I", ordinal = 3), index = 1)
     private int addLemon(int par2) {
-        if (par2 != Item.banana.itemID) return par2;
         return (new Random()).nextInt(2) == 0 ? par2 : Items.lemon.itemID;
     }
 }

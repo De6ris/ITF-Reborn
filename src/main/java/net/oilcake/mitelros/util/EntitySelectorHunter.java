@@ -2,7 +2,7 @@ package net.oilcake.mitelros.util;
 
 import net.minecraft.Entity;
 import net.minecraft.IEntitySelector;
-import net.oilcake.mitelros.entity.misc.EntityUndeadGuard;
+import net.oilcake.mitelros.entity.mob.EntityUndeadGuard;
 
 public final class EntitySelectorHunter implements IEntitySelector {
     public boolean isEntityApplicable(Entity var1) {

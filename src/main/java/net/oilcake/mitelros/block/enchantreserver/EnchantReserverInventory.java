@@ -2,7 +2,7 @@ package net.oilcake.mitelros.block.enchantreserver;
 
 import net.minecraft.*;
 
-public class EnchantReserverSlots extends InventoryBasic {
+public class EnchantReserverInventory extends InventoryBasic {
 
     public TileEntityEnchantReserver tileEntityEnchantReserver;
 
@@ -30,7 +30,7 @@ public class EnchantReserverSlots extends InventoryBasic {
         }
     }
 
-    public EnchantReserverSlots(IInventory iInventory) {
+    public EnchantReserverInventory(IInventory iInventory) {
         super("EnchantReserver", true, 2);
         if (iInventory instanceof TileEntityEnchantReserver) {
             this.tileEntityEnchantReserver = (TileEntityEnchantReserver) iInventory;

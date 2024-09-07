@@ -1,7 +1,6 @@
 package net.oilcake.mitelros.block.enchantreserver;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.item.Items;
 
 import java.util.Arrays;
 
@@ -12,7 +11,7 @@ public class TileEntityEnchantReserver extends TileEntity implements ISidedInven
 
     private static final int[] slots_sides = new int[]{1};
 
-    private final EnchantReserverSlots slots = new EnchantReserverSlots(this);
+    private final EnchantReserverInventory inventory = new EnchantReserverInventory(this);
 
     private final ItemStack[] items = new ItemStack[2];
 
@@ -36,8 +35,8 @@ public class TileEntityEnchantReserver extends TileEntity implements ISidedInven
         return this.items[index];
     }
 
-    public EnchantReserverSlots getSlots() {
-        return this.slots;
+    public EnchantReserverInventory getInventory() {
+        return this.inventory;
     }
 
     private int EXP;
@@ -52,7 +51,7 @@ public class TileEntityEnchantReserver extends TileEntity implements ISidedInven
         this.EXP = exp;
     }
 
-    public int getMAXEXP() {
+    public int getMaxEXP() {
         return getStorage() + getLaunchEXP();
     }
 
@@ -83,90 +82,53 @@ public class TileEntityEnchantReserver extends TileEntity implements ISidedInven
 
     @Override
     public void updateEntity() {
-        this.slots.updateInfo();
+        this.inventory.updateInfo();
         if (!(getWorldObj()).isRemote) {
-            if (getEXP() != this.last_EXP)
+            if (this.EXP != this.last_EXP)
                 this.last_EXP = this.EXP;
-            ItemStack inputStack = this.slots.getInPutStack();
+            ItemStack inputStack = this.inventory.getInPutStack();
             if (inputStack != null) {
-                this.input(inputStack);
+                this.checkInput(inputStack);
             }
-            ItemStack outputStack = this.slots.getOutPutStack();
+            ItemStack outputStack = this.inventory.getOutPutStack();
             if (outputStack != null) {
-                this.output(outputStack);
+                this.checkOutput(outputStack);
             }
         }
     }
 
-    public void output(ItemStack outputStack) {
-        if (getEXP() >= 200 &&
-                outputStack.itemID == Item.potion.itemID && outputStack.stackSize * 200 <= getEXP() - getLaunchEXP()) {
+    public void checkOutput(ItemStack outputStack) {
+        if (this.EXP >= 200 && outputStack.itemID == Item.potion.itemID && outputStack.stackSize * 200 <= getEXP() - getLaunchEXP()) {
             this.EXP -= 200 * outputStack.stackSize;
-            this.slots.getOutPut().putStack(Item.expBottle.getItemStackForStatsIcon());
+            this.inventory.getOutPut().putStack(Item.expBottle.getItemStackForStatsIcon());
+            return;
         }
-        if (getEXP() >= 5 &&
-                outputStack.itemID == Item.copperNugget.itemID && outputStack.stackSize * 5 <= getEXP() - getLaunchEXP()) {
-            this.EXP -= 5 * outputStack.stackSize;
-            this.slots.getOutPut().putStack(new ItemStack(Item.coinCopper, outputStack.stackSize));
-        }
-        if (getEXP() >= 25 &&
-                outputStack.itemID == Item.silverNugget.itemID && outputStack.stackSize * 25 <= getEXP() - getLaunchEXP()) {
-            this.EXP -= 25 * outputStack.stackSize;
-            this.slots.getOutPut().putStack(new ItemStack(Item.coinSilver, outputStack.stackSize));
-        }
-        if (getEXP() >= 50 &&
-                outputStack.itemID == Items.nickelNugget.itemID && outputStack.stackSize * 50 <= getEXP() - getLaunchEXP()) {
-            this.EXP -= 50 * outputStack.stackSize;
-            this.slots.getOutPut().putStack(new ItemStack(Items.nickelCoin, outputStack.stackSize));
-        }
-        if (getEXP() >= 100 &&
-                outputStack.itemID == Item.goldNugget.itemID && outputStack.stackSize * 100 <= getEXP() - getLaunchEXP()) {
-            this.EXP -= 100 * outputStack.stackSize;
-            this.slots.getOutPut().putStack(new ItemStack(Item.coinGold, outputStack.stackSize));
-        }
-        if (getEXP() >= 500 &&
-                outputStack.itemID == Item.ancientMetalNugget.itemID && outputStack.stackSize * 500 <= getEXP() - getLaunchEXP()) {
-            this.EXP -= 500 * outputStack.stackSize;
-            this.slots.getOutPut().putStack(new ItemStack(Item.coinAncientMetal, outputStack.stackSize));
-        }
-        if (getEXP() >= 2500 &&
-                outputStack.itemID == Item.mithrilNugget.itemID && outputStack.stackSize * 2500 <= getEXP() - getLaunchEXP()) {
-            this.EXP -= 2500 * outputStack.stackSize;
-            this.slots.getOutPut().putStack(new ItemStack(Item.coinMithril, outputStack.stackSize));
-        }
-        if (getEXP() >= 5000 &&
-                outputStack.itemID == Items.tungstenNugget.itemID && outputStack.stackSize * 5000 <= getEXP() - getLaunchEXP()) {
-            this.EXP -= 5000 * outputStack.stackSize;
-            this.slots.getOutPut().putStack(new ItemStack(Items.tungstenCoin, outputStack.stackSize));
-        }
-        if (getEXP() >= 10000 &&
-                outputStack.itemID == Item.adamantiumNugget.itemID && outputStack.stackSize * 10000 <= getEXP() - getLaunchEXP()) {
-            this.EXP -= 10000 * outputStack.stackSize;
-            this.slots.getOutPut().putStack(new ItemStack(Item.coinAdamantium, outputStack.stackSize));
+        if (outputStack.getItem() instanceof ItemNugget nugget) {
+            ItemCoin coin = ItemCoin.getForMaterial(nugget.getExclusiveMaterial());
+            if (coin == null) return;
+            int experienceValue = coin.getExperienceValue();
+            if (experienceValue == 0) return;
+            if (this.EXP >= outputStack.stackSize * experienceValue) {
+                this.EXP -= outputStack.stackSize * experienceValue;
+                this.inventory.getOutPut().putStack(new ItemStack(coin, outputStack.stackSize));
+            }
         }
     }
 
-    public void input(ItemStack inputStack) {
-        if (inputStack.itemID == Item.diamond.itemID && inputStack.stackSize * 500 + getEXP() <= getMAXEXP()) {
-            int size = inputStack.stackSize;
-            this.EXP += 500 * size;
-            this.slots.getInPut().putStack(null);
-        } else if (inputStack.itemID == Item.emerald.itemID && inputStack.stackSize * 250 + getEXP() <= getMAXEXP()) {
-            int size = inputStack.stackSize;
-            this.EXP += 250 * size;
-            this.slots.getInPut().putStack(null);
-        } else if (inputStack.itemID == Item.netherQuartz.itemID && inputStack.stackSize * 50 + getEXP() <= getMAXEXP()) {
-            int size = inputStack.stackSize;
-            this.EXP += 50 * size;
-            this.slots.getInPut().putStack(null);
-        } else if (inputStack.itemID == Item.dyePowder.itemID && inputStack.getItemSubtype() == 4 && inputStack.stackSize * 25 + getEXP() <= getMAXEXP()) {
-            int size = inputStack.stackSize;
-            this.EXP += 25 * size;
-            this.slots.getInPut().putStack(null);
-        } else if (inputStack.itemID == Items.shardAzurite.itemID && inputStack.stackSize * 5 + getEXP() <= getMAXEXP()) {
-            int size = inputStack.stackSize;
-            this.EXP += 5 * size;
-            this.slots.getInPut().putStack(null);
+    public void checkInput(ItemStack inputStack) {
+        int xpUnit = ItemRock.getExperienceValueWhenSacrificed(inputStack);
+        if (xpUnit != 0 && inputStack.stackSize * xpUnit + this.EXP <= this.getMaxEXP()) {
+            this.EXP += inputStack.stackSize * xpUnit;
+            this.inventory.getInPut().putStack(null);
+        }
+    }
+
+    public void dropXP(World world, int x, int y, int z) {
+        int var3;
+//        world.playAuxSFX(2002, x, y, z, 0);
+        for (int var2 = this.EXP; var2 > 0; var2 -= var3) {
+            var3 = EntityXPOrb.getXPSplit(var2);
+            world.spawnEntityInWorld(new EntityXPOrb(world, x, y, z, var3));
         }
     }
 
@@ -221,7 +183,7 @@ public class TileEntityEnchantReserver extends TileEntity implements ISidedInven
 
     @Override
     public void openChest() {
-        this.slots.updateInfo();
+        this.inventory.updateInfo();
         this.isUsing = true;
     }
 
@@ -229,14 +191,14 @@ public class TileEntityEnchantReserver extends TileEntity implements ISidedInven
     public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readFromNBT(par1NBTTagCompound);
         this.EXP = par1NBTTagCompound.getInteger("EXP");
-        this.slots.readFromNBT(par1NBTTagCompound, this);
+        this.inventory.readFromNBT(par1NBTTagCompound, this);
     }
 
     @Override
     public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("EXP", this.EXP);
-        this.slots.writeToNBT(par1NBTTagCompound);
+        this.inventory.writeToNBT(par1NBTTagCompound);
     }
 
     @Override
@@ -246,11 +208,7 @@ public class TileEntityEnchantReserver extends TileEntity implements ISidedInven
 
     @Override
     public boolean isItemValidForSlot(int var1, ItemStack var2) {
-        return this.slots.isItemValidForSlot(var1, var2);
-    }
-
-    public void dropAllItems() {
-        this.slots.dropItems(this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        return this.inventory.isItemValidForSlot(var1, var2);
     }
 
     @Override

@@ -7,7 +7,7 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.block.api.ITFWorkbench;
-import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
+import net.oilcake.mitelros.block.enchantreserver.EnchantReserverInventory;
 import net.oilcake.mitelros.block.enchantreserver.GuiEnchantReserver;
 import net.oilcake.mitelros.item.minePocket.GuiMinePocketInventory;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,7 +27,7 @@ public abstract class ClientPlayerMixin extends AbstractClientPlayer implements 
     }
 
     @Override
-    public void itf$DisplayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
+    public void itf$DisplayGUIEnchantReserver(int x, int y, int z, EnchantReserverInventory slots) {
         this.mc.displayGuiScreen(new GuiEnchantReserver(this, x, y, z, slots));
     }
 

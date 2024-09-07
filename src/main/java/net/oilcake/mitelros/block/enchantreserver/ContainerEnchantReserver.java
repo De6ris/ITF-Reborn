@@ -12,7 +12,7 @@ public class ContainerEnchantReserver extends Container {
     @Nullable
     private final TileEntityEnchantReserver tileEntityEnchantReserver;
 
-    private final EnchantReserverSlots slots;
+    private final EnchantReserverInventory inventory;
 
     private final int blockX;
 
@@ -20,26 +20,28 @@ public class ContainerEnchantReserver extends Container {
 
     private final int blockZ;
 
-    public ContainerEnchantReserver(EnchantReserverSlots slots, EntityPlayer player, int x, int y, int z) {
+    public ContainerEnchantReserver(EnchantReserverInventory inventory, EntityPlayer player, int x, int y, int z) {
         super(player);
         this.blockX = x;
         this.blockY = y;
         this.blockZ = z;
-        slots.initSlots(this);
-        this.slots = slots;
+        inventory.initSlots(this);
+        this.inventory = inventory;
         if (!(player.getWorld()).isRemote) {
             this.tileEntityEnchantReserver = (TileEntityEnchantReserver) player.getWorldServer().getBlockTileEntity(x, y, z);
         } else {
             this.tileEntityEnchantReserver = null;
         }
-        onCraftMatrixChanged(slots);
+        onCraftMatrixChanged(inventory);
         int index;
         for (index = 0; index < 3; index++) {
-            for (int var8 = 0; var8 < 9; var8++)
+            for (int var8 = 0; var8 < 9; var8++) {
                 addSlotToContainer(new Slot(player.inventory, var8 + index * 9 + 9, 8 + var8 * 18, 84 + index * 18));
+            }
         }
-        for (index = 0; index < 9; index++)
+        for (index = 0; index < 9; index++) {
             addSlotToContainer(new Slot(player.inventory, index, 8 + index * 18, 142));
+        }
     }
 
     @Override
@@ -49,14 +51,14 @@ public class ContainerEnchantReserver extends Container {
         if (slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
-            if (index < this.slots.getSize()) {
-                if (!mergeItemStack(itemstack1, this.slots.getSize(), this.inventorySlots.size(), false))
+            if (index < this.inventory.getSize()) {
+                if (!mergeItemStack(itemstack1, this.inventory.getSize(), this.inventorySlots.size(), false))
                     return null;
             } else if (itemstack1.getItem() instanceof net.minecraft.ItemPotion) {
-                if (!mergeItemStack(itemstack1, this.slots.getInputIndex(), this.slots.getInputIndex() + 1, false))
+                if (!mergeItemStack(itemstack1, this.inventory.getInputIndex(), this.inventory.getInputIndex() + 1, false))
                     return null;
             } else if (itemstack1.getItem() instanceof net.minecraft.ItemRock &&
-                    !mergeItemStack(itemstack1, this.slots.getOutputIndex(), this.slots.getOutputIndex() + 1, false)) {
+                    !mergeItemStack(itemstack1, this.inventory.getOutputIndex(), this.inventory.getOutputIndex() + 1, false)) {
                 return null;
             }
             if (itemstack1.stackSize == 0) {
@@ -75,7 +77,7 @@ public class ContainerEnchantReserver extends Container {
     public void onContainerClosed(EntityPlayer par1EntityPlayer) {
         super.onContainerClosed(par1EntityPlayer);
         if (!this.world.isRemote)
-            this.slots.onContainerClosed();
+            this.inventory.onContainerClosed();
     }
 
     public void updateInfo() {

@@ -8,6 +8,7 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.AnvilStatus;
 import net.oilcake.mitelros.api.ITFContainerRepair;
 import net.oilcake.mitelros.api.ITFEnchantment;
+import net.oilcake.mitelros.config.ITFConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -59,7 +60,7 @@ public abstract class ContainerRepairMixin extends Container implements ITFConta
         int xpDifference = 0;
         ItemStack item_stack_in_first_slot = this.inputSlots.getStackInSlot(0);
         Map enchantmentOnItem = EnchantmentHelper.getEnchantmentsMap(item_stack_in_first_slot);
-        int xpMultiplier = enchantmentOnItem.isEmpty() ? 20 : 100;// if not enchanted, we take less
+        int xpMultiplier = enchantmentOnItem.isEmpty() ? ITFConfig.AnvilXPMultiplierInit.getIntegerValue() : ITFConfig.AnvilXPMultiplier.getIntegerValue();// if not enchanted, we take less
         for (int i = 0; i < enchantmentsOfBook.tagCount(); ++i) {
             NBTTagCompound tag = (NBTTagCompound) enchantmentsOfBook.tagAt(i);
             int id = tag.getShort("id");
@@ -107,7 +108,7 @@ public abstract class ContainerRepairMixin extends Container implements ITFConta
         Map mapBefore = EnchantmentHelper.getEnchantmentsMap(item_stack_in_first_slot);
         int xpReward = 0;
         for (Object o : mapBefore.keySet()) {
-            xpReward += calculateEquivalentLevel((int) o, (int) mapBefore.get(o)) * 10;
+            xpReward += calculateEquivalentLevel((int) o, (int) mapBefore.get(o)) * ITFConfig.AnvilXPMultiplierReward.getIntegerValue();
         }
         this.xpDifference = xpReward;
     }
@@ -129,6 +130,6 @@ public abstract class ContainerRepairMixin extends Container implements ITFConta
         int original = enchantment.hasLevels() ?
                 enchantment.getMinEnchantmentLevelsCost(level) :
                 enchantment.getMinEnchantmentLevelsCost();
-        return original * (((ITFEnchantment) enchantment).isTreasure() ? 10 : 2);
+        return original * (((ITFEnchantment) enchantment).isTreasure() ? 2 * ITFConfig.AnvilXPMultiplierTreasure.getIntegerValue() : 2);
     }
 }

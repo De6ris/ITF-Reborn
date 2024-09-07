@@ -28,7 +28,6 @@ public class ITFConfig extends SimpleConfigs {
     public static final ConfigBooleanChallenge TagInvisibleFollower = new ConfigBooleanChallenge("无形跟随", "更低层数的爬行者将被替换为潜伏爬行者", 1);
     public static final ConfigBooleanChallenge TagUnstableConvection = new ConfigBooleanChallenge("不稳定对流", "闪电的触发频率提升300%", 1);
     public static final ConfigBooleanChallenge TagEternalRaining = new ConfigBooleanChallenge("阴雨连绵", "雨的最长持续时间提升300%，最短持续时间提升700%", 2);
-    public static final ConfigBooleanChallenge TagDeadGeothermy = new ConfigBooleanChallenge("地热失效", "地下世界成为寒冷生物群系, 更改地下世界基岩生成, 同时生成绿宝石, 重启游戏生效", 2);
     public static final ConfigBooleanChallenge TagApocalypse = new ConfigBooleanChallenge("灾厄余生", "不再自然生成可提供肉类的动物", 3);
     public static final ConfigBooleanChallenge TagWorshipDark = new ConfigBooleanChallenge("崇尚黑暗", "僵尸将尝试摧毁其沿途可见的火把", 2);
     public static final ConfigBooleanChallenge TagMiracleDisaster = new ConfigBooleanChallenge("迷幻危机", "主世界出现更多种类怪物的刷怪笼", 1);
@@ -46,12 +45,19 @@ public class ITFConfig extends SimpleConfigs {
     public static final ConfigBooleanChallenge TagArmament = new ConfigBooleanChallenge("战备军械", "玩家的护甲值在耐久低于25%时才会减少，且不再受到低于自身护甲值的伤害", -2);
     public static final ConfigBooleanChallenge TagWorkOfHeaven = new ConfigBooleanChallenge("巧夺天工", "品质装备的效果增强一倍", -2);
     public static final ConfigBooleanChallenge TagTotemBlessing = new ConfigBooleanChallenge("图腾祝福", "加强图腾的正面效果", -2);
-
+    public static final ConfigBooleanChallenge TagDeadGeothermy = new ConfigBooleanChallenge("地热失效", "地下世界成为寒冷生物群系, 更改地下世界基岩生成, 同时生成绿宝石, 重启游戏生效", -2);
 
     /* experimentalConfig */
     public static final ConfigBoolean TagCreaturesV2 = new ConfigBoolean("新动物生成机制", "重启游戏生效");
     public static final ConfigBoolean TagBenchingV2 = new ConfigBoolean("工作站废料回收");
     public static final ConfigBoolean FinalChallenge = new ConfigBoolean("终极挑战模式");
+
+    // args
+    public static final ConfigInteger AnvilXPMultiplier = new ConfigInteger("砧打附魔书经验需求乘子", 100, 1, Integer.MAX_VALUE, false, null);
+    public static final ConfigInteger AnvilXPMultiplierInit = new ConfigInteger("砧打附魔书经验需求乘子(首次)", 20, 1, Integer.MAX_VALUE, false, null);
+    public static final ConfigInteger AnvilXPMultiplierReward = new ConfigInteger("砧袪魔经验返还乘子", 10, 1, Integer.MAX_VALUE, false, null);
+    public static final ConfigInteger AnvilXPMultiplierTreasure = new ConfigInteger("宝藏附魔经验倍率乘子", 5, 1, Integer.MAX_VALUE, false, null);
+    public static final ConfigInteger TotemKnowledgeLimit = new ConfigInteger("智识图腾经验上限", 30000, 1, Integer.MAX_VALUE, false, null);
 
 
     //misc
@@ -65,6 +71,7 @@ public class ITFConfig extends SimpleConfigs {
     public static final List<ConfigBase<?>> luck;
     public static final List<ConfigBase<?>> misc;
     public static final List<ConfigBase<?>> experimental;
+    public static final List<ConfigBase<?>> args;
     public static final List<ConfigBase<?>> values;
 
     public ITFConfig(String name, List<ConfigHotkey> hotkeys, List<ConfigBase<?>> values) {
@@ -75,20 +82,23 @@ public class ITFConfig extends SimpleConfigs {
     public static final ITFConfig Instance;
 
     static {
-        spite = List.of(TagUnstableConvection, TagDryDilemma, TagHeatStroke, TagDeadGeothermy, TagRejection, TagEternalRaining, TagApocalypse, TagDimensionInvade, TagCorrosion, TagBurnOut);
+        spite = List.of(TagUnstableConvection, TagDryDilemma, TagHeatStroke, TagRejection, TagEternalRaining, TagApocalypse, TagDimensionInvade, TagCorrosion, TagBurnOut);
         enemy = List.of(TagMiracleDisaster, TagInvisibleFollower, TagUnderAlliance, TagPseudoVision, TagInstinctSurvival, TagFallenInMine, TagBattleSuffer, TagWorshipDark, TagDemonDescend, TagPillager);
-        luck = List.of(TagDigest, TagArmament, TagWorkOfHeaven, TagTotemBlessing);
+        luck = List.of(TagDigest, TagArmament, TagWorkOfHeaven, TagTotemBlessing, TagDeadGeothermy);
         challenge = new ArrayList<>();
         challenge.addAll(spite);
         challenge.addAll(enemy);
         challenge.addAll(luck);
 
         experimental = List.of(TagCreaturesV2, TagBenchingV2, FinalChallenge);
+        args = List.of(AnvilXPMultiplier, AnvilXPMultiplierInit, AnvilXPMultiplierReward, AnvilXPMultiplierTreasure, TotemKnowledgeLimit);
         misc = List.of(FixedID, ItemIDStart, BlockIDStart);
+
 
         values = new ArrayList<>();
         values.addAll(challenge);
         values.addAll(experimental);
+        values.addAll(args);
         values.addAll(misc);
 
         Instance = new ITFConfig(ITFStart.MOD_ID, null, values);
@@ -100,6 +110,7 @@ public class ITFConfig extends SimpleConfigs {
         configTabs.add(new ConfigTab("疯狂劲敌", enemy));
         configTabs.add(new ConfigTab("天赐福星", luck));
         configTabs.add(new ConfigTab("实验性玩法", experimental));
+        configTabs.add(new ConfigTab("参数配置", args));
         configTabs.add(new ConfigTab("杂项", misc));
     }
 
@@ -141,6 +152,7 @@ public class ITFConfig extends SimpleConfigs {
         ConfigUtils.writeConfigBase(challenge, "疯狂劲敌", enemy);
         ConfigUtils.writeConfigBase(challenge, "天赐福星", luck);
         ConfigUtils.writeConfigBase(root, "实验性玩法", experimental);
+        ConfigUtils.writeConfigBase(root, "参数配置", args);
         ConfigUtils.writeConfigBase(root, "杂项", misc);
         JsonUtils.writeJsonToFile(root, this.optionsFile);
     }
@@ -158,6 +170,7 @@ public class ITFConfig extends SimpleConfigs {
                 ConfigUtils.readConfigBase(challenge, "疯狂劲敌", enemy);
                 ConfigUtils.readConfigBase(challenge, "天赐福星", luck);
                 ConfigUtils.readConfigBase(root, "实验性玩法", experimental);
+                ConfigUtils.readConfigBase(root, "参数配置", args);
                 ConfigUtils.readConfigBase(root, "杂项", misc);
             }
             if (FixedID.getBooleanValue()) {

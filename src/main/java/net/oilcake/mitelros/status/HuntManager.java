@@ -3,7 +3,7 @@ package net.oilcake.mitelros.status;
 import net.minecraft.Damage;
 import net.minecraft.EntityPlayer;
 import net.minecraft.EnumEntityFX;
-import net.oilcake.mitelros.entity.misc.EntityUndeadGuard;
+import net.oilcake.mitelros.entity.mob.EntityUndeadGuard;
 import net.oilcake.mitelros.util.DamageSourceExtend;
 
 public class HuntManager {

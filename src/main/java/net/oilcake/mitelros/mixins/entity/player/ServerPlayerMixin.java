@@ -4,7 +4,7 @@ import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.ContainerEnchantReserver;
-import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
+import net.oilcake.mitelros.block.enchantreserver.EnchantReserverInventory;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.minePocket.ContainerMinePocket;
 import net.oilcake.mitelros.network.S2COpenWindow;
@@ -104,7 +104,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     }
 
     @Override
-    public void itf$DisplayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
+    public void itf$DisplayGUIEnchantReserver(int x, int y, int z, EnchantReserverInventory slots) {
         incrementWindowID();
         TileEntity tile_entity = this.worldObj.getBlockTileEntity(x, y, z);
         this.playerNetServerHandler.sendPacketToPlayer((new S2COpenWindow(this.currentWindowId, S2COpenWindow.EnumInventoryType.EnchantReserver, tile_entity.getCustomInvName(), 9, tile_entity.hasCustomName())).setCoords(x, y, z));// 9 is dummy

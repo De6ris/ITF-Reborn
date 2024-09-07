@@ -520,9 +520,9 @@ public class Items extends Item {
     }
 
     static {
-        ((ITFItem) totemOfKnowledge).itf$SetExtraInfo("使用后提升20%经验");
-        ((ITFItem) totemOfFlattening).itf$SetExtraInfo("据说能够平整15x15的土地, 在图腾得到祝福时, 能加强为29x29的范围");
-        ((ITFItem) frostRod).itf$SetExtraInfo("似乎能提升触及距离, 还能搓成粉?");
-        ((ITFItem) enderRod).itf$SetExtraInfo("似乎能提升触及距离, 还能酿药?");
+        ((ITFItem) totemOfKnowledge).itf$SetExtraInfo("itf.item.totem_of_knowledge.info");
+        ((ITFItem) totemOfFlattening).itf$SetExtraInfo("itf.item.totem_of_flattening.info");
+        ((ITFItem) frostRod).itf$SetExtraInfo("itf.item.frost_rod.info");
+        ((ITFItem) enderRod).itf$SetExtraInfo("itf.item.ender_rod.info");
     }
 }

@@ -6,21 +6,38 @@
     "fishmodloader": ">=3.3.2",
     "many-lib": ">=2.0.0"
   },
+  "recommends": {
+    "emi": ">=1.0.5"
+  },
   "environment": "*",
   "name": "MITE-ITF-Reborn",
-  "description": "",
+  "description": "本模组是MITE-ITF移植到最新FML版本的分支, 移植基于FML1.4.0的ITF-R14. 本模组的版本号于H14开始.\n本模组需要ManyLib模组作为前置!",
+  "icon": "assets/icon.png",
   "authors": [
     "Huix",
     "Rizur",
     "Debris",
     "Xy_Lose"
   ],
+  "contact": {
+    "homepage": "https://github.com/De6ris/ITF-Reborn",
+    "issues": "https://github.com/De6ris/ITF-Reborn",
+    "sources": "https://github.com/De6ris/ITF-Reborn",
+    "qq": "2838369930",
+    "qqGroup": "661223990"
+  },
   "entrypoints": {
     "preLaunch": [
       "net.oilcake.mitelros.EarlyRiser"
     ],
     "main": [
       "net.oilcake.mitelros.ITFStart"
+    ],
+    "emi": [
+      "net.oilcake.mitelros.compat.EmiPluginITF"
+    ],
+    "modmenu": [
+      "net.oilcake.mitelros.compat.ModMenuImpl"
     ]
   },
   "mixins": [

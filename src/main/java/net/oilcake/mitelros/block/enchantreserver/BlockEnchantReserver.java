@@ -2,7 +2,7 @@ package net.oilcake.mitelros.block.enchantreserver;
 
 import net.minecraft.*;
 
-public class BlockEnchantReserver extends Block implements ITileEntityProvider {
+public class BlockEnchantReserver extends BlockContainer {
     private Icon TEXTURE_TOP;
 
     private Icon TEXTURE_BOTTOM;
@@ -45,16 +45,13 @@ public class BlockEnchantReserver extends Block implements ITileEntityProvider {
     }
 
     @Override
-    public boolean isPortable(World world, EntityLivingBase entity_living_base, int x, int y, int z) {
-        return true;
-    }
-
-    @Override
     public void breakBlock(World world, int x, int y, int z, int block_id, int metadata) {
-        super.breakBlock(world, x, y, z, block_id, metadata);
         TileEntityEnchantReserver tileEntityEnchantReserver = (TileEntityEnchantReserver) world.getBlockTileEntity(x, y, z);
-        tileEntityEnchantReserver.dropAllItems();
-        world.removeBlockTileEntity(x, y, z);
+        if (tileEntityEnchantReserver != null) {
+            tileEntityEnchantReserver.getInventory().dropItems(world, x, y, z);
+            tileEntityEnchantReserver.dropXP(world, x, y, z);
+        }
+        super.breakBlock(world, x, y, z, block_id, metadata);
     }
 
     @Override
@@ -64,7 +61,7 @@ public class BlockEnchantReserver extends Block implements ITileEntityProvider {
         if (player.onServer()) {
             TileEntityEnchantReserver tile_entity = (TileEntityEnchantReserver) world.getBlockTileEntity(x, y, z);
             if (tile_entity != null && !tile_entity.isUsing()) {
-                player.itf$DisplayGUIEnchantReserver(x, y, z, tile_entity.getSlots());
+                player.itf$DisplayGUIEnchantReserver(x, y, z, tile_entity.getInventory());
             } else {
                 return false;
             }

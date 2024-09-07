@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.util;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
@@ -49,14 +50,15 @@ public class FoodDataList {
 
     public static void onFoodEaten(ItemStack item_stack, EntityPlayer player) {
         Random rand = player.rand;
-        if (item_stack.itemID == Item.rottenFlesh.itemID)
+        Item item = item_stack.getItem();
+        if (item == Item.rottenFlesh)
             player.addPotionEffect(new PotionEffect(Potion.confusion.id, 600, 0));
         if (item_stack.hasMaterial(Material.bread) || item_stack.hasMaterial(Material.desert))
             player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
-        if (rand.nextFloat() < chanceOfDecreaseWater(item_stack.itemID)) {
+        if (rand.nextFloat() < chanceOfDecreaseWater(item)) {
             player.itf$AddWater(-1);
         }
-        if (item_stack.getItem() instanceof ItemMeat meat) {
+        if (item instanceof ItemMeat meat) {
             if (meat.is_cooked) {
                 player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
             } else {
@@ -68,9 +70,9 @@ public class FoodDataList {
         }
     }
 
-    public static float chanceOfDecreaseWater(int itemID) {
-        if (itemID == Items.agave.itemID) return ITFConfig.TagDryDilemma.getBooleanValue() ? 0.8F : 0.6F;
-        if (itemID == Items.glowberries.itemID) return ITFConfig.TagDryDilemma.getBooleanValue() ? 0.5F : 0.0F;
+    public static float chanceOfDecreaseWater(Item item) {
+        if (item == Items.agave) return ITFConfig.TagDryDilemma.getBooleanValue() ? 0.8F : 0.6F;
+        if (item == Items.glowberries) return ITFConfig.TagDryDilemma.getBooleanValue() ? 0.5F : 0.0F;
         return 0.0F;
     }
 }

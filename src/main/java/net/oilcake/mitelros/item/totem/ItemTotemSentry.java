@@ -3,7 +3,7 @@ package net.oilcake.mitelros.item.totem;
 import net.minecraft.EntityPlayer;
 import net.minecraft.EnumEntityFX;
 import net.minecraft.Material;
-import net.oilcake.mitelros.entity.misc.EntityLongdeadSentry;
+import net.oilcake.mitelros.entity.mob.EntityLongdeadSentry;
 
 public class ItemTotemSentry  extends ItemTotem{
     public ItemTotemSentry(int id) {

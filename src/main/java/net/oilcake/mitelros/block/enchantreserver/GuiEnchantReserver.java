@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.block.enchantreserver;
 
 import net.minecraft.*;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 public class GuiEnchantReserver extends GuiContainer {
@@ -8,7 +9,7 @@ public class GuiEnchantReserver extends GuiContainer {
 
     private final TileEntityEnchantReserver tileEntityEnchantReserver = new TileEntityEnchantReserver();
 
-    public GuiEnchantReserver(EntityPlayer player, int x, int y, int z, EnchantReserverSlots slots) {
+    public GuiEnchantReserver(EntityPlayer player, int x, int y, int z, EnchantReserverInventory slots) {
         super(new ContainerEnchantReserver(slots, player, x, y, z));
     }
 
@@ -19,11 +20,29 @@ public class GuiEnchantReserver extends GuiContainer {
         if (slot == null) return;
         if (slot.getHasStack()) return;
         if (slot.slotNumber > 1) return;
-        String toDraw = "请放置水瓶, 金属粒等能够储存经验的物品";
+        String tooltip;
         if (slot.slotNumber == 0) {
-            toDraw = "请放置钻石等具有经验的物品";
+            tooltip = I18n.getString("gui.enchantReserver.slotTop.tooltip");
+        } else {
+            tooltip = I18n.getString("gui.enchantReserver.slotBottom.tooltip");
         }
-        this.drawCreativeTabHoveringText(EnumChatFormatting.GOLD + toDraw, mouse_x, mouse_y);
+        this.drawCreativeTabHoveringText(EnumChatFormatting.GOLD + tooltip, mouse_x, mouse_y);
+    }
+
+    @Override
+    protected void mouseClicked(int par1, int par2, int par3) {
+        super.mouseClicked(par1, par2, par3);
+        if (par3 != 0 || !Keyboard.isKeyDown(42)) return;// shift and left click
+        Slot mouseOver = this.theSlot;
+        if (mouseOver != null && mouseOver.getHasStack() && mouseOver.slotNumber > 1) {
+            ItemStack stack = mouseOver.getStack();
+            if (stack != null) {
+                this.mc.playerController.windowClick(this.inventorySlots.windowId, mouseOver.slotNumber, 0, 0, this.mc.thePlayer);
+                this.mc.playerController.windowClick(this.inventorySlots.windowId, 0, 0, 0, this.mc.thePlayer);
+                this.mc.playerController.windowClick(this.inventorySlots.windowId, 1, 0, 0, this.mc.thePlayer);
+                this.mc.playerController.windowClick(this.inventorySlots.windowId, mouseOver.slotNumber, 0, 0, this.mc.thePlayer);
+            }
+        }
     }
 
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
@@ -42,7 +61,7 @@ public class GuiEnchantReserver extends GuiContainer {
         int var7 = this.guiTop;
         drawTexturedModalRect(var4, var5, 0, 0, this.xSize, this.ySize);
         int exp = Math.max(0, this.tileEntityEnchantReserver.getEXP() - this.tileEntityEnchantReserver.getLaunchEXP());
-        int maxExp = this.tileEntityEnchantReserver.getMAXEXP() - this.tileEntityEnchantReserver.getLaunchEXP();
+        int maxExp = this.tileEntityEnchantReserver.getMaxEXP() - this.tileEntityEnchantReserver.getLaunchEXP();
         int r;
         int g;
         int b;

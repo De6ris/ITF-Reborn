@@ -2,7 +2,7 @@ package net.oilcake.mitelros.network;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
+import net.oilcake.mitelros.block.enchantreserver.EnchantReserverInventory;
 import net.oilcake.mitelros.item.minePocket.MinePocketInventory;
 
 import java.io.DataInput;
@@ -81,7 +81,7 @@ public class S2COpenWindow extends Packet100OpenWindow {
 
         switch (this.enumInventoryType) {
             case EnchantReserver -> {
-                ((ITFPlayer) player).itf$DisplayGUIEnchantReserver(this.x, this.y, this.z, new EnchantReserverSlots(new InventoryBasic(this.windowTitle, this.useProvidedWindowTitle, this.slotsCount)));
+                ((ITFPlayer) player).itf$DisplayGUIEnchantReserver(this.x, this.y, this.z, new EnchantReserverInventory(new InventoryBasic(this.windowTitle, this.useProvidedWindowTitle, this.slotsCount)));
                 player.openContainer.windowId = this.windowId;
             }
             case MinePocket -> {

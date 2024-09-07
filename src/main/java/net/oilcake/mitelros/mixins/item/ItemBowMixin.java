@@ -35,7 +35,7 @@ public abstract class ItemBowMixin extends Item {
     private Material reinforcement_material;
 
     @Inject(method = "<clinit>", at = @At("TAIL"))
-    private static void addITFBowlMaterials(CallbackInfo ci) {
+    private static void addITFArrowMaterials(CallbackInfo ci) {
         Material[] original = possible_arrow_materials;
         Material[] expanded = new Material[original.length + 3];
         System.arraycopy(original, 0, expanded, 0, original.length);

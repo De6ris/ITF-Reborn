@@ -1,14 +1,15 @@
 package net.oilcake.mitelros.api;
 
 import net.minecraft.IInventory;
-import net.oilcake.mitelros.block.enchantreserver.EnchantReserverSlots;
+import net.oilcake.mitelros.block.enchantreserver.EnchantReserverInventory;
 import net.oilcake.mitelros.status.*;
 
 public interface ITFPlayer {
-    default void itf$DisplayGUIEnchantReserver(int x, int y, int z, EnchantReserverSlots slots) {
+    default void itf$DisplayGUIEnchantReserver(int x, int y, int z, EnchantReserverInventory slots) {
     }
 
-    void itf$DisplayGuiMinePocket(IInventory minePocketInventory);
+    default void itf$DisplayGuiMinePocket(IInventory minePocketInventory) {
+    }
 
     NewPlayerManager itf_GetNewPlayerManager();
 

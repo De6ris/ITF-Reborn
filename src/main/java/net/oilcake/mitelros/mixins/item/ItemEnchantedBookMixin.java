@@ -1,11 +1,13 @@
 package net.oilcake.mitelros.mixins.item;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
-import net.oilcake.mitelros.api.WontFix;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.*;
 
@@ -15,23 +17,21 @@ public abstract class ItemEnchantedBookMixin extends Item {
     @Shadow
     public abstract void addEnchantment(ItemStack par1ItemStack, EnchantmentData par2EnchantmentData);
 
-    /**
-     * @author Debris
-     * @reason rewrite
-     */
-    @WontFix
-    @Overwrite
-    public WeightedRandomChestContent func_92112_a(Random par1Random, int par2, int par3, int par4) {
-        ItemStack var6 = new ItemStack(this.itemID, 1, 0);
+    @Redirect(method = "func_92112_a", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemEnchantedBook;addEnchantment(Lnet/minecraft/ItemStack;Lnet/minecraft/EnchantmentData;)V"))
+    private void addNewEnchantments(ItemEnchantedBook instance, ItemStack var5, EnchantmentData var7, @Local(argsOnly = true) Random par1Random) {
         List<EnchantmentData> var4 = buildEnchantmentList(par1Random, 75);
         if (var4 != null) {
             for (EnchantmentData var8 : var4) {
-                this.addEnchantment(var6, var8);
+                this.addEnchantment(var5, var8);
             }
         }
-        return new WeightedRandomChestContent(var6, par2, par3, par4 * 2);
     }
 
+    @ModifyReturnValue(method = "func_92112_a", at = @At("RETURN"))
+    private WeightedRandomChestContent modifyWeight(WeightedRandomChestContent original) {
+        original.itemWeight *= 2;
+        return original;
+    }
 
     @Unique
     private static List<EnchantmentData> buildEnchantmentList(Random random, int enchantment_levels) {

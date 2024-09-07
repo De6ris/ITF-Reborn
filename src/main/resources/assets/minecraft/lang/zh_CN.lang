@@ -444,3 +444,16 @@ gui.repair.lack_xp=缺少经验值:至少需要%d级
 gui.repair.effectLessThanOneLevel=合并它们对你的影响小于1级.
 gui.repair.costMoreThanOneLevel=合并它们会消耗你%d级.
 gui.repair.rewardMoreThanOneLevel=合并它们会提升你%d级.
+
+gui.enchantReserver.slotTop.tooltip=放置钻石等拥有经验的物品
+gui.enchantReserver.slotBottom.tooltip=放置玻璃瓶, 金属粒等储存经验的物品
+
+itf.item.totem_of_knowledge.info=使用后提升20%经验
+itf.item.totem_of_flattening.info=据说能够平整15x15的土地, 在图腾得到祝福时, 能加强为29x29的范围
+itf.item.frost_rod.info=似乎能提升触及距离, 还能搓成粉?
+itf.item.ender_rod.info=似乎能提升触及距离, 还能酿药?
+
+emi.category.itf.enchant_reserver.in=转化
+emi.category.itf.enchant_reserver.out=回流
+itf.exp.provides=转化为 %d xp
+itf.exp.consumes=消耗 %d xp

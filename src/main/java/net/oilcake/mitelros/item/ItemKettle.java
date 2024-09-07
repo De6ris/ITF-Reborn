@@ -102,7 +102,6 @@ public class ItemKettle extends Item implements IDamageableItem {
         ItemStack item_stack = player.getHeldItemStack();
 
         if (item_stack.getItemDamage() > 0) {
-            System.out.println("damage >0, will try convert");
             if (rc.getBlockHitMaterial() == Material.water || rc.getNeighborOfBlockHitMaterial() == Material.water) {
                 if (player.onServer()) {
                     if (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland) {
@@ -116,7 +115,6 @@ public class ItemKettle extends Item implements IDamageableItem {
                 return true;
             }
         } else {
-            System.out.println("damage = 0");
             if (rc.getNeighborOfBlockHit() == Block.fire && item_stack.getItemDamage() + douseUnit < item_stack.getMaxDamage()) {
                 if (player.onServer()) {
                     rc.world.douseFire(rc.neighbor_block_x, rc.neighbor_block_y, rc.neighbor_block_z, (Entity) null);

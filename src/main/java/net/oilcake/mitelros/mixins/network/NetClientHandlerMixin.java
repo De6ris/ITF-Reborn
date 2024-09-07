@@ -5,10 +5,7 @@ import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFGuiEnchantment;
 import net.oilcake.mitelros.api.ITFNetHandler;
 import net.oilcake.mitelros.block.enchantreserver.GuiEnchantReserver;
-import net.oilcake.mitelros.entity.misc.EntityWandFireBall;
-import net.oilcake.mitelros.entity.misc.EntityWandIceBall;
-import net.oilcake.mitelros.entity.misc.EntityWandShockWave;
-import net.oilcake.mitelros.entity.misc.EntityWandSlimeBall;
+import net.oilcake.mitelros.entity.misc.*;
 import net.oilcake.mitelros.network.S2CEnchantReserverInfo;
 import net.oilcake.mitelros.network.S2CEnchantmentInfo;
 import net.oilcake.mitelros.network.S2CUpdateITFStatus;
@@ -22,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class NetClientHandlerMixin extends NetHandler implements ITFNetHandler {
     @Inject(method = "handleVehicleSpawn", at = @At("HEAD"), cancellable = true)
     private void addITFEntity(Packet23VehicleSpawn par1Packet23VehicleSpawn, CallbackInfo ci) {
-        if (par1Packet23VehicleSpawn.type < 100 || par1Packet23VehicleSpawn.type > 102) {
+        if (par1Packet23VehicleSpawn.type < 100 || par1Packet23VehicleSpawn.type > 104) {// important
             return;
         }
         ci.cancel();
@@ -49,7 +46,10 @@ public abstract class NetClientHandlerMixin extends NetHandler implements ITFNet
             var8 = new EntityWandShockWave(this.worldClient, var2, var4, var6);
         } else if (par1Packet23VehicleSpawn.type == 103) {
             var8 = new EntityWandSlimeBall(this.worldClient, var2, var4, var6);
+        } else if (par1Packet23VehicleSpawn.type == 104) {
+            var8 = new EntityWandPearl(this.worldClient, var2, var4, var6);
         }
+        // before you add, see the beginning of the method
 
         var8.rotationYaw = SpatialScaler.getRotation(par1Packet23VehicleSpawn.scaled_yaw);
         var8.rotationPitch = SpatialScaler.getRotation(par1Packet23VehicleSpawn.scaled_pitch);

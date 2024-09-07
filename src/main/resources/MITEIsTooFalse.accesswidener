@@ -14,6 +14,7 @@ accessible method net/minecraft/Block setTextureName (Ljava/lang/String;)Lnet/mi
 accessible method net/minecraft/Block setStepSound (Lnet/minecraft/StepSound;)Lnet/minecraft/Block;
 
 accessible method net/minecraft/Container addSlotToContainer (Lnet/minecraft/Slot;)Lnet/minecraft/Slot;
+accessible field net/minecraft/GuiContainer theSlot Lnet/minecraft/Slot;
 accessible field net/minecraft/ContainerWorkbench x I
 accessible field net/minecraft/ContainerWorkbench y I
 accessible field net/minecraft/ContainerWorkbench z I
@@ -49,6 +50,7 @@ accessible method net/minecraft/World chunkExistsAndIsNotEmptyFromBlockCoords (I
 accessible field net/minecraft/WeightedRandomChestContent min_quantity I
 accessible field net/minecraft/WeightedRandomChestContent max_quantity I
 accessible field net/minecraft/WeightedRandomChestContent theItemId Lnet/minecraft/ItemStack;
+accessible field net/minecraft/WeightedRandomItem itemWeight I
 
 extendable class net/minecraft/BlockDoor
 accessible class net/minecraft/ContainerRepairINNER2
