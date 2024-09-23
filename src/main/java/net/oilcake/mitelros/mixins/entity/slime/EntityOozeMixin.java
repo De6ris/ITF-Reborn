@@ -2,10 +2,7 @@ package net.oilcake.mitelros.mixins.entity.slime;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.DamageSource;
-import net.minecraft.EntityCubic;
-import net.minecraft.EntityOoze;
-import net.minecraft.World;
+import net.minecraft.*;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,9 +16,13 @@ public abstract class EntityOozeMixin extends EntityCubic {
     }
 
     @ModifyReturnValue(method = "isImmuneTo", at = @At("RETURN"))
-    private boolean nickelDamage(boolean original, @Local(argsOnly = true) DamageSource damage_source) {
-        original &= !damage_source.isExplosion();
-        return (damage_source.getItemAttackedWith() != null) ? (original && damage_source.getItemAttackedWith().getMaterialForRepairs() != Materials.nickel) : original;
+    private boolean notImmuneToNickelDamage(boolean original, @Local(argsOnly = true) DamageSource damage_source) {
+        if (damage_source.isExplosion()) return false;
+        ItemStack itemAttackedWith = damage_source.getItemAttackedWith();
+        if (itemAttackedWith == null) return original;
+        if (itemAttackedWith.getMaterialForRepairs() == Materials.nickel) return false;
+        if (itemAttackedWith.getItem() instanceof ItemFishingRod itemFishingRod && itemFishingRod.getHookMaterial() == Materials.nickel) return false;
+        return original;
     }
 
     @ModifyConstant(method = "setSize", constant = @Constant(intValue = 2))

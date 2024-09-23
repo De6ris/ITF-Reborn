@@ -47,6 +47,8 @@ public class RecipeRegister extends Items {
             }
             register.registerShapelessRecipe(new ItemStack(coin), true, new ItemStack(coin.getNuggetPeer()));
         }
+        register.registerShapedRecipe(new ItemStack(doorNickel, 6), true, "AA ", "AA ", "AA ", 'A', nickelIngot);
+        register.registerShapedRecipe(new ItemStack(doorTungsten, 6), true, "AA ", "AA ", "AA ", 'A', tungstenIngot);
     }
 
     private static void registerMiscRecipes(RecipeRegistryEvent register) {

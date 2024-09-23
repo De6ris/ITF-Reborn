@@ -4,7 +4,8 @@
   "version": "${version}",
   "depends": {
     "fishmodloader": ">=3.3.2",
-    "many-lib": ">=2.0.0"
+    "many-lib": ">=2.0.0",
+    "rusted_iron_core_rust_removal": "*"
   },
   "recommends": {
     "emi": ">=1.0.5"

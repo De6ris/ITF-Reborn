@@ -1,4 +1,4 @@
-package net.oilcake.mitelros;
+package net.oilcake.mitelros.event;
 
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.*;
@@ -28,7 +28,7 @@ import net.xiaoyu233.fml.reload.event.*;
 
 import static net.oilcake.mitelros.ITFStart.NameSpace;
 
-public class ITFEvent {
+public class ITFEventFML {
     @Subscribe
     public void handleChatCommand(HandleChatCommandEvent event) {
         String par2Str = event.getCommand();

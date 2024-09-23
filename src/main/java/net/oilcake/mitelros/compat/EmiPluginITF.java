@@ -3,8 +3,12 @@ package net.oilcake.mitelros.compat;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiInfoRecipe;
+import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
 import dev.emi.emi.api.stack.EmiStack;
-import net.minecraft.*;
+import net.minecraft.Item;
+import net.minecraft.ItemCoin;
+import net.minecraft.ItemRock;
+import net.minecraft.ItemStack;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.Items;
 import shims.java.com.unascribed.retroemi.RetroEMI;
@@ -19,6 +23,14 @@ public class EmiPluginITF implements EmiPlugin {
         emiRegistry.addCategory(RecipeCategory.EnchantReserverOut);
         emiRegistry.addWorkstation(RecipeCategory.EnchantReserverIn, EmiStack.of(Blocks.blockEnchantReserver));
         emiRegistry.addWorkstation(RecipeCategory.EnchantReserverOut, EmiStack.of(Blocks.blockEnchantReserver));
+
+        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.CRAFTING, EmiStack.of(new ItemStack(Blocks.nickelWorkBench)));
+        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.CRAFTING, EmiStack.of(new ItemStack(Blocks.tungstenWorkBench)));
+
+        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, EmiStack.of(Blocks.blastFurnaceStoneIdle));
+        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, EmiStack.of(Blocks.blastFurnaceObsidianIdle));
+        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, EmiStack.of(Blocks.blastFurnaceNetherrackIdle));
+        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, EmiStack.of(Blocks.blockSmokerIdle));
 
         this.addInfoRecipes(emiRegistry);
     }

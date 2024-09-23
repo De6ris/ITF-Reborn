@@ -1,20 +1,14 @@
 package net.oilcake.mitelros.item.api;
 
-import net.minecraft.*;
+import net.minecraft.Enchantment;
+import net.minecraft.EnchantmentHelper;
+import net.minecraft.ItemStack;
+import net.minecraft.Material;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.quality.EnumEffectEntry;
 import net.oilcake.mitelros.util.quality.EnumToolType;
 
-public class ITFBow extends ItemBow {
-    public ITFBow(int id, Material reinforcement_material) {
-        super(id, reinforcement_material);
-        if (reinforcement_material == Materials.tungsten) {
-            this.setMaxDamage(256);
-        } else if (reinforcement_material == Materials.uru) {
-            this.setMaxDamage(512);
-        }
-    }
-
+public class ITFBow {
     public static int overridePullSpeed(ItemStack item_stack) {
         int ticksPull;
         Material material = item_stack.getMaterialForRepairs();
@@ -32,15 +26,6 @@ public class ITFBow extends ItemBow {
         return (int) (ticksPull *
                 (1.0F - 0.5F * EnchantmentHelper.getEnchantmentLevelFraction(Enchantment.quickness, item_stack)) /
                 EnumToolType.getMultiplierForEntry(item_stack, EnumEffectEntry.PullSpeed));
-    }
-
-    public static int getArrowSpeedBonus(Material material) {
-        if (material == Materials.tungsten) {
-            return 35;
-        } else if (material == Materials.uru) {
-            return 45;
-        }
-        return 0;
     }
 
     public static double getDamageModifier(Material material) {

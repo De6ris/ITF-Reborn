@@ -31,32 +31,36 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
 
     private boolean attack_mode = true;
 
-    public void addRandomWeapon() {
-        List<RandomItemListEntry> items = new ArrayList();
-        items.add(new RandomItemListEntry(Item.swordGold, 2));
-        this.stowed_item_stack = (new ItemStack(Items.shockWand)).randomizeForMob(this, true);
-        RandomItemListEntry entry = (RandomItemListEntry) WeightedRandom.getRandomItem(this.rand, items);
-        setHeldItemStack((new ItemStack(entry.item)).randomizeForMob(this, true));
-    }
-
     public EntityLich(World par1World) {
         super(par1World);
         if (par1World != null && onServer())
             this.max_num_evasions = this.num_evasions = 6;
     }
 
+    @Override
+    public void addRandomWeapon() {
+        List<RandomItemListEntry> items = new ArrayList<>();
+        items.add(new RandomItemListEntry(Item.swordGold, 2));
+        this.stowed_item_stack = (new ItemStack(Items.shockWand)).randomizeForMob(this, true);
+        RandomItemListEntry entry = (RandomItemListEntry) WeightedRandom.getRandomItem(this.rand, items);
+        setHeldItemStack((new ItemStack(entry.item)).randomizeForMob(this, true));
+    }
+
+    @Override
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setByte("max_num_evasions", (byte) this.max_num_evasions);
         par1NBTTagCompound.setByte("num_evasions", (byte) this.num_evasions);
     }
 
+    @Override
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.max_num_evasions = par1NBTTagCompound.getByte("max_num_evasions");
         this.num_evasions = par1NBTTagCompound.getByte("num_evasions");
     }
 
+    @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         setEntityAttribute(SharedMonsterAttributes.followRange, 128.0D);
@@ -65,6 +69,7 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
         setEntityAttribute(SharedMonsterAttributes.maxHealth, 75.0D);
     }
 
+    @Override
     protected void addRandomEquipment() {
         addRandomWeapon();
         setBoots((new ItemStack(Items.bootsAncientMetalSacred)).randomizeForMob(this, true));
@@ -73,6 +78,7 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
         setHelmet((new ItemStack(Items.helmetAncientMetalSacred)).randomizeForMob(this, true));
     }
 
+    @Override
     public void onUpdate() {
         super.onUpdate();
         if (!(getWorld()).isRemote) {
@@ -95,6 +101,7 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
         }
     }
 
+    @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
         if (onServer() && getHealth() > 0.0F) {
@@ -220,6 +227,7 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
         return false;
     }
 
+    @Override
     public EntityDamageResult attackEntityAsMob(Entity target) {
         EntityDamageResult result = super.attackEntityAsMob(target);
         if (result != null && !result.entityWasDestroyed()) {
@@ -229,6 +237,7 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
         return result;
     }
 
+    @Override
     public EntityDamageResult attackEntityFrom(Damage damage) {
         boolean can_evade = (!damage.isFallDamage() && !damage.isFireDamage() && !damage.isPoison());
         if (can_evade && (this.num_evasions > 0 || (getHealth() < 20.0F && this.rand.nextInt(8) != 0))) {
@@ -289,14 +298,14 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
     public void onDeath(DamageSource par1DamageSource) {
         super.onDeath(par1DamageSource);
         List<Entity> targets = getNearbyEntities(48.0F, 48.0F);
-        for (int i = 0; i < targets.size(); i++) {
-            EntityPlayer entityPlayer = (targets.get(i) instanceof EntityPlayer) ? (EntityPlayer) targets.get(i) : null;
+        for (Entity target : targets) {
+            EntityPlayer entityPlayer = (target instanceof EntityPlayer) ? (EntityPlayer) target : null;
             if (entityPlayer != null)
                 entityPlayer.triggerAchievement(AchievementExtend.lichHunter);
         }
     }
 
-    public Class getTroopClass() {
+    public Class<?> getTroopClass() {
         return EntityLichShadow.class;
     }
 }

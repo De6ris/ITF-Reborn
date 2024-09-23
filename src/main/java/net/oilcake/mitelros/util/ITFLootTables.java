@@ -49,7 +49,8 @@ public class ITFLootTables {
             new WeightedRandomChestContent(Items.leggingsAncientMetalSacred.itemID, 0, 1, 1, 1),
             new WeightedRandomChestContent(Items.totemOfKnowledge.itemID, 0, 1, 1, 1),
             new WeightedRandomChestContent(Items.totemOfSentry.itemID, 0, 1, 1, 1),
-            new WeightedRandomChestContent(Items.totemOfFlattening.itemID, 0, 1, 1, 1)
+            new WeightedRandomChestContent(Items.totemOfFlattening.itemID, 0, 1, 1, 1),
+            new WeightedRandomChestContent(Items.bossDetector.itemID, 0, 1, 1, 5),
     };
 
     public static final Supplier<WeightedRandomChestContent[]> fortressExtra = () -> new WeightedRandomChestContent[]{

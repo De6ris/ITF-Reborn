@@ -1,11 +1,7 @@
 package net.oilcake.mitelros.mixins.entity.player;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.block.api.ITFWorkbench;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverInventory;
 import net.oilcake.mitelros.block.enchantreserver.GuiEnchantReserver;
@@ -34,15 +30,6 @@ public abstract class ClientPlayerMixin extends AbstractClientPlayer implements 
     @Override
     public void itf$DisplayGuiMinePocket(IInventory minePocketInventory) {
         this.mc.displayGuiScreen(new GuiMinePocketInventory(this, minePocketInventory));
-    }
-
-    @WrapOperation(method = "getBenchAndToolsModifier", at = @At(value = "INVOKE", target = "Lnet/minecraft/BlockWorkbench;getToolMaterial(I)Lnet/minecraft/Material;"))
-    private Material itfWorkBench(int metadata, Operation<Material> original, @Local ContainerWorkbench workbench) {
-        if (workbench.world.getBlockId(workbench.x, workbench.y, workbench.z) == Blocks.itfWorkBench.blockID) {
-            return ITFWorkbench.getToolMaterial(metadata);
-        } else {
-            return original.call(metadata);
-        }
     }
 
     @Inject(method = "getBenchAndToolsModifier", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/BlockWorkbench;getToolMaterial(I)Lnet/minecraft/Material;", shift = At.Shift.AFTER), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)

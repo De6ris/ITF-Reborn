@@ -1,11 +1,11 @@
 package net.oilcake.mitelros.compat;
 
-import dev.emi.emi.api.recipe.EmiRecipeCategory;
+import dev.emi.emi.EmiPort;
 import dev.emi.emi.api.recipe.EmiRecipe;
+import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
-import dev.emi.emi.EmiPort;
 import net.minecraft.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 

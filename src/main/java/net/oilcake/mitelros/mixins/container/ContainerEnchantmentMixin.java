@@ -1,6 +1,5 @@
 package net.oilcake.mitelros.mixins.container;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.ItemGoldenAppleLegend;
@@ -131,6 +130,4 @@ public abstract class ContainerEnchantmentMixin extends Container {
             cir.setReturnValue(25);
         }
     }
-
-//    @ModifyReturnValue(method = "")
 }

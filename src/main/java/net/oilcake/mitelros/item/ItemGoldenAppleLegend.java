@@ -3,8 +3,6 @@ package net.oilcake.mitelros.item;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 
-import java.util.List;
-
 public class ItemGoldenAppleLegend extends ItemAppleGold {
     public ItemGoldenAppleLegend(int id, int satiation, int nutrition, String texture) {
         super(id, satiation, nutrition, texture);

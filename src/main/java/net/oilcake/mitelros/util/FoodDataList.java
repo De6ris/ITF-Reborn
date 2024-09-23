@@ -1,7 +1,6 @@
 package net.oilcake.mitelros.util;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;

@@ -1,5 +1,7 @@
 package net.oilcake.mitelros.item;
 
+import moddedmite.rustedironcore.api.item.BowItem;
+import moddedmite.rustedironcore.api.item.DoorItem;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.block.Blocks;
@@ -62,7 +64,7 @@ public class Items extends Item {
 
     public static final ItemShears nickelShears = new ItemShears(getNextItemID(), Materials.nickel);
 
-    public static final Item doorNickel = new ItemDoor(getNextItemID(), Materials.nickel);
+    public static final Item doorNickel = new DoorItem(getNextItemID(), Materials.nickel, () -> Blocks.doorNickel);
 
     public static final ItemChain nickelChain = ReflectHelper.createInstance(ItemChain.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.nickel);
 
@@ -116,7 +118,7 @@ public class Items extends Item {
 
     public static final ItemShears tungstenShears = new ItemShears(getNextItemID(), Materials.tungsten);
 
-    public static final Item doorTungsten = new ItemDoor(getNextItemID(), Materials.tungsten);
+    public static final Item doorTungsten = new DoorItem(getNextItemID(), Materials.tungsten, () -> Blocks.doorTungsten);
 
     public static final ItemChain tungstenChain = ReflectHelper.createInstance(ItemChain.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.tungsten);
 
@@ -300,7 +302,7 @@ public class Items extends Item {
 
     public static final Item ale = (new ItemWine(getNextItemID())).setUnlocalizedName("ale").setCreativeTab(CreativeTabs.tabFood);
 
-    public static final ItemBow bowTungsten = new ITFBow(getNextItemID(), Materials.tungsten);
+    public static final ItemBow bowTungsten = new BowItem(getNextItemID(), Materials.tungsten, 256, 35);
 
     public static final ItemArmor uruHelmet = new ItemHelmet(getNextItemID(), Materials.uru, false);
 
@@ -446,7 +448,7 @@ public class Items extends Item {
 
     public static final Item sulphur = new ItemStandard(getNextItemID(), Materials.sulphur, "sulphur_sphere");
 
-    public static final ItemBow bowUru = new ITFBow(getNextItemID(), Materials.uru);
+    public static final ItemBow bowUru = new BowItem(getNextItemID(), Materials.uru, 512, 45);
 
     public static final Item enderRod = new ItemBrewingMisc(getNextItemID(), Material.ender_pearl, "ender_rod").setPotionEffectExtend("+8+9+10+11&4-4+13").setReachBonus(0.5F);
 
@@ -513,6 +515,7 @@ public class Items extends Item {
     public static final ItemKettle hardenedClayJugSuspicious = new ItemKettle(getNextItemID(), 19, Materials.suspicious_water, Material.hardened_clay);
     public static final ItemKettle hardenedClayJugSwampland = new ItemKettle(getNextItemID(), 19, Materials.dangerous_water, Material.hardened_clay);
     public static final ItemWand enderWand = new ItemWandEnder(getNextItemID());
+    public static final ItemBossDetector bossDetector = new ItemBossDetector(getNextItemID(), Material.mithril, "boss_detector");
 
     private static int getNextItemID() {
         if (!ITFConfig.FixedID.getBooleanValue()) return IdUtil.getNextItemID();

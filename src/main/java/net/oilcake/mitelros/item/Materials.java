@@ -1,5 +1,6 @@
 package net.oilcake.mitelros.item;
 
+import moddedmite.rustedironcore.api.register.MaterialProperties;
 import net.minecraft.*;
 
 public class Materials extends Material {
@@ -86,6 +87,8 @@ public class Materials extends Material {
         melon_ice = new MaterialFood("melon_ice");
         chocolate_smoothie = new MaterialFood("chocolate_smoothie");
         frost = new Material("frost");
+        MaterialProperties.registerArrowMaterial(nickel, 0.7F);
+        MaterialProperties.registerArrowMaterial(tungsten, 0.9F);
     }
 
     public Materials(EnumEquipmentMaterial enum_crafting_material) {

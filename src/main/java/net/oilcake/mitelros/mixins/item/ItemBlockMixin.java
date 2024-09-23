@@ -1,8 +1,10 @@
 package net.oilcake.mitelros.mixins.item;
 
-import net.minecraft.*;
+import net.minecraft.Block;
+import net.minecraft.Item;
+import net.minecraft.ItemBlock;
+import net.minecraft.ItemStack;
 import net.oilcake.mitelros.block.Blocks;
-import net.oilcake.mitelros.block.api.ITFWorkbench;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,13 +32,6 @@ public class ItemBlockMixin extends Item {
             cir.setReturnValue(400);
         } else if (block == Blocks.torchWoodExtinguished) {
             cir.setReturnValue(50);
-        }
-    }
-
-    @Inject(method = "getItemDisplayName", at = @At("HEAD"), cancellable = true)
-    private void itfWorkbench(ItemStack item_stack, CallbackInfoReturnable<String> cir) {
-        if (item_stack != null && this.getBlock() == Blocks.itfWorkBench) {
-            cir.setReturnValue(Translator.get("tile.toolbench." + ITFWorkbench.getToolMaterial(item_stack.getItemSubtype()).name + ".name"));
         }
     }
 }

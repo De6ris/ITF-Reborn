@@ -54,6 +54,7 @@ dependencies {
     implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\DebrisHUD.jar")
     implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\CraftGuide.jar")
     implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\Hwite.jar")
+    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\RustedIronCore.jar")
 }
 
 processResources {

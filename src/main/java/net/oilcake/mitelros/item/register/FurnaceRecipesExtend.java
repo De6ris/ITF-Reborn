@@ -1,6 +1,8 @@
 package net.oilcake.mitelros.item.register;
 
+import moddedmite.rustedironcore.api.register.SmeltingSpecial;
 import net.minecraft.*;
+import net.oilcake.mitelros.item.ItemKettle;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.api.ItemMorningStar;
@@ -32,6 +34,11 @@ public class FurnaceRecipesExtend extends Items {
         FurnaceRecipes.smelting().addSmelting(clayJug.itemID, new ItemStack(hardenedClayJug).setItemDamage(hardenedClayJug.maxDamage - 1));
         ItemFood.setCookingResult((ItemFood) horse_meat, (ItemFood) horse_meat_cooked, 6);
         registerBlastFurnaceRecipes();
+
+        SmeltingSpecial.registerSpecialRecipe((itemStack, heatLevel) -> itemStack.getItem() instanceof ItemArmor armor ? new SmeltingSpecial.SmeltingResult(FurnaceRecipesExtend.recycleArmors(itemStack, armor)) : null);
+        SmeltingSpecial.registerSpecialRecipe((itemStack, heatLevel) -> itemStack.getItem() instanceof ItemTool tool ? new SmeltingSpecial.SmeltingResult(FurnaceRecipesExtend.recycleArmors(itemStack, tool)) : null);
+        SmeltingSpecial.registerSpecialRecipe((itemStack, heatLevel) -> itemStack.getItem() == Items.clayBowlRaw && itemStack.stackSize >= 4 ? new SmeltingSpecial.SmeltingResult(4, new ItemStack(Items.clayBowlEmpty, 4)) : null);
+        SmeltingSpecial.registerSpecialRecipe((itemStack, heatLevel) -> itemStack.getItem() instanceof ItemKettle ? new SmeltingSpecial.SmeltingResult(ItemKettle.boil(itemStack)) : null);
     }
 
     private static void registerBlastFurnaceRecipes() {
@@ -46,11 +53,11 @@ public class FurnaceRecipesExtend extends Items {
 
         for (Material material : available_material) {
             for (Class<?> tool : tools) {
-                registerRecipeSafe(Item.getMatchingItem(tool, material), new ItemStack(appleRed));
+                registerRecipeSafe(Item.getMatchingItem(tool, material), armorItemStack(material, 1, material));
             }
             for (Class<?> armor : armors) {
-                registerRecipeSafe(ItemArmor.getMatchingArmor(armor, material, false), new ItemStack(appleRed));
-                registerRecipeSafe(ItemArmor.getMatchingArmor(armor, material, true), new ItemStack(appleRed));
+                registerRecipeSafe(ItemArmor.getMatchingArmor(armor, material, false), armorItemStack(material, 1, material));
+                registerRecipeSafe(ItemArmor.getMatchingArmor(armor, material, true), armorItemStack(material, 1, material));
             }
         }
     }

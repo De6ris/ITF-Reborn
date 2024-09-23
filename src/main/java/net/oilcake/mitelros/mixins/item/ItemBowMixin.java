@@ -4,56 +4,18 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.enchantment.Enchantments;
-import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.api.ITFBow;
 import net.oilcake.mitelros.util.quality.EnumEffectEntry;
 import net.oilcake.mitelros.util.quality.EnumToolType;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(ItemBow.class)
 public abstract class ItemBowMixin extends Item {
-    @Final
-    @Shadow
-    @Mutable
-    private static Material[] possible_arrow_materials;
-
-    @Mutable
-    @Shadow
-    @Final
-    public static String[] bow_pull_icon_name_array;
-    @Shadow
-    private Material reinforcement_material;
-
-    @Inject(method = "<clinit>", at = @At("TAIL"))
-    private static void addITFArrowMaterials(CallbackInfo ci) {
-        Material[] original = possible_arrow_materials;
-        Material[] expanded = new Material[original.length + 3];
-        System.arraycopy(original, 0, expanded, 0, original.length);
-        expanded[original.length] = Materials.nickel;
-        expanded[original.length + 1] = Materials.tungsten;
-        expanded[original.length + 2] = Materials.magical;
-        possible_arrow_materials = expanded;
-
-        bow_pull_icon_name_array = new String[possible_arrow_materials.length * 3];
-
-        for (int arrow_index = 0; arrow_index < possible_arrow_materials.length; ++arrow_index) {
-            Material material = possible_arrow_materials[arrow_index];
-            for (int icon_index = 0; icon_index < 3; ++icon_index) {
-                ItemBow.bow_pull_icon_name_array[arrow_index * 3 + icon_index] = material.name + "_arrow_" + icon_index;
-            }
-        }
-    }// feels stupid
-
     @Inject(method = "getTicksForMaxPull", at = @At("HEAD"), cancellable = true)
     private static void setITFPullSpeed(ItemStack item_stack, CallbackInfoReturnable<Integer> cir) {
         int i = ITFBow.overridePullSpeed(item_stack);
@@ -86,10 +48,4 @@ public abstract class ItemBowMixin extends Item {
         damageAfterPower *= EnumToolType.getMultiplierForEntry(item_stack, EnumEffectEntry.ArrowDamage);
         entity_arrow.setDamage(damageAfterPower);
     }// TODO compatibility
-
-    @ModifyConstant(method = "addInformation", constant = @Constant(intValue = 10))
-    private int itfBonus(int bonus) {
-        int itfBonus = ITFBow.getArrowSpeedBonus(this.reinforcement_material);
-        return itfBonus != 0 ? itfBonus : bonus;
-    }
 }

@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(SpawnerAnimals.class)
 public class SpawnerAnimalsMixin {
-    @ModifyConstant(method = "trySpawningHostileMobs", constant = @Constant(intValue = 256))
+    @ModifyConstant(method = "trySpawningHostileMobs", constant = @Constant(intValue = 256), require = 0)
     private int moreMobs(int constant, @Local(argsOnly = true) WorldServer world) {
         int day = world.getDayOfWorld();
         if (day > 4096) return 4;

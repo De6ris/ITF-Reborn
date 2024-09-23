@@ -2,44 +2,24 @@ package net.oilcake.mitelros.mixins.tileentity;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFurnace;
-import net.oilcake.mitelros.api.WontFix;
 import net.oilcake.mitelros.block.BlockBlastFurnace;
 import net.oilcake.mitelros.block.BlockSmoker;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(TileEntityFurnace.class)
 public abstract class TileEntityFurnaceMixin extends TileEntity implements ISidedInventory, ITFFurnace {
-    @Shadow public abstract void smeltItem(int heat_level);
-
-    @Shadow
-    protected abstract boolean canSmelt(int heat_level);
 
     @Shadow
     private ItemStack[] furnaceItemStacks = new ItemStack[3];
-
-    @Shadow
-    public int currentItemBurnTime;
-
-    @Shadow
-    public int furnaceBurnTime;
-
-    @Shadow
-    public int furnaceCookTime;
-
-    @Shadow
-    public int heat_level = 0;
 
     @Unique
     private boolean activated = false;
@@ -91,113 +71,24 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
         return getFurnaceBlock() instanceof BlockSmoker;
     }
 
-    @Unique
+    @Override
     public boolean canBurnbyItself() {
         return (getFuelHeatLevel() > 2);
     }
 
     @Override
-    public void itf$ActivateFurnace() {
+    public boolean itf$IsActive() {
+        return this.activated;
+    }
+
+    @Override
+    public void itf$setActive(boolean activated) {
         this.activated = true;
     }
 
-    @Unique
-    private boolean canNormallyWork() {
+    @Override
+    public boolean itf$CanNormallyWork() {
         return (this.activated && this.furnaceItemStacks[1] != null);
-    }
-
-    /**
-     * @author
-     * @reason
-     */
-    @WontFix
-    @Overwrite
-    public void updateEntity() {
-        if (!this.worldObj.isRemote && !isBurning() && this.activated && this.furnaceItemStacks[1] == null) {
-            this.activated = false;
-        }
-        if (this.worldObj.isRemote || this.furnaceBurnTime == 1 || (!isFlooded() && !isSmotheredBySolidBlock())) {
-            boolean var1 = (this.furnaceBurnTime > 0);
-            boolean var2 = false;
-            if (this.furnaceBurnTime > 0) {
-                float temp = 1.0F;
-                if (getFurnaceBlock() instanceof BlockBlastFurnace || getFurnaceBlock() instanceof BlockSmoker)
-                    temp = 2.0F;
-                this.furnaceBurnTime = (int) (this.furnaceBurnTime - temp);
-            } else {
-                this.heat_level = 0;
-            }
-            if (!this.worldObj.isRemote) {
-                if (this.furnaceBurnTime == 0 && canSmelt(this.getFuelHeatLevel()) && (canNormallyWork() || canBurnbyItself())) {
-                    this.currentItemBurnTime = this.furnaceBurnTime = getItemBurnTime(this.furnaceItemStacks[1]);
-                    if (this.furnaceBurnTime > 0) {
-                        this.heat_level = getItemHeatLevel(this.furnaceItemStacks[1]);
-                        var2 = true;
-                        if (this.furnaceItemStacks[1] != null) {
-                            (this.furnaceItemStacks[1]).stackSize--;
-                            if ((this.furnaceItemStacks[1]).stackSize == 0) {
-                                Item var3 = this.furnaceItemStacks[1].getItem().getContainerItem();
-                                this.furnaceItemStacks[1] = (var3 != null) ? new ItemStack(var3) : null;
-                            }
-                            if (itf$IsBlastFurnace())
-                                this.worldObj.playSoundEffect((this.xCoord + 0.5F), (this.yCoord + 0.5F), (this.zCoord + 0.5F), "imported.random.melting");
-                        }
-                    }
-                }
-                if (isBurning() && canSmelt(this.heat_level)) {
-                    itf$ActivateFurnace();
-                    int temp = 200;
-                    int item_id = (getInputItemStack()).itemID;
-                    int speed_bonus = 1;
-                    if (item_id == Items.pieceCopper.itemID || item_id == Items.pieceSilver.itemID || item_id == Items.pieceGold.itemID || item_id == Items.pieceGoldNether.itemID || item_id == Items.pieceIron.itemID || item_id == Items.pieceNickel.itemID)
-                        speed_bonus = 4;
-                    if (item_id == Items.pieceMithril.itemID || item_id == Items.pieceTungsten.itemID || item_id == Items.pieceAdamantium.itemID)
-                        speed_bonus = 2;
-                    this.furnaceCookTime += speed_bonus;
-                    if (getFurnaceBlock() instanceof BlockBlastFurnace) {
-                        this.furnaceCookTime += speed_bonus;
-                    } else if (getFurnaceBlock() instanceof BlockSmoker) {
-                        this.furnaceCookTime += speed_bonus;
-                    }
-                    if (this.furnaceCookTime >= temp) {
-                        this.furnaceCookTime = 0;
-                        smeltItem(this.heat_level);
-                        if (getInputItemStack() != null && getOutputItemStack().getItem() instanceof net.minecraft.ItemMeat)
-                            this.worldObj.playSoundEffect((this.xCoord + 0.5F), (this.yCoord + 0.5F), (this.zCoord + 0.5F), "imported.random.sizzle");
-                        if ((getInputItemStack() != null && getOutputItemStack().getItem() == Item.bowlWater) || getOutputItemStack().getItem() == Items.clayBowlWater)
-                            this.worldObj.playSoundEffect((this.xCoord + 0.5F), (this.yCoord + 0.5F), (this.zCoord + 0.5F), "imported.random.boil");
-                        var2 = true;
-                    }
-                } else {
-                    this.furnaceCookTime = 0;
-                }
-                if (var1 != ((this.furnaceBurnTime > 0))) {
-                    var2 = true;
-                    BlockFurnace.updateFurnaceBlockState((this.furnaceBurnTime > 0), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
-                }
-            }
-            if (var2)
-                onInventoryChanged();
-        } else {
-            if (this.furnaceBurnTime > 0) {
-                if (isFlooded())
-                    this.worldObj.blockFX(EnumBlockFX.steam, this.xCoord, this.yCoord, this.zCoord);
-                BlockFurnace.updateFurnaceBlockState(false, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
-            }
-            this.furnaceBurnTime = 0;
-            this.furnaceCookTime = 0;
-            this.activated = false;
-        }
-    }
-
-    @Shadow
-    public boolean isBurning() {
-        return false;
-    }
-
-    @Shadow
-    public int getItemBurnTime(ItemStack item_stack) {
-        return 1;
     }
 
     @Shadow
@@ -205,24 +96,6 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
         return 1;
     }
 
-    @Shadow
-    public boolean isSmotheredBySolidBlock() {
-        return false;
-    }
-
-    @Shadow
-    public boolean isFlooded() {
-        return false;
-    }
-
-    @ModifyConstant(method = "smeltItem", constant = @Constant(intValue = 1))
-    private int itfFurnaceRecipe(int constant) {
-        ItemStack var1 = FurnaceRecipes.smelting().getSmeltingResult(getInputItemStack(), heat_level);
-        if ((getInputItemStack()).itemID == Items.clayBowlRaw.itemID && var1.itemID == Items.clayBowlEmpty.itemID) {
-            return 4;
-        }
-        return constant;
-    }
     @Inject(method = "readFromNBT", at = @At("RETURN"))
     public void injectReadNBT(NBTTagCompound par1NBTTagCompound, CallbackInfo callbackInfo) {
         this.activated = par1NBTTagCompound.getBoolean("activated");
@@ -239,17 +112,8 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
     }
 
     @Shadow
-    public ItemStack getOutputItemStack() {
-        return this.furnaceItemStacks[2];
-    }
-
-    @Shadow
     public ItemStack getInputItemStack() {
         return this.furnaceItemStacks[0];
     }
 
-    @Shadow
-    public int getItemHeatLevel(ItemStack item_stack) {
-        return 0;
-    }
 }

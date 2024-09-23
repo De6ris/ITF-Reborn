@@ -38,8 +38,8 @@ public class EnchantmentManager {
         }
         ItemStack heldItemStack = player.getHeldItemStack();
         if (EnchantmentHelper.hasEnchantment(heldItemStack, Enchantments.enchantmentDestroying)) {
-            int destorying = EnchantmentHelper.getEnchantmentLevel(Enchantments.enchantmentDestroying, heldItemStack);
-            target.worldObj.createExplosion(player, target.posX, target.posY, target.posZ, 0.0F, destorying * 0.5F, true);
+            int destroyingLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.enchantmentDestroying, heldItemStack);
+            target.worldObj.createExplosion(this.player, target.posX, target.posY, target.posZ, 0.0F, destroyingLevel * 0.5F, true);
         }
     }
 

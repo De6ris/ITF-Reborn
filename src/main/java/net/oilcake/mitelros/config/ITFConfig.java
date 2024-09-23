@@ -144,6 +144,11 @@ public class ITFConfig extends SimpleConfigs {
         return configTabs;
     }
 
+//    @Override
+//    public GuiScreen getConfigScreen(GuiScreen parentScreen) {
+//        return new ITFConfigScreen(parentScreen, this);
+//    }
+
     @Override
     public void save() {
         JsonObject root = new JsonObject();

@@ -1,6 +1,9 @@
 package net.oilcake.mitelros.item.wand;
 
-import net.minecraft.*;
+import net.minecraft.EntityPlayer;
+import net.minecraft.ItemStack;
+import net.minecraft.Material;
+import net.minecraft.World;
 import net.oilcake.mitelros.entity.misc.EntityWandPearl;
 
 public class ItemWandEnder extends ItemWand {

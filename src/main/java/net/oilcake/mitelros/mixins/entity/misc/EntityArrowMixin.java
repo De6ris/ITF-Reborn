@@ -1,12 +1,14 @@
 package net.oilcake.mitelros.mixins.entity.misc;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import net.minecraft.*;
+import net.minecraft.Entity;
+import net.minecraft.EntityArrow;
+import net.minecraft.ItemStack;
+import net.minecraft.World;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.entity.mob.EntityBoneBodyguard;
 import net.oilcake.mitelros.entity.mob.EntityStray;
 import net.oilcake.mitelros.entity.mob.EntityWitherBodyguard;
-import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.quality.EnumEffectEntry;
 import net.oilcake.mitelros.util.quality.EnumToolType;
@@ -42,10 +44,6 @@ public abstract class EntityArrowMixin extends Entity {
     private float itfSpeed(float velocity) {
         ItemStack launcher = this.getLauncher();
         if (launcher == null) return velocity;
-        if (launcher.getItem() == Items.bowTungsten && this.shootingEntity instanceof EntityPlayer)
-            velocity *= 1.35F;
-        if (launcher.getItem() == Items.bowUru && this.shootingEntity instanceof EntityPlayer)
-            velocity *= 1.45F;
         velocity *= EnumToolType.getMultiplierForEntry(launcher, EnumEffectEntry.ArrowSpeed);
         return velocity;
     }

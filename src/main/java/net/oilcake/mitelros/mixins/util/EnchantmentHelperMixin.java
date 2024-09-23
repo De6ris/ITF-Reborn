@@ -9,12 +9,9 @@ import net.minecraft.EnchantmentHelper;
 import net.minecraft.Item;
 import net.minecraft.ItemStack;
 import net.oilcake.mitelros.api.ITFEnchantment;
-import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
@@ -36,15 +33,5 @@ public class EnchantmentHelperMixin {
         } else {
             return original.call(enchantment, item);
         }
-    }
-
-    @ModifyConstant(method = "buildEnchantmentList", constant = @Constant(intValue = 2, ordinal = 0))
-    private static int uruEnchantMore1(int constant, @Local Item item) {
-        return (item.getMaterialForRepairs() == Materials.uru) ? 4 : 2;
-    }
-
-    @ModifyConstant(method = "buildEnchantmentList", constant = @Constant(intValue = 2, ordinal = 2))
-    private static int uruEnchantMore2(int constant, @Local Item item) {
-        return (item.getMaterialForRepairs() == Materials.uru) ? 4 : 2;
     }
 }

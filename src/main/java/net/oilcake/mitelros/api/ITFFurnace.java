@@ -1,9 +1,15 @@
 package net.oilcake.mitelros.api;
 
 public interface ITFFurnace {
-    void itf$ActivateFurnace();
+    boolean itf$IsActive();
+
+    void itf$setActive(boolean activated);
 
     boolean itf$IsBlastFurnace();
 
     boolean itf$IsSmoker();
+
+    boolean itf$CanNormallyWork();
+
+    boolean canBurnbyItself();
 }
