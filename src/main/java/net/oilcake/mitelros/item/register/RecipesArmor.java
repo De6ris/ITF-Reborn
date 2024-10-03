@@ -4,6 +4,7 @@ import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.api.ItemMorningStar;
+import net.oilcake.mitelros.util.ItemUtil;
 import net.xiaoyu233.fml.reload.event.RecipeRegistryEvent;
 
 public class RecipesArmor extends Items {
@@ -27,7 +28,7 @@ public class RecipesArmor extends Items {
         Material[] materials = new Material[]{Material.copper, Material.silver, Material.gold, Material.iron, Materials.nickel, Material.ancient_metal, Material.mithril, Materials.tungsten, Material.adamantium};
         for (Material material : materials) {
             Item item = Item.getMatchingItem(ItemIngot.class, material);
-            Item item_nugget = getMatchingItem(ItemNugget.class, material);
+            Item item_nugget = ItemUtil.getNugget(material);
             register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemMorningStar.class, material), 1), true, "###", "#*#", " # ", '#', item_nugget, '*', item);
             register.registerShapedRecipe(new ItemStack(getMatchingItem(ItemFlintAndSteel.class, material)), true, "C ", " F", 'C', item_nugget, 'F', flint);
             register.registerShapedRecipe(new ItemStack(leatherKettle, 1).setItemDamage(leatherKettle.maxDamage - 1), false, "#N", "JL", 'J', Item.sinew, '#', Item.silk, 'N', item_nugget, 'L', Item.leather).difficulty(2000);
@@ -36,7 +37,7 @@ public class RecipesArmor extends Items {
 
     private static void registerFullMetalToolRecipe(RecipeRegistryEvent register, Material material) {
         Item item_ingot = Item.getMatchingItem(ItemIngot.class, material);
-        Item item_nugget = getMatchingItem(ItemNugget.class, item_ingot.getExclusiveMaterial());
+        Item item_nugget = ItemUtil.getNugget(item_ingot.getExclusiveMaterial());
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemArrow.class, material)), true, "C", "B", "A", 'A', Item.feather, 'B', Item.stick, 'C', item_nugget);
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemChain.class, material)), true, " A ", "A A", " A ", 'A', item_nugget);
         Item item_chain = Item.getMatchingItem(ItemChain.class, material);

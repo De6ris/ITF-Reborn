@@ -361,6 +361,7 @@ item.misc/ender_rod.name=末影棒
 item.misc/ice_chunk.name=碎冰块
 item.misc/frost_rod.name=寒霜棒
 item.misc/frost_powder.name=寒霜粉
+item.misc/boss_detector.name=Boss探测法杖
 
 item.ignition/wood.name=引火器
 item.ignition/rusted_iron.name=锈铁打火石
@@ -452,6 +453,7 @@ itf.item.totem_of_knowledge.info=使用后提升20%经验
 itf.item.totem_of_flattening.info=据说能够平整15x15的土地, 在图腾得到祝福时, 能加强为29x29的范围
 itf.item.frost_rod.info=似乎能提升触及距离, 还能搓成粉?
 itf.item.ender_rod.info=似乎能提升触及距离, 还能酿药?
+itf.item.emerald.info=在mitf中, 你必须前往寒冷群系收集绿宝石
 
 emi.category.itf.enchant_reserver.in=转化
 emi.category.itf.enchant_reserver.out=回流

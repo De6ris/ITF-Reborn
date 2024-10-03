@@ -1,6 +1,6 @@
-package net.oilcake.mitelros.event;
+package net.oilcake.mitelros.event.listener;
 
-import moddedmite.rustedironcore.api.interfaces.IFurnaceUpdateListener;
+import moddedmite.rustedironcore.api.event.listener.IFurnaceUpdateListener;
 import net.minecraft.Item;
 import net.minecraft.ItemStack;
 import net.minecraft.TileEntityFurnace;

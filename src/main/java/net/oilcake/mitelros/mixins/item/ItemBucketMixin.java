@@ -28,13 +28,6 @@ public abstract class ItemBucketMixin extends ItemVessel {
         super(id, vessel_material, contents_material, standard_volume, max_stack_size_empty, max_stack_size_full, texture);
     }
 
-    @Inject(method = "getChanceOfMeltingWhenFilledWithLava", at = @At("HEAD"), cancellable = true)
-    private void itfBucketChance(CallbackInfoReturnable<Float> cir) {
-        if (this.getVesselMaterial() == Materials.tungsten) {
-            cir.setReturnValue(0.0F);
-        }
-    }
-
     @ModifyReturnValue(method = "getChanceOfMeltingWhenFilledWithLava", at = @At("RETURN"))
     private float burnEasier(float original) {
         return original * 2.5F;

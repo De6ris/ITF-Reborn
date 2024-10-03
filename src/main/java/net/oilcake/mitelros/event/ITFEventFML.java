@@ -1,6 +1,8 @@
 package net.oilcake.mitelros.event;
 
 import com.google.common.eventbus.Subscribe;
+import moddedmite.rustedironcore.property.ItemProperties;
+import moddedmite.rustedironcore.property.MaterialProperties;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.Blocks;
@@ -15,8 +17,6 @@ import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.entity.boss.EntityLich;
 import net.oilcake.mitelros.entity.misc.*;
 import net.oilcake.mitelros.entity.mob.*;
-import net.oilcake.mitelros.item.ItemGuideBook;
-import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.register.ItemTextureRegister;
 import net.oilcake.mitelros.item.register.RecipeRegister;
 import net.oilcake.mitelros.network.*;
@@ -107,15 +107,6 @@ public class ITFEventFML {
 
     @Subscribe
     public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
-        ServerPlayer player = event.getPlayer();
-        player.setHealth(player.getHealth());
-        ((ITFPlayer) player).itf_GetMiscManager().broadcast();
-        if (((ITFPlayer) player).itf_GetNewPlayerManager().getNew()) {
-            ItemStack guide = new ItemStack(Items.guide);
-            guide.setTagCompound(ItemGuideBook.generateBookContents());
-            player.inventory.addItemStackToInventoryOrDropIt(guide);
-            ((ITFPlayer) player).itf_GetNewPlayerManager().setNew(false);
-        }
     }
 
     @Subscribe

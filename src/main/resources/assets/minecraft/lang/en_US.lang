@@ -361,6 +361,7 @@ item.misc/ender_rod.name=Ender Rod
 item.misc/ice_chunk.name=Ice Chunk
 item.misc/frost_rod.name=Frost Rod
 item.misc/frost_powder.name=Frost Powder
+item.misc/boss_detector.name=Boss Detector
 
 item.ignition/wood.name=Ignition
 item.ignition/rusted_iron.name=Rusted Iron Fire Starter
@@ -452,6 +453,7 @@ itf.item.totem_of_knowledge.info=Adds 20% XP
 itf.item.totem_of_flattening.info=May flatten 15x15 area, when totem is blessed, it comes with 29x29
 itf.item.frost_rod.info=Seems able to improve reach, and grind to dust
 itf.item.ender_rod.info=Seems able to improve reach, and brew potions
+itf.item.emerald.info=In mitf, you have to collect them in the snowy biomes
 
 emi.category.itf.enchant_reserver.in=Transform
 emi.category.itf.enchant_reserver.out=Reserve

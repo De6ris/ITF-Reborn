@@ -1,16 +1,12 @@
 package net.oilcake.mitelros.mixins.world.biome;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.api.BadOverride;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.entity.mob.*;
-import net.oilcake.mitelros.world.WorldGenSulphur;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Random;
 
 @Mixin(BiomeGenHell.class)
 public abstract class BiomeHellMixin extends BiomeGenBase {
@@ -43,27 +39,6 @@ public abstract class BiomeHellMixin extends BiomeGenBase {
             this.spawnableMonsterList.add(new SpawnListEntry(EntityCastleGuard.class, 20, 1, 2));
             this.spawnableCaveCreatureList.add(new SpawnListEntry(EntityVampireBat.class, 20, 8, 8));
             this.spawnableCaveCreatureList.add(new SpawnListEntry(EntityNightwing.class, 4, 1, 4));
-        }
-    }
-
-    @BadOverride
-    @Override
-    public void decorate(World par1World, Random par2Random, int par3, int par4) {
-        super.decorate(par1World, par2Random, par3, par4);
-        if (par2Random.nextInt(256) == 0) {
-            int var5 = par3 + par2Random.nextInt(16) + 8;
-            int var6 = par4 + par2Random.nextInt(16) + 8;
-            WorldGenSulphur var7 = new WorldGenSulphur();
-            if (par2Random.nextInt(8) == 0) {
-                var7.setSuperLarge();
-                if (var7.generate(par1World, par2Random, var5, par1World.getHeightValue(var5, var6) + 1, var6))
-                    if (Minecraft.inDevMode())
-                        System.out.println("Generate Sulphur at " + var5 + " " + var6 + " , superlarge.");
-            } else {
-                if (var7.generate(par1World, par2Random, var5, par1World.getHeightValue(var5, var6) + 1, var6))
-                    if (Minecraft.inDevMode())
-                        System.out.println("Generate Sulphur at " + var5 + " " + var6);
-            }
         }
     }
 }

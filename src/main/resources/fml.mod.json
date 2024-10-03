@@ -5,14 +5,14 @@
   "depends": {
     "fishmodloader": ">=3.3.2",
     "many-lib": ">=2.0.0",
-    "rusted_iron_core_rust_removal": "*"
+    "rusted_iron_core": ">=1.3.0"
   },
   "recommends": {
     "emi": ">=1.0.5"
   },
   "environment": "*",
   "name": "MITE-ITF-Reborn",
-  "description": "本模组是MITE-ITF移植到最新FML版本的分支, 移植基于FML1.4.0的ITF-R14. 本模组的版本号于H14开始.\n本模组需要ManyLib模组作为前置!",
+  "description": "本模组是MITE-ITF移植到最新FML版本的分支, 移植基于FML1.4.0的ITF-R14. 本模组的版本号于H14开始.\n本模组需要ManyLib和RustedIronCore模组作为前置!",
   "icon": "assets/icon.png",
   "authors": [
     "Huix",

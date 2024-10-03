@@ -18,21 +18,22 @@ import java.util.List;
 
 public class EmiPluginITF implements EmiPlugin {
     @Override
-    public void register(EmiRegistry emiRegistry) {
-        emiRegistry.addCategory(RecipeCategory.EnchantReserverIn);
-        emiRegistry.addCategory(RecipeCategory.EnchantReserverOut);
-        emiRegistry.addWorkstation(RecipeCategory.EnchantReserverIn, EmiStack.of(Blocks.blockEnchantReserver));
-        emiRegistry.addWorkstation(RecipeCategory.EnchantReserverOut, EmiStack.of(Blocks.blockEnchantReserver));
+    public void register(EmiRegistry registry) {
+        registry.addCategory(RecipeCategory.EnchantReserverIn);
+        registry.addCategory(RecipeCategory.EnchantReserverOut);
+        registry.addWorkstation(RecipeCategory.EnchantReserverIn, EmiStack.of(Blocks.blockEnchantReserver));
+        registry.addWorkstation(RecipeCategory.EnchantReserverOut, EmiStack.of(Blocks.blockEnchantReserver));
 
-        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.CRAFTING, EmiStack.of(new ItemStack(Blocks.nickelWorkBench)));
-        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.CRAFTING, EmiStack.of(new ItemStack(Blocks.tungstenWorkBench)));
+        registry.addWorkstation(VanillaEmiRecipeCategories.CRAFTING, EmiStack.of(new ItemStack(Blocks.nickelWorkBench)));
+        registry.addWorkstation(VanillaEmiRecipeCategories.CRAFTING, EmiStack.of(new ItemStack(Blocks.tungstenWorkBench)));
 
-        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, EmiStack.of(Blocks.blastFurnaceStoneIdle));
-        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, EmiStack.of(Blocks.blastFurnaceObsidianIdle));
-        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, EmiStack.of(Blocks.blastFurnaceNetherrackIdle));
-        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, EmiStack.of(Blocks.blockSmokerIdle));
+        registry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, EmiStack.of(Blocks.blastFurnaceStoneIdle));
+        registry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, EmiStack.of(Blocks.blastFurnaceObsidianIdle));
+        registry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, EmiStack.of(Blocks.blastFurnaceNetherrackIdle));
+        registry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, EmiStack.of(Blocks.blockSmokerIdle));
 
-        this.addInfoRecipes(emiRegistry);
+        this.addInfoRecipes(registry);
+        this.addEnchantReserverRecipes(registry);
     }
 
     private void addInfoRecipes(EmiRegistry registry) {
@@ -40,7 +41,10 @@ public class EmiPluginITF implements EmiPlugin {
         info(registry, Items.totemOfFlattening, "itf.item.totem_of_flattening.info");
         info(registry, Items.frostRod, "itf.item.frost_rod.info");
         info(registry, Items.enderRod, "itf.item.ender_rod.info");
+        info(registry, Item.emerald, "itf.item.emerald.info");
+    }
 
+    private void addEnchantReserverRecipes(EmiRegistry registry) {
         enchantReserverIn(registry, Item.diamond);
         enchantReserverIn(registry, Item.emerald);
         enchantReserverIn(registry, Item.netherQuartz);
@@ -55,7 +59,6 @@ public class EmiPluginITF implements EmiPlugin {
         enchantReserverOut(registry, Item.coinMithril);
         enchantReserverOut(registry, Items.tungstenCoin);
         enchantReserverOut(registry, Item.coinAdamantium);
-
         registry.addRecipe(new EnchantReserverOutRecipe(RetroEMI.wildcardIngredient(new ItemStack(Item.potion, 1, 32767)), EmiStack.of(Item.expBottle), 200));
     }
 

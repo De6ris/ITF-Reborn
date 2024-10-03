@@ -11,8 +11,6 @@ public interface ITFPlayer {
     default void itf$DisplayGuiMinePocket(IInventory minePocketInventory) {
     }
 
-    NewPlayerManager itf_GetNewPlayerManager();
-
     MiscManager itf_GetMiscManager();
 
     int itf$GetWater();

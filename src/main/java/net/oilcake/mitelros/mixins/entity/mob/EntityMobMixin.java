@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.mixins.entity.mob;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.api.BadOverride;
+import net.oilcake.mitelros.api.ITFEntityMob;
 import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.enchantment.Enchantments;
@@ -16,13 +16,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityMob.class)
-public abstract class EntityMobMixin extends EntityCreature {
+public abstract class EntityMobMixin extends EntityCreature implements ITFEntityMob {
     @Unique
     private boolean modified_attribute;
 
     public EntityMobMixin(World par1World) {
         super(par1World);
         this.modified_attribute = false;
+    }
+
+    @Override
+    public boolean modified_attribute() {
+        return this.modified_attribute;
+    }
+
+    @Override
+    public void set_modified_attribute(boolean modified_attribute) {
+        this.modified_attribute = modified_attribute;
     }
 
     @Inject(method = "attackEntityAsMob(Lnet/minecraft/Entity;)Lnet/minecraft/EntityDamageResult;", at = @At("HEAD"), cancellable = true)
@@ -88,19 +98,5 @@ public abstract class EntityMobMixin extends EntityCreature {
             this.setHealth(this.getMaxHealth());
             this.modified_attribute = true;
         }
-    }
-
-    @BadOverride
-    @Override
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
-        super.writeEntityToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setBoolean("modified_attribute", this.modified_attribute);
-    }
-
-    @BadOverride
-    @Override
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
-        super.readEntityFromNBT(par1NBTTagCompound);
-        this.modified_attribute = par1NBTTagCompound.getBoolean("modified_attribute");
     }
 }

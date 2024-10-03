@@ -56,3 +56,5 @@ extendable class net/minecraft/BlockDoor
 accessible class net/minecraft/ContainerRepairINNER2
 accessible class net/minecraft/ComponentNetherBridgePiece
 accessible class net/minecraft/GuiBeaconButtonPower
+
+accessible field net/minecraft/GenLayer chunkSeed J

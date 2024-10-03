@@ -33,14 +33,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     public InventoryPlayer inventory;
 
     @Unique
-    public NewPlayerManager newPlayerManager = new NewPlayerManager();
-
-    @Override
-    public NewPlayerManager itf_GetNewPlayerManager() {
-        return newPlayerManager;
-    }
-
-    @Unique
     public DiarrheaManager diarrheaManager = new DiarrheaManager(ReflectHelper.dyCast(this));
 
     @Shadow
@@ -191,7 +183,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         this.diarrheaManager.setDiarrheaCounter(par1NBTTagCompound.getInteger("diarrheaCounter"));
         this.huntManager.hunt_cap = par1NBTTagCompound.getBoolean("UsedTotemOfHunt");
         this.huntManager.hunt_counter = par1NBTTagCompound.getInteger("TotemDyingCounter");
-        this.newPlayerManager.setNew(par1NBTTagCompound.getBoolean("isNewPlayer"));
         this.drunkManager.setDrunk_duration(par1NBTTagCompound.getInteger("DrunkDuration"));
         this.miscManager.setKnowledgeTotemCounter(par1NBTTagCompound.getByte("KnowledgeTotemUsed"));
     }
@@ -201,7 +192,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         par1NBTTagCompound.setInteger("diarrheaCounter", this.diarrheaManager.getDiarrheaCounter());
         par1NBTTagCompound.setBoolean("UsedTotemOfHunt", this.huntManager.hunt_cap);
         par1NBTTagCompound.setInteger("TotemDyingCounter", this.huntManager.hunt_counter);
-        par1NBTTagCompound.setBoolean("isNewPlayer", this.newPlayerManager.getNew());
         par1NBTTagCompound.setInteger("DrunkDuration", this.drunkManager.getDrunk_duration());
         par1NBTTagCompound.setByte("KnowledgeTotemUsed", this.miscManager.getKnowledgeTotemCounter());
     }

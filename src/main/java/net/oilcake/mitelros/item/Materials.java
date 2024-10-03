@@ -1,6 +1,6 @@
 package net.oilcake.mitelros.item;
 
-import moddedmite.rustedironcore.api.register.MaterialProperties;
+import moddedmite.rustedironcore.property.MaterialProperties;
 import net.minecraft.*;
 
 public class Materials extends Material {
@@ -87,8 +87,6 @@ public class Materials extends Material {
         melon_ice = new MaterialFood("melon_ice");
         chocolate_smoothie = new MaterialFood("chocolate_smoothie");
         frost = new Material("frost");
-        MaterialProperties.registerArrowMaterial(nickel, 0.7F);
-        MaterialProperties.registerArrowMaterial(tungsten, 0.9F);
     }
 
     public Materials(EnumEquipmentMaterial enum_crafting_material) {
@@ -109,18 +107,6 @@ public class Materials extends Material {
             return 0.0F;
         Minecraft.setErrorMessage("getDamageVsEntity: unhandled material " + this.name);
         return 0.0F;
-    }
-
-    public static Item getITFRepairItem(Material material_for_repairs) {
-        if (material_for_repairs == Materials.nickel)
-            return Items.nickelNugget;
-        if (material_for_repairs == Materials.tungsten)
-            return Items.tungstenNugget;
-        if (material_for_repairs == Materials.ancient_metal_sacred)
-            return Items.ancientMetalArmorPiece;
-        if (material_for_repairs == Materials.uru)
-            return Items.uruNugget;
-        return null;
     }
 
     public static ItemVessel getITFBowl(Material vessel_material, Material contents) {

@@ -2,6 +2,8 @@ package net.oilcake.mitelros.item;
 
 import moddedmite.rustedironcore.api.item.BowItem;
 import moddedmite.rustedironcore.api.item.DoorItem;
+import moddedmite.rustedironcore.api.item.FishingRodItem;
+import moddedmite.rustedironcore.api.item.NuggetItem;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.block.Blocks;
@@ -34,7 +36,7 @@ public class Items extends Item {
 
     public static final ItemArmor nickelBootsChain = new ItemBoots(getNextItemID(), Materials.nickel, true);
 
-    public static final ItemNugget nickelNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.nickel);
+    public static final ItemNugget nickelNugget = new NuggetItem(getNextItemID(), Materials.nickel);
 
     public static final ItemAxe nickelAxe = ReflectHelper.createInstance(ItemAxe.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.nickel);
 
@@ -88,7 +90,7 @@ public class Items extends Item {
 
     public static final ItemArmor tungstenBootsChain = new ItemBoots(getNextItemID(), Materials.tungsten, true);
 
-    public static final ItemNugget tungstenNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.tungsten);
+    public static final ItemNugget tungstenNugget = new NuggetItem(getNextItemID(), Materials.tungsten);
 
     public static final ItemAxe tungstenAxe = ReflectHelper.createInstance(ItemAxe.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.tungsten);
 
@@ -294,7 +296,7 @@ public class Items extends Item {
 
     public static final ItemArmor bootsAncientMetalSacred = new ItemBoots(getNextItemID(), Materials.ancient_metal_sacred, false);
 
-    public static final Item ancientMetalArmorPiece = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.ancient_metal_sacred).setCraftingDifficultyAsComponent(800.0F).setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
+    public static final Item ancientMetalArmorPiece = new NuggetItem(getNextItemID(), Materials.ancient_metal_sacred).setCraftingDifficultyAsComponent(800.0F).setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
 
     public static final ItemFood agave = (ItemFood) (new ItemFood(getNextItemID(), Materials.agave, 1, 0, false, false, false, "agave")).setMaxStackSize(16).setAlwaysEdible();
 
@@ -312,7 +314,7 @@ public class Items extends Item {
 
     public static final ItemArmor uruBoots = new ItemBoots(getNextItemID(), Materials.uru, false);
 
-    public static final ItemNugget uruNugget = ReflectHelper.createInstance(ItemNugget.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.uru);
+    public static final ItemNugget uruNugget = new NuggetItem(getNextItemID(), Materials.uru);
 
     public static final ItemBattleAxe uruBattleAxe = ReflectHelper.createInstance(ItemBattleAxe.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.uru);
 
@@ -396,9 +398,9 @@ public class Items extends Item {
 
     public static final ItemArmor bootsCustom_b = new ItemBoots(getNextItemID(), Materials.custom_b, false);
 
-    public static final ItemFishingRod fishingRodNickel = (ItemFishingRod) (new ITFFishingRod(getNextItemID(), Materials.nickel)).setUnlocalizedName("fishingRod");
+    public static final FishingRodItem fishingRodNickel = (FishingRodItem) (new FishingRodItem(getNextItemID(), Materials.nickel)).setUnlocalizedName("fishingRod");
 
-    public static final ItemFishingRod fishingRodTungsten = (ItemFishingRod) (new ITFFishingRod(getNextItemID(), Materials.tungsten)).setUnlocalizedName("fishingRod");
+    public static final FishingRodItem fishingRodTungsten = (FishingRodItem) (new FishingRodItem(getNextItemID(), Materials.tungsten)).setUnlocalizedName("fishingRod");
 
     public static final ItemCarrotOnAStick carrotOnAStickNickel = (ItemCarrotOnAStick) (new ItemCarrotOnAStick(getNextItemID(), Materials.nickel)).setUnlocalizedName("carrotOnAStick");
 

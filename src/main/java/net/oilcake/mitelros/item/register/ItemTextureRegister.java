@@ -255,6 +255,6 @@ public class ItemTextureRegister extends Items {
         event.register(NameSpace, "jug/hardened_clay", hardenedClayJugSuspicious).setUnlocalizedName("hardened_clay_jug_suspicious");
         event.register(NameSpace, "jug/hardened_clay", hardenedClayJugSwampland).setUnlocalizedName("hardened_clay_jug_dangerous");
         event.register(NameSpace, "wand/ender", enderWand);
-        event.register(NameSpace, "boss_detector", bossDetector);
+        event.register(NameSpace, "misc/boss_detector", bossDetector);
     }
 }

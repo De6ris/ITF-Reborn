@@ -8,7 +8,6 @@ import fi.dy.masa.malilib.util.StringUtils;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.item.Items;
-import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.FoodDataList;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,10 +26,6 @@ import java.util.Optional;
 public abstract class ItemMixin implements ITFItem {
     @Shadow
     private float reach_bonus;
-
-    @Shadow
-    public abstract Material getMaterialForRepairs();
-
     @Shadow
     @Final
     public int itemID;
@@ -92,13 +87,6 @@ public abstract class ItemMixin implements ITFItem {
     @Override
     public void itf$SetExtraInfo(String extraInfo) {
         this.extraInfo = extraInfo;
-    }
-
-    @Inject(method = "getRepairItem", at = @At("HEAD"), cancellable = true)
-    private void itfRepairItem(CallbackInfoReturnable<Item> cir) {
-        Material material_for_repairs = this.getMaterialForRepairs();
-        Item repairItem = Materials.getITFRepairItem(material_for_repairs);
-        if (repairItem != null) cir.setReturnValue(repairItem);
     }
 
     @WrapOperation(method = "getExclusiveMaterial", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;setErrorMessage(Ljava/lang/String;)V", ordinal = 1))

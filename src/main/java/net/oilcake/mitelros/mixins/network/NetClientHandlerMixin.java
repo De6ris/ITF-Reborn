@@ -5,23 +5,24 @@ import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFGuiEnchantment;
 import net.oilcake.mitelros.api.ITFNetHandler;
 import net.oilcake.mitelros.block.enchantreserver.GuiEnchantReserver;
-import net.oilcake.mitelros.entity.misc.*;
 import net.oilcake.mitelros.network.S2CEnchantReserverInfo;
 import net.oilcake.mitelros.network.S2CEnchantmentInfo;
 import net.oilcake.mitelros.network.S2CUpdateITFStatus;
+import net.oilcake.mitelros.util.EntityTrackerMap;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Optional;
+
 @Mixin(NetClientHandler.class)
 public abstract class NetClientHandlerMixin extends NetHandler implements ITFNetHandler {
     @Inject(method = "handleVehicleSpawn", at = @At("HEAD"), cancellable = true)
     private void addITFEntity(Packet23VehicleSpawn par1Packet23VehicleSpawn, CallbackInfo ci) {
-        if (par1Packet23VehicleSpawn.type < 100 || par1Packet23VehicleSpawn.type > 104) {// important
-            return;
-        }
+        Optional<EntityTrackerMap.Constructor> match = EntityTrackerMap.match(par1Packet23VehicleSpawn.type);
+        if (match.isEmpty()) return;
         ci.cancel();
         double var2;
         double var4;
@@ -36,20 +37,8 @@ public abstract class NetClientHandlerMixin extends NetHandler implements ITFNet
             var6 = SpatialScaler.getPosZ(par1Packet23VehicleSpawn.scaled_pos_z);
         }
 
-        Entity var8 = null;
-
-        if (par1Packet23VehicleSpawn.type == 100) {
-            var8 = new EntityWandIceBall(this.worldClient, var2, var4, var6);
-        } else if (par1Packet23VehicleSpawn.type == 101) {
-            var8 = new EntityWandFireBall(this.worldClient, var2, var4, var6);
-        } else if (par1Packet23VehicleSpawn.type == 102) {
-            var8 = new EntityWandShockWave(this.worldClient, var2, var4, var6);
-        } else if (par1Packet23VehicleSpawn.type == 103) {
-            var8 = new EntityWandSlimeBall(this.worldClient, var2, var4, var6);
-        } else if (par1Packet23VehicleSpawn.type == 104) {
-            var8 = new EntityWandPearl(this.worldClient, var2, var4, var6);
-        }
-        // before you add, see the beginning of the method
+        Entity var8 = match.get().get(this.worldClient, var2, var4, var6, par1Packet23VehicleSpawn);
+        // for now I only consider simple constructors
 
         var8.rotationYaw = SpatialScaler.getRotation(par1Packet23VehicleSpawn.scaled_yaw);
         var8.rotationPitch = SpatialScaler.getRotation(par1Packet23VehicleSpawn.scaled_pitch);

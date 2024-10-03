@@ -2,6 +2,7 @@ package net.oilcake.mitelros.mixins.block;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
+import net.oilcake.mitelros.util.ItemUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -39,7 +40,7 @@ public class BlockAnvilMixin extends BlockFalling {
                 }
                 while (expecting_nuggets > 0) {
                     expecting_nuggets--;
-                    dropBlockAsEntityItem(info, (Item.getMatchingItem(ItemNugget.class, this.metal_type)).itemID);
+                    dropBlockAsEntityItem(info, ItemUtil.getNugget(this.metal_type).itemID);
                 }
                 cir.setReturnValue(0);
                 return;
