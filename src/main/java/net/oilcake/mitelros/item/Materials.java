@@ -1,9 +1,20 @@
 package net.oilcake.mitelros.item;
 
-import moddedmite.rustedironcore.property.MaterialProperties;
 import net.minecraft.*;
 
 public class Materials extends Material {
+    public static final EnumEquipmentMaterial NICKEL = EnumEquipmentMaterials.NICKEL.get();
+    public static final EnumEquipmentMaterial TUNGSTEN = EnumEquipmentMaterials.TUNGSTEN.get();
+    public static final EnumEquipmentMaterial URU = EnumEquipmentMaterials.URU.get();
+    public static final EnumEquipmentMaterial WOLF_FUR = EnumEquipmentMaterials.WOLF_FUR.get();
+    public static final EnumEquipmentMaterial CUSTOM_A = EnumEquipmentMaterials.CUSTOM_A.get();
+    public static final EnumEquipmentMaterial CUSTOM_B = EnumEquipmentMaterials.CUSTOM_B.get();
+    public static final EnumEquipmentMaterial VIBRANIUM = EnumEquipmentMaterials.VIBRANIUM.get();
+    public static final EnumEquipmentMaterial MAGICAL = EnumEquipmentMaterials.MAGICAL.get();
+    public static final EnumEquipmentMaterial ANCIENT_METAL_SACRED = EnumEquipmentMaterials.ANCIENT_METAL_SACRED.get();
+    public static final EnumEquipmentMaterial ICE_CHUNK = EnumEquipmentMaterials.ICE_CHUNK.get();
+
+
     public static final Materials nickel;
 
     public static final Materials tungsten;
@@ -58,31 +69,31 @@ public class Materials extends Material {
     public static final Material frost;
 
     static {
-        nickel = (Materials) (new Materials(EnumEquipmentMaterials.NICKEL)).setRequiresTool().setMetal(false).setMinHarvestLevel(3);
-        tungsten = (Materials) (new Materials(EnumEquipmentMaterials.TUNGSTEN)).setRequiresTool().setMetal(true).setHarmedByLava(false).setMinHarvestLevel(4);
-        vibranium = (Materials) (new Materials(EnumEquipmentMaterials.VIBRANIUM)).setRequiresTool().setMetal(true).setMinHarvestLevel(1);
-        uru = (Materials) (new Materials(EnumEquipmentMaterials.URU)).setRequiresTool().setMetal(true).setHarmedByLava(false).setMinHarvestLevel(5);
+        nickel = (Materials) (new Materials(NICKEL)).setRequiresTool().setMetal(false).setMinHarvestLevel(3);
+        tungsten = (Materials) (new Materials(TUNGSTEN)).setRequiresTool().setMetal(true).setHarmedByLava(false).setMinHarvestLevel(4);
+        vibranium = (Materials) (new Materials(VIBRANIUM)).setRequiresTool().setMetal(true).setMinHarvestLevel(1);
+        uru = (Materials) (new Materials(URU)).setRequiresTool().setMetal(true).setHarmedByLava(false).setMinHarvestLevel(5);
         porkchop_stew = (new MaterialFood("porkchop_stew")).setHarmedByPepsin();
         lampchop_stew = (new MaterialFood("chestnut_soup")).setHarmedByPepsin();
         fish_soup = (new MaterialFood("chestnut_soup")).setHarmedByPepsin();
         mashedCactus = new MaterialFood("mashed_cactus");
         glowberries = new MaterialFood("glowberries");
         orePieces = new Material("Pieces");
-        wolf_fur = (Materials) (new Materials(EnumEquipmentMaterials.WOLF_FUR)).setMinHarvestLevel(0);
-        custom_a = (Materials) (new Materials(EnumEquipmentMaterials.CUSTOM_A)).setMetal(false).setMinHarvestLevel(0);
-        custom_b = (Materials) (new Materials(EnumEquipmentMaterials.CUSTOM_B)).setMetal(false).setMinHarvestLevel(0);
+        wolf_fur = (Materials) (new Materials(WOLF_FUR)).setMinHarvestLevel(0);
+        custom_a = (Materials) (new Materials(CUSTOM_A)).setMetal(false).setMinHarvestLevel(0);
+        custom_b = (Materials) (new Materials(CUSTOM_B)).setMetal(false).setMinHarvestLevel(0);
         lemonade = (new MaterialFood("lemonade")).setDrinkable();
         suspicious_water = (new MaterialLiquid("suspicious_water", MapColor.waterColor)).setCanDouseFire().setDrinkable();
         dangerous_water = (new MaterialLiquid("swampland_water", MapColor.waterColor)).setCanDouseFire().setDrinkable();
-        magical = (Materials) (new Materials(EnumEquipmentMaterials.MAGICAL)).setMetal(false).setMinHarvestLevel(0);
-        ancient_metal_sacred = (Materials) (new Materials(EnumEquipmentMaterials.ANCIENT_METAL_SACRED)).setRequiresTool().setMetal(true).setMinHarvestLevel(3);
+        magical = (Materials) (new Materials(MAGICAL)).setMetal(false).setMinHarvestLevel(0);
+        ancient_metal_sacred = (Materials) (new Materials(ANCIENT_METAL_SACRED)).setRequiresTool().setMetal(true).setMinHarvestLevel(3);
         agave = new MaterialFood("agave");
         beetroot = new MaterialFood("beetroot");
         beetroot_soup = new MaterialFood("beetroot_soup");
         crystal = new Material("crystal").setDurability(4.0F);
         sulphur = new Material("sulphur").setDurability(2.0F);
         peeledSugarcane = new MaterialFood("peeledSugarcane");
-        ice_chunk = (Materials) (new Materials(EnumEquipmentMaterials.ICE_CHUNK)).setMinHarvestLevel(0);
+        ice_chunk = (Materials) (new Materials(ICE_CHUNK)).setMinHarvestLevel(0);
         ice_sucker = new MaterialFood("ice_sucker");
         melon_ice = new MaterialFood("melon_ice");
         chocolate_smoothie = new MaterialFood("chocolate_smoothie");

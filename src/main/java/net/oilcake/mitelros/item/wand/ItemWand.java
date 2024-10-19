@@ -11,6 +11,7 @@ public abstract class ItemWand extends ItemTool {
         setMaxStackSize(1);
         setMaxDamage(192);
         setCreativeTab(CreativeTabs.tabCombat);
+        this.setLowestCraftingDifficultyToProduce(0.0F);
     }
 
     @Override

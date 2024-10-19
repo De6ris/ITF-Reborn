@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.compat.CompatUtil;
 import net.oilcake.mitelros.item.Items;
 
 import java.util.ArrayList;
@@ -12,13 +13,14 @@ public class EntityPigmanGuard extends EntityPigZombie {
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.setEntityAttribute(SharedMonsterAttributes.maxHealth, 20.0);
-        this.setEntityAttribute(SharedMonsterAttributes.attackDamage, 8.0);
+        CompatUtil.setMaxHealth(this, 20.0);
+        CompatUtil.setAttackDamage(this, 8.0);
     }
 
     public EntityPigmanGuard(World par1World) {
         super(par1World);
     }
+
     protected EntityPlayer findPlayerToAttack(float max_distance) {
         Entity previous_target = this.getEntityToAttack();
         EntityPlayer target = super.findPlayerToAttack(max_distance);
@@ -28,11 +30,13 @@ public class EntityPigmanGuard extends EntityPigZombie {
 
         return target;
     }
+
     private void becomeAngryAt(Entity par1Entity) {
         this.entityToAttack = par1Entity;
         this.angerLevel = 4000;
         this.randomSoundDelay = this.rand.nextInt(40);
     }
+
     public void addRandomWeapon() {
         List items = new ArrayList();
         items.add(new RandomItemListEntry(Items.tungstenSword, 2));
@@ -40,7 +44,7 @@ public class EntityPigmanGuard extends EntityPigZombie {
             items.add(new RandomItemListEntry(Items.tungstenBattleAxe, 1));
             items.add(new RandomItemListEntry(Items.tungstenWarHammer, 1));
         }
-        RandomItemListEntry entry = (RandomItemListEntry)WeightedRandom.getRandomItem(this.rand, items);
+        RandomItemListEntry entry = (RandomItemListEntry) WeightedRandom.getRandomItem(this.rand, items);
         this.setHeldItemStack((new ItemStack(entry.item)).randomizeForMob(this, true));
     }
 

@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.compat.CompatUtil;
 
 import java.util.Iterator;
 import java.util.List;
@@ -26,9 +27,9 @@ public class EntitySpirit extends EntityMob {
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.setEntityAttribute(SharedMonsterAttributes.maxHealth, 60.0);
+        CompatUtil.setMaxHealth(this, 60.0);
         this.setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.35);
-        this.setEntityAttribute(SharedMonsterAttributes.attackDamage, 15.0);
+        CompatUtil.setAttackDamage(this, 15.0);
     }
 
     protected float getSoundVolume(String sound) {

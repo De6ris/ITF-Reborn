@@ -5,6 +5,8 @@ import net.minecraft.BiomeGenBase;
 import net.minecraft.GenLayer;
 import net.oilcake.mitelros.world.ITFBiomes;
 
+import java.util.List;
+
 public class BiomeGenerateListener implements IBiomeGenerateListener {
     // areBiomesViable params: blockX, blockZ, radius
     // geInts params: blockX, blockZ, xWidth, zWidth, but with >> 2
@@ -31,5 +33,12 @@ public class BiomeGenerateListener implements IBiomeGenerateListener {
             };
         }
         return original;
+    }
+
+    @Override
+    public void onStrongholdAllowedRegister(List<BiomeGenBase> original) {
+        original.add(ITFBiomes.BIOME_SAVANNA);
+        original.add(ITFBiomes.BIOME_SAVANNA_PLEATU);
+        original.add(ITFBiomes.BIOME_WINDSWEPT_PLEATU);
     }
 }

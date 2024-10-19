@@ -5,7 +5,8 @@ import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.ItemGoldenAppleLegend;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
-import net.oilcake.mitelros.network.S2CEnchantmentInfo;
+import net.oilcake.mitelros.network.ITFNetwork;
+import net.oilcake.mitelros.network.packets.S2CEnchantmentInfo;
 import net.oilcake.mitelros.util.AchievementExtend;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -61,7 +62,7 @@ public abstract class ContainerEnchantmentMixin extends Container {
         if (!predicated) return;
         boolean extended = itemStack.getMaterialForRepairs() == Materials.uru;
         int[] result = this.predict(this.rand, itemStack, this.enchantLevels, extended);
-        this.player.sendPacket(new S2CEnchantmentInfo(result));
+        ITFNetwork.sendToClient((ServerPlayer) this.player, new S2CEnchantmentInfo(result));
     }
 
     @Unique

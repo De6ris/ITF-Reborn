@@ -52,16 +52,22 @@ public abstract class ItemBucketMixin extends ItemVessel {
         }
     }
 
-    @ModifyArg(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;convertOneOfHeldItem(Lnet/minecraft/ItemStack;)V"))
-    private ItemStack itfBucket(ItemStack created_item_stack, @Local RaycastCollision rc) {
-        if (created_item_stack == null || !created_item_stack.hasMaterial(Material.water)) return created_item_stack;
+    @ModifyArg(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemBucket;getPeerForContents(Lnet/minecraft/Material;)Lnet/minecraft/ItemVessel;"))
+    private Material moreWaterType(Material contents, @Local RaycastCollision rc) {
+        if (contents != Material.water) return contents;
         BiomeGenBase biome = rc.world.getBiomeGenForCoords(rc.block_hit_x, rc.block_hit_z);
         Material material;
         if (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland) material = Materials.dangerous_water;
         else if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) material = Material.water;
         else material = Materials.suspicious_water;
-        return new ItemStack(this.getPeerForContents(material));
+        return material;
     }
+
+    @ModifyExpressionValue(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemBucket;getPeerForContents(Lnet/minecraft/Material;)Lnet/minecraft/ItemVessel;"))
+    private ItemVessel fixNPE(ItemVessel original) {
+        if (original == null) return this;
+        return original;
+    }// if null, won't convert anything
 
     @ModifyExpressionValue(method = "tryPlaceContainedLiquid", at = @At(value = "INVOKE", target = "Lnet/minecraft/ItemBucket;getContents()Lnet/minecraft/Material;"))
     private Material inject(Material material_in_bucket) {
@@ -70,7 +76,6 @@ public abstract class ItemBucketMixin extends ItemVessel {
         }
         return material_in_bucket;
     }
-
 
     @ModifyConstant(method = "tryPlaceContainedLiquid", constant = @Constant(intValue = -100))
     private int itfXP_1(int constant) {

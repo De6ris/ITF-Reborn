@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.entity.boss;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.compat.CompatUtil;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.entity.mob.EntityLichShadow;
 import net.oilcake.mitelros.item.Items;
@@ -63,10 +64,11 @@ public class EntityLich extends EntityBoneLord implements IBossDisplayData {
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
+        int iteDay = CompatUtil.getITEDay(this.worldObj);
         setEntityAttribute(SharedMonsterAttributes.followRange, 128.0D);
         setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.27000001072883606D);
-        setEntityAttribute(SharedMonsterAttributes.attackDamage, 9.0D);
-        setEntityAttribute(SharedMonsterAttributes.maxHealth, 75.0D);
+        setEntityAttribute(SharedMonsterAttributes.attackDamage, CompatUtil.getAttribute(iteDay, 9.0D));
+        setEntityAttribute(SharedMonsterAttributes.maxHealth, CompatUtil.getAttribute(iteDay, 75.0D));
     }
 
     @Override

@@ -1,32 +1,38 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.compat.CompatUtil;
 
 public class EntityBoneBodyguard extends EntitySkeleton {
-  public EntityBoneBodyguard(World par1World) {
-    super(par1World);
-  }
-  
-  protected void applyEntityAttributes() {
-    super.applyEntityAttributes();
-    setEntityAttribute(SharedMonsterAttributes.maxHealth, 6.0D);
-    setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.28999999165534973D);
-    setEntityAttribute(SharedMonsterAttributes.attackDamage, 5.0D);
-  }
-  
-  public void addRandomWeapon() {
-    setHeldItemStack((new ItemStack((getSkeletonType() == 2) ? ((this.rand.nextInt(20) == 0) ? Item.battleAxeRustedIron : Item.swordRustedIron) : (Item)Item.bow)).randomizeForMob((EntityLiving)this, true));
-  }
-  
-  protected void addRandomEquipment() {
-    addRandomWeapon();
-    setBoots((new ItemStack((Item)Item.bootsChainRustedIron)).randomizeForMob((EntityLiving)this, true));
-    setLeggings((new ItemStack((Item)Item.legsChainRustedIron)).randomizeForMob((EntityLiving)this, true));
-    setCuirass((new ItemStack((Item)Item.plateChainRustedIron)).randomizeForMob((EntityLiving)this, true));
-    setHelmet((new ItemStack((Item)Item.helmetChainRustedIron)).randomizeForMob((EntityLiving)this, true));
-  }
-  
-  public int getExperienceValue() {
-    return super.getExperienceValue() * 2;
-  }
+    public EntityBoneBodyguard(World par1World) {
+        super(par1World);
+    }
+
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        int iteDay = CompatUtil.getITEDay(this.worldObj);
+        setEntityAttribute(SharedMonsterAttributes.maxHealth, CompatUtil.getAttribute(iteDay, 6.0D));
+        setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.29D);
+        setEntityAttribute(SharedMonsterAttributes.attackDamage, CompatUtil.getAttribute(iteDay, 5.0D));
+    }
+
+    @Override
+    public void addRandomWeapon() {
+        setHeldItemStack((new ItemStack((getSkeletonType() == 2) ? ((this.rand.nextInt(20) == 0) ? Item.battleAxeRustedIron : Item.swordRustedIron) : Item.bow)).randomizeForMob(this, true));
+    }
+
+    @Override
+    protected void addRandomEquipment() {
+        addRandomWeapon();
+        setBoots((new ItemStack(Item.bootsChainRustedIron)).randomizeForMob(this, true));
+        setLeggings((new ItemStack(Item.legsChainRustedIron)).randomizeForMob(this, true));
+        setCuirass((new ItemStack(Item.plateChainRustedIron)).randomizeForMob(this, true));
+        setHelmet((new ItemStack(Item.helmetChainRustedIron)).randomizeForMob(this, true));
+    }
+
+    @Override
+    public int getExperienceValue() {
+        return super.getExperienceValue() * 2;
+    }
 }

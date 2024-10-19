@@ -58,3 +58,5 @@ accessible class net/minecraft/ComponentNetherBridgePiece
 accessible class net/minecraft/GuiBeaconButtonPower
 
 accessible field net/minecraft/GenLayer chunkSeed J
+
+accessible method net/minecraft/EntityVillager adjustProbability (F)F

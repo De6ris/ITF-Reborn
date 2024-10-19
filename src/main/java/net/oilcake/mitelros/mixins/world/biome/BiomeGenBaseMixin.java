@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.entity.mob.*;
+import net.oilcake.mitelros.registry.ITFRegistryImpl;
 import net.oilcake.mitelros.world.ITFBiomes;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
@@ -77,11 +78,9 @@ public abstract class BiomeGenBaseMixin {
     private void removeAnimalsThatProvidesMeat(EnumCreatureType par1EnumCreatureType, CallbackInfoReturnable<List> cir) {
         if (ITFConfig.TagApocalypse.getBooleanValue() && par1EnumCreatureType == EnumCreatureType.animal) {
             List original = this.spawnableCreatureList;
-            this.removeEntityFromSpawnableList(original, EntityCow.class);
-            this.removeEntityFromSpawnableList(original, EntityChicken.class);
-            this.removeEntityFromSpawnableList(original, EntitySheep.class);
-            this.removeEntityFromSpawnableList(original, EntityPig.class);
-            this.removeEntityFromSpawnableList(original, EntityHorse.class);
+            for (Class<? extends Entity> meatAnimal : ITFRegistryImpl.meatAnimals) {
+                this.removeEntityFromSpawnableList(original, meatAnimal);
+            }
             cir.setReturnValue(original);
         }
     }

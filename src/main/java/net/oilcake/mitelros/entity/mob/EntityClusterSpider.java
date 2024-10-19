@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.compat.CompatUtil;
 
 public class EntityClusterSpider extends EntityArachnid {
     int num_webs;
@@ -20,8 +21,8 @@ public class EntityClusterSpider extends EntityArachnid {
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        setEntityAttribute(SharedMonsterAttributes.maxHealth, 6.0D);
-        setEntityAttribute(SharedMonsterAttributes.attackDamage, 3.0D);
+        CompatUtil.setMaxHealth(this, 6.0D);
+        CompatUtil.setAttackDamage(this, 3.0D);
         setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.75D);
     }
 

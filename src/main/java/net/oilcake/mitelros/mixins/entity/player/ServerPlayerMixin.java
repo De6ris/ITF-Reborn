@@ -1,14 +1,14 @@
 package net.oilcake.mitelros.mixins.entity.player;
 
 import net.minecraft.*;
-import net.minecraft.server.MinecraftServer;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.ContainerEnchantReserver;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverInventory;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.minePocket.ContainerMinePocket;
-import net.oilcake.mitelros.network.S2COpenWindow;
-import net.oilcake.mitelros.network.S2CUpdateITFStatus;
+import net.oilcake.mitelros.network.ITFNetwork;
+import net.oilcake.mitelros.network.packets.S2COpenWindow;
+import net.oilcake.mitelros.network.packets.S2CUpdateITFStatus;
 import net.oilcake.mitelros.status.EnchantmentManager;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
@@ -17,7 +17,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -40,9 +39,6 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
 
     @Shadow
     private int protein;
-
-    @Shadow
-    private int essential_fats;
 
     @Shadow
     private int phytonutrients;
@@ -78,29 +74,9 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
         }
         int water = this.itf$GetWater();
         if (water != this.last_water) {
-            this.playerNetServerHandler.sendPacketToPlayer(new S2CUpdateITFStatus(water));
+            ITFNetwork.sendToClient(this.getAsEntityPlayerMP(), new S2CUpdateITFStatus(water));
             this.last_water = water;
         }
-    }
-
-    @ModifyArg(method = "setProtein", at = @At(value = "INVOKE", target = "Lnet/minecraft/MathHelper;clamp_int(III)I"), index = 2)
-    private int widenProtein(int par0) {
-        return 960000;
-    }
-
-    @ModifyArg(method = "setEssentialFats", at = @At(value = "INVOKE", target = "Lnet/minecraft/MathHelper;clamp_int(III)I"), index = 2)
-    private int widenFat(int par0) {
-        return 960000;
-    }
-
-    @ModifyArg(method = "setPhytonutrients", at = @At(value = "INVOKE", target = "Lnet/minecraft/MathHelper;clamp_int(III)I"), index = 2)
-    private int widenPhytonutrients(int par0) {
-        return 960000;
-    }
-
-    @Inject(method = "<init>(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/World;Ljava/lang/String;Lnet/minecraft/ItemInWorldManager;)V", at = @At("RETURN"))
-    private void injectInit(MinecraftServer par1MinecraftServer, World par2World, String par3Str, ItemInWorldManager par4ItemInWorldManager, CallbackInfo callback) {
-        this.protein = this.essential_fats = this.phytonutrients = 960000;
     }
 
     @Override

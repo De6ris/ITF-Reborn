@@ -2,7 +2,10 @@ package net.oilcake.mitelros.api;
 
 import net.minecraft.IInventory;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverInventory;
-import net.oilcake.mitelros.status.*;
+import net.oilcake.mitelros.status.DrunkManager;
+import net.oilcake.mitelros.status.FeastManager;
+import net.oilcake.mitelros.status.HuntManager;
+import net.oilcake.mitelros.status.MiscManager;
 
 public interface ITFPlayer {
     default void itf$DisplayGUIEnchantReserver(int x, int y, int z, EnchantReserverInventory slots) {

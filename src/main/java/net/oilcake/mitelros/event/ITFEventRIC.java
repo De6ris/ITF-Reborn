@@ -2,24 +2,15 @@ package net.oilcake.mitelros.event;
 
 import moddedmite.rustedironcore.api.event.Handlers;
 import moddedmite.rustedironcore.api.event.handler.GravelDropHandler;
-import moddedmite.rustedironcore.api.event.listener.IEnchantingListener;
-import net.minecraft.ItemStack;
 import net.oilcake.mitelros.event.listener.*;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
-
-import java.util.Random;
 
 public class ITFEventRIC extends Handlers {
     public static void register() {
         FurnaceUpdate.register(new FurnaceListener());
 
-        Enchanting.register(new IEnchantingListener() {
-            @Override
-            public int onMaxEnchantNumModify(Random random, ItemStack item_stack, int enchantment_levels, int original) {
-                return item_stack.getItem().getHardestMetalMaterial() == Materials.uru ? original + 2 : original;
-            }
-        });
+        Enchanting.register(new EnchantingListener());
 
         BiomeGenerate.register(new BiomeGenerateListener());
 
@@ -28,7 +19,7 @@ public class ITFEventRIC extends Handlers {
 
         BeaconUpdate.register(new BeaconListener());
 
-        SpawnCondition.register(new ITFSpawnConditions());
+        SpawnCondition.register(new SpawnConditionsRegistry());
 
         EntityMobMixin.register(new EntityMobListener());
 
@@ -43,5 +34,16 @@ public class ITFEventRIC extends Handlers {
 
         Smelting.register(new SmeltingRegistry());
 
+        Crafting.register(new CraftingRegistry());
+
+        Trading.register(new TradingListener());
+
+        Combat.register(new CombatListener());
+
+        LootTable.register(new LootTableRegistry());
+
+        EntityTracker.register(new EntityTrackerRegistry());
+
+        PlayerAttribute.register(new PlayerAttributeListener());
     }
 }

@@ -5,7 +5,9 @@ import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.item.potion.PotionExtend;
-import net.oilcake.mitelros.network.C2SDecreaseWater;
+import net.oilcake.mitelros.network.ITFNetwork;
+import net.oilcake.mitelros.network.packets.C2SDecreaseWater;
+import net.oilcake.mitelros.registry.ITFRegistryImpl;
 import net.oilcake.mitelros.util.DamageSourceExtend;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -52,6 +54,11 @@ public class FoodStatsMixin implements ITFFoodStats {
     private void inject(Item item, CallbackInfo ci) {
         int foodWater = ((ITFItem) item).itf$GetFoodWater();
         this.itf$AddWater(foodWater);
+        if (ITFRegistryImpl.waterChanceMap.containsKey(item)) {
+            if (this.player.rand.nextFloat() < ITFRegistryImpl.waterChanceMap.get(item)) {
+                this.itf$AddWater(1);
+            }
+        }
     }
 
     public void itf$SetSatiationWater(int water, boolean check_limit) {
@@ -83,7 +90,7 @@ public class FoodStatsMixin implements ITFFoodStats {
             water *= this.global_water_rate;
             this.hungerWater = Math.min(this.hungerWater + water, 40.0F);
             if (this.player.worldObj.isRemote && this.hungerWater > 0.2F) {
-                (Minecraft.getMinecraft()).thePlayer.sendQueue.addToSendQueue(new C2SDecreaseWater(this.hungerWater));
+                ITFNetwork.sendToServer(new C2SDecreaseWater(this.hungerWater));
                 this.hungerWater = 0.0F;
             }
         }

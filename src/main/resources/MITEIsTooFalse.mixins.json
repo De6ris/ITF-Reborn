@@ -31,8 +31,6 @@
     "enchantment.EnchantmentProtectionMixin",
     "enchantment.EnchantmentSilkTouchMixin",
     "entity.ai.EntityAISeekLitTorchMixin",
-    "entity.ai.EntityTrackerEntryMixin",
-    "entity.ai.EntityTrackerMixin",
     "entity.animal.EntityHorseMixin",
     "entity.animal.EntityWolfMixin",
     "entity.misc.EntityArrowMixin",
@@ -60,8 +58,6 @@
     "entity.player.ServerPlayerMixin",
     "entity.slime.EntityOozeMixin",
     "entity.slime.EntityPuddingMixin",
-    "entity.villager.ContainerMerchantMixin",
-    "entity.villager.EntityVillagerMixin",
     "gui.GuiBeaconButtonPowerMixin",
     "gui.GuiBeaconMixin",
     "gui.GuiEnchantmentMixin",
@@ -89,13 +85,9 @@
     "item.food.ItemBowlMixin",
     "item.food.ItemFoodMixin",
     "item.food.ItemGoldenAppleMixin",
-    "item.recipes.CraftingManagerMixin",
     "item.recipes.RecipeHelperMixin",
-    "network.NetClientHandlerMixin",
-    "network.NetServerHandlerMixin",
     "render.ItemRendererMixin",
     "render.RenderBlocksMixin",
-    "render.RenderVillagerMixin",
     "tileentity.TileEntityBeaconMixin",
     "tileentity.TileEntityFurnaceMixin",
     "util.DamageMixin",
@@ -127,17 +119,9 @@
     "world.biome.BiomeHellMixin",
     "world.biome.BiomeIcePlainsMixin",
     "world.biome.BiomeTaigaMixin",
-    "world.biome.BiomeTheEndMixin",
-    "world.structure.ComponentDesertPyramidMixin",
-    "world.structure.ComponentNetherBridgePieceMixin",
-    "world.structure.MapGenStrongholdMixin",
-    "world.structure.WorldGenJungleTempleMixin",
-    "world.structure.WorldGenMineshaftPiecesMixin",
-    "world.structure.WorldGenStrongholdChestCorridorMixin",
-    "world.structure.WorldGenWitchHutMixin"
+    "world.biome.BiomeTheEndMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "plugin": "net.oilcake.mitelros.compat.MixinPlugin"
+  }
 }

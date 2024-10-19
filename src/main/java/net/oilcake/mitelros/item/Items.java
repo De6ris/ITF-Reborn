@@ -529,5 +529,27 @@ public class Items extends Item {
         ((ITFItem) totemOfFlattening).itf$SetExtraInfo("itf.item.totem_of_flattening.info");
         ((ITFItem) frostRod).itf$SetExtraInfo("itf.item.frost_rod.info");
         ((ITFItem) enderRod).itf$SetExtraInfo("itf.item.ender_rod.info");
+
+        forgingNote.setLowestCraftingDifficultyToProduce(0.0F);
+        clayBowlEmpty.setLowestCraftingDifficultyToProduce(0.0F);
+        vibraniumHelmet.setLowestCraftingDifficultyToProduce(0.0F);
+        vibraniumChestplate.setLowestCraftingDifficultyToProduce(0.0F);
+        vibraniumLeggings.setLowestCraftingDifficultyToProduce(0.0F);
+        vibraniumBoots.setLowestCraftingDifficultyToProduce(0.0F);
+        vibraniumSword.setLowestCraftingDifficultyToProduce(0.0F);
+        helmetCustom_a.setLowestCraftingDifficultyToProduce(0.0F);
+        chestplateCustom_a.setLowestCraftingDifficultyToProduce(0.0F);
+        leggingsCustom_a.setLowestCraftingDifficultyToProduce(0.0F);
+        bootsCustom_a.setLowestCraftingDifficultyToProduce(0.0F);
+        helmetCustom_b.setLowestCraftingDifficultyToProduce(0.0F);
+        chestplateCustom_b.setLowestCraftingDifficultyToProduce(0.0F);
+        leggingsCustom_b.setLowestCraftingDifficultyToProduce(0.0F);
+        bootsCustom_b.setLowestCraftingDifficultyToProduce(0.0F);
+        leatherKettle.setLowestCraftingDifficultyToProduce(0.0F);
+        leatherKettleSuspicious.setLowestCraftingDifficultyToProduce(0.0F);
+        leatherKettleSwampland.setLowestCraftingDifficultyToProduce(0.0F);
+        hardenedClayJug.setLowestCraftingDifficultyToProduce(0.0F);
+        hardenedClayJugSuspicious.setLowestCraftingDifficultyToProduce(0.0F);
+        hardenedClayJugSwampland.setLowestCraftingDifficultyToProduce(0.0F);
     }
 }

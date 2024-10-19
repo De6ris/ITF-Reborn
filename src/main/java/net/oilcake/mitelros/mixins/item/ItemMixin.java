@@ -8,7 +8,7 @@ import fi.dy.masa.malilib.util.StringUtils;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.item.Items;
-import net.oilcake.mitelros.util.FoodDataList;
+import net.oilcake.mitelros.registry.ITFRegistryImpl;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -54,10 +54,11 @@ public abstract class ItemMixin implements ITFItem {
 
     @Inject(method = "addInformation", at = @At(value = "INVOKE", target = "Lnet/minecraft/Item;getNutrition()I"))
     private void itfFoodInfo(ItemStack item_stack, EntityPlayer player, List info, boolean extended_info, Slot slot, CallbackInfo ci) {
-        float chanceOfDecreaseWater = FoodDataList.chanceOfDecreaseWater(item_stack.getItem());
-        if (chanceOfDecreaseWater > 0) {
-            info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.chance", Math.round(100.0f * (1.0f - chanceOfDecreaseWater))));
-        } else if (this.foodWater > 0) {
+        Float v = ITFRegistryImpl.waterChanceMap.get(item_stack.getItem());
+        if (v != null) {
+            info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.chance", Math.round(100.0f * v)));
+        }
+        if (this.foodWater > 0) {
             info.add(EnumChatFormatting.AQUA + Translator.getFormatted("item.tooltip.water.add", this.foodWater));
         } else if (this.foodWater < 0) {
             info.add(EnumChatFormatting.YELLOW + Translator.getFormatted("item.tooltip.water.minus", this.foodWater));
@@ -72,6 +73,9 @@ public abstract class ItemMixin implements ITFItem {
     }
 
     public int itf$GetFoodWater() {
+        if (ITFRegistryImpl.waterMap.containsKey((Item) (Object) this)) {
+            return ITFRegistryImpl.waterMap.get((Item) (Object) this);
+        }
         return this.foodWater;
     }
 

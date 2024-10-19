@@ -1,10 +1,8 @@
 package net.oilcake.mitelros.block.enchantreserver;
 
-import net.minecraft.Container;
-import net.minecraft.EntityPlayer;
-import net.minecraft.ItemStack;
-import net.minecraft.Slot;
-import net.oilcake.mitelros.network.S2CEnchantReserverInfo;
+import net.minecraft.*;
+import net.oilcake.mitelros.network.ITFNetwork;
+import net.oilcake.mitelros.network.packets.S2CEnchantReserverInfo;
 
 import javax.annotation.Nullable;
 
@@ -54,10 +52,10 @@ public class ContainerEnchantReserver extends Container {
             if (index < this.inventory.getSize()) {
                 if (!mergeItemStack(itemstack1, this.inventory.getSize(), this.inventorySlots.size(), false))
                     return null;
-            } else if (itemstack1.getItem() instanceof net.minecraft.ItemPotion) {
+            } else if (itemstack1.getItem() instanceof ItemPotion) {
                 if (!mergeItemStack(itemstack1, this.inventory.getInputIndex(), this.inventory.getInputIndex() + 1, false))
                     return null;
-            } else if (itemstack1.getItem() instanceof net.minecraft.ItemRock &&
+            } else if (itemstack1.getItem() instanceof ItemRock &&
                     !mergeItemStack(itemstack1, this.inventory.getOutputIndex(), this.inventory.getOutputIndex() + 1, false)) {
                 return null;
             }
@@ -82,7 +80,8 @@ public class ContainerEnchantReserver extends Container {
 
     public void updateInfo() {
         if (!this.world.isRemote) {
-            this.player.sendPacket(new S2CEnchantReserverInfo(this.tileEntityEnchantReserver.getEXP()));
+            assert this.tileEntityEnchantReserver != null;
+            ITFNetwork.sendToClient(((ServerPlayer) this.player), new S2CEnchantReserverInfo(this.tileEntityEnchantReserver.getEXP()));
         }
     }
 

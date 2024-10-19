@@ -1,10 +1,7 @@
 package net.oilcake.mitelros.event;
 
 import com.google.common.eventbus.Subscribe;
-import moddedmite.rustedironcore.property.ItemProperties;
-import moddedmite.rustedironcore.property.MaterialProperties;
 import net.minecraft.*;
-import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;
 import net.oilcake.mitelros.block.observer.TileEntityObserver;
@@ -18,8 +15,6 @@ import net.oilcake.mitelros.entity.boss.EntityLich;
 import net.oilcake.mitelros.entity.misc.*;
 import net.oilcake.mitelros.entity.mob.*;
 import net.oilcake.mitelros.item.register.ItemTextureRegister;
-import net.oilcake.mitelros.item.register.RecipeRegister;
-import net.oilcake.mitelros.network.*;
 import net.oilcake.mitelros.render.*;
 import net.oilcake.mitelros.status.MiscManager;
 import net.oilcake.mitelros.util.AchievementExtend;
@@ -87,22 +82,12 @@ public class ITFEventFML {
 
     @Subscribe
     public void onRecipeRegister(RecipeRegistryEvent event) {
-        RecipeRegister.registerRecipes(event);
         Blocks.registerRecipes(event);
     }
 
     @Subscribe
     public void onAchievementRegister(AchievementRegistryEvent event) {
         AchievementExtend.registerAchievements();
-    }
-
-    @Subscribe
-    public void onPacketRegister(PacketRegisterEvent event) {
-        event.register(true, false, S2CEnchantReserverInfo.class);//134
-        event.register(false, true, C2SDecreaseWater.class);//135
-        event.register(true, false, S2CEnchantmentInfo.class);//136
-        event.register(true, false, S2CUpdateITFStatus.class);//137
-        event.register(true, false, S2COpenWindow.class);//138
     }
 
     @Subscribe

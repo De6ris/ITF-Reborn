@@ -1,20 +1,20 @@
 package net.oilcake.mitelros.item.register;
 
+import moddedmite.rustedironcore.api.event.events.CraftingRecipeRegisterEvent;
 import moddedmite.rustedironcore.api.event.events.SmeltingRecipeRegisterEvent;
 import net.minecraft.*;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.Items;
-import net.xiaoyu233.fml.reload.event.RecipeRegistryEvent;
 
 public class RecipeRegister extends Items {
-    public static void registerRecipes(RecipeRegistryEvent register) {
+    public static void registerRecipes(CraftingRecipeRegisterEvent register) {
         registerMetalRecipes(register);
         registerMiscRecipes(register);
         RecipesArmor.registerArmorRecipe(register);
         RecipesFood.registerFoodRecipe(register);
     }
 
-    private static void registerMetalRecipes(RecipeRegistryEvent register) {
+    private static void registerMetalRecipes(CraftingRecipeRegisterEvent register) {
         register.registerShapelessRecipe(new ItemStack(nickelIngot, 9), true, Blocks.blockNickel);
         register.registerShapelessRecipe(new ItemStack(nickelNugget, 9), true, nickelIngot);
         register.registerShapelessRecipe(new ItemStack(tungstenIngot, 9), true, Blocks.blockTungsten);
@@ -33,8 +33,8 @@ public class RecipeRegister extends Items {
         register.registerShapelessRecipe(new ItemStack(tungstenNugget, 1), false, arrowTungsten);
         register.registerShapelessRecipe(new ItemStack(nickelNugget, 1), false, arrowNickel);
         register.registerShapedRecipe(new ItemStack(bowTungsten, 1), true, "#C ", "#EC", "#C ", '#', silk, 'E', tungstenIngot, 'C', stick);
-        register.registerShapelessRecipe(new ItemStack(carrotOnAStickNickel, 1), false, Item.carrot, fishingRodNickel);
-        register.registerShapelessRecipe(new ItemStack(carrotOnAStickTungsten, 1), false, Item.carrot, fishingRodTungsten);
+        register.registerShapelessRecipe(new ItemStack(carrotOnAStickNickel, 1), true, Item.carrot, fishingRodNickel).difficulty(40.0F);
+        register.registerShapelessRecipe(new ItemStack(carrotOnAStickTungsten, 1), true, Item.carrot, fishingRodTungsten).difficulty(40.0F);
         register.registerShapedRecipe(new ItemStack(detectorEmerald, 1), true, "FAF", "ANA", "FAF", 'A', Item.goldNugget, 'F', Item.ancientMetalNugget, 'N', Item.emerald);
         register.registerShapedRecipe(new ItemStack(detectorDiamond, 1), true, "FAF", "ANA", "FAF", 'A', Item.goldNugget, 'F', Item.ancientMetalNugget, 'N', Item.diamond);
         ItemCoin[] coins = {nickelCoin, tungstenCoin};
@@ -48,7 +48,7 @@ public class RecipeRegister extends Items {
         register.registerShapedRecipe(new ItemStack(doorTungsten, 6), true, "AA ", "AA ", "AA ", 'A', tungstenIngot);
     }
 
-    private static void registerMiscRecipes(RecipeRegistryEvent register) {
+    private static void registerMiscRecipes(CraftingRecipeRegisterEvent register) {
         register.registerShapelessRecipe(new ItemStack(frostPowder, 2), true, frostRod);
         register.registerShapelessRecipe(new ItemStack(Item.leather, 1), true, wolf_fur, wolf_fur, wolf_fur, wolf_fur);
         register.registerShapelessRecipe(new ItemStack(Block.ice, 1), true, iceChunk, iceChunk, iceChunk, iceChunk);
@@ -64,7 +64,7 @@ public class RecipeRegister extends Items {
         registerHoeFlintRecipes(register);
     }
 
-    private static void registerHoeFlintRecipes(RecipeRegistryEvent register) {
+    private static void registerHoeFlintRecipes(CraftingRecipeRegisterEvent register) {
         register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "SP", "S ", 'F', Item.flint, 'S', Item.stick, 'P', sinew);
         register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", "S ", "SP", 'F', Item.flint, 'S', Item.stick, 'P', sinew);
         register.registerShapedRecipe(new ItemStack(hoeFlint, 1), true, "FF", " S", "PS", 'F', Item.flint, 'S', Item.stick, 'P', sinew);

@@ -2,23 +2,23 @@ package net.oilcake.mitelros.mixins.entity.player;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.api.ITFPlayer;
-import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.status.*;
-import net.oilcake.mitelros.util.Constant;
-import net.oilcake.mitelros.util.quality.EnumEffectEntry;
-import net.oilcake.mitelros.util.quality.EnumToolType;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
@@ -44,16 +44,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @Override
     public HuntManager itf$GetHuntManager() {
         return huntManager;
-    }
-
-    @ModifyReturnValue(method = "getReach(Lnet/minecraft/Block;I)F", at = @At("RETURN"))
-    private float addReach(float original) {
-        return original + (this.isPotionActive(PotionExtend.stretch) ? this.getActivePotionEffect(PotionExtend.stretch).getAmplifier() * 1.0F + 1.0F : 0.0F);
-    }
-
-    @ModifyReturnValue(method = "getReach(Lnet/minecraft/EnumEntityReachContext;Lnet/minecraft/Entity;)F", at = @At("RETURN"))
-    private float addReachToEntity(float original) {
-        return original + (this.isPotionActive(PotionExtend.stretch) ? this.getActivePotionEffect(PotionExtend.stretch).getAmplifier() * 0.5F + 0.5F : 0.0F);
     }
 
     @Inject(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/Entity;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
@@ -83,9 +73,9 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
         return new PotionEffect(PotionExtend.stunning.id, par1PotionEffect.getDuration(), par1PotionEffect.getAmplifier());
     }
 
-    @ModifyConstant(method = "attackTargetEntityWithCurrentItem", constant = @org.spongepowered.asm.mixin.injection.Constant(floatValue = 18.0F))
-    private float achievement(float constant) {
-        return 40.0F;
+    @WrapWithCondition(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityPlayer;triggerAchievement(Lnet/minecraft/StatBase;)V"))
+    private boolean strict(EntityPlayer instance, StatBase par1StatBase, @Local float damage) {
+        return damage >= 40.0F;
     }
 
     @Inject(method = "onDeath(Lnet/minecraft/DamageSource;)V", at = @At("TAIL"))
@@ -210,21 +200,5 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
                 cir.setReturnValue(null);
             damage.scaleAmount(1.0F - nickel_coverage);
         }
-    }
-
-    @Inject(method = "attackEntityFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
-    private void inject_1(Damage damage, CallbackInfoReturnable<EntityDamageResult> cir) {
-        if (ITFConfig.FinalChallenge.getBooleanValue())
-            damage.scaleAmount(1.0F + Constant.calculateCurrentDifficulty() / 50.0F);
-    }
-
-    @ModifyArg(method = "getCurrentPlayerStrVsBlock", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F"), index = 0)
-    private float itfModify(float str_vs_block) {
-        return this.miscManager.calculateITFStv(str_vs_block);
-    }
-
-    @ModifyReturnValue(method = "calcRawMeleeDamageVs(Lnet/minecraft/Entity;ZZ)F", at = @At("RETURN"))
-    private float applyQuality(float original) {
-        return original * EnumToolType.getMultiplierForEntry(this.getHeldItemStack(), EnumEffectEntry.Attack);
     }
 }

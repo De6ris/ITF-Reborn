@@ -2,6 +2,7 @@ package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFSpider;
+import net.oilcake.mitelros.compat.CompatUtil;
 
 import java.util.Iterator;
 import java.util.List;
@@ -57,9 +58,9 @@ public class EntitySpiderKing extends EntityArachnid {
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        setEntityAttribute(SharedMonsterAttributes.maxHealth, 28.0D);
+        CompatUtil.setMaxHealth(this, 28.0D);
         setEntityAttribute(SharedMonsterAttributes.followRange, 56.0D);
-        setEntityAttribute(SharedMonsterAttributes.attackDamage, 13.0D);
+        CompatUtil.setAttackDamage(this, 13.0D);
         setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.92D);
     }
 

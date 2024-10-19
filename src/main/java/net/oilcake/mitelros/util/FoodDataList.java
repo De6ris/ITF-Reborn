@@ -2,7 +2,6 @@ package net.oilcake.mitelros.util;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
-import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 
@@ -22,12 +21,10 @@ public class FoodDataList {
         return 0;
     }
 
-    public static int foodWater(int id, Material material) {// 135 carrot; it is called at init
-        if (material == Material.fruit | id == 135 || material == Materials.ice_sucker || material == Materials.melon_ice || material == Materials.chocolate_smoothie)
+    public static int foodWater(int id, Material material) {
+        if (material == Material.fruit)
             return ITFConfig.TagDryDilemma.getBooleanValue() ? 1 : 2;
-        if (material == (Materials.glowberries) || material == Materials.peeledSugarcane || material == Materials.agave || material == Materials.mashedCactus)
-            return 1;
-        if (material == Material.cheese || material == Material.bread || material == Material.desert)
+        if (material == Material.desert)
             return -1;
         return 0;
     }
@@ -54,9 +51,6 @@ public class FoodDataList {
             player.addPotionEffect(new PotionEffect(Potion.confusion.id, 600, 0));
         if (item_stack.hasMaterial(Material.bread) || item_stack.hasMaterial(Material.desert))
             player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
-        if (rand.nextFloat() < chanceOfDecreaseWater(item)) {
-            player.itf$AddWater(-1);
-        }
         if (item instanceof ItemMeat meat) {
             if (meat.is_cooked) {
                 player.addPotionEffect(new PotionEffect(PotionExtend.thirsty.id, 1280, 0));
@@ -67,11 +61,5 @@ public class FoodDataList {
                 }
             }
         }
-    }
-
-    public static float chanceOfDecreaseWater(Item item) {
-        if (item == Items.agave) return ITFConfig.TagDryDilemma.getBooleanValue() ? 0.8F : 0.6F;
-        if (item == Items.glowberries) return ITFConfig.TagDryDilemma.getBooleanValue() ? 0.5F : 0.0F;
-        return 0.0F;
     }
 }

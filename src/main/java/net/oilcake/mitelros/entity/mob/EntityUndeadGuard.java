@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.compat.CompatUtil;
 import net.oilcake.mitelros.util.EntitySelectorHunter;
 
 import java.util.ArrayList;
@@ -31,8 +32,8 @@ public class EntityUndeadGuard extends EntitySkeleton implements IRangedAttackMo
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.27D);
-        setEntityAttribute(SharedMonsterAttributes.attackDamage, 6.0D);
-        setEntityAttribute(SharedMonsterAttributes.maxHealth, 12.0D);
+        CompatUtil.setAttackDamage(this, 6.0D);
+        CompatUtil.setMaxHealth(this, 12.0D);
     }
 
     @Override

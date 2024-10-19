@@ -2,8 +2,8 @@ package net.oilcake.mitelros.item;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.entity.boss.EntityLich;
-import net.oilcake.mitelros.network.modern.ITFNetwork;
-import net.oilcake.mitelros.network.modern.S2CSetGlowing;
+import net.oilcake.mitelros.network.ITFNetwork;
+import net.oilcake.mitelros.network.packets.S2CSetGlowing;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ public class ItemBossDetector extends Item implements IDamageableItem {
         super(id, material, texture);
         this.setCreativeTab(CreativeTabs.tabTools);
         this.setMaxDamage(72);
+        this.setLowestCraftingDifficultyToProduce(0.0F);
     }
 
     @Override

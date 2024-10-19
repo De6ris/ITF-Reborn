@@ -1,14 +1,14 @@
 package net.oilcake.mitelros.item.register;
 
+import moddedmite.rustedironcore.api.event.events.CraftingRecipeRegisterEvent;
 import net.minecraft.*;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.api.ItemMorningStar;
 import net.oilcake.mitelros.util.ItemUtil;
-import net.xiaoyu233.fml.reload.event.RecipeRegistryEvent;
 
 public class RecipesArmor extends Items {
-    public static void registerArmorRecipe(RecipeRegistryEvent register) {
+    public static void registerArmorRecipe(CraftingRecipeRegisterEvent register) {
         registerArmorRecipe(register, wolf_fur, Materials.wolf_fur, false);
         registerArmorRecipe(register, iceChunk, Materials.ice_chunk, false);
         registerITFToolRecipe(register);
@@ -17,14 +17,14 @@ public class RecipesArmor extends Items {
         registerUruMetalRecipes(register);
     }
 
-    private static void registerArmorRecipe(RecipeRegistryEvent register, Item item, Material material, boolean isChainMail) {
+    private static void registerArmorRecipe(CraftingRecipeRegisterEvent register, Item item, Material material, boolean isChainMail) {
         register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemHelmet.class, material, isChainMail)), true, "AAA", "A A", 'A', item);
         register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemCuirass.class, material, isChainMail)), true, "A A", "AAA", "AAA", 'A', item);
         register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemLeggings.class, material, isChainMail)), true, "AAA", "A A", "A A", 'A', item);
         register.registerShapedRecipe(new ItemStack(ItemArmor.getMatchingArmor(ItemBoots.class, material, isChainMail)), true, "A A", "A A", 'A', item);
     }
 
-    private static void registerITFToolRecipe(RecipeRegistryEvent register) {
+    private static void registerITFToolRecipe(CraftingRecipeRegisterEvent register) {
         Material[] materials = new Material[]{Material.copper, Material.silver, Material.gold, Material.iron, Materials.nickel, Material.ancient_metal, Material.mithril, Materials.tungsten, Material.adamantium};
         for (Material material : materials) {
             Item item = Item.getMatchingItem(ItemIngot.class, material);
@@ -35,7 +35,7 @@ public class RecipesArmor extends Items {
         }
     }
 
-    private static void registerFullMetalToolRecipe(RecipeRegistryEvent register, Material material) {
+    private static void registerFullMetalToolRecipe(CraftingRecipeRegisterEvent register, Material material) {
         Item item_ingot = Item.getMatchingItem(ItemIngot.class, material);
         Item item_nugget = ItemUtil.getNugget(item_ingot.getExclusiveMaterial());
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemArrow.class, material)), true, "C", "B", "A", 'A', Item.feather, 'B', Item.stick, 'C', item_nugget);
@@ -54,12 +54,13 @@ public class RecipesArmor extends Items {
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemMattock.class, material)), true, "AAA", " SA", " S ", 'A', item_ingot, 'S', Item.stick);
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemHatchet.class, material)), true, " BA", " B ", 'A', item_ingot, 'B', Item.stick);
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemWarHammer.class, material)), true, "AAA", "ABA", " B ", 'A', item_ingot, 'B', Item.stick);
+        register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemKnife.class, material)), true, " A ", " B ", 'A', item_ingot, 'B', Item.stick);
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemDagger.class, material)), true, " A ", " B ", 'A', item_ingot, 'B', Item.stick);
         register.registerShapedRecipe(new ItemStack(Item.getMatchingItem(ItemBattleAxe.class, material)), true, "A A", "ABA", " B ", 'A', item_ingot, 'B', Item.stick);
 
     }
 
-    private static void registerUruMetalRecipes(RecipeRegistryEvent register) {
+    private static void registerUruMetalRecipes(CraftingRecipeRegisterEvent register) {
         register.registerShapelessRecipe(new ItemStack(forgingNote, 2), false, forgingNote, Item.writableBook);
 
         registerUruItem(register, uruHelmet, helmetMithril);
@@ -79,7 +80,7 @@ public class RecipesArmor extends Items {
     }
 
     // 25600 is the difficulty of adamantium ingot
-    private static <T extends Item & IDamageableItem> void registerUruItem(RecipeRegistryEvent register, T uruItem, Item mithrilItem) {
+    private static <T extends Item & IDamageableItem> void registerUruItem(CraftingRecipeRegisterEvent register, T uruItem, Item mithrilItem) {
         register.registerShapelessRecipe(new ItemStack(uruItem),
                         true,
                         forgingNote, uruIngot, mithrilItem, Item.ingotMithril)
