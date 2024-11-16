@@ -10,10 +10,11 @@ import net.xiaoyu233.fml.reload.event.MITEEvents;
 
 public class ITFStart implements ModInitializer {
     public static final String MOD_ID = "MITE-ITF-Reborn";
-    public static final String MOD_Version = "17.2.11";
+    public static final String MOD_Version = "17.2.13";
     public static final String NameSpace = "ITF Reborn";
     public static final String NameSpaceCompact = "ITF";
     public static final String NameSpaceCompactWithColon = "ITF:";
+    public static final String NameSpaceCompactWithUnderScore = "ITF_";
 
     @Override
     public void onInitialize() {

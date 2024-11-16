@@ -77,6 +77,9 @@ public class RecipesArmor extends Items {
         registerUruItem(register, uruPickaxe, pickaxeMithril);
 
         register.registerShapelessRecipe(new ItemStack(uruNugget, 9), true, uruIngot);
+
+        register.registerShapedRecipe(new ItemStack(uruKettle).setItemDamage(uruKettle.maxDamage - 1), true,
+                "UUU", "UKU", "UUU", 'U', uruNugget, 'K', leatherKettle);
     }
 
     // 25600 is the difficulty of adamantium ingot

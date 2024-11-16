@@ -12,7 +12,6 @@ public class ItemWine extends Item {
         super(id, Material.glass, "alcohol");
         setMaxStackSize(1);
         setCraftingDifficultyAsComponent(512.0F);
-        setCreativeTab(CreativeTabs.tabMisc);
         ((ITFItem) this).itf$SetFoodWater(2);
     }
 

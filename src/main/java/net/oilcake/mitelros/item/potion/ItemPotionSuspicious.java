@@ -9,7 +9,6 @@ public class ItemPotionSuspicious extends Item {
         super(id, Material.glass, "suspicious_potion");
         setMaxStackSize(1);
         setCraftingDifficultyAsComponent(25.0F);
-        setCreativeTab(CreativeTabs.tabMisc);
         ((ITFItem) this).itf$SetFoodWater(1);
     }
 

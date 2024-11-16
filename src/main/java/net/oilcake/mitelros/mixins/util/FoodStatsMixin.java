@@ -8,6 +8,7 @@ import net.oilcake.mitelros.item.potion.PotionExtend;
 import net.oilcake.mitelros.network.ITFNetwork;
 import net.oilcake.mitelros.network.packets.C2SDecreaseWater;
 import net.oilcake.mitelros.registry.ITFRegistryImpl;
+import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.DamageSourceExtend;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -42,7 +43,7 @@ public class FoodStatsMixin implements ITFFoodStats {
     @Inject(method = "writeNBT(Lnet/minecraft/NBTTagCompound;)V", at = @At("RETURN"))
     public void injectWriteNBT(NBTTagCompound par1NBTTagCompound, CallbackInfo callbackInfo) {
         par1NBTTagCompound.setInteger("water", this.water);
-        par1NBTTagCompound.setFloat("hungerwater", this.hungerWater);
+        par1NBTTagCompound.setFloat("hungerWater", this.hungerWater);
         par1NBTTagCompound.setFloat("water_for_nutrition_only", this.water_for_nutrition_only);
     }
 
@@ -61,7 +62,7 @@ public class FoodStatsMixin implements ITFFoodStats {
         }
     }
 
-    public void itf$SetSatiationWater(int water, boolean check_limit) {
+    public void itf$SetWater(int water, boolean check_limit) {
         if (check_limit) {
             this.water = Math.min(water, itf$GetWaterLimit());
         } else {
@@ -72,22 +73,14 @@ public class FoodStatsMixin implements ITFFoodStats {
     public int itf$AddWater(int water) {
         if (water != 0) {
             this.player.removePotionEffect(PotionExtend.thirsty.id);
-            itf$SetSatiationWater(this.water + water, true);
         }
+        this.itf$SetWater(this.water + water, true);
         return this.water;
-    }
-
-    @Unique
-    private final float global_water_rate = 1.0F;
-
-    @Unique
-    private static float getWaterPerTick() {
-        return 0.002F;
     }
 
     public void itf$DecreaseWater(float water) {
         if (!this.player.capabilities.isCreativeMode && !this.player.capabilities.disableDamage && !this.player.isGhost() && !this.player.isZevimrgvInTournament()) {
-            water *= this.global_water_rate;
+            water *= Constant.global_water_rate;
             this.hungerWater = Math.min(this.hungerWater + water, 40.0F);
             if (this.player.worldObj.isRemote && this.hungerWater > 0.2F) {
                 ITFNetwork.sendToServer(new C2SDecreaseWater(this.hungerWater));
@@ -96,9 +89,18 @@ public class FoodStatsMixin implements ITFFoodStats {
         }
     }
 
+    @Override
+    public void itf$DecreaseWaterClientSide(float hungerWater) {
+        if (this.player.onServer()) {
+            Minecraft.setErrorMessage("decreaseWaterClientSide: why call on server");
+            return;
+        }
+        this.itf$DecreaseWater(hungerWater);
+    }
+
     public void itf$DecreaseWaterServerSide(float hungerWater) {
-        if (this.player.worldObj.isRemote) {
-            Minecraft.setErrorMessage("addHungerServerSide: cannot decrease Water to server if remote");
+        if (this.player.onClient()) {
+            Minecraft.setErrorMessage("decreaseWaterServerSide: why call on client");
         } else {
             itf$DecreaseWater(hungerWater);
         }
@@ -110,9 +112,9 @@ public class FoodStatsMixin implements ITFFoodStats {
 
     @Inject(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/ServerPlayer;decrementInsulinResistance()V"))
     private void inject(ServerPlayer par1EntityPlayer, CallbackInfo ci) {
-        this.itf$DecreaseWaterServerSide(getWaterPerTick());
+        this.itf$DecreaseWaterServerSide(Constant.HungerWaterPerTick);
         if (!par1EntityPlayer.inCreativeMode())
-            this.water_for_nutrition_only += getWaterPerTick() * 0.3F;
+            this.water_for_nutrition_only += Constant.HungerWaterPerTick * 0.3F;
         if (this.water < 0) {
             this.water = 0;
         }

@@ -15,7 +15,6 @@ public class ItemLootPack extends Item {
         this.lootTableSupplier = lootTableSupplier;
         this.lootRolls = lootRolls;
         this.setMaxStackSize(4);
-        this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     @Override

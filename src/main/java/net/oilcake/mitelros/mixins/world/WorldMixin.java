@@ -2,11 +2,13 @@ package net.oilcake.mitelros.mixins.world;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.Debug;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.config.ITFConfig;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,15 +22,6 @@ public abstract class WorldMixin implements ITFWorld {
 
     @Shadow
     public abstract World getWorld();
-
-    @Mutable
-    @Shadow
-    @Final
-    public WorldProvider provider;
-
-    public WorldMixin(WorldProvider provider) {
-        this.provider = provider;
-    }
 
     public Explosion itf$ExplosionC(Entity exploder, double posX, double posY, double posZ, float explosion_size_vs_blocks, float explosion_size_vs_living_entities, boolean b) {
         Explosion explosion = new Explosion(this.getWorld(), exploder, posX, posY, posZ, explosion_size_vs_blocks, explosion_size_vs_living_entities);

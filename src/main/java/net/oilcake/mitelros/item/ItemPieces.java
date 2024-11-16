@@ -1,6 +1,5 @@
 package net.oilcake.mitelros.item;
 
-import net.minecraft.CreativeTabs;
 import net.minecraft.Item;
 import net.minecraft.Material;
 
@@ -9,6 +8,5 @@ public class ItemPieces extends Item {
         super(id, material, texture);
         setMaxStackSize(32);
         setCraftingDifficultyAsComponent(20.0F);
-        setCreativeTab(CreativeTabs.tabMaterials);
     }
 }

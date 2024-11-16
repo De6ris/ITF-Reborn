@@ -29,7 +29,7 @@ public class S2CUpdateITFStatus implements Packet {
 
     @Override
     public void apply(EntityPlayer entityPlayer) {
-        ((ITFFoodStats) entityPlayer.getFoodStats()).itf$SetSatiationWater(this.water, false);
+        ((ITFFoodStats) entityPlayer.getFoodStats()).itf$SetWater(this.water, false);
     }
 
     @Override

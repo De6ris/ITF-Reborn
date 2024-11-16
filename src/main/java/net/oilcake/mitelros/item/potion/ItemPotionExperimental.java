@@ -9,7 +9,6 @@ public class ItemPotionExperimental extends Item {
         super(id, Material.glass, "experimental_potion");
         setMaxStackSize(1);
         setCraftingDifficultyAsComponent(25.0F);
-        setCreativeTab(CreativeTabs.tabMisc);
         ((ITFItem) this).itf$SetFoodWater(3);
     }
 

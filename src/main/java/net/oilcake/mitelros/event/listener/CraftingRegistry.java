@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.event.listener;
 
 import moddedmite.rustedironcore.api.event.events.CraftingRecipeRegisterEvent;
+import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.register.RecipeRegister;
@@ -14,5 +15,7 @@ public class CraftingRegistry implements Consumer<CraftingRecipeRegisterEvent> {
         event.registerArmorRepairRecipe(Items.iceChunk, Materials.ice_chunk);
 
         RecipeRegister.registerRecipes(event);
+
+        Blocks.registerRecipes(event);
     }
 }

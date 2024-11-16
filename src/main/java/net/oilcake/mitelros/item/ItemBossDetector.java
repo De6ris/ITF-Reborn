@@ -11,7 +11,6 @@ public class ItemBossDetector extends Item implements IDamageableItem {
 
     public ItemBossDetector(int id, Material material, String texture) {
         super(id, material, texture);
-        this.setCreativeTab(CreativeTabs.tabTools);
         this.setMaxDamage(72);
         this.setLowestCraftingDifficultyToProduce(0.0F);
     }

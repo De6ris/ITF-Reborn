@@ -10,6 +10,7 @@ import fi.dy.masa.malilib.config.options.ConfigBoolean;
 import fi.dy.masa.malilib.config.options.ConfigHotkey;
 import fi.dy.masa.malilib.config.options.ConfigInteger;
 import fi.dy.masa.malilib.util.JsonUtils;
+import net.minecraft.GuiScreen;
 import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.util.Constant;
 
@@ -58,6 +59,7 @@ public class ITFConfig extends SimpleConfigs {
     public static final ConfigInteger AnvilXPMultiplierReward = new ConfigInteger("砧袪魔经验返还乘子", 10, 1, Integer.MAX_VALUE, false, null);
     public static final ConfigInteger AnvilXPMultiplierTreasure = new ConfigInteger("宝藏附魔经验倍率乘子", 5, 1, Integer.MAX_VALUE, false, null);
     public static final ConfigInteger TotemKnowledgeLimit = new ConfigInteger("智识图腾经验上限", 30000, 1, Integer.MAX_VALUE, false, null);
+    public static final ConfigBoolean CancelItemRockUse = new ConfigBoolean("禁止右键使用宝石", true);
 
 
     //misc
@@ -91,7 +93,7 @@ public class ITFConfig extends SimpleConfigs {
         challenge.addAll(luck);
 
         experimental = List.of(TagCreaturesV2, TagBenchingV2, FinalChallenge);
-        args = List.of(AnvilXPMultiplier, AnvilXPMultiplierInit, AnvilXPMultiplierReward, AnvilXPMultiplierTreasure, TotemKnowledgeLimit);
+        args = List.of(AnvilXPMultiplier, AnvilXPMultiplierInit, AnvilXPMultiplierReward, AnvilXPMultiplierTreasure, TotemKnowledgeLimit, CancelItemRockUse);
         misc = List.of(FixedID, ItemIDStart, BlockIDStart);
 
 
@@ -144,7 +146,12 @@ public class ITFConfig extends SimpleConfigs {
         return configTabs;
     }
 
-//    @Override
+    @Override
+    public GuiScreen getConfigScreen(GuiScreen parentScreen) {
+        return new ITFConfigScreen(parentScreen, this);
+    }
+
+    //    @Override
 //    public GuiScreen getConfigScreen(GuiScreen parentScreen) {
 //        return new ITFConfigScreen(parentScreen, this);
 //    }

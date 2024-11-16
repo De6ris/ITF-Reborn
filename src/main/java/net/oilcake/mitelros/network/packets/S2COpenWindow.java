@@ -1,78 +1,79 @@
 package net.oilcake.mitelros.network.packets;
 
+import moddedmite.rustedironcore.network.Packet;
+import moddedmite.rustedironcore.network.PacketByteBuf;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.EnchantReserverInventory;
 import net.oilcake.mitelros.item.minePocket.MinePocketInventory;
+import net.oilcake.mitelros.network.ITFNetwork;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
-
-public class S2COpenWindow extends Packet100OpenWindow {
+public class S2COpenWindow implements Packet {
+    public int windowId;
+    public String windowTitle;
+    public int slotsCount;
+    public boolean has_set_coords;
+    public boolean useProvidedWindowTitle;
     public EnumInventoryType enumInventoryType;
+    public int x;
+    public int y;
+    public int z;
 
-    public S2COpenWindow() {
-        super();
+    public S2COpenWindow(PacketByteBuf packetByteBuf) {
+        this(packetByteBuf.readByte() & 0xFF, EnumInventoryType.getFromID(packetByteBuf.readByte() & 0xFF), packetByteBuf.readString(), packetByteBuf.readByte() & 0xFF, packetByteBuf.readBoolean());
+        if (this.hasCoords()) {
+            this.x = packetByteBuf.readInt();
+            this.y = packetByteBuf.readInt();
+            this.z = packetByteBuf.readInt();
+        }
     }
 
     public S2COpenWindow(int windowId, EnumInventoryType enumInventoryType, String windowTitle, int slotsCount, boolean useProvidedWindowTitle) {
-        super(windowId, 255, windowTitle, slotsCount, useProvidedWindowTitle);// 255 is dummy
+        if (windowTitle == null) {
+            windowTitle = "";
+        }
+        this.windowId = windowId;
+        this.windowTitle = windowTitle;
+        this.slotsCount = slotsCount;
+        this.useProvidedWindowTitle = useProvidedWindowTitle;
         this.enumInventoryType = enumInventoryType;
     }
 
-    @Override
+    public S2COpenWindow setCoords(int x, int y, int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.has_set_coords = true;
+        return this;
+    }
+
     public boolean hasCoords() {
         return this.enumInventoryType.hasCoords;
     }
 
-    @Override
     public boolean hasTileEntity() {
         return this.hasCoords();
     }
 
     @Override
-    public void readPacketData(DataInput par1DataInput) throws IOException {
-        this.windowId = par1DataInput.readByte() & 0xFF;
-        this.enumInventoryType = EnumInventoryType.getFromID(par1DataInput.readByte() & 0xFF);
-        this.windowTitle = Packet100OpenWindow.readString(par1DataInput, 32767);
-        this.slotsCount = par1DataInput.readByte() & 0xFF;
-        this.useProvidedWindowTitle = par1DataInput.readBoolean();
-        if (this.hasCoords()) {
-            this.x = par1DataInput.readInt();
-            this.y = par1DataInput.readInt();
-            this.z = par1DataInput.readInt();
-        }
-    }
-
-    @Override
-    public void writePacketData(DataOutput par1DataOutput) throws IOException {
-        par1DataOutput.writeByte(this.windowId & 0xFF);
-        par1DataOutput.writeByte(this.enumInventoryType.id & 0xFF);
-        Packet100OpenWindow.writeString(this.windowTitle, par1DataOutput);
-        par1DataOutput.writeByte(this.slotsCount & 0xFF);
-        par1DataOutput.writeBoolean(this.useProvidedWindowTitle);
+    public void write(PacketByteBuf packetByteBuf) {
+        packetByteBuf.writeByte(this.windowId & 0xFF);
+        packetByteBuf.writeByte(this.enumInventoryType.id & 0xFF);
+        packetByteBuf.writeString(this.windowTitle);
+        packetByteBuf.writeByte(this.slotsCount & 0xFF);
+        packetByteBuf.writeBoolean(this.useProvidedWindowTitle);
         if (this.hasCoords()) {
             if (!this.has_set_coords) {
                 Minecraft.setErrorMessage("S2COpenWindow: coords not set for type " + this.enumInventoryType);
             }
-            par1DataOutput.writeInt(this.x);
-            par1DataOutput.writeInt(this.y);
-            par1DataOutput.writeInt(this.z);
+            packetByteBuf.writeInt(this.x);
+            packetByteBuf.writeInt(this.y);
+            packetByteBuf.writeInt(this.z);
         }
     }
 
     @Override
-    public int getPacketSize() {
-        int bytes = 2 + Packet.getPacketSizeOfString(this.windowTitle) + 2;
-        if (this.hasCoords()) {
-            bytes += 12;
-        }
-        return bytes;
-    }
-
-    @Override
-    public void handleOpenWindow(EntityClientPlayerMP player) {
+    public void apply(EntityPlayer player) {
         WorldClient world = player.worldObj.getAsWorldClient();
         TileEntity tile_entity = world.getBlockTileEntity(this.x, this.y, this.z);
         if (this.hasTileEntity() && tile_entity == null) {
@@ -90,6 +91,11 @@ public class S2COpenWindow extends Packet100OpenWindow {
             }
             default -> Minecraft.setErrorMessage("handleOpenWindow: type not handled " + this.enumInventoryType);
         }
+    }
+
+    @Override
+    public ResourceLocation getChannel() {
+        return ITFNetwork.OpenWindow;
     }
 
     public enum EnumInventoryType {

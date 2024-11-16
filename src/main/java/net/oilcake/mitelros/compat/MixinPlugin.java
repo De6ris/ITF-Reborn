@@ -20,7 +20,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String s, String s1) {
-        if (FishModLoader.hasMod("shader-loader") && s.equals("net.minecraft.ItemRenderer")) {
+        if (FishModLoader.hasMod("shader-loader") && s1.equals("net.oilcake.mitelros.mixins.render.ItemRendererMixin")) {
             return false;
         }
         return true;

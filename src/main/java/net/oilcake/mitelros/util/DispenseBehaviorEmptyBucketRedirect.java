@@ -23,12 +23,10 @@ public final class DispenseBehaviorEmptyBucketRedirect extends BehaviorDefaultDi
         var4.getBlockMetadata(var5, var6, var7);
         if (var8 == Material.water) {
             BiomeGenBase biome = var4.getBiomeGenForCoords(var5, var7);
-            if (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland) {
-                var10 = this.item_bucket.getPeerForContents(Materials.dangerous_water);
-            } else if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) {
-                var10 = this.item_bucket.getPeerForContents(Material.water);
+            if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) {
+                var10 = this.item_bucket.getPeerForContents(Materials.pure_water);
             } else {
-                var10 = this.item_bucket.getPeerForContents(Materials.suspicious_water);
+                var10 = this.item_bucket.getPeerForContents(Materials.water);
             }
         } else {
             if (var8 != Material.lava)

@@ -10,6 +10,9 @@ public class Constant {
     public static int nextItemID;
     public static int nextBlockID;
 
+    public static float HungerWaterPerTick = 0.002F;
+    public static float global_water_rate = 1.0F;
+
     public static int calculateCurrentDifficulty() {
         int difficulty = 0;
         for (ConfigBase<?> configBase : ITFConfig.challenge) {

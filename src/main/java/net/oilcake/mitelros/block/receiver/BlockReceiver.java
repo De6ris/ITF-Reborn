@@ -13,7 +13,6 @@ public class BlockReceiver extends BlockContainer{
     }
     public BlockReceiver(int par1) {
         super(par1, Material.stone, new BlockConstants());
-        this.setCreativeTab(CreativeTabs.tabRedstone);
         this.setMaxStackSize(4);
         this.setLightOpacity(0);
     }

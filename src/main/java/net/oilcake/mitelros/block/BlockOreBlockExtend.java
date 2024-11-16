@@ -6,7 +6,6 @@ public class BlockOreBlockExtend extends Block {
     public BlockOreBlockExtend(int par1, Material material) {
         super(par1, material, new BlockConstants());
         modifyMinHarvestLevel(1);
-        setCreativeTab(CreativeTabs.tabBlock);
         setMaxStackSize(4);
         setHardnessRelativeToWood(BlockHardness.log);
     }

@@ -3,18 +3,21 @@ package net.oilcake.mitelros.util;
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Materials;
+import net.oilcake.mitelros.item.api.IWateryMaterial;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 
 import java.util.Random;
 
 public class FoodDataList {
     public static int bowlFoodWater(Material material) {
-        if (material == (Material.water) || material == (Material.cereal) || material == (Material.ice_cream) || material == (Material.milk)) {
+        if (material instanceof IWateryMaterial iWateryMaterial) {
+            return iWateryMaterial.getWater();
+        }
+        if (material == Material.water) {
+            return 1;// changed
+        }
+        if (material == (Material.cereal) || material == (Material.ice_cream) || material == (Material.milk)) {
             return 2;
-        } else if (material == (Materials.dangerous_water) || material == (Materials.suspicious_water)) {
-            return 1;
-        } else if (material == (Materials.beetroot_soup)) {
-            return 6;
         } else if (!(material == null || material == (Material.mashed_potato) || material == (Materials.salad))) {
             return 4;
         }
@@ -30,17 +33,11 @@ public class FoodDataList {
     }
 
     public static void onWaterDrunk(Item item, EntityPlayer player) {
-        if (item.hasMaterial(Materials.dangerous_water)) {
-            double rand = Math.random();
-            if (rand > 0.2D)
+        if (item.hasMaterial(Material.water)) {
+            float randomFloat = player.rand.nextFloat();
+            if (randomFloat > 0.8D)
                 player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
-            player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
-        }
-        if (item.hasMaterial(Materials.suspicious_water)) {
-            double rand = Math.random();
-            if (rand > 0.8D)
-                player.addPotionEffect(new PotionEffect(Potion.poison.id, 450, 0));
-            player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + rand)), 0));
+            player.addPotionEffect(new PotionEffect(PotionExtend.dehydration.id, (int) (160.0D * (1.0D + randomFloat)), 0));
         }
     }
 

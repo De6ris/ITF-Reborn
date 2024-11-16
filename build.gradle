@@ -22,7 +22,7 @@ repositories {
 loom {
     accessWidenerPath = file("src/main/resources/MITEIsTooFalse.accesswidener")
     mergedMinecraftJar()
-    setFML(new File("libs\\FishModLoader-v3.3.2.jar"))
+    setFML(new File("${lib_dir}/${fml_file_name}${fml_version}.jar"))
     mods {
         "MITE-ITF-Reborn" {
             sourceSet sourceSets.main
@@ -41,25 +41,29 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     implementation files(loom.getFML().toPath())
-    implementation files("libs\\ManyLib-2.2.0.jar")
-    implementation files("libs\\EMI-1.0.5.jar")
-    implementation files("libs\\PinIn-Lib.jar")
-    implementation files("libs\\ModMenu-1.0.0.jar")
-    implementation files("libs\\GA-Higher.jar")
-    implementation files("libs\\MITE-ITE-2.0.7.jar")
 
-    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\ModernMite.jar")
-//    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\MithrilCore.jar")
-    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\ommc.jar")
-    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\GammaFree.jar")
-    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\MITEDevHackMod-FML3.0.0.jar")
-    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\Neodymium.jar")
-    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\FPSPlus.jar")
-    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\DebrisHUD.jar")
-    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\CraftGuide.jar")
-    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\Hwite.jar")
-    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\RustedIronCore.jar")
-    implementation files("D:\\Code\\Java\\FML3.0.0\\lib\\RustedIronCore-sources.jar")
+    // these are necessary for compiling
+    implementation files("${lib_dir}/ManyLib.jar")
+    implementation files("${lib_dir}/RustedIronCore.jar")
+    implementation files("${lib_dir}/RustedIronCore-sources.jar")
+
+    // compile needed, runtime not needed
+    implementation files("${lib_dir}/MITE-ITE.jar")
+
+    // some useful mods I use
+    implementation files("${lib_dir}/ModernMite.jar")
+//    implementation files("${lib_dir}/MithrilCore.jar")
+    implementation files("${lib_dir}/ommc.jar")
+    implementation files("${lib_dir}/GammaFree.jar")
+    implementation files("${lib_dir}/MITEDevHackMod-FML3.0.0.jar")
+    implementation files("${lib_dir}/Neodymium.jar")
+    implementation files("${lib_dir}/FPSPlus.jar")
+    implementation files("${lib_dir}/DebrisHUD.jar")
+    implementation files("${lib_dir}/Hwite.jar")
+    implementation files("${lib_dir}/MixinConflictHelper.jar")
+    implementation files("${lib_dir}/EMI.jar")
+    implementation files("${lib_dir}/ModMenu.jar")
+    implementation files("${lib_dir}/PinIn-Lib.jar")
 }
 
 processResources {
@@ -72,6 +76,7 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
     it.options.release = 17
+//    options.compilerArgs += ["-Dmod_version=${mod_version}"]
 }
 
 java {

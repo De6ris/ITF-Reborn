@@ -7,9 +7,11 @@ public interface ITFFoodStats {
 
     void itf$DecreaseWater(float water);
 
+    void itf$DecreaseWaterClientSide(float hungerWater);
+
     void itf$DecreaseWaterServerSide(float hungerWater);
 
     int itf$GetWaterLimit();
 
-    void itf$SetSatiationWater(int water, boolean check_limit);
+    void itf$SetWater(int water, boolean check_limit);
 }

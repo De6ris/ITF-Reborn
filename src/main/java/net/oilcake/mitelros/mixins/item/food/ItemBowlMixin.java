@@ -3,6 +3,7 @@ package net.oilcake.mitelros.mixins.item.food;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFItem;
+import net.oilcake.mitelros.item.ItemBowlClay;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.FoodDataList;
 import org.spongepowered.asm.mixin.Mixin;
@@ -37,15 +38,17 @@ public abstract class ItemBowlMixin extends ItemVessel implements ITFItem {
     private ItemStack itfWaterBowl(ItemStack created_item_stack, @Local RaycastCollision rc) {
         BiomeGenBase biome = rc.world.getBiomeGenForCoords(rc.block_hit_x, rc.block_hit_z);
         Material material;
-        if (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland) material = Materials.dangerous_water;
-        else if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) material = Material.water;
-        else material = Materials.suspicious_water;
+        if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) {
+            material = Materials.pure_water;
+        } else {
+            material = Material.water;
+        }
         return new ItemStack(this.getPeerForContents(material));
     }
 
-    @Inject(method = "getPeer", at = @At("HEAD"), cancellable = true)
-    private static void itfPeer(Material vessel_material, Material contents, CallbackInfoReturnable<ItemVessel> cir) {
-        ItemVessel result = Materials.getITFBowl(vessel_material, contents);
-        if (result != null) cir.setReturnValue(result);
-    }
+//    @Inject(method = "getPeer", at = @At("HEAD"), cancellable = true)
+//    private static void itfPeer(Material vessel_material, Material contents, CallbackInfoReturnable<ItemVessel> cir) {
+//        ItemVessel result = Materials.getITFBowl(vessel_material, contents);
+//        if (result != null) cir.setReturnValue(result);
+//    }
 }

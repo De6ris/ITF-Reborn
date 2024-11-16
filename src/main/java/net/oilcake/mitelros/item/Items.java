@@ -1,6 +1,5 @@
 package net.oilcake.mitelros.item;
 
-import moddedmite.rustedironcore.api.item.BowItem;
 import moddedmite.rustedironcore.api.item.DoorItem;
 import moddedmite.rustedironcore.api.item.FishingRodItem;
 import moddedmite.rustedironcore.api.item.NuggetItem;
@@ -132,9 +131,7 @@ public class Items extends Item {
 
     public static final ItemBowl bowlLampchopStew = (ItemBowl) (new ItemBowl(getNextItemID(), Materials.lampchop_stew, "lampchop_stew")).setFoodValue(12, 12, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("lampchopStew");
 
-    public static final ItemBowl bowlWaterSuspicious = (ItemBowl) (new ItemBowl(getNextItemID(), Materials.suspicious_water, "suspicious_water")).setUnlocalizedName("SuspiciousWater");
-
-    public static final ItemBowl bowlWaterSwampland = (ItemBowl) (new ItemBowl(getNextItemID(), Materials.dangerous_water, "swampland_water")).setUnlocalizedName("SwamplandWater");
+    public static final ItemBowl bowlWaterPure = new ItemBowl(getNextItemID(), Materials.pure_water, "pure_water");
 
     public static final ItemPieces pieceCopper = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceCopper");
 
@@ -180,41 +177,23 @@ public class Items extends Item {
 
     public static final ItemBucketMilk tungstenBucketMilk = (ItemBucketMilk) (new ItemBucketMilk(getNextItemID(), Materials.tungsten)).setContainerItem(tungstenBucket);
 
-    public static final ItemBucket copperBucketWaterSuspicious = (ItemBucket) (new ItemBucket(getNextItemID(), Material.copper, Materials.suspicious_water)).setContainerItem(bucketCopperEmpty);
+    public static final ItemBucket copperBucketWaterPure = (ItemBucket) (new ItemBucket(getNextItemID(), Material.copper, Materials.pure_water)).setContainerItem(bucketCopperEmpty);
 
-    public static final ItemBucket silverBucketWaterSuspicious = (ItemBucket) (new ItemBucket(getNextItemID(), Material.silver, Materials.suspicious_water)).setContainerItem(bucketSilverEmpty);
+    public static final ItemBucket silverBucketWaterPure = (ItemBucket) (new ItemBucket(getNextItemID(), Material.silver, Materials.pure_water)).setContainerItem(bucketSilverEmpty);
 
-    public static final ItemBucket goldBucketWaterSuspicious = (ItemBucket) (new ItemBucket(getNextItemID(), Material.gold, Materials.suspicious_water)).setContainerItem(bucketGoldEmpty);
+    public static final ItemBucket goldBucketWaterPure = (ItemBucket) (new ItemBucket(getNextItemID(), Material.gold, Materials.pure_water)).setContainerItem(bucketGoldEmpty);
 
-    public static final ItemBucket ironBucketWaterSuspicious = (ItemBucket) (new ItemBucket(getNextItemID(), Material.iron, Materials.suspicious_water)).setContainerItem(bucketIronEmpty);
+    public static final ItemBucket ironBucketWaterPure = (ItemBucket) (new ItemBucket(getNextItemID(), Material.iron, Materials.pure_water)).setContainerItem(bucketIronEmpty);
 
-    public static final ItemBucket nickelBucketWaterSuspicious = (ItemBucket) (new ItemBucket(getNextItemID(), Materials.nickel, Materials.suspicious_water)).setContainerItem(nickelBucket);
+    public static final ItemBucket nickelBucketWaterPure = (ItemBucket) (new ItemBucket(getNextItemID(), Materials.nickel, Materials.pure_water)).setContainerItem(nickelBucket);
 
-    public static final ItemBucket ancientmetalBucketWaterSuspicious = (ItemBucket) (new ItemBucket(getNextItemID(), Material.ancient_metal, Materials.suspicious_water)).setContainerItem(bucketAncientMetalEmpty);
+    public static final ItemBucket ancientmetalBucketWaterPure = (ItemBucket) (new ItemBucket(getNextItemID(), Material.ancient_metal, Materials.pure_water)).setContainerItem(bucketAncientMetalEmpty);
 
-    public static final ItemBucket mithrilBucketWaterSuspicious = (ItemBucket) (new ItemBucket(getNextItemID(), Material.mithril, Materials.suspicious_water)).setContainerItem(bucketMithrilEmpty);
+    public static final ItemBucket mithrilBucketWaterPure = (ItemBucket) (new ItemBucket(getNextItemID(), Material.mithril, Materials.pure_water)).setContainerItem(bucketMithrilEmpty);
 
-    public static final ItemBucket tungstenBucketWaterSuspicious = (ItemBucket) (new ItemBucket(getNextItemID(), Materials.tungsten, Materials.suspicious_water)).setContainerItem(tungstenBucket);
+    public static final ItemBucket tungstenBucketWaterPure = (ItemBucket) (new ItemBucket(getNextItemID(), Materials.tungsten, Materials.pure_water)).setContainerItem(tungstenBucket);
 
-    public static final ItemBucket adamantiumBucketWaterSuspicious = (ItemBucket) (new ItemBucket(getNextItemID(), Material.adamantium, Materials.suspicious_water)).setContainerItem(bucketAdamantiumEmpty);
-
-    public static final ItemBucket copperBucketWaterDangerous = (ItemBucket) (new ItemBucket(getNextItemID(), Material.copper, Materials.dangerous_water)).setContainerItem(bucketCopperEmpty);
-
-    public static final ItemBucket silverBucketWaterDangerous = (ItemBucket) (new ItemBucket(getNextItemID(), Material.silver, Materials.dangerous_water)).setContainerItem(bucketSilverEmpty);
-
-    public static final ItemBucket goldBucketWaterDangerous = (ItemBucket) (new ItemBucket(getNextItemID(), Material.gold, Materials.dangerous_water)).setContainerItem(bucketGoldEmpty);
-
-    public static final ItemBucket ironBucketWaterDangerous = (ItemBucket) (new ItemBucket(getNextItemID(), Material.iron, Materials.dangerous_water)).setContainerItem(bucketIronEmpty);
-
-    public static final ItemBucket nickelBucketWaterDangerous = (ItemBucket) (new ItemBucket(getNextItemID(), Materials.nickel, Materials.dangerous_water)).setContainerItem(nickelBucket);
-
-    public static final ItemBucket ancientmetalBucketWaterDangerous = (ItemBucket) (new ItemBucket(getNextItemID(), Material.ancient_metal, Materials.dangerous_water)).setContainerItem(bucketAncientMetalEmpty);
-
-    public static final ItemBucket mithrilBucketWaterDangerous = (ItemBucket) (new ItemBucket(getNextItemID(), Material.mithril, Materials.dangerous_water)).setContainerItem(bucketMithrilEmpty);
-
-    public static final ItemBucket tungstenBucketWaterDangerous = (ItemBucket) (new ItemBucket(getNextItemID(), Materials.tungsten, Materials.dangerous_water)).setContainerItem(tungstenBucket);
-
-    public static final ItemBucket adamantiumBucketWaterDangerous = (ItemBucket) (new ItemBucket(getNextItemID(), Material.adamantium, Materials.dangerous_water)).setContainerItem(bucketAdamantiumEmpty);
+    public static final ItemBucket adamantiumBucketWaterPure = (ItemBucket) (new ItemBucket(getNextItemID(), Material.adamantium, Materials.pure_water)).setContainerItem(bucketAdamantiumEmpty);
 
     public static final Item wolf_fur = new ItemStandard(getNextItemID(), Materials.wolf_fur, "wolf_fur");
 
@@ -264,7 +243,7 @@ public class Items extends Item {
 
     public static final ItemWand shockWand = new ItemWandShock(getNextItemID());
 
-    public static final Item experimentalPotion = (new ItemPotionExperimental(getNextItemID())).setUnlocalizedName("experimentalPotion").setCreativeTab(CreativeTabs.tabMisc);
+    public static final Item experimentalPotion = (new ItemPotionExperimental(getNextItemID())).setUnlocalizedName("experimentalPotion");
 
     public static final ITFRecord recordDamnation = (ITFRecord) (new ITFRecord(2024, "imported.damnation", "record_damnation", "Damnation", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
 
@@ -296,15 +275,15 @@ public class Items extends Item {
 
     public static final ItemArmor bootsAncientMetalSacred = new ItemBoots(getNextItemID(), Materials.ancient_metal_sacred, false);
 
-    public static final Item ancientMetalArmorPiece = new NuggetItem(getNextItemID(), Materials.ancient_metal_sacred).setCraftingDifficultyAsComponent(800.0F).setCreativeTab(CreativeTabs.tabMaterials).setMaxStackSize(16);
+    public static final Item ancientMetalArmorPiece = new NuggetItem(getNextItemID(), Materials.ancient_metal_sacred).setMaxStackSize(16);
 
     public static final ItemFood agave = (ItemFood) (new ItemFood(getNextItemID(), Materials.agave, 1, 0, false, false, false, "agave")).setMaxStackSize(16).setAlwaysEdible();
 
-    public static final Item pulque = (new ItemWine(getNextItemID())).setUnlocalizedName("pulque").setCreativeTab(CreativeTabs.tabFood);
+    public static final Item pulque = (new ItemWine(getNextItemID())).setUnlocalizedName("pulque");
 
-    public static final Item ale = (new ItemWine(getNextItemID())).setUnlocalizedName("ale").setCreativeTab(CreativeTabs.tabFood);
+    public static final Item ale = (new ItemWine(getNextItemID())).setUnlocalizedName("ale");
 
-    public static final ItemBow bowTungsten = new BowItem(getNextItemID(), Materials.tungsten, 256, 35);
+    public static final ItemBow bowTungsten = new ItemBow(getNextItemID(), Materials.tungsten);
 
     public static final ItemArmor uruHelmet = new ItemHelmet(getNextItemID(), Materials.uru, false);
 
@@ -380,9 +359,7 @@ public class Items extends Item {
 
     public static final ItemBowlClay clayBowlLampchopSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.lampchop_stew, "lampchop_stew")).setFoodValue(12, 12, true, false, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("lampchopStew");
 
-    public static final ItemBowlClay clayBowlWaterSuspicious = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.suspicious_water, "suspicious_water")).setUnlocalizedName("SuspiciousWater");
-
-    public static final ItemBowlClay clayBowlWaterSwampland = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.dangerous_water, "swampland_water")).setUnlocalizedName("SwamplandWater");
+    public static final ItemBowlClay clayBowlWaterPure = new ItemBowlClay(getNextItemID(), Materials.pure_water, "pure_water");
 
     public static final ItemBowlClay clayBowlSalmonSoup = (ItemBowlClay) (new ItemBowlClay(getNextItemID(), Materials.fish_soup, "salmon_soup")).setFoodValue(14, 14, true, true, true).setPlantProduct().setAnimalProduct().setUnlocalizedName("salmonSoup");
 
@@ -406,7 +383,7 @@ public class Items extends Item {
 
     public static final ItemCarrotOnAStick carrotOnAStickTungsten = (ItemCarrotOnAStick) (new ItemCarrotOnAStick(getNextItemID(), Materials.tungsten)).setUnlocalizedName("carrotOnAStick");
 
-    public static final ItemPotionSuspicious suspiciousPotion = (ItemPotionSuspicious) (new ItemPotionSuspicious(getNextItemID())).setUnlocalizedName("suspiciousPotion").setCreativeTab(CreativeTabs.tabMisc);
+    public static final ItemPotionSuspicious suspiciousPotion = (ItemPotionSuspicious) (new ItemPotionSuspicious(getNextItemID())).setUnlocalizedName("suspiciousPotion");
 
     public static final Item totemOfDestroy = new ItemTotemDestroy(getNextItemID());
 
@@ -450,7 +427,7 @@ public class Items extends Item {
 
     public static final Item sulphur = new ItemStandard(getNextItemID(), Materials.sulphur, "sulphur_sphere");
 
-    public static final ItemBow bowUru = new BowItem(getNextItemID(), Materials.uru, 512, 45);
+    public static final ItemBow bowUru = new ItemBow(getNextItemID(), Materials.uru);
 
     public static final Item enderRod = new ItemBrewingMisc(getNextItemID(), Material.ender_pearl, "ender_rod").setPotionEffectExtend("+8+9+10+11&4-4+13").setReachBonus(0.5F);
 
@@ -460,9 +437,7 @@ public class Items extends Item {
 
     public static final ItemBucket woodBucketWater = (ItemBucket) new ItemBucket(getNextItemID(), Materials.wood, Materials.water).setContainerItem(woodBucket);
 
-    public static final ItemBucket woodBucketWaterSuspicious = (ItemBucket) new ItemBucket(getNextItemID(), Materials.wood, Materials.suspicious_water).setContainerItem(woodBucket);
-
-    public static final ItemBucket woodBucketWaterDangerous = (ItemBucket) new ItemBucket(getNextItemID(), Materials.wood, Materials.dangerous_water).setContainerItem(woodBucket);
+    public static final ItemBucket woodBucketWaterPure = (ItemBucket) new ItemBucket(getNextItemID(), Materials.wood, Materials.pure_water).setContainerItem(woodBucket);
 
     public static final ItemBucketMilk woodBucketMilk = (ItemBucketMilk) new ItemBucketMilk(getNextItemID(), Materials.wood).setContainerItem(woodBucket);
 
@@ -500,24 +475,27 @@ public class Items extends Item {
 
     public static final Item frostPowder = new ItemBrewingMisc(getNextItemID(), Materials.frost, "frost_powder");//.setPotionEffectExtend("+8+9+10-11&4-4+13");
 
-    public static final ItemBowlClay clayBowlHotWater = new ItemBowlClay(getNextItemID(), Materials.water, "clay_bowl_hot_water");
-
-    public static final ItemBowl bowlHotWater = new ItemBowl(getNextItemID(), Materials.water, "bowl_water");
-
     public static final Item totemOfFlattening = new ItemTotemFlattening(getNextItemID());
 
     public static final Item lootPackLich = new ItemLootPack(getNextItemID(), Material.leather, "lootPack", ITFLootTables.lichEntity, 6);
 
     public static final Item minePocket = new ItemMinePocket(getNextItemID(), Material.leather, "pocket");
+
     public static final ItemKettle leatherKettle = new ItemKettle(getNextItemID(), 13, Material.water, Material.leather);
-    public static final ItemKettle leatherKettleSuspicious = new ItemKettle(getNextItemID(), 13, Materials.suspicious_water, Material.leather);
-    public static final ItemKettle leatherKettleSwampland = new ItemKettle(getNextItemID(), 13, Materials.dangerous_water, Material.leather);
+
+    public static final ItemKettle leatherKettlePure = new ItemKettle(getNextItemID(), 13, Materials.pure_water, Material.leather);
+
     public static final ItemStandard clayJug = (ItemStandard) new ItemStandard(getNextItemID(), Material.clay, "clayJug").setMaxStackSize(1);
+
     public static final ItemKettle hardenedClayJug = new ItemKettle(getNextItemID(), 19, Material.water, Material.hardened_clay);
-    public static final ItemKettle hardenedClayJugSuspicious = new ItemKettle(getNextItemID(), 19, Materials.suspicious_water, Material.hardened_clay);
-    public static final ItemKettle hardenedClayJugSwampland = new ItemKettle(getNextItemID(), 19, Materials.dangerous_water, Material.hardened_clay);
+
+    public static final ItemKettle hardenedClayJugPure = new ItemKettle(getNextItemID(), 19, Materials.pure_water, Material.hardened_clay);
+
     public static final ItemWand enderWand = new ItemWandEnder(getNextItemID());
+
     public static final ItemBossDetector bossDetector = new ItemBossDetector(getNextItemID(), Material.mithril, "boss_detector");
+
+    public static final ItemKettle uruKettle = new ItemKettle(getNextItemID(), 13, Materials.pure_water, Materials.uru).setPurify();
 
     private static int getNextItemID() {
         if (!ITFConfig.FixedID.getBooleanValue()) return IdUtil.getNextItemID();
@@ -546,10 +524,8 @@ public class Items extends Item {
         leggingsCustom_b.setLowestCraftingDifficultyToProduce(0.0F);
         bootsCustom_b.setLowestCraftingDifficultyToProduce(0.0F);
         leatherKettle.setLowestCraftingDifficultyToProduce(0.0F);
-        leatherKettleSuspicious.setLowestCraftingDifficultyToProduce(0.0F);
-        leatherKettleSwampland.setLowestCraftingDifficultyToProduce(0.0F);
+        leatherKettlePure.setLowestCraftingDifficultyToProduce(0.0F);
         hardenedClayJug.setLowestCraftingDifficultyToProduce(0.0F);
-        hardenedClayJugSuspicious.setLowestCraftingDifficultyToProduce(0.0F);
-        hardenedClayJugSwampland.setLowestCraftingDifficultyToProduce(0.0F);
+        hardenedClayJugPure.setLowestCraftingDifficultyToProduce(0.0F);
     }
 }

@@ -2,10 +2,10 @@ package net.oilcake.mitelros.event;
 
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.*;
-import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;
 import net.oilcake.mitelros.block.observer.TileEntityObserver;
 import net.oilcake.mitelros.block.receiver.TileEntityReceiver;
+import net.oilcake.mitelros.block.register.BlockRegistry;
 import net.oilcake.mitelros.command.CommandGenerate;
 import net.oilcake.mitelros.command.CommandHunger;
 import net.oilcake.mitelros.command.CommandSetStatus;
@@ -14,7 +14,7 @@ import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.entity.boss.EntityLich;
 import net.oilcake.mitelros.entity.misc.*;
 import net.oilcake.mitelros.entity.mob.*;
-import net.oilcake.mitelros.item.register.ItemTextureRegister;
+import net.oilcake.mitelros.item.register.ItemRegistry;
 import net.oilcake.mitelros.render.*;
 import net.oilcake.mitelros.status.MiscManager;
 import net.oilcake.mitelros.util.AchievementExtend;
@@ -68,8 +68,8 @@ public class ITFEventFML {
 
     @Subscribe
     public void onItemRegister(ItemRegistryEvent event) {
-        ItemTextureRegister.registerItems(event);
-        Blocks.registerBlocks(event);
+        ItemRegistry.registerItems(event);
+        BlockRegistry.registerBlocks(event);
     }
 
     @Subscribe
@@ -81,17 +81,8 @@ public class ITFEventFML {
     }
 
     @Subscribe
-    public void onRecipeRegister(RecipeRegistryEvent event) {
-        Blocks.registerRecipes(event);
-    }
-
-    @Subscribe
     public void onAchievementRegister(AchievementRegistryEvent event) {
         AchievementExtend.registerAchievements();
-    }
-
-    @Subscribe
-    public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
     }
 
     @Subscribe

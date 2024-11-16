@@ -3,6 +3,7 @@ package net.oilcake.mitelros.block;
 import moddedmite.rustedironcore.api.block.DoorBlock;
 import moddedmite.rustedironcore.api.block.PaneBlock;
 import moddedmite.rustedironcore.api.block.WorkbenchBlock;
+import moddedmite.rustedironcore.api.event.events.CraftingRecipeRegisterEvent;
 import net.minecraft.*;
 import net.oilcake.mitelros.block.enchantreserver.BlockEnchantReserver;
 import net.oilcake.mitelros.block.observer.BlockObserver;
@@ -12,11 +13,7 @@ import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.Constant;
 import net.xiaoyu233.fml.api.block.AnvilBlock;
-import net.xiaoyu233.fml.reload.event.ItemRegistryEvent;
-import net.xiaoyu233.fml.reload.event.RecipeRegistryEvent;
 import net.xiaoyu233.fml.reload.utils.IdUtil;
-
-import static net.oilcake.mitelros.ITFStart.NameSpace;
 
 public class Blocks {
     private static int getNextBlockID() {
@@ -24,11 +21,11 @@ public class Blocks {
         return Constant.nextBlockID--;
     }
 
-    public static final Block blastFurnaceStoneIdle = (new BlockBlastFurnace(getNextBlockID(), Material.stone, false)).setCreativeTab(CreativeTabs.tabDecorations).setHardness(4.8F).setResistance(20.0F).setStepSound(Block.soundStoneFootstep);
+    public static final Block blastFurnaceStoneIdle = (new BlockBlastFurnace(getNextBlockID(), Material.stone, false)).setHardness(4.8F).setResistance(20.0F).setStepSound(Block.soundStoneFootstep);
 
-    public static final Block blastFurnaceObsidianIdle = (new BlockBlastFurnace(getNextBlockID(), Material.obsidian, false)).setCreativeTab(CreativeTabs.tabDecorations).setHardness(38.4F).setResistance(40.0F).setStepSound(Block.soundStoneFootstep);
+    public static final Block blastFurnaceObsidianIdle = (new BlockBlastFurnace(getNextBlockID(), Material.obsidian, false)).setHardness(38.4F).setResistance(40.0F).setStepSound(Block.soundStoneFootstep);
 
-    public static final Block blastFurnaceNetherrackIdle = (new BlockBlastFurnace(getNextBlockID(), Material.netherrack, false)).setCreativeTab(CreativeTabs.tabDecorations).setHardness(153.6F).setResistance(80.0F).setStepSound(Block.soundStoneFootstep);
+    public static final Block blastFurnaceNetherrackIdle = (new BlockBlastFurnace(getNextBlockID(), Material.netherrack, false)).setHardness(153.6F).setResistance(80.0F).setStepSound(Block.soundStoneFootstep);
 
     public static final Block blastFurnaceStoneBurning = (new BlockBlastFurnace(getNextBlockID(), Material.stone, true)).setHardness(4.8F).setResistance(20.0F).setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);
 
@@ -36,7 +33,7 @@ public class Blocks {
 
     public static final Block blastFurnaceNetherrackBurning = (new BlockBlastFurnace(getNextBlockID(), Material.netherrack, true)).setHardness(153.6F).setResistance(80.0F).setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);
 
-    public static final Block blockSmokerIdle = (new BlockSmoker(getNextBlockID(), false)).setHardness(2.0F).setResistance(20.0F).setCreativeTab(CreativeTabs.tabDecorations).setStepSound(Block.soundStoneFootstep);
+    public static final Block blockSmokerIdle = (new BlockSmoker(getNextBlockID(), false)).setHardness(2.0F).setResistance(20.0F).setStepSound(Block.soundStoneFootstep);
 
     public static final Block blockSmokerBurning = (new BlockSmoker(getNextBlockID(), true)).setHardness(2.0F).setResistance(20.0F).setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);
 
@@ -100,60 +97,18 @@ public class Blocks {
 
     public static final WorkbenchBlock tungstenWorkBench = new WorkbenchBlock(getNextBlockID(), Materials.tungsten, 1.5F, Material.mithril);
 
-    public static void registerBlocks(ItemRegistryEvent registryEvent) {
-        registryEvent.registerAnvil(NameSpace, "nickel_anvil", anvilNickel);
+    static {
         anvilNickel.stepSound = Block.soundAnvilFootstep;
-        registryEvent.registerAnvil(NameSpace, "tungsten_anvil", anvilTungsten);
         anvilTungsten.stepSound = Block.soundAnvilFootstep;
-        registryEvent.registerItemBlock(NameSpace, "blastfurnace_stone_idle", blastFurnaceStoneIdle);
-        registryEvent.registerItemBlock(NameSpace, "blastfurnace_obsidian_idle", blastFurnaceObsidianIdle);
-        registryEvent.registerItemBlock(NameSpace, "blastfurnace_obsidian_idle", blastFurnaceObsidianIdle);
-        registryEvent.registerItemBlock(NameSpace, "blastfurnace_netherrack_idle", blastFurnaceNetherrackIdle);
-        registryEvent.registerItemBlock(NameSpace, "blastfurnace_stone_burning", blastFurnaceStoneBurning);
-        registryEvent.registerItemBlock(NameSpace, "blastfurnace_obsidian_burning", blastFurnaceObsidianBurning);
-        registryEvent.registerItemBlock(NameSpace, "blastfurnace_netherrack_burning", blastFurnaceNetherrackBurning);
-        registryEvent.registerItemBlock(NameSpace, "block_enchant_reserver", blockEnchantReserver);
-        registryEvent.registerItemBlock(NameSpace, "ore/nickel_ore", oreNickel);
-        registryEvent.registerItemBlock(NameSpace, "block/nickel_block", blockNickel);
-        registryEvent.registerItemBlock(NameSpace, "bars/nickel_bars", fenceNickel);
-        registryEvent.registerItemBlock(NameSpace, "door/door_nickel", doorNickel);
-        registryEvent.registerItemBlock(NameSpace, "block_smoker_idle", blockSmokerIdle);
-        registryEvent.registerItemBlock(NameSpace, "block_smoker_burning", blockSmokerBurning);
-        registryEvent.registerItemBlock(NameSpace, "ore/tungsten_ore", oreTungsten);
-        registryEvent.registerItemBlock(NameSpace, "block/tungsten_block", blockTungsten);
-        registryEvent.registerItemBlock(NameSpace, "bars/tungsten_bars", fenceTungsten);
-        registryEvent.registerItemBlock(NameSpace, "door/door_tungsten", doorTungsten);
-        registryEvent.registerItemBlock(NameSpace, "flowers/", flowerextend);
-        registryEvent.registerItemBlock(NameSpace, "block_enchant_enhancer", blockEnchantEnhancer);
-        registryEvent.registerItemBlock(NameSpace, "ore/uru_ore", oreUru);
-        registryEvent.registerItemBlock(NameSpace, "beetroot", beetroots);
-        registryEvent.registerItemBlock(NameSpace, "beetroot", beetrootsDead);
-        registryEvent.registerItemBlock(NameSpace, "flower_pot", flowerPotExtend);
-        registryEvent.registerItemBlock(NameSpace, "azurite_block", blockAzurite);
-        registryEvent.registerItemBlock(NameSpace, "azurite_cluster", azuriteCluster);
-        registryEvent.registerItemBlock(NameSpace, "torch_idle", torchWoodIdle);
-        registryEvent.registerItemBlock(NameSpace, "torch_off", torchWoodExtinguished);
-        registryEvent.registerItemBlock(NameSpace, "sulphur", blockSulphur);
-        registryEvent.registerItemBlock(NameSpace, "block_observer", blockObserver);
-        registryEvent.registerItemBlock(NameSpace, "block_receiver", blockReceiver);
-        registryEvent.registerItemBlock(NameSpace, "block_enchant_predicator", blockEnchantPredicator);
-        registryEvent.registerItemBlock(NameSpace, "magic_table", magicTable);
-        registryEvent.registerItemBlock(NameSpace, "crafting_table", nickelWorkBench);
-        registryEvent.registerItemBlock(NameSpace, "crafting_table", tungstenWorkBench);
-        registryEvent.registerItemBlock(NameSpace, "beacon", uruBeacon);
-        uruBeacon.setUnlocalizedName("uru_beacon");
-        registryEvent.registerItemBlock(NameSpace, "obsidian", tungstenRuneStone);
-        tungstenRuneStone.setUnlocalizedName("runestone");
     }
 
-    public static void registerRecipes(RecipeRegistryEvent register) {
+    public static void registerRecipes(CraftingRecipeRegisterEvent register) {
         shapedRecipe(register);
         shapelessRecipe(register);
-        furnaceRecipe();
         //TODO fix block recipe with subtype
     }
 
-    public static void shapedRecipe(RecipeRegistryEvent register) {
+    public static void shapedRecipe(CraftingRecipeRegisterEvent register) {
         register.registerShapedRecipe(new ItemStack(blockSmokerIdle), true, " A ", "ABA", " A ",
                 'A', Block.wood,
                 'B', Block.furnaceIdle);
@@ -204,7 +159,7 @@ public class Blocks {
         tungstenWorkBench.registerSimpleRecipe(register);
     }
 
-    public static void shapelessRecipe(RecipeRegistryEvent register) {
+    public static void shapelessRecipe(CraftingRecipeRegisterEvent register) {
         register.registerShapelessRecipe(new ItemStack(Items.glowberries, 1), true, new ItemStack(flowerextend, 1, 0));
         register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 7), true, new ItemStack(flowerextend, 1, 1));
 //        register.registerShapelessRecipe(new ItemStack(Item.dyePowder, 1, 4), true, new ItemStack(flowerextend, 1, 2));
@@ -224,13 +179,7 @@ public class Blocks {
         nineToOne(register, new ItemStack(blockAzurite), Items.shardAzurite);
     }
 
-    public static void furnaceRecipe() {
-        FurnaceRecipes.smelting().addSmelting(oreTungsten.blockID, new ItemStack(Items.tungstenIngot));
-        FurnaceRecipes.smelting().addSmelting(oreNickel.blockID, new ItemStack(Items.nickelIngot));
-        FurnaceRecipes.smelting().addSmelting(oreUru.blockID, new ItemStack(Items.uruIngot));
-    }
-
-    public static void nineToOne(RecipeRegistryEvent register, ItemStack itemStack, Item item) {
+    public static void nineToOne(CraftingRecipeRegisterEvent register, ItemStack itemStack, Item item) {
         register.registerShapedRecipe(itemStack, true, "XXX", "XXX", "XXX",
                 'X', item);
     }

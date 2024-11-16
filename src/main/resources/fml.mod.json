@@ -4,11 +4,11 @@
   "version": "${version}",
   "depends": {
     "fishmodloader": ">=3.3.2",
-    "many-lib": ">=2.0.0",
-    "rusted_iron_core": ">=1.3.3"
+    "many-lib": ">=2.2.1",
+    "rusted_iron_core": ">=1.3.6"
   },
   "recommends": {
-    "emi": ">=1.0.5"
+    "emi": ">=1.0.8"
   },
   "environment": "*",
   "name": "MITE-ITF-Reborn",
@@ -39,9 +39,6 @@
     ],
     "modmenu": [
       "net.oilcake.mitelros.compat.ModMenuImpl"
-    ],
-    "ga-higher": [
-      "net.oilcake.mitelros.compat.GAPluginImpl"
     ],
     "mite_ite": [
       "net.oilcake.mitelros.compat.ITEPluginImpl"

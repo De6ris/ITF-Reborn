@@ -1,5 +1,6 @@
 package net.oilcake.mitelros.mixins.entity.player;
 
+import moddedmite.rustedironcore.network.Network;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.block.enchantreserver.ContainerEnchantReserver;
@@ -10,8 +11,6 @@ import net.oilcake.mitelros.network.ITFNetwork;
 import net.oilcake.mitelros.network.packets.S2COpenWindow;
 import net.oilcake.mitelros.network.packets.S2CUpdateITFStatus;
 import net.oilcake.mitelros.status.EnchantmentManager;
-import net.oilcake.mitelros.util.AchievementExtend;
-import net.oilcake.mitelros.util.Constant;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -42,10 +41,6 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
 
     @Shadow
     private int phytonutrients;
-
-    @Shadow
-    public NetServerHandler playerNetServerHandler;
-
 
     @Shadow
     public abstract boolean isMalnourished();
@@ -83,7 +78,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     public void itf$DisplayGUIEnchantReserver(int x, int y, int z, EnchantReserverInventory slots) {
         incrementWindowID();
         TileEntity tile_entity = this.worldObj.getBlockTileEntity(x, y, z);
-        this.playerNetServerHandler.sendPacketToPlayer((new S2COpenWindow(this.currentWindowId, S2COpenWindow.EnumInventoryType.EnchantReserver, tile_entity.getCustomInvName(), 9, tile_entity.hasCustomName())).setCoords(x, y, z));// 9 is dummy
+        Network.sendToClient(this.getAsEntityPlayerMP(), (new S2COpenWindow(this.currentWindowId, S2COpenWindow.EnumInventoryType.EnchantReserver, tile_entity.getCustomInvName(), 9, tile_entity.hasCustomName())).setCoords(x, y, z));
         this.openContainer = new ContainerEnchantReserver(slots, this, x, y, z);
         this.openContainer.windowId = this.currentWindowId;
         this.sendContainerAndContentsToPlayer(this.openContainer, ((ContainerEnchantReserver) this.openContainer).getInventory());
@@ -93,7 +88,7 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
     @Override
     public void itf$DisplayGuiMinePocket(IInventory minePocketInventory) {
         this.incrementWindowID();
-        this.playerNetServerHandler.sendPacketToPlayer(new S2COpenWindow(this.currentWindowId, S2COpenWindow.EnumInventoryType.MinePocket, minePocketInventory.getCustomNameOrUnlocalized(), 5, true));
+        Network.sendToClient(this.getAsEntityPlayerMP(), new S2COpenWindow(this.currentWindowId, S2COpenWindow.EnumInventoryType.MinePocket, minePocketInventory.getCustomNameOrUnlocalized(), 5, true));
         this.openContainer = new ContainerMinePocket(this, minePocketInventory);
         this.openContainer.windowId = this.currentWindowId;
         this.openContainer.addCraftingToCrafters(this);
@@ -144,11 +139,5 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
             newFactor = level == 3 ? 3.0F : (level == 2 ? 1.0F : (level == 1 ? 0.5F : 0.0F));
         }
         cir.setReturnValue(original + newFactor);
-    }
-
-    @Inject(method = "travelToDimension", at = @At(value = "INVOKE", target = "Lnet/minecraft/World;removeEntity(Lnet/minecraft/Entity;)V"))
-    private void itfAchievement(int par1, CallbackInfo ci) {
-        if (Constant.calculateCurrentDifficulty() >= 12)
-            triggerAchievement(AchievementExtend.stormStriker);
     }
 }

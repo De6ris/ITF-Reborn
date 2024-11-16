@@ -18,7 +18,6 @@ public class BlockCaveMisc extends Block {
         float var3 = 0.2F;
         this.setBlockBoundsForAllThreads((double) (0.5F - var3), 0.0, (double) (0.5F - var3), (double) (0.5F + var3), (double) (var3 * 3.0F), (double) (0.5F + var3));
         this.setMaxStackSize(32);
-        this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
     public int getPatchSize(BiomeGenBase biome) {

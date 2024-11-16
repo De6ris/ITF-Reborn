@@ -10,7 +10,6 @@ public class BlockObserver extends BlockDirectionalWithTileEntity{
 
     public BlockObserver(int id, Material material) {
         super(id, material, new BlockConstants());
-        this.setCreativeTab(CreativeTabs.tabRedstone);
         this.setMaxStackSize(4);
         this.setLightOpacity(0);
     }

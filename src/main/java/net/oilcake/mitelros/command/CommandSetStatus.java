@@ -45,7 +45,7 @@ public class CommandSetStatus extends CommandBase {
                 iCommandListener.sendChatToPlayer(ChatMessageComponent.createFromText("目前玩家的植物营养素为" + player.getPhytonutrients()).setColor(EnumChatFormatting.WHITE));
             }
             case "water" -> {
-                ((ITFFoodStats) player.getFoodStats()).itf$SetSatiationWater(parseInt(iCommandListener, strings[1]), true);
+                ((ITFFoodStats) player.getFoodStats()).itf$SetWater(parseInt(iCommandListener, strings[1]), true);
                 iCommandListener.sendChatToPlayer(ChatMessageComponent.createFromText("水分值现在为" + ((ITFPlayer) player).itf$GetWater()).setColor(EnumChatFormatting.WHITE));
             }
             default -> throw new WrongUsageException("commands.setStatus.usage");

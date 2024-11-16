@@ -9,26 +9,26 @@ public class GuiInGameDrawer {
 
     public static void drawWater(Gui gui, Minecraft mc, int par1, int par2) {
         int var12 = par1 / 2 + 91;
-        int var13 = par2 - 39;
         FoodStats foodStats = mc.thePlayer.getFoodStats();
         mc.getTextureManager().bindTexture(icons_itf);
         mc.mcProfiler.endStartSection("water");
+        int waterLimit = ((ITFFoodStats) mc.thePlayer.getFoodStats()).itf$GetWaterLimit();
         int water = ((ITFFoodStats) foodStats).itf$GetWater();
+        int displayY = par2 - 39 - 9;
         for (int temp = 0; temp < 10; temp++) {
-            int var28 = var13 - 9;
             int var25 = 16;
             int var36 = 0;
-            int var27 = var12 - temp * 8 - 9;
+            int displayX = var12 - temp * 8 - 9;
             if (mc.thePlayer.isPotionActive(PotionExtend.dehydration)) {
                 var25 += 27;
                 var36 = 3;
             }
-            if (temp < ((ITFFoodStats) mc.thePlayer.getFoodStats()).itf$GetWaterLimit() / 2)
-                gui.drawTexturedModalRect(var27, var28, 16 + var36 * 9, 54, 9, 9);
+            if (temp < waterLimit / 2)
+                gui.drawTexturedModalRect(displayX, displayY, 16 + var36 * 9, 54, 9, 9);
             if (temp * 2 + 1 < water)
-                gui.drawTexturedModalRect(var27, var28, var25 + 9, 54, 9, 9);
+                gui.drawTexturedModalRect(displayX, displayY, var25 + 9, 54, 9, 9);
             if (temp * 2 + 1 == water)
-                gui.drawTexturedModalRect(var27, var28, var25 + 18, 54, 9, 9);
+                gui.drawTexturedModalRect(displayX, displayY, var25 + 18, 54, 9, 9);
         }
     }
 

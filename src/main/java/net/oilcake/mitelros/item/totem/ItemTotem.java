@@ -8,7 +8,6 @@ public abstract class ItemTotem extends Item {
         super(id, material, texture);
         setMaxStackSize(1);
         setCraftingDifficultyAsComponent(100.0F);
-        setCreativeTab(CreativeTabs.tabTools);
     }
 
     public void trigger(EntityPlayer player, boolean isProactive) {

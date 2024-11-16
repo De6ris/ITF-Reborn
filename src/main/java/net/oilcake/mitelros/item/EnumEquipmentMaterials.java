@@ -26,7 +26,7 @@ public enum EnumEquipmentMaterials {
     public final String name;
 
     EnumEquipmentMaterials(float durability, int enchantability, EnumQuality max_quality, String material_name) {
-        this.EnumName = ITFStart.NameSpaceCompactWithColon + this.name();
+        this.EnumName = ITFStart.NameSpaceCompactWithUnderScore + this.name();
         this.durability = durability;
         this.enchantability = enchantability;
         this.max_quality = max_quality;

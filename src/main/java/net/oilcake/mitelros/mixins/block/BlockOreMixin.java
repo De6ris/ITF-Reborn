@@ -1,5 +1,6 @@
 package net.oilcake.mitelros.mixins.block;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -10,7 +11,9 @@ import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Random;
@@ -98,9 +101,9 @@ public abstract class BlockOreMixin extends Block {
         return 0;
     }
 
-    @ModifyConstant(method = "dropBlockAsEntityItem", constant = @Constant(floatValue = 0.1f))
-    private float moreFortune(float constant) {
-        return constant * 2.0f;
+    @ModifyExpressionValue(method = "dropBlockAsEntityItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/BlockBreakInfo;getHarvesterFortune()I"))
+    private int moreFortune(int original) {
+        return original * 2;
     }
 
     @ModifyArg(method = "dropBlockAsEntityItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/Block;dropBlockAsEntityItem(Lnet/minecraft/BlockBreakInfo;IIIF)I"), index = 1)
@@ -128,11 +131,15 @@ public abstract class BlockOreMixin extends Block {
 
     @Unique
     private int calcAbsorbXP(float chance) {
-        if (this == Block.oreDiamond) return (int) (530.0F * chance);
-        if (this == Block.oreEmerald) return (int) (270.0F * chance);
-        if (this == Blocks.blockAzurite) return (int) (((3 + new Random().nextInt(5)) * 6) * chance);
-        if (this == Block.oreNetherQuartz) return (int) (60.0F * chance);
-        if (this == Block.oreLapis) return (int) (((3 + new Random().nextInt(3)) * 30) * chance);
+        if (this == Block.oreDiamond)
+            return (int) (1.1F * ItemRock.getExperienceValueWhenSacrificed(new ItemStack(Item.diamond)) * chance);
+        if (this == Block.oreEmerald)
+            return (int) (1.1F * ItemRock.getExperienceValueWhenSacrificed(new ItemStack(Item.emerald)) * chance);
+        if (this == Blocks.blockAzurite) return (int) (((3 + new Random().nextInt(5)) * 1.1F * ItemRock.getExperienceValueWhenSacrificed(new ItemStack(Items.shardAzurite))) * chance);
+        if (this == Block.oreNetherQuartz)
+            return (int) (1.1F * ItemRock.getExperienceValueWhenSacrificed(new ItemStack(Item.netherQuartz)) * chance);
+        if (this == Block.oreLapis)
+            return (int) (((3 + new Random().nextInt(3)) * 1.2F * ItemRock.getExperienceValueWhenSacrificed(new ItemStack(Item.dyePowder, 1, 4))) * chance);
         return 0;
     }
 }

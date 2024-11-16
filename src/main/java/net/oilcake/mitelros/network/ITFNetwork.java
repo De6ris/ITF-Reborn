@@ -16,6 +16,7 @@ public class ITFNetwork {
     public static final ResourceLocation EnchantmentInfo = new ResourceLocation(ITFStart.NameSpaceCompact, "EnchantmentInfo");
     public static final ResourceLocation EnchantmentReserverInfo = new ResourceLocation(ITFStart.NameSpaceCompact, "EnchantmentReserverInfo");
     public static final ResourceLocation UpdateITFStatus = new ResourceLocation(ITFStart.NameSpaceCompact, "UpdateITFStatus");
+    public static final ResourceLocation OpenWindow = new ResourceLocation(ITFStart.NameSpaceCompact, "OpenWindow");
 
     public static void sendToClient(ServerPlayer player, Packet packet) {
         Network.sendToClient(player, packet);
@@ -38,6 +39,7 @@ public class ITFNetwork {
         PacketReader.registerClientPacketReader(EnchantmentInfo, S2CEnchantmentInfo::new);
         PacketReader.registerClientPacketReader(EnchantmentReserverInfo, S2CEnchantReserverInfo::new);
         PacketReader.registerClientPacketReader(UpdateITFStatus, S2CUpdateITFStatus::new);
+        PacketReader.registerClientPacketReader(OpenWindow, S2COpenWindow::new);
     }
 
     private static void initServer() {

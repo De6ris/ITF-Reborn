@@ -11,7 +11,6 @@ public class BlockEnchantReserver extends BlockContainer {
 
     public BlockEnchantReserver(int par1) {
         super(par1, Material.anvil, new BlockConstants());
-        setCreativeTab(CreativeTabs.tabDecorations);
         setMaxStackSize(1);
         setLightOpacity(0);
         setLightValue(0.75F);

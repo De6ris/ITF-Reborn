@@ -1,43 +1,54 @@
 package net.oilcake.mitelros.item;
 
+import moddedmite.rustedironcore.api.util.LogUtil;
 import net.minecraft.*;
+import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.util.FoodDataList;
+import org.apache.logging.log4j.Logger;
 
 public class ItemKettle extends Item implements IDamageableItem {
+    private static final Logger LOGGER = LogUtil.getLogger();
     private static final int drinkUnit = 3;
     private static final int douseUnit = 1;
     private final Material vessel_material;
+    private boolean purify = false;
 
     public ItemKettle(int id, int volume, Material contents, Material vessel_material) {
         super(id, Material.silk, "kettle");
         this.setAlwaysEdible();
         this.addMaterial(vessel_material, contents);
         this.setMaxDamage(volume);
-        this.setCreativeTab(CreativeTabs.tabTools);
         this.vessel_material = vessel_material;
         this.setCraftingDifficultyAsComponent(100.0F);
     }
 
+    public ItemKettle setPurify() {
+        this.purify = true;
+        return this;
+    }
+
     public ItemKettle getPeer(Material vessel_material, Material contents) {
         if (vessel_material == Material.leather) {
-            if (contents == Materials.suspicious_water) {
-                return Items.leatherKettleSuspicious;
-            }
-            if (contents == Materials.dangerous_water) {
-                return Items.leatherKettleSwampland;
-            }
             if (contents == Materials.water) {
                 return Items.leatherKettle;
             }
+            if (contents == Materials.pure_water) {
+                return Items.leatherKettlePure;
+            }
         } else if (vessel_material == Material.hardened_clay) {
-            if (contents == Materials.suspicious_water) {
-                return Items.hardenedClayJugSuspicious;
-            }
-            if (contents == Materials.dangerous_water) {
-                return Items.hardenedClayJugSwampland;
-            }
             if (contents == Materials.water) {
                 return Items.hardenedClayJug;
+            }
+            if (contents == Materials.pure_water) {
+                return Items.hardenedClayJugPure;
+            }
+        } else if (vessel_material == Materials.uru) {
+            if (contents == Material.water) {
+                LOGGER.warn("why get water peer for uru kettle");
+                return Items.uruKettle;
+            }
+            if (contents == Materials.pure_water) {
+                return Items.uruKettle;
             }
         }
         return null;
@@ -89,7 +100,14 @@ public class ItemKettle extends Item implements IDamageableItem {
 
     @Override
     public EnumItemInUseAction getItemInUseAction(ItemStack item_stack, EntityPlayer player) {
-        return (item_stack.getItemDamage() + drinkUnit <= item_stack.getMaxDamage()) ? EnumItemInUseAction.DRINK : null;
+        if (item_stack.getItemDamage() + drinkUnit > item_stack.getMaxDamage()) {
+            return null;
+        }
+        ITFFoodStats foodStats = (ITFFoodStats) player.getFoodStats();
+        if (foodStats.itf$GetWater() >= foodStats.itf$GetWaterLimit()) {
+            return null;
+        }
+        return EnumItemInUseAction.DRINK;
     }
 
     @Override
@@ -98,19 +116,26 @@ public class ItemKettle extends Item implements IDamageableItem {
         if (rc == null || !rc.isBlock()) {
             return false;
         }
-        BiomeGenBase biome = rc.world.getBiomeGenForCoords(rc.block_hit_x, rc.block_hit_z);
         ItemStack item_stack = player.getHeldItemStack();
 
         if (item_stack.getItemDamage() > 0) {
+
             if (rc.getBlockHitMaterial() == Material.water || rc.getNeighborOfBlockHitMaterial() == Material.water) {
+
                 if (player.onServer()) {
-                    if (biome == BiomeGenBase.swampRiver || biome == BiomeGenBase.swampland) {
-                        player.convertOneOfHeldItem(new ItemStack(this.getPeer(this.vessel_material, Materials.dangerous_water)));
-                    } else if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) {
-                        player.convertOneOfHeldItem(new ItemStack(this.getPeer(this.vessel_material, Materials.water)));
+                    Material result;
+                    if (this.purify) {
+                        result = Materials.pure_water;
                     } else {
-                        player.convertOneOfHeldItem(new ItemStack(this.getPeer(this.vessel_material, Materials.suspicious_water)));
+                        BiomeGenBase biome = rc.world.getBiomeGenForCoords(rc.block_hit_x, rc.block_hit_z);
+                        if (biome == BiomeGenBase.river || biome == BiomeGenBase.desertRiver) {
+                            result = Materials.pure_water;
+                        } else {
+                            result = Materials.water;
+                        }
                     }
+                    player.convertOneOfHeldItem(new ItemStack(this.getPeer(this.vessel_material, result)));
+
                 }
                 return true;
             }
@@ -124,7 +149,7 @@ public class ItemKettle extends Item implements IDamageableItem {
                 return true;
             }
 
-            if (this.contains(Material.water) || this.contains(Materials.suspicious_water) || this.contains(Materials.dangerous_water)) {
+            if (this.contains(Material.water) || this.contains(Materials.pure_water)) {
                 Block block = rc.getBlockHit();
                 int x = rc.block_hit_x;
                 int y = rc.block_hit_y;

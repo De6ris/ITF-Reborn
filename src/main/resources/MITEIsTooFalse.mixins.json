@@ -9,7 +9,6 @@
     "block.BlockBushMixin",
     "block.BlockCropsMixin",
     "block.BlockDeadBushMixin",
-    "block.BlockFireMixin",
     "block.BlockFlowerPotMixin",
     "block.BlockFurnaceMixin",
     "block.BlockGrassMixin",
@@ -86,6 +85,8 @@
     "item.food.ItemFoodMixin",
     "item.food.ItemGoldenAppleMixin",
     "item.recipes.RecipeHelperMixin",
+    "item.recipes.RecipesFoodMixin",
+    "item.recipes.RecipesMITEMixin",
     "render.ItemRendererMixin",
     "render.RenderBlocksMixin",
     "tileentity.TileEntityBeaconMixin",
@@ -96,8 +97,6 @@
     "util.FoodStatsMixin",
     "util.PlayerAbilitiesMixin",
     "util.PotionHelperMixin",
-    "util.SlotCraftingMixin",
-    "util.SlotFurnaceMixin",
     "world.BiomeDecoratorMixin",
     "world.ChunkMixin",
     "world.ChunkProviderGenerateMixin",
@@ -123,5 +122,6 @@
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "net.oilcake.mitelros.compat.MixinPlugin"
 }

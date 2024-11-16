@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.mixins.compat;
 
 import dev.emi.emi.api.widget.WidgetHolder;
-import dev.emi.emi.recipe.mite.EmiFoodRecipe;
+import moddedmite.emi.recipe.EmiFoodRecipe;
 import net.minecraft.ItemStack;
 import net.minecraft.ResourceLocation;
 import net.oilcake.mitelros.api.ITFItem;
@@ -32,7 +32,7 @@ public abstract class EmiFoodRecipeMixin {
         this.water = ((ITFItem) foodStack.getItem()).itf$GetFoodWater();
     }
 
-    @Inject(method = "addWidgets", at = @At(value = "INVOKE", target = "Ldev/emi/emi/recipe/mite/EmiFoodRecipe;checkY(I)V", ordinal = 4, shift = At.Shift.AFTER))
+    @Inject(method = "addWidgets", at = @At(value = "INVOKE", target = "Lmoddedmite/emi/recipe/EmiFoodRecipe;checkY(I)V", ordinal = 4, shift = At.Shift.AFTER))
     private void addWater(WidgetHolder widgets, CallbackInfo ci) {
         int i, haunchXCoord;
         for (i = 0; i < this.water / 2; ++i) {
