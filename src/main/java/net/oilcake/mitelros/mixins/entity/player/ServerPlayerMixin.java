@@ -11,6 +11,7 @@ import net.oilcake.mitelros.network.ITFNetwork;
 import net.oilcake.mitelros.network.packets.S2COpenWindow;
 import net.oilcake.mitelros.network.packets.S2CUpdateITFStatus;
 import net.oilcake.mitelros.status.EnchantmentManager;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -139,5 +140,20 @@ public abstract class ServerPlayerMixin extends EntityPlayer implements ICraftin
             newFactor = level == 3 ? 3.0F : (level == 2 ? 1.0F : (level == 1 ? 0.5F : 0.0F));
         }
         cir.setReturnValue(original + newFactor);
+    }
+
+    @Inject(method = "travelInsideDimension", at = @At("HEAD"))
+    private void onTravelInsideDimension(double x, double y, double z, CallbackInfo ci) {
+        this.last_water = -1;
+    }
+
+    @Inject(method = "travelToDimension", at = @At(value = "FIELD", target = "Lnet/minecraft/ServerPlayer;last_nutrition:I", opcode = Opcodes.PUTFIELD))
+    private void onTravelToDimension(int par1, CallbackInfo ci) {
+        this.last_water = -1;
+    }
+
+    @Inject(method = "clonePlayer", at = @At(value = "FIELD", target = "Lnet/minecraft/ServerPlayer;last_nutrition:I", opcode = Opcodes.PUTFIELD))
+    private void onClonePlayer(EntityPlayer par1EntityPlayer, boolean par2, CallbackInfo ci) {
+        this.last_water = -1;
     }
 }

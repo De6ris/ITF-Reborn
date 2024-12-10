@@ -3,6 +3,7 @@ package net.oilcake.mitelros.event;
 import moddedmite.rustedironcore.api.event.Handlers;
 import moddedmite.rustedironcore.api.event.handler.GravelDropHandler;
 import moddedmite.rustedironcore.api.event.listener.IArrowRegisterListener;
+import moddedmite.rustedironcore.api.event.listener.ITickListener;
 import net.minecraft.Material;
 import net.oilcake.mitelros.event.listener.*;
 import net.oilcake.mitelros.item.Items;

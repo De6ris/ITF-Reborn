@@ -50,11 +50,11 @@ public abstract class BiomeDecoratorMixin implements ITFBiomeDecorator {
     public void BiomeDecorator(CallbackInfo callbackInfo) {
         this.nickelGen = new MinableWorldGen(Blocks.oreNickel.blockID, 6)
                 .setMinVeinHeight((world, minableWorldGen) -> 0)
-                .setMaxVeinHeight(((world, minableWorldGen) -> 48))
+                .setMaxVeinHeight(((world, minableWorldGen) -> world.isUnderworld() ? 255 : 48))
                 .setRandomVeinHeight(MinableWorldGen.Common);
         this.tungstenGen = new MinableWorldGen(Blocks.oreTungsten.blockID, 3)
                 .setMinVeinHeight((world, minableWorldGen) -> 0)
-                .setMaxVeinHeight((world, minableWorldGen) -> 32)
+                .setMaxVeinHeight((world, minableWorldGen) -> world.isUnderworld() ? 255 : 32)
                 .setRandomVeinHeight((world, random, minableWorldGen) -> {
                     if (world.isUnderworld()) return random.nextInt(142);
                     return MinableWorldGen.Common.getVeinHeight(world, random, minableWorldGen);// in overworld

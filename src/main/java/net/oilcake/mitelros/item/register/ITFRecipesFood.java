@@ -41,10 +41,10 @@ public class ITFRecipesFood extends Items {
             register.registerShapelessRecipe(new ItemStack(Item.glassBottle, i), false, new ItemStack(suspiciousPotion, i));
         }
         for (i = 1; i <= 9; i++) {
-            register.registerShapelessRecipe(new ItemStack(Item.bowlEmpty, i), false, new ItemStack(bowlWaterPure, i));
+            register.registerShapelessRecipe(new ItemStack(Item.bowlEmpty, i), false, new ItemStack(bowlWater, i));
         }
         for (i = 1; i <= 9; i++) {
-            register.registerShapelessRecipe(new ItemStack(clayBowlEmpty, i), false, new ItemStack(clayBowlWaterPure, i)).difficulty(0);
+            register.registerShapelessRecipe(new ItemStack(clayBowlEmpty, i), false, new ItemStack(clayBowlWater, i)).difficulty(0);
         }
         register.registerShapelessRecipe(new ItemStack(leatherKettle).setItemDamage(leatherKettle.maxDamage - 1), false, new ItemStack(leatherKettle)).difficulty(0).allowDamaged();
         register.registerShapelessRecipe(new ItemStack(leatherKettle).setItemDamage(leatherKettle.maxDamage - 1), false, new ItemStack(leatherKettlePure)).difficulty(0).allowDamaged();

@@ -1,25 +1,36 @@
 package net.oilcake.mitelros.item;
 
-import moddedmite.rustedironcore.api.util.LogUtil;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.util.FoodDataList;
-import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nonnull;
 
 public class ItemKettle extends Item implements IDamageableItem {
-    private static final Logger LOGGER = LogUtil.getLogger();
     private static final int drinkUnit = 3;
     private static final int douseUnit = 1;
     private final Material vessel_material;
+    private final Material contents;
     private boolean purify = false;
 
-    public ItemKettle(int id, int volume, Material contents, Material vessel_material) {
+    public ItemKettle(int id, int volume, @Nonnull Material contents, @Nonnull Material vessel_material) {
         super(id, Material.silk, "kettle");
         this.setAlwaysEdible();
         this.addMaterial(vessel_material, contents);
         this.setMaxDamage(volume);
         this.vessel_material = vessel_material;
+        this.contents = contents;
         this.setCraftingDifficultyAsComponent(100.0F);
+        this.register();
+    }
+
+    // vessel, contents
+    private static final Table<Material, Material, ItemKettle> KettleTable = HashBasedTable.create();
+
+    private void register() {
+        KettleTable.put(this.vessel_material, this.contents, this);
     }
 
     public ItemKettle setPurify() {
@@ -27,37 +38,50 @@ public class ItemKettle extends Item implements IDamageableItem {
         return this;
     }
 
-    public ItemKettle getPeer(Material vessel_material, Material contents) {
-        if (vessel_material == Material.leather) {
-            if (contents == Materials.water) {
-                return Items.leatherKettle;
-            }
-            if (contents == Materials.pure_water) {
-                return Items.leatherKettlePure;
-            }
-        } else if (vessel_material == Material.hardened_clay) {
-            if (contents == Materials.water) {
-                return Items.hardenedClayJug;
-            }
-            if (contents == Materials.pure_water) {
-                return Items.hardenedClayJugPure;
-            }
-        } else if (vessel_material == Materials.uru) {
-            if (contents == Material.water) {
-                LOGGER.warn("why get water peer for uru kettle");
-                return Items.uruKettle;
-            }
-            if (contents == Materials.pure_water) {
-                return Items.uruKettle;
-            }
-        }
-        return null;
+    public ItemKettle getContentsPeer(Material contents) {
+        return getPeer(this.vessel_material, contents);
     }
 
-    public static ItemStack boil(ItemStack input) {
+    public ItemKettle getVesselPeer(Material vessel_material) {
+        return getPeer(vessel_material, this.contents);
+    }
+
+    public static ItemKettle getPeer(Material vessel_material, Material contents) {
+        return KettleTable.get(vessel_material, contents);
+//        if (vessel_material == Material.leather) {
+//            if (contents == Materials.water) {
+//                return Items.leatherKettle;
+//            }
+//            if (contents == Materials.pure_water) {
+//                return Items.leatherKettlePure;
+//            }
+//        } else if (vessel_material == Material.hardened_clay) {
+//            if (contents == Materials.water) {
+//                return Items.hardenedClayJug;
+//            }
+//            if (contents == Materials.pure_water) {
+//                return Items.hardenedClayJugPure;
+//            }
+//        } else if (vessel_material == Materials.uru) {
+//            if (contents == Material.water) {
+//                LOGGER.warn("why get water peer for uru kettle");
+//                return Items.uruKettle;
+//            }
+//            if (contents == Materials.pure_water) {
+//                return Items.uruKettle;
+//            }
+//        }
+//        return null;
+    }
+
+    public boolean canBoil() {
+        return !this.purify;
+    }
+
+    public @Nonnull ItemStack onBoil(ItemStack input) {
         ItemKettle item = (ItemKettle) input.getItem();
-        ItemKettle peer = item.getPeer(item.vessel_material, Materials.water);
-        return new ItemStack(peer).setItemDamage(input.getItemDamage());
+        ItemKettle boiled = item.getContentsPeer(Materials.pure_water);
+        return new ItemStack(boiled).setItemDamage(input.getItemDamage());
     }
 
     @Override
@@ -134,7 +158,7 @@ public class ItemKettle extends Item implements IDamageableItem {
                             result = Materials.water;
                         }
                     }
-                    player.convertOneOfHeldItem(new ItemStack(this.getPeer(this.vessel_material, result)));
+                    player.convertOneOfHeldItem(new ItemStack(this.getContentsPeer(result)));
 
                 }
                 return true;

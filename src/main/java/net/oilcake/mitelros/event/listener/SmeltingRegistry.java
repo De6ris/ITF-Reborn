@@ -8,6 +8,9 @@ import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.api.ItemMorningStar;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static net.oilcake.mitelros.block.Blocks.*;
@@ -32,9 +35,9 @@ public class SmeltingRegistry implements Consumer<SmeltingRecipeRegisterEvent> {
         event.register(bowlWater.itemID, new ItemStack(bowlWaterPure));
         event.register(suspiciousPotion.itemID, new ItemStack(potion, 1, 0));
         event.register(horse_meat.itemID, new ItemStack(horse_meat_cooked));
-        event.register(clayBowlRaw.itemID, new ItemStack(clayBowlEmpty));
-        event.register(leatherKettle.itemID, new ItemStack(leatherKettlePure));
-        event.register(hardenedClayJug.itemID, new ItemStack(hardenedClayJugPure));
+        event.register(clayBowlRaw.itemID, new ItemStack(clayBowlEmpty));// TODO remove when ric 1.3.7
+        event.register(leatherKettle.itemID, new ItemStack(leatherKettlePure));//
+        event.register(hardenedClayJug.itemID, new ItemStack(hardenedClayJugPure));//
         event.register(clayJug.itemID, new ItemStack(hardenedClayJug).setItemDamage(hardenedClayJug.maxDamage - 1));
 
         ItemFood.setCookingResult((ItemFood) horse_meat, (ItemFood) horse_meat_cooked, 6);
@@ -44,21 +47,40 @@ public class SmeltingRegistry implements Consumer<SmeltingRecipeRegisterEvent> {
         event.register(oreUru.blockID, new ItemStack(Items.uruIngot));
 
         registerBlastFurnaceRecipes(event);
-        event.registerSpecial((itemStack, heatLevel) -> itemStack.getItem() instanceof ItemArmor armor ? SmeltingHandler.result(recycleArmors(itemStack, armor)) : null);
-        event.registerSpecial((itemStack, heatLevel) -> itemStack.getItem() instanceof ItemTool tool ? SmeltingHandler.result(recycleArmors(itemStack, tool)) : null);
+
+        event.registerSpecial((itemStack, heatLevel) -> {
+            Class<? extends Item> clazz = itemStack.getItem().getClass();
+            if (tools.contains(clazz) || armors.contains(clazz)) {
+                return SmeltingHandler.result(recycleArmors(itemStack, (Item & IDamageableItem) itemStack.getItem()));
+            }
+            return null;
+        });
+
         event.registerSpecial((itemStack, heatLevel) -> itemStack.getItem() == Items.clayBowlRaw && itemStack.stackSize >= 4 ? SmeltingHandler.result(4, new ItemStack(Items.clayBowlEmpty, 4)) : null);
-        event.registerSpecial((itemStack, heatLevel) -> itemStack.getItem() instanceof ItemKettle ? SmeltingHandler.result(ItemKettle.boil(itemStack)) : null);
+        event.registerSpecial((itemStack, heatLevel) -> {
+            if (itemStack.getItem() instanceof ItemKettle itemKettle) {
+                if (itemKettle.canBoil()) {
+                    return SmeltingHandler.result(itemKettle.onBoil(itemStack));
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        });
     }
 
 
+    private static final List<Class<? extends IDamageableItem>> tools = List.of(
+            ItemSword.class, ItemAxe.class, ItemPickaxe.class, ItemHoe.class, ItemShovel.class,
+            ItemWarHammer.class, ItemBattleAxe.class, ItemScythe.class, ItemDagger.class, ItemKnife.class,
+            ItemMorningStar.class, ItemHatchet.class, ItemShears.class, ItemMattock.class);
+
+    private static final List<Class<? extends IDamageableItem>> armors = List.of(
+            ItemHelmet.class, ItemCuirass.class, ItemLeggings.class, ItemBoots.class
+    );
+
     private static void registerBlastFurnaceRecipes(SmeltingRecipeRegisterEvent event) {
-        Class<?>[] tools = {
-                ItemSword.class, ItemAxe.class, ItemPickaxe.class, ItemHoe.class, ItemShovel.class,
-                ItemWarHammer.class, ItemBattleAxe.class, ItemScythe.class, ItemDagger.class, ItemKnife.class,
-                ItemMorningStar.class, ItemHatchet.class, ItemShears.class, ItemMattock.class};
-        Class<?>[] armors = {
-                ItemHelmet.class, ItemCuirass.class, ItemLeggings.class, ItemBoots.class
-        };
         Material[] available_material = {Material.copper, Material.silver, Material.gold, Material.iron, Materials.nickel, Materials.tungsten, Material.ancient_metal, Material.rusted_iron};
 
         for (Material material : available_material) {
@@ -81,15 +103,18 @@ public class SmeltingRegistry implements Consumer<SmeltingRecipeRegisterEvent> {
         }
     }
 
+    @Nullable
     public static <T extends Item & IDamageableItem> ItemStack recycleArmors(ItemStack input_item_stack, T armor) {
+        Item repairItem = armor.getRepairItem();
+        if (repairItem == null) return null;
         float ingotToNugget = input_item_stack.getItem().isChainMail() ? 4.0F : 9.0F;
         float durabilityRatio = (input_item_stack.getMaxDamage() - input_item_stack.getItemDamage()) / (float) input_item_stack.getMaxDamage();
         float component = armor.getNumComponentsForDurability();
         int quantity = (int) (durabilityRatio * component * ingotToNugget / 3.0F);
-        return armorItemStack(armor.getHardestMetalMaterial(), quantity, armor.getRepairItem());
+        return armorItemStack(armor.getHardestMetalMaterial(), quantity, repairItem);
     }
 
-    private static ItemStack armorItemStack(Material hardestMaterial, int quantity, Item repairItem) {
+    private static ItemStack armorItemStack(Material hardestMaterial, int quantity, @Nonnull Item repairItem) {
         ItemStack output;
         if (hardestMaterial == Material.rusted_iron) {
             quantity /= 3;
