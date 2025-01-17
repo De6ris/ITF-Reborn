@@ -161,16 +161,6 @@ public class MiscManager {
         }
     }
 
-    public void broadcast() {
-        player.sendChatToPlayer(ChatMessageComponent.createFromText(MOD_ID + "挂载成功,当前版本:").setColor(EnumChatFormatting.BLUE)
-                .appendComponent(ChatMessageComponent.createFromText(ITFStart.MOD_Version).setColor(EnumChatFormatting.YELLOW))
-                .appendComponent(ChatMessageComponent.createFromText(",作者:Lee074,Huix,Kalsey,由Debris移植到高版本FML,现由Debris和Xy_Lose共同维护")));
-        int difficulty = Constant.calculateCurrentDifficulty();
-        if (difficulty != 0) {
-            player.sendChatToPlayer(ChatMessageComponent.createFromText("[MITE-ITF]").appendComponent(getDifficultyMessage(difficulty)));
-        }
-    }
-
     public static ChatMessageComponent getDifficultyMessage(int difficulty) {
         return ChatMessageComponent.createFromText("当前难度：" + difficulty).setColor(getColor(difficulty));
     }

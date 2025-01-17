@@ -1,6 +1,5 @@
 package net.oilcake.mitelros.compat;
 
-import net.xiaoyu233.fml.FishModLoader;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -20,9 +19,6 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String s, String s1) {
-        if (FishModLoader.hasMod("shader-loader") && s1.equals("net.oilcake.mitelros.mixins.render.ItemRendererMixin")) {
-            return false;
-        }
         return true;
     }
 

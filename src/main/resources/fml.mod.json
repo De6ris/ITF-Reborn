@@ -5,9 +5,9 @@
   "depends": {
     "fishmodloader": ">=3.3.2",
     "many-lib": ">=2.2.1",
-    "rusted_iron_core": ">=1.3.6"
+    "rusted_iron_core": ">=1.3.8"
   },
-  "recommends": {
+  "suggests": {
     "emi": ">=1.0.8"
   },
   "environment": "*",

@@ -13,7 +13,7 @@ public class BiomeSavannaPlateau extends BiomeGenBase {
         this.theBiomeDecorator.treesPerChunk = 1;
         this.theBiomeDecorator.flowersPerChunk = 3;
         this.theBiomeDecorator.grassPerChunk = 10;
-        ((ITFBiomeDecorator) this.theBiomeDecorator).setFlowersExtendPerChunk(1);
+        ((ITFBiomeDecorator) this.theBiomeDecorator).itf$setFlowersExtendPerChunk(1);
         setBiomeName("SavannaPlateau");
         setColor(16421912);
         setDisableRain();

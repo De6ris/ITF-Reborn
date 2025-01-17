@@ -1,5 +1,6 @@
 package net.oilcake.mitelros.status;
 
+import moddedmite.rustedironcore.random.RandomUtil;
 import net.minecraft.*;
 import net.oilcake.mitelros.enchantment.Enchantments;
 import net.oilcake.mitelros.item.potion.PotionExtend;
@@ -23,13 +24,20 @@ public class EnchantmentManager {
     }
 
     public void thresh(EntityLivingBase entity_living_base) {
-        ItemStack[] item_stack_to_drop = entity_living_base.getWornItems();
-        int rand = player.rand.nextInt(item_stack_to_drop.length);
-        if (item_stack_to_drop[rand] != null && player.rand.nextFloat() < EnchantmentHelper.getEnchantmentLevelFraction(Enchantments.enchantmentThresher, player.getHeldItemStack()) && entity_living_base instanceof EntityLiving entity_living) {
-            entity_living.dropItemStack(item_stack_to_drop[rand], entity_living.height / 2.0F);
-            entity_living.clearMatchingEquipmentSlot(item_stack_to_drop[rand]);
-            entity_living.ticks_disarmed = 40;
+        if (entity_living_base instanceof EntityLiving entity_living) {
+            if (player.rand.nextFloat() > EnchantmentHelper.getEnchantmentLevelFraction(Enchantments.enchantmentThresher, player.getHeldItemStack()))
+                return;
+            ItemStack randomArmor = RandomUtil.getRandom(List.of(entity_living_base.getWornItems()), player.rand);
+            if (randomArmor != null && this.shouldThresh(randomArmor)) {
+                entity_living.dropItemStack(randomArmor, entity_living.height / 2.0F);
+                entity_living.clearMatchingEquipmentSlot(randomArmor);
+                entity_living.ticks_disarmed = 40;
+            }
         }
+    }
+
+    private boolean shouldThresh(ItemStack itemStack) {
+        return itemStack.getItem() instanceof ItemArmor armor && armor.getArmorMaterial().durability <= EnumEquipmentMaterial.ancient_metal.durability;
     }
 
     public void destroy(Entity target) {

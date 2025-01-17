@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 plugins {
     id 'fml-loom' version '0.1.local'
     id 'maven-publish'
@@ -42,13 +44,13 @@ dependencies {
 
     implementation files(loom.getFML().toPath())
 
-    // these are necessary for compiling
-    implementation files("${lib_dir}/ManyLib.jar")
+    // these are necessary for running
+    implementation(files("${lib_dir}/ManyLib.jar"))
     implementation files("${lib_dir}/RustedIronCore.jar")
     implementation files("${lib_dir}/RustedIronCore-sources.jar")
 
     // compile needed, runtime not needed
-    implementation files("${lib_dir}/MITE-ITE.jar")
+    compileOnly(files("${lib_dir}/MITE-ITE.jar"))
 
     // some useful mods I use
     implementation files("${lib_dir}/ModernMite.jar")
@@ -82,6 +84,7 @@ tasks.withType(JavaCompile).configureEach {
 java {
     withSourcesJar()
 
+    version += "-mc" + project.minecraft_version + "-" + new SimpleDateFormat("yyyyMMdd").format(new Date())
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }

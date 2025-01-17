@@ -18,7 +18,7 @@ public class BiomeWindsweptPlateau extends BiomeGenBase {
         this.spawnableCreatureList.add(new SpawnListEntry(EntityDireWolf.class, 20, 3, 6));
         this.theBiomeDecorator.flowersPerChunk = 0;
         this.theBiomeDecorator.grassPerChunk = 1;
-        ((ITFBiomeDecorator) this.theBiomeDecorator).setFlowersExtendPerChunk(0);
+        ((ITFBiomeDecorator) this.theBiomeDecorator).itf$setFlowersExtendPerChunk(0);
         this.topBlock = (byte) Block.grass.blockID;
         this.fillerBlock = (byte) Block.cobblestone.blockID;
         setColor(10526880);

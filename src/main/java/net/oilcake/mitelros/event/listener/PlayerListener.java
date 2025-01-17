@@ -13,7 +13,6 @@ public class PlayerListener implements IPlayerEventListener {
     public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
         ServerPlayer player = event.player();
         player.setHealth(player.getHealth());
-        ((ITFPlayer) player).itf_GetMiscManager().broadcast();
         if (event.firstLogin()) {
             ItemStack guide = new ItemStack(Items.guide);
             guide.setTagCompound(ItemGuideBook.generateBookContents());
