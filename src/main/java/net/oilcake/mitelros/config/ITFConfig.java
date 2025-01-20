@@ -17,7 +17,8 @@ import net.oilcake.mitelros.util.Constant;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ITFConfig extends SimpleConfigs {
+public class
+ITFConfig extends SimpleConfigs {
 
     /* stuckTags */
     public static final ConfigBooleanChallenge TagHeatStroke = new ConfigBooleanChallenge("酷暑代价", "水分自然消耗的速度提升100%", 1);

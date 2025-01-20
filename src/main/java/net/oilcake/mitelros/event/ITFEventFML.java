@@ -2,6 +2,7 @@ package net.oilcake.mitelros.event;
 
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.*;
+import net.oilcake.mitelros.ModSoundManager;
 import net.oilcake.mitelros.block.enchantreserver.TileEntityEnchantReserver;
 import net.oilcake.mitelros.block.observer.TileEntityObserver;
 import net.oilcake.mitelros.block.receiver.TileEntityReceiver;
@@ -30,7 +31,7 @@ public class ITFEventFML {
         EntityPlayer player = event.getPlayer();
         if (par2Str.startsWith("Brain Power")) {
             if (player.rand.nextFloat() <= 0.1F)
-                player.makeSound("imported.meme.brainpower", 10.0F, 1.0F);
+                player.makeSound(ModSoundManager.brainPower.sound(), 10.0F, 1.0F);
             player.sendChatToPlayer(ChatMessageComponent.createFromText("O-oooooooooo AAAAE-A-A-I-A-U- JO-oooooooooooo AAE-O-A-A-U-U-A- E-eee-ee-eee AAAAE-A-E-I-E-A- JO-ooo-ooo-oooo EEEEO-A-AAA-AAA- O----------\n"));
             event.setExecuteSuccess(true);
         }
@@ -151,18 +152,18 @@ public class ITFEventFML {
 
     @Subscribe
     public void onSoundsRegister(SoundsRegisterEvent event) {
-        event.register("records/imported/damnation.ogg");
-        event.register("records/imported/connected.ogg");
-        event.register("sound/imported/meme/brainpower.ogg");
-        event.register("sound/imported/mob/spiderking/hit1.ogg");
-        event.register("sound/imported/mob/spiderking/hit2.ogg");
-        event.register("sound/imported/mob/spiderking/hit3.ogg");
-        event.register("sound/imported/mob/spiderking/hit4.ogg");
-        event.register("sound/imported/mob/spiderking/death.ogg");
-        event.register("sound/imported/mob/spiderking/say1.ogg");
-        event.register("sound/imported/mob/spiderking/say2.ogg");
-        event.register("sound/imported/mob/spiderking/say3.ogg");
-        event.register("sound/imported/random/totem_use.ogg");
-        event.register("sound/imported/random/melting.ogg");
+        event.register("miteitfrb:records/imported/damnation.ogg");
+        event.register("miteitfrb:records/imported/connected.ogg");
+        event.register("miteitfrb:sound/imported/meme/brainpower.ogg");
+        event.register("miteitfrb:sound/imported/mob/spiderking/hit1.ogg");
+        event.register("miteitfrb:sound/imported/mob/spiderking/hit2.ogg");
+        event.register("miteitfrb:sound/imported/mob/spiderking/hit3.ogg");
+        event.register("miteitfrb:sound/imported/mob/spiderking/hit4.ogg");
+        event.register("miteitfrb:sound/imported/mob/spiderking/death.ogg");
+        event.register("miteitfrb:sound/imported/mob/spiderking/say1.ogg");
+        event.register("miteitfrb:sound/imported/mob/spiderking/say2.ogg");
+        event.register("miteitfrb:sound/imported/mob/spiderking/say3.ogg");
+        event.register("miteitfrb:sound/imported/random/totem_use.ogg");
+        event.register("miteitfrb:sound/imported/random/melting.ogg");
     }
 }

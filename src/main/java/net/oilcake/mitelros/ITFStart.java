@@ -6,6 +6,7 @@ import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.event.ITFEventFML;
 import net.oilcake.mitelros.event.ITFEventRIC;
 import net.oilcake.mitelros.network.ITFNetwork;
+import net.xiaoyu233.fml.ModResourceManager;
 import net.xiaoyu233.fml.reload.event.MITEEvents;
 
 public class ITFStart implements ModInitializer {
@@ -22,5 +23,6 @@ public class ITFStart implements ModInitializer {
         ITFEventRIC.register();
         ConfigManager.getInstance().registerConfig(ITFConfig.getInstance());
         ITFNetwork.init();
+        ModResourceManager.addResourcePackDomain("miteitfrb");
     }
 }

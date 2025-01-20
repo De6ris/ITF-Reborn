@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.ModSoundManager;
 import net.oilcake.mitelros.api.ITFSpider;
 import net.oilcake.mitelros.compat.CompatUtil;
 
@@ -22,17 +23,17 @@ public class EntitySpiderKing extends EntityArachnid {
 
     @Override
     protected String getLivingSound() {
-        return "imported.mob.spiderking.say";
+        return ModSoundManager.spiderkingSay.sound();
     }
 
     @Override
     protected String getHurtSound() {
-        return "imported.mob.spiderking.hit";
+        return ModSoundManager.spiderkingHit.sound();
     }
 
     @Override
     protected String getDeathSound() {
-        return "imported.mob.spiderking.death";
+        return ModSoundManager.spiderkingDeath.sound();
     }
 
     @Override

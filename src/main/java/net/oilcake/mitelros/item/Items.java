@@ -4,6 +4,7 @@ import moddedmite.rustedironcore.api.item.DoorItem;
 import moddedmite.rustedironcore.api.item.FishingRodItem;
 import moddedmite.rustedironcore.api.item.NuggetItem;
 import net.minecraft.*;
+import net.oilcake.mitelros.ModSoundManager;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.config.ITFConfig;
@@ -245,9 +246,9 @@ public class Items extends Item {
 
     public static final Item experimentalPotion = (new ItemPotionExperimental(getNextItemID())).setUnlocalizedName("experimentalPotion");
 
-    public static final ITFRecord recordDamnation = (ITFRecord) (new ITFRecord(2024, "imported.damnation", "record_damnation", "Damnation", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
+    public static final ITFRecord recordDamnation = (ITFRecord) (new ITFRecord(2024, ModSoundManager.damnation.sound(), "record_damnation", "Damnation", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
 
-    public static final ITFRecord recordConnected = (ITFRecord) (new ITFRecord(2025, "imported.connected", "record_connected", "Connected", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
+    public static final ITFRecord recordConnected = (ITFRecord) (new ITFRecord(2025, ModSoundManager.connected.sound(), "record_connected", "Connected", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
 
     public static final ItemArmor vibraniumHelmet = new ItemHelmet(getNextItemID(), Materials.vibranium, false);
 

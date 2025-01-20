@@ -76,12 +76,24 @@ public class ITFLootTables {
             new WeightedRandomChestContent(Items.morningStarCopper.itemID, 0, 1, 1, 1),
             new WeightedRandomChestContent(Items.warHammerRustedIron.itemID, 0, 1, 1, 2),
             new WeightedRandomChestContent(Items.morningStarRustedIron.itemID, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Items.ignitionRustedIron.itemID, 0, 1, 1, 1)
+            new WeightedRandomChestContent(Items.ignitionRustedIron.itemID, 0, 1, 1, 1),
+
+            new WeightedRandomChestContent(Item.monsterPlacer.itemID, 90, 1, 1, 1),
+            new WeightedRandomChestContent(Item.monsterPlacer.itemID, 91, 1, 1, 1),
+            new WeightedRandomChestContent(Item.monsterPlacer.itemID, 92, 1, 1, 1),
+            new WeightedRandomChestContent(Item.monsterPlacer.itemID, 93, 1, 1, 1),
+            new WeightedRandomChestContent(Item.monsterPlacer.itemID, 100, 1, 1, 1)
     };
 
     public static final Supplier<WeightedRandomChestContent[]> dungeonUnderworldExtra = () -> new WeightedRandomChestContent[]{
             new WeightedRandomChestContent(Items.ancientMetalArmorPiece.itemID, 0, 1, 2, 10),
             new WeightedRandomChestContent(Items.morningStarAncientMetal.itemID, 0, 1, 1, 2),
-            new WeightedRandomChestContent(Items.ignitionAncientMetal.itemID, 0, 1, 1, 2)
+            new WeightedRandomChestContent(Items.ignitionAncientMetal.itemID, 0, 1, 1, 2),
+
+            new WeightedRandomChestContent(Item.monsterPlacer.itemID, 90, 1, 1, 1),
+            new WeightedRandomChestContent(Item.monsterPlacer.itemID, 91, 1, 1, 1),
+            new WeightedRandomChestContent(Item.monsterPlacer.itemID, 92, 1, 1, 1),
+            new WeightedRandomChestContent(Item.monsterPlacer.itemID, 93, 1, 1, 1),
+            new WeightedRandomChestContent(Item.monsterPlacer.itemID, 100, 1, 1, 1)
     };
 }

@@ -32,14 +32,14 @@ public class VanillaPlugin implements ITFPlugin {
         registry.registerMeatAnimal(EntityPig.class);
         registry.registerMeatAnimal(EntityHorse.class);
 
-        if (FishModLoader.hasMod("bettermite")) {
-            try {
-                registry.registerMeatAnimal((Class<? extends Entity>) Class.forName("com.github.FlyBird.BetterMite.entity.EntityRabbit"));
-            } catch (ClassNotFoundException | ClassCastException e) {
-                ManyLib.logger.warn("itf reborn compat: failed to register rabbit for meat animals");
-                e.printStackTrace();
-            }
-        }
+//        if (FishModLoader.hasMod("bettermite")) {
+//            try {
+//                registry.registerMeatAnimal((Class<? extends Entity>) Class.forName("com.github.FlyBird.BetterMite.entity.EntityRabbit"));
+//            } catch (ClassNotFoundException | ClassCastException e) {
+//                ManyLib.logger.warn("itf reborn compat: failed to register rabbit for meat animals");
+//                e.printStackTrace();
+//            }
+//        }
 
 
         registry.registerOrePiece(Block.oreCopper, Items.pieceCopper.itemID);
