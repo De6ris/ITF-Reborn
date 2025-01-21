@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.render;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.entity.mob.EntitySpirit;
 import org.lwjgl.opengl.GL11;
 
@@ -13,10 +14,10 @@ public class RenderSpirit extends RenderLiving {
 
     public RenderSpirit() {
         super(new ModelEnderman(), 0.5F);
-        this.endermanModel = (ModelEnderman)super.mainModel;
+        this.endermanModel = (ModelEnderman) super.mainModel;
         this.setRenderPassModel(this.endermanModel);
     }
-    
+
     public void renderSpirit(EntitySpirit par1EntitySpirit, double par2, double par4, double par6, float par8, float par9) {
         this.endermanModel.isCarrying = par1EntitySpirit.getCarried() > 0;
         this.endermanModel.isAttacking = par1EntitySpirit.isScreaming();
@@ -47,7 +48,7 @@ public class RenderSpirit extends RenderLiving {
             int var4 = par1EntitySpirit.getBrightnessForRender(par2);
             int var5 = var4 % 65536;
             int var6 = var4 / 65536;
-            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)var5 / 1.0F, (float)var6 / 1.0F);
+            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) var5 / 1.0F, (float) var6 / 1.0F);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.bindTexture(TextureMap.locationBlocksTexture);
@@ -59,26 +60,29 @@ public class RenderSpirit extends RenderLiving {
     }
 
     public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
-        this.renderSpirit((EntitySpirit)par1EntityLiving, par2, par4, par6, par8, par9);
+        this.renderSpirit((EntitySpirit) par1EntityLiving, par2, par4, par6, par8, par9);
     }
 
     protected void renderEquippedItems(EntityLivingBase par1EntityLivingBase, float par2) {
-        this.renderCarrying((EntitySpirit)par1EntityLivingBase, par2);
+        this.renderCarrying((EntitySpirit) par1EntityLivingBase, par2);
     }
 
     public void doRenderLiving(EntityLivingBase par1EntityLivingBase, double par2, double par4, double par6, float par8, float par9) {
-        this.renderSpirit((EntitySpirit)par1EntityLivingBase, par2, par4, par6, par8, par9);
+        this.renderSpirit((EntitySpirit) par1EntityLivingBase, par2, par4, par6, par8, par9);
     }
 
     protected ResourceLocation getEntityTexture(Entity par1Entity) {
-        return this.getSpiritTextures((EntitySpirit)par1Entity);
+        return this.getSpiritTextures((EntitySpirit) par1Entity);
     }
 
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {
-        this.renderSpirit((EntitySpirit)par1Entity, par2, par4, par6, par8, par9);
+        this.renderSpirit((EntitySpirit) par1Entity, par2, par4, par6, par8, par9);
     }
+
     protected void setTextures() {
-        this.setTexture(0, "textures/entity/spirit","textures/entity/spirit_glow");
+        this.setTexture(0,
+                ITFStart.ResourceDomainColon + "textures/entity/spirit",
+                ITFStart.ResourceDomainColon + "textures/entity/spirit_glow");
     }
-    
+
 }

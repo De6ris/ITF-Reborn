@@ -4,7 +4,7 @@ import moddedmite.rustedironcore.api.item.DoorItem;
 import moddedmite.rustedironcore.api.item.FishingRodItem;
 import moddedmite.rustedironcore.api.item.NuggetItem;
 import net.minecraft.*;
-import net.oilcake.mitelros.ModSoundManager;
+import net.oilcake.mitelros.api.ITFFishingRod;
 import net.oilcake.mitelros.api.ITFItem;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.config.ITFConfig;
@@ -14,6 +14,7 @@ import net.oilcake.mitelros.item.potion.ItemPotionExperimental;
 import net.oilcake.mitelros.item.potion.ItemPotionSuspicious;
 import net.oilcake.mitelros.item.totem.*;
 import net.oilcake.mitelros.item.wand.*;
+import net.oilcake.mitelros.sound.Sounds;
 import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.ITFLootTables;
 import net.xiaoyu233.fml.reload.utils.IdUtil;
@@ -246,9 +247,9 @@ public class Items extends Item {
 
     public static final Item experimentalPotion = (new ItemPotionExperimental(getNextItemID())).setUnlocalizedName("experimentalPotion");
 
-    public static final ITFRecord recordDamnation = (ITFRecord) (new ITFRecord(2024, ModSoundManager.damnation.sound(), "record_damnation", "Damnation", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
+    public static final ITFRecord recordDamnation = (ITFRecord) (new ITFRecord(2024, Sounds.damnation.toString(), "record_damnation", "Damnation", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
 
-    public static final ITFRecord recordConnected = (ITFRecord) (new ITFRecord(2025, ModSoundManager.connected.sound(), "record_connected", "Connected", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
+    public static final ITFRecord recordConnected = (ITFRecord) (new ITFRecord(2025, Sounds.connected.toString(), "record_connected", "Connected", "Mwk feat. Hatsune Miku")).setUnlocalizedName("record");
 
     public static final ItemArmor vibraniumHelmet = new ItemHelmet(getNextItemID(), Materials.vibranium, false);
 
@@ -376,9 +377,9 @@ public class Items extends Item {
 
     public static final ItemArmor bootsCustom_b = new ItemBoots(getNextItemID(), Materials.custom_b, false);
 
-    public static final FishingRodItem fishingRodNickel = (FishingRodItem) (new FishingRodItem(getNextItemID(), Materials.nickel)).setUnlocalizedName("fishingRod");
+    public static final FishingRodItem fishingRodNickel = (FishingRodItem) (new ITFFishingRod(getNextItemID(), Materials.nickel)).setUnlocalizedName("fishingRod");
 
-    public static final FishingRodItem fishingRodTungsten = (FishingRodItem) (new FishingRodItem(getNextItemID(), Materials.tungsten)).setUnlocalizedName("fishingRod");
+    public static final FishingRodItem fishingRodTungsten = (FishingRodItem) (new ITFFishingRod(getNextItemID(), Materials.tungsten)).setUnlocalizedName("fishingRod");
 
     public static final ItemCarrotOnAStick carrotOnAStickNickel = (ItemCarrotOnAStick) (new ItemCarrotOnAStick(getNextItemID(), Materials.nickel)).setUnlocalizedName("carrotOnAStick");
 

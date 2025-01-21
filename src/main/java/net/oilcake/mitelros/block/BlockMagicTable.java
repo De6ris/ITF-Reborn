@@ -4,6 +4,7 @@ import net.minecraft.BlockEnchantmentTable;
 import net.minecraft.Icon;
 import net.minecraft.IconRegister;
 import net.minecraft.Material;
+import net.oilcake.mitelros.ITFStart;
 
 public class BlockMagicTable extends BlockEnchantmentTable {
     private Icon TEXTURE_TOP;
@@ -31,8 +32,8 @@ public class BlockMagicTable extends BlockEnchantmentTable {
 
     @Override
     public void registerIcons(IconRegister mt) {
-        this.TEXTURE_TOP = mt.registerIcon("magic_table/top");
-        this.TEXTURE_BOTTOM = mt.registerIcon("magic_table/bottom");
-        this.TEXTURE_SIDE = mt.registerIcon("magic_table/side");
+        this.TEXTURE_TOP = mt.registerIcon(ITFStart.ResourceDomainColon + "magic_table/top");
+        this.TEXTURE_BOTTOM = mt.registerIcon(ITFStart.ResourceDomainColon + "magic_table/bottom");
+        this.TEXTURE_SIDE = mt.registerIcon(ITFStart.ResourceDomainColon + "magic_table/side");
     }
 }

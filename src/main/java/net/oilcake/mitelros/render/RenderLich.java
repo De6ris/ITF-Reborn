@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.render;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.api.ITFEntityLivingBase;
 import net.oilcake.mitelros.entity.boss.EntityLich;
 import org.lwjgl.opengl.GL11;
@@ -12,7 +13,7 @@ public class RenderLich extends RenderBiped {
 
     @Override
     protected void setTextures() {
-        setTexture(0, "textures/entity/skeleton/lich");
+        setTexture(0, ITFStart.ResourceDomainColon + "textures/entity/skeleton/lich");
     }
 
     @Override

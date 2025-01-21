@@ -1,6 +1,9 @@
 package net.oilcake.mitelros.api;
 
-import net.minecraft.*;
+import net.minecraft.Block;
+import net.minecraft.Entity;
+import net.minecraft.Item;
+import net.minecraft.ItemStack;
 
 public interface ITFRegistry {
     void registerItemWater(Item item, int water);

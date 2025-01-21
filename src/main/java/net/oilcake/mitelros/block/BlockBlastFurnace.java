@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.block;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.config.ITFConfig;
 
 public class BlockBlastFurnace extends BlockFurnace {
@@ -15,9 +16,9 @@ public class BlockBlastFurnace extends BlockFurnace {
     }
 
     public void registerIcons(IconRegister mt) {
-        this.blockIcon = mt.registerIcon("blastfurnace/" + this.material + "/side");
-        this.furnaceIconFront = mt.registerIcon(this.isActive ? ("blastfurnace/" + this.material + "/on") : ("blastfurnace/" + this.material + "/off"));
-        this.furnaceIconTop = mt.registerIcon("blastfurnace/" + this.material + "/top");
+        this.blockIcon = mt.registerIcon(ITFStart.ResourceDomainColon + "blastfurnace/" + this.material + "/side");
+        this.furnaceIconFront = mt.registerIcon(ITFStart.ResourceDomainColon + (this.isActive ? ("blastfurnace/" + this.material + "/on") : ("blastfurnace/" + this.material + "/off")));
+        this.furnaceIconTop = mt.registerIcon(ITFStart.ResourceDomainColon + "blastfurnace/" + this.material + "/top");
     }
 
     public int getIdleBlockID() {

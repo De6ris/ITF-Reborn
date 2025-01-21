@@ -1,11 +1,12 @@
 package net.oilcake.mitelros.block.enchantreserver;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.ITFStart;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 public class GuiEnchantReserver extends GuiContainer {
-    private static final ResourceLocation ENCHANT_RESERVER_TEXTURE = new ResourceLocation("textures/gui/container/enchant_reserver.png");
+    private static final ResourceLocation ENCHANT_RESERVER_TEXTURE = new ResourceLocation(ITFStart.ResourceDomain, "textures/gui/container/enchant_reserver.png");
 
     private final TileEntityEnchantReserver tileEntityEnchantReserver = new TileEntityEnchantReserver();
 

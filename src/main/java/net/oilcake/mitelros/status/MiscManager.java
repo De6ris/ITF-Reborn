@@ -1,7 +1,6 @@
 package net.oilcake.mitelros.status;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
@@ -12,8 +11,6 @@ import net.oilcake.mitelros.util.quality.EnumEffectEntry;
 import net.oilcake.mitelros.util.quality.EnumToolType;
 
 import java.util.List;
-
-import static net.oilcake.mitelros.ITFStart.MOD_ID;
 
 public class MiscManager {
     private final EntityPlayer player;

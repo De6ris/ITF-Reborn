@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.block;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.ITFStart;
 
 public class BlockEnchantPredicator extends Block {
     private Icon TEXTURE_TOP;
@@ -30,9 +31,9 @@ public class BlockEnchantPredicator extends Block {
 
     @Override
     public void registerIcons(IconRegister mt) {
-        this.TEXTURE_TOP = mt.registerIcon("enchant_predicator/top");
-        this.TEXTURE_BOTTOM = mt.registerIcon("enchant_predicator/bottom");
-        this.TEXTURE_SIDE = mt.registerIcon("enchant_predicator/side");
+        this.TEXTURE_TOP = mt.registerIcon(ITFStart.ResourceDomainColon + "enchant_predicator/top");
+        this.TEXTURE_BOTTOM = mt.registerIcon(ITFStart.ResourceDomainColon + "enchant_predicator/bottom");
+        this.TEXTURE_SIDE = mt.registerIcon(ITFStart.ResourceDomainColon + "enchant_predicator/side");
     }
 
 

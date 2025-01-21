@@ -1,11 +1,12 @@
 package net.oilcake.mitelros.util;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.api.ITFFoodStats;
 import net.oilcake.mitelros.item.potion.PotionExtend;
 
 public class GuiInGameDrawer {
-    public static final ResourceLocation icons_itf = new ResourceLocation("textures/gui/itf_icons.png");
+    public static final ResourceLocation icons_itf = new ResourceLocation(ITFStart.ResourceDomain, "textures/gui/itf_icons.png");
 
     public static void drawWater(Gui gui, Minecraft mc, int par1, int par2) {
         int var12 = par1 / 2 + 91;

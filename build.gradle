@@ -54,19 +54,15 @@ dependencies {
 
     // some useful mods I use
     implementation files("${lib_dir}/ModernMite.jar")
-//    implementation files("${lib_dir}/MithrilCore.jar")
     implementation files("${lib_dir}/ommc.jar")
-//    implementation files("${lib_dir}/GammaFree.jar")
 //    implementation files("${lib_dir}/MITEDevHackMod-FML3.0.0.jar")
     implementation files("${lib_dir}/Neodymium.jar")
     implementation files("${lib_dir}/FPSPlus.jar")
-//    implementation files("${lib_dir}/DebrisHUD.jar")
-//    implementation files("${lib_dir}/Hwite.jar")
+    implementation files("${lib_dir}/Hwite.jar")
     implementation files("${lib_dir}/MixinConflictHelper.jar")
     implementation files("${lib_dir}/EMI.jar")
     implementation files("${lib_dir}/ModMenu.jar")
     implementation files("${lib_dir}/PinIn-Lib.jar")
-    implementation files("${lib_dir}/BetterGameSetting.jar")
     implementation files("${lib_dir}/ExtraGui.jar")
 }
 

@@ -1,13 +1,11 @@
 package net.oilcake.mitelros.registry;
 
-import fi.dy.masa.malilib.ManyLib;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFPlugin;
 import net.oilcake.mitelros.api.ITFRegistry;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
-import net.xiaoyu233.fml.FishModLoader;
 
 public class VanillaPlugin implements ITFPlugin {
     @SuppressWarnings("unchecked")

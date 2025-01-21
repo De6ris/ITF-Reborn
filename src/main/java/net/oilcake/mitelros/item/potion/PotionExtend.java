@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.item.potion;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.ITFStart;
 import net.xiaoyu233.fml.reload.utils.IdUtil;
 
 public class PotionExtend extends moddedmite.rustedironcore.api.util.PotionExtend {
@@ -15,7 +16,7 @@ public class PotionExtend extends moddedmite.rustedironcore.api.util.PotionExten
     }
 
     public PotionExtend(int id, boolean isBadEffect, int effectiveness, String texturePath) {
-        super(id, isBadEffect, effectiveness, new ResourceLocation("textures/gui/mob_effects/" + texturePath + ".png"));
+        super(id, isBadEffect, effectiveness, new ResourceLocation(ITFStart.ResourceDomainColon + "textures/gui/mob_effects/" + texturePath + ".png"));
     }
 
     @Override

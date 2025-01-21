@@ -5,7 +5,6 @@
   "target": "DEFAULT",
   "minVersion": "0.8.3",
   "mixins": [
-    "SoundManagerMixin",
     "block.BlockAnvilMixin",
     "block.BlockBushMixin",
     "block.BlockCropsMixin",

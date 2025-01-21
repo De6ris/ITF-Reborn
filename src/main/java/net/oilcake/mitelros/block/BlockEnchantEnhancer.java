@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.block;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.ITFStart;
 
 public class BlockEnchantEnhancer extends Block {
     private Icon TEXTURE_TOP;
@@ -28,9 +29,9 @@ public class BlockEnchantEnhancer extends Block {
 
     @Override
     public void registerIcons(IconRegister mt) {
-        this.TEXTURE_TOP = mt.registerIcon("enchant_enhancer/top");
-        this.TEXTURE_BOTTOM = mt.registerIcon("enchant_enhancer/bottom");
-        this.TEXTURE_SIDE = mt.registerIcon("enchant_enhancer/side");
+        this.TEXTURE_TOP = mt.registerIcon(ITFStart.ResourceDomainColon + "enchant_enhancer/top");
+        this.TEXTURE_BOTTOM = mt.registerIcon(ITFStart.ResourceDomainColon + "enchant_enhancer/bottom");
+        this.TEXTURE_SIDE = mt.registerIcon(ITFStart.ResourceDomainColon + "enchant_enhancer/side");
     }
 
 

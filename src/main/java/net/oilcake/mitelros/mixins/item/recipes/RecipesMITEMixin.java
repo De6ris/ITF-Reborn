@@ -2,14 +2,13 @@ package net.oilcake.mitelros.mixins.item.recipes;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.*;
+import net.minecraft.CraftingManager;
+import net.minecraft.ItemStack;
+import net.minecraft.RecipesMITE;
+import net.minecraft.ShapelessRecipes;
 import net.oilcake.mitelros.item.register.ITFRecipesFood;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(RecipesMITE.class)
 public class RecipesMITEMixin {

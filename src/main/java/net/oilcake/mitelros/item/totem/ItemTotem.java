@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.item.totem;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.ModSoundManager;
+import net.oilcake.mitelros.sound.Sounds;
 import net.oilcake.mitelros.util.AchievementExtend;
 
 public abstract class ItemTotem extends Item {
@@ -15,7 +15,7 @@ public abstract class ItemTotem extends Item {
         player.clearActivePotions();
         player.setHealth(isProactive ? Math.max(player.getHealth(), 2.0F) : player.getMaxHealth(), true, player.getHealFX());
         player.entityFX(EnumEntityFX.smoke_and_steam);
-        player.makeSound(ModSoundManager.totemUse.sound(), 3.0F, 1.0F + player.rand.nextFloat() * 0.1F);
+        player.makeSound(Sounds.totemUse.toString(), 3.0F, 1.0F + player.rand.nextFloat() * 0.1F);
         if (!player.isPlayerInCreative()) {
             player.addPotionEffect(new PotionEffect(Potion.blindness.id, 40, 4));
             player.vision_dimming = 1.0F;

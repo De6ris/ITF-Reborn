@@ -4,7 +4,6 @@ import moddedmite.rustedironcore.api.event.events.PlayerLoggedInEvent;
 import moddedmite.rustedironcore.api.event.listener.IPlayerEventListener;
 import net.minecraft.ItemStack;
 import net.minecraft.ServerPlayer;
-import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.item.ItemGuideBook;
 import net.oilcake.mitelros.item.Items;
 

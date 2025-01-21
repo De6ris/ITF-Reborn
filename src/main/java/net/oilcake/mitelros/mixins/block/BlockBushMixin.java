@@ -5,6 +5,7 @@ import net.minecraft.BlockBush;
 import net.minecraft.BlockGrowingPlant;
 import net.minecraft.World;
 import net.oilcake.mitelros.api.ITFWorld;
+import net.oilcake.mitelros.util.EnumSeason;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
@@ -17,6 +18,6 @@ public abstract class BlockBushMixin extends BlockGrowingPlant {
 
     @ModifyConstant(method = "getGrowthRate", constant = @Constant(floatValue = 0.1F))
     private float itfSeason(float constant, @Local(argsOnly = true) World world) {
-        return constant + ((((ITFWorld) world).itf$GetWorldSeason() == 2) ? 0.15F : 0.0F);
+        return constant + (ITFWorld.getSeason(world) == EnumSeason.AUTUMN ? 0.15F : 0.0F);
     }
 }

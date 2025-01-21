@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.WontFix;
+import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.DispenseBehaviorEmptyBucketRedirect;
 import net.oilcake.mitelros.util.DispenseBehaviorFilledBucketRedirect;
@@ -87,5 +88,13 @@ public abstract class ItemBucketMixin extends ItemVessel {
     @ModifyArg(method = "addInformation", at = @At(value = "INVOKE", target = "Lnet/minecraft/Translator;getFormatted(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;"), index = 1)
     private Object[] fixChances(Object[] par1ArrayOfObj) {
         return new Object[]{Math.round(this.getChanceOfMeltingWhenFilledWithLava() * 100.0f)};
+    }
+
+    @Inject(method = "getPeer", at = @At("HEAD"), cancellable = true)
+    @Deprecated(since = "ric1.3.9")// TODO temp fix
+    private static void tempFix(Material vessel_material, Material contents, CallbackInfoReturnable<ItemVessel> cir) {
+        if (vessel_material == Material.wood && contents == Material.milk) {
+            cir.setReturnValue(Items.woodBucket);
+        }
     }
 }

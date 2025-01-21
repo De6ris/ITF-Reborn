@@ -2,9 +2,13 @@ package net.oilcake.mitelros.mixins.world;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.*;
+import net.minecraft.BiomeGenBase;
+import net.minecraft.Entity;
+import net.minecraft.Explosion;
+import net.minecraft.World;
 import net.oilcake.mitelros.api.ITFWorld;
 import net.oilcake.mitelros.config.ITFConfig;
+import net.oilcake.mitelros.util.EnumSeason;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -47,24 +51,18 @@ public abstract class WorldMixin implements ITFWorld {
     }
 
     @Unique
-    public int itf$GetWorldSeason() {
-        return (this.getDayOfWorld() % 128) / 32;
+    public EnumSeason itf$GetWorldSeason() {
+        return EnumSeason.getForCode((this.getDayOfWorld() % 128) / 32);
     }
 
     @Unique
-    public float getRainDurationModify(int Season) {
-        switch (Season) {
-            case 0:
-                return 1.0F;
-            case 1:
-                return 2.25F;
-            case 2:
-                return 0.75F;
-            case 3:
-                return 0.5F;
-        }
-        Debug.setErrorMessage("getRainDurationModify: called for num " + Season + " for calculating. Use the default.");
-        return 1.0F;
+    public float getRainDurationModify(EnumSeason season) {
+        return switch (season) {
+            case SPRING -> 1.0F;
+            case SUMMER -> 2.25F;
+            case AUTUMN -> 0.75F;
+            case WINTER -> 0.5F;
+        };
     }
 
     @Unique
@@ -74,12 +72,12 @@ public abstract class WorldMixin implements ITFWorld {
 
     @ModifyConstant(method = "canSnowAt", constant = @Constant(floatValue = 0.15F))
     private float itfSnow(float constant) {
-        return (this.itf$GetWorldSeason() == 3) ? 1.0F : 0.15F;
+        return (this.itf$GetWorldSeason() == EnumSeason.AUTUMN) ? 1.0F : 0.15F;
     }
 
     @Inject(method = "isFreezing", at = @At("HEAD"), cancellable = true)
     private void itfFreezing(int x, int z, CallbackInfoReturnable<Boolean> cir) {
-        if (getBiomeGenForCoords(x, z).temperature <= ((itf$GetWorldSeason() == 3) ? 1.0F : 0.15F))
+        if (getBiomeGenForCoords(x, z).temperature <= ((itf$GetWorldSeason() == EnumSeason.AUTUMN) ? 1.0F : 0.15F))
             cir.setReturnValue(true);
     }
 

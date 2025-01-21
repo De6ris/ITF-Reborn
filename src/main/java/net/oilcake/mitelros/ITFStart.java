@@ -16,6 +16,8 @@ public class ITFStart implements ModInitializer {
     public static final String NameSpaceCompact = "ITF";
     public static final String NameSpaceCompactWithColon = "ITF:";
     public static final String NameSpaceCompactWithUnderScore = "ITF_";
+    public static final String ResourceDomain = "miteitfrb";
+    public static final String ResourceDomainColon = "miteitfrb:";
 
     @Override
     public void onInitialize() {
@@ -23,6 +25,6 @@ public class ITFStart implements ModInitializer {
         ITFEventRIC.register();
         ConfigManager.getInstance().registerConfig(ITFConfig.getInstance());
         ITFNetwork.init();
-        ModResourceManager.addResourcePackDomain("miteitfrb");
+        ModResourceManager.addResourcePackDomain(ResourceDomain);
     }
 }

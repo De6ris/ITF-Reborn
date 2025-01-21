@@ -1,6 +1,7 @@
 package net.oilcake.mitelros.block.enchantreserver;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.ITFStart;
 
 public class BlockEnchantReserver extends BlockContainer {
     private Icon TEXTURE_TOP;
@@ -28,9 +29,9 @@ public class BlockEnchantReserver extends BlockContainer {
 
     @Override
     public void registerIcons(IconRegister mt) {
-        this.TEXTURE_TOP = mt.registerIcon("enchant_reserver/top");
-        this.TEXTURE_BOTTOM = mt.registerIcon("enchant_reserver/bottom");
-        this.TEXTURE_SIDE = mt.registerIcon("enchant_reserver/side");
+        this.TEXTURE_TOP = mt.registerIcon(ITFStart.ResourceDomainColon + "enchant_reserver/top");
+        this.TEXTURE_BOTTOM = mt.registerIcon(ITFStart.ResourceDomainColon + "enchant_reserver/bottom");
+        this.TEXTURE_SIDE = mt.registerIcon(ITFStart.ResourceDomainColon + "enchant_reserver/side");
     }
 
     @Override

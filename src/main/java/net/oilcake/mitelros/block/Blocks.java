@@ -5,6 +5,10 @@ import moddedmite.rustedironcore.api.block.PaneBlock;
 import moddedmite.rustedironcore.api.block.WorkbenchBlock;
 import moddedmite.rustedironcore.api.event.events.CraftingRecipeRegisterEvent;
 import net.minecraft.*;
+import net.oilcake.mitelros.ITFStart;
+import net.oilcake.mitelros.api.ITFAnvil;
+import net.oilcake.mitelros.api.ITFRunestone;
+import net.oilcake.mitelros.api.ITFWorkbench;
 import net.oilcake.mitelros.block.enchantreserver.BlockEnchantReserver;
 import net.oilcake.mitelros.block.observer.BlockObserver;
 import net.oilcake.mitelros.block.receiver.BlockReceiver;
@@ -12,7 +16,6 @@ import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.util.Constant;
-import net.xiaoyu233.fml.api.block.AnvilBlock;
 import net.xiaoyu233.fml.reload.utils.IdUtil;
 
 public class Blocks {
@@ -37,15 +40,15 @@ public class Blocks {
 
     public static final Block blockSmokerBurning = (new BlockSmoker(getNextBlockID(), true)).setHardness(2.0F).setResistance(20.0F).setStepSound(Block.soundStoneFootstep).setLightValue(0.875F);
 
-    public static final BlockAnvil anvilNickel = new AnvilBlock(getNextBlockID(), Materials.nickel);
+    public static final BlockAnvil anvilNickel = new ITFAnvil(getNextBlockID(), Materials.nickel);
 
     public static final Block blockEnchantReserver = (new BlockEnchantReserver(getNextBlockID())).setHardness(8.0F).setResistance(20.0F).setStepSound(Block.soundStoneFootstep).setLightValue(0.0F);
 
     public static final Block blockNickel = (new BlockOreBlockExtend(getNextBlockID(), Materials.nickel)).setStepSound(Block.soundMetalFootstep);
 
-    public static final Block fenceNickel = (new PaneBlock(getNextBlockID(), "bars/nickel_bars", "bars/nickel_bars", Materials.nickel, false)).setStepSound(Block.soundMetalFootstep).setResistance(6.0F).setHardness(3.2F).setMinHarvestLevel(3);
+    public static final Block fenceNickel = (new PaneBlock(getNextBlockID(), ITFStart.ResourceDomainColon + "bars/nickel_bars", ITFStart.ResourceDomainColon + "bars/nickel_bars", Materials.nickel, false)).setStepSound(Block.soundMetalFootstep).setResistance(6.0F).setHardness(3.2F).setMinHarvestLevel(3);
 
-    public static final DoorBlock doorNickel = (DoorBlock) (new DoorBlock(getNextBlockID(), Materials.nickel, () ->Items.doorNickel)).setStepSound(Block.soundMetalFootstep).setMinHarvestLevel(3);
+    public static final DoorBlock doorNickel = (DoorBlock) (new DoorBlock(getNextBlockID(), Materials.nickel, () -> Items.doorNickel)).setStepSound(Block.soundMetalFootstep).setMinHarvestLevel(3);
 
     public static final Block oreNickel = (new BlockOre(getNextBlockID(), Materials.nickel, 2)).setHardness(3.0F).setResistance(20.0F);
 
@@ -53,11 +56,11 @@ public class Blocks {
 
     public static final Block blockTungsten = (new BlockOreStorage(getNextBlockID(), Materials.tungsten)).setStepSound(Block.soundMetalFootstep);
 
-    public static final Block fenceTungsten = (new PaneBlock(getNextBlockID(), "bars/tungsten_bars", "bars/tungsten_bars", Materials.tungsten, false)).setStepSound(Block.soundMetalFootstep).setResistance(96.0F).setHardness(51.2F).setMinHarvestLevel(5);
+    public static final Block fenceTungsten = (new PaneBlock(getNextBlockID(), ITFStart.ResourceDomainColon + "bars/tungsten_bars", ITFStart.ResourceDomainColon + "bars/tungsten_bars", Materials.tungsten, false)).setStepSound(Block.soundMetalFootstep).setResistance(96.0F).setHardness(51.2F).setMinHarvestLevel(5);
 
-    public static final DoorBlock doorTungsten = (DoorBlock) (new DoorBlock(getNextBlockID(), Materials.tungsten,() -> Items.doorTungsten)).setStepSound(Block.soundMetalFootstep).setMinHarvestLevel(5);
+    public static final DoorBlock doorTungsten = (DoorBlock) (new DoorBlock(getNextBlockID(), Materials.tungsten, () -> Items.doorTungsten)).setStepSound(Block.soundMetalFootstep).setMinHarvestLevel(5);
 
-    public static final BlockAnvil anvilTungsten = new AnvilBlock(getNextBlockID(), Materials.tungsten);
+    public static final BlockAnvil anvilTungsten = new ITFAnvil(getNextBlockID(), Materials.tungsten);
 
     public static final BlockFlowerExtend flowerextend = new BlockFlowerExtend(getNextBlockID());
 
@@ -89,13 +92,13 @@ public class Blocks {
 
     public static final Block magicTable = new BlockMagicTable(getNextBlockID());
 
-    public static final WorkbenchBlock nickelWorkBench = new WorkbenchBlock(getNextBlockID(), Materials.nickel, 0.5F, Material.copper);
+    public static final WorkbenchBlock nickelWorkBench = new ITFWorkbench(getNextBlockID(), Materials.nickel, 0.5F, Material.copper);
 
     public static final Block uruBeacon = new BlockUruBeacon(getNextBlockID());
 
-    public static final BlockRunestone tungstenRuneStone = (BlockRunestone) new BlockRunestone(getNextBlockID(), Materials.tungsten).setHardness(2.4f).setResistance(20.0f).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("runestone").setTextureName("obsidian");
+    public static final BlockRunestone tungstenRuneStone = (BlockRunestone) new ITFRunestone(getNextBlockID(), Materials.tungsten).setHardness(2.4f).setResistance(20.0f).setStepSound(Block.soundStoneFootstep).setUnlocalizedName("runestone").setTextureName("obsidian");
 
-    public static final WorkbenchBlock tungstenWorkBench = new WorkbenchBlock(getNextBlockID(), Materials.tungsten, 1.5F, Material.mithril);
+    public static final WorkbenchBlock tungstenWorkBench = new ITFWorkbench(getNextBlockID(), Materials.tungsten, 1.5F, Material.mithril);
 
     static {
         anvilNickel.stepSound = Block.soundAnvilFootstep;

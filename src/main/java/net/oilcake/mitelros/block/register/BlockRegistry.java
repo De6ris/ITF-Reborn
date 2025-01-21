@@ -2,6 +2,7 @@ package net.oilcake.mitelros.block.register;
 
 import net.minecraft.Block;
 import net.minecraft.BlockAnvil;
+import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.register.ItemRegistry;
 import net.xiaoyu233.fml.reload.event.ItemRegistryEvent;
@@ -38,9 +39,9 @@ public class BlockRegistry extends Blocks {
         register("flowers/", flowerextend);
         register("block_enchant_enhancer", blockEnchantEnhancer);
         register("ore/uru_ore", oreUru);
-        register("beetroot", beetroots, false);
-        register("beetroot", beetrootsDead, false);
-        register("flower_pot", flowerPotExtend, false);
+        register("beetroot", beetroots, false, false);
+        register("beetroot", beetrootsDead, false, false);
+        register("flower_pot", flowerPotExtend, false, false);
         register("azurite_block", blockAzurite);
         register("azurite_cluster", azuriteCluster);
         register("torch_idle", torchWoodIdle);
@@ -52,8 +53,8 @@ public class BlockRegistry extends Blocks {
         register("magic_table", magicTable);
         register("crafting_table", nickelWorkBench);
         register("crafting_table", tungstenWorkBench);
-        register("beacon", uruBeacon);
-        register("obsidian", tungstenRuneStone);
+        register("beacon", uruBeacon, false, true);
+        register("obsidian", tungstenRuneStone, false, true);
 
         uruBeacon.setUnlocalizedName("uru_beacon");
         tungstenRuneStone.setUnlocalizedName("runestone");
@@ -66,14 +67,22 @@ public class BlockRegistry extends Blocks {
     }
 
     private static void register(String texture, Block block, boolean show) {
-        eventCache.registerItemBlock(NameSpace, texture, block);
+        register(texture, block, true, show);
+    }
+
+    private static void register(String texture, Block block, boolean withDomain, boolean show) {
+        String translationKey = texture;
+        if (withDomain) texture = ITFStart.ResourceDomainColon + texture;
+        eventCache.registerItemBlock(NameSpace, texture, translationKey, block);
         if (show) {
             block.setCreativeTab(ItemRegistry.ITFBlock);
         }
     }
 
     private static void registerAnvil(String texture, BlockAnvil block) {
-        eventCache.registerAnvil(NameSpace, texture, block);
+        String translationKey = texture;
+        texture = ITFStart.ResourceDomainColon + texture;
+        eventCache.registerAnvil(NameSpace, texture, translationKey, block);
         block.setCreativeTab(ItemRegistry.ITFBlock);
     }
 }

@@ -1,21 +1,25 @@
 package net.oilcake.mitelros.block.receiver;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.block.Blocks;
 
-public class BlockReceiver extends BlockContainer{
+public class BlockReceiver extends BlockContainer {
     protected Icon SIDE_ON;
     protected Icon SIDE_OFF;
+
     @Override
     public void registerIcons(IconRegister mt) {
-        SIDE_ON = mt.registerIcon("resonance_converter/side_on");
-        SIDE_OFF = mt.registerIcon("resonance_converter/side");
+        SIDE_ON = mt.registerIcon(ITFStart.ResourceDomainColon + "resonance_converter/side_on");
+        SIDE_OFF = mt.registerIcon(ITFStart.ResourceDomainColon + "resonance_converter/side");
     }
+
     public BlockReceiver(int par1) {
         super(par1, Material.stone, new BlockConstants());
         this.setMaxStackSize(4);
         this.setLightOpacity(0);
     }
+
     public boolean isValidMetadata(int metadata) {
         return metadata >= 0 && metadata < 16;
     }
@@ -27,6 +31,7 @@ public class BlockReceiver extends BlockContainer{
     public boolean isPortable(World world, EntityLiving entity_living_base, int x, int y, int z) {
         return true;
     }
+
     public boolean canProvidePower() {
         return true;
     }
@@ -36,18 +41,20 @@ public class BlockReceiver extends BlockContainer{
     }
 
     public int dropBlockAsEntityItem(BlockBreakInfo info) {
-        this.dropBlockAsEntityItem(info, new ItemStack(Blocks.blockReceiver.blockID,1));
+        this.dropBlockAsEntityItem(info, new ItemStack(Blocks.blockReceiver.blockID, 1));
         return 0;
     }
+
     public String getMetadataNotes() {
         return "All bits used to track signal level.";
     }
-    public void updateSignalLevel(World par1World, int par2, int par3, int par4){
-        for(int dx = -2; dx <= 2; dx++){
-            for(int dy = -2; dy <= 2; dy++){
-                for(int dz = -2; dz <= 2; dz++){
-                    if(par1World.getBlockId(par2 + dx, par3 + dy, par4 + dz) == Blocks.blockObserver.blockID){
-                        if((par1World.getBlockMetadata(par2 + dx, par3 + dy, par4 + dz) & 8) != 0){
+
+    public void updateSignalLevel(World par1World, int par2, int par3, int par4) {
+        for (int dx = -2; dx <= 2; dx++) {
+            for (int dy = -2; dy <= 2; dy++) {
+                for (int dz = -2; dz <= 2; dz++) {
+                    if (par1World.getBlockId(par2 + dx, par3 + dy, par4 + dz) == Blocks.blockObserver.blockID) {
+                        if ((par1World.getBlockMetadata(par2 + dx, par3 + dy, par4 + dz) & 8) != 0) {
                             par1World.setBlockMetadataWithNotify(par2, par3, par4, 9 - Math.abs(dx) - Math.abs(dy) - Math.abs(dz), 3);
                         } else {
                             par1World.setBlockMetadataWithNotify(par2, par3, par4, 0, 3);
@@ -57,6 +64,7 @@ public class BlockReceiver extends BlockContainer{
             }
         }
     }
+
     public TileEntity createNewTileEntity(World par1World) {
         return new TileEntityReceiver();
     }
