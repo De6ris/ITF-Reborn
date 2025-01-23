@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.compat.CompatUtil;
+import net.oilcake.mitelros.compat.ITECompatUtil;
 import net.oilcake.mitelros.item.Items;
 
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ public class EntityPigmanGuard extends EntityPigZombie {
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        CompatUtil.setMaxHealth(this, 20.0);
-        CompatUtil.setAttackDamage(this, 8.0);
+        ITECompatUtil.setMaxHealth(this, 20.0);
+        ITECompatUtil.setAttackDamage(this, 8.0);
     }
 
     public EntityPigmanGuard(World par1World) {

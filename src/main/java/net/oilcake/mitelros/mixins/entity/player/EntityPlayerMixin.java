@@ -3,8 +3,6 @@ package net.oilcake.mitelros.mixins.entity.player;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFoodStats;
@@ -104,11 +102,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements ICom
     @ModifyReturnValue(method = "hasFoodEnergy", at = @At("RETURN"))
     private boolean needWater(boolean original) {
         return original && this.itf$GetWater() != 0;
-    }
-
-    @WrapOperation(method = "attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityLivingBase;attackEntityFrom(Lnet/minecraft/Damage;)Lnet/minecraft/EntityDamageResult;"))
-    private EntityDamageResult redirectEntityAttack(EntityPlayer instance, Damage damage, Operation<EntityDamageResult> original) {
-        return this.miscManager.totemCheckOnDeath(original.call(instance, damage));
     }
 
     @Shadow

@@ -2,7 +2,7 @@ package net.oilcake.mitelros.entity.mob;
 
 
 import net.minecraft.*;
-import net.oilcake.mitelros.compat.CompatUtil;
+import net.oilcake.mitelros.compat.ITECompatUtil;
 
 public class EntityCastleGuard extends EntityEarthElemental {
     public EntityCastleGuard(World world) {
@@ -11,11 +11,11 @@ public class EntityCastleGuard extends EntityEarthElemental {
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        int iteDay = CompatUtil.getITEDay(this.worldObj);
+        int iteDay = ITECompatUtil.getITEDay(this.worldObj);
         this.setEntityAttribute(SharedMonsterAttributes.followRange, 48.0D);
         this.setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.22D);
-        this.setEntityAttribute(SharedMonsterAttributes.attackDamage, CompatUtil.getAttribute(iteDay, 12.0D));
-        this.setEntityAttribute(SharedMonsterAttributes.maxHealth, CompatUtil.getAttribute(iteDay, 40.0D));
+        this.setEntityAttribute(SharedMonsterAttributes.attackDamage, ITECompatUtil.getAttribute(iteDay, 12.0D));
+        this.setEntityAttribute(SharedMonsterAttributes.maxHealth, ITECompatUtil.getAttribute(iteDay, 40.0D));
     }
 
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {

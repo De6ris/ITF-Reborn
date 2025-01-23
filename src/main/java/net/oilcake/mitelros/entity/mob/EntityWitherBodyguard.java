@@ -2,7 +2,7 @@ package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFSkeleton;
-import net.oilcake.mitelros.compat.CompatUtil;
+import net.oilcake.mitelros.compat.ITECompatUtil;
 import net.oilcake.mitelros.item.Items;
 
 import java.util.ArrayList;
@@ -22,8 +22,8 @@ public class EntityWitherBodyguard extends EntitySkeleton {
         super.applyEntityAttributes();
         setEntityAttribute(SharedMonsterAttributes.followRange, 64.0D);
         setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.27D);
-        CompatUtil.setAttackDamage(this, 6.0D);
-        CompatUtil.setMaxHealth(this, 12.0D);
+        ITECompatUtil.setAttackDamage(this, 6.0D);
+        ITECompatUtil.setMaxHealth(this, 12.0D);
     }
 
     public boolean isHoldingRangedWeapon() {

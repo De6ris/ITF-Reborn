@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.compat.CompatUtil;
+import net.oilcake.mitelros.compat.ITECompatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,8 @@ public class EntityEvil extends EntityGhost {
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        CompatUtil.setMaxHealth(this, 30.0D);
-        CompatUtil.setAttackDamage(this, 7.0D);
+        ITECompatUtil.setMaxHealth(this, 30.0D);
+        ITECompatUtil.setAttackDamage(this, 7.0D);
         setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.3D);
     }
 

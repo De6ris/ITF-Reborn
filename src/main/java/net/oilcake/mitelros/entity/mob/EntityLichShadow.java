@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.compat.CompatUtil;
+import net.oilcake.mitelros.compat.ITECompatUtil;
 import net.oilcake.mitelros.item.Items;
 
 import java.util.ArrayList;
@@ -51,8 +51,8 @@ public class EntityLichShadow extends EntitySkeleton {
         super.applyEntityAttributes();
         setEntityAttribute(SharedMonsterAttributes.followRange, 128.0D);
         setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.27000001072883606D);
-        CompatUtil.setAttackDamage(this, 6.0D);
-        CompatUtil.setMaxHealth(this, 24.0D);
+        ITECompatUtil.setAttackDamage(this, 6.0D);
+        ITECompatUtil.setMaxHealth(this, 24.0D);
     }
 
     protected void addRandomEquipment() {

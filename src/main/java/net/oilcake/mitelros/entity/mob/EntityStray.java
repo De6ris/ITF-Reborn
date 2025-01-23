@@ -2,7 +2,7 @@ package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFSkeleton;
-import net.oilcake.mitelros.compat.CompatUtil;
+import net.oilcake.mitelros.compat.ITECompatUtil;
 import net.oilcake.mitelros.item.Items;
 
 public class EntityStray extends EntitySkeleton {
@@ -16,9 +16,9 @@ public class EntityStray extends EntitySkeleton {
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        CompatUtil.setMaxHealth(this, 8.0D);
+        ITECompatUtil.setMaxHealth(this, 8.0D);
         setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.29D);
-        CompatUtil.setAttackDamage(this, 5.0D);
+        ITECompatUtil.setAttackDamage(this, 5.0D);
     }
 
     public void onLivingUpdate() {

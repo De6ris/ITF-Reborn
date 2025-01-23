@@ -42,6 +42,9 @@
     ],
     "mite_ite": [
       "net.oilcake.mitelros.compat.ITEPluginImpl"
+    ],
+    "baubles": [
+      "net.oilcake.mitelros.compat.BaublesPluginImpl"
     ]
   },
   "mixins": [

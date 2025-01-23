@@ -51,6 +51,7 @@ dependencies {
 
     // compile needed, runtime not needed
     compileOnly(files("${lib_dir}/MITE-ITE.jar"))
+    compileOnly(files("${lib_dir}/Baubles.jar"))
 
     // some useful mods I use
     implementation files("${lib_dir}/ModernMite.jar")

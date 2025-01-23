@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.compat.CompatUtil;
+import net.oilcake.mitelros.compat.ITECompatUtil;
 
 public class EntityBoneBodyguard extends EntitySkeleton {
     public EntityBoneBodyguard(World par1World) {
@@ -11,10 +11,10 @@ public class EntityBoneBodyguard extends EntitySkeleton {
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        int iteDay = CompatUtil.getITEDay(this.worldObj);
-        setEntityAttribute(SharedMonsterAttributes.maxHealth, CompatUtil.getAttribute(iteDay, 6.0D));
+        int iteDay = ITECompatUtil.getITEDay(this.worldObj);
+        setEntityAttribute(SharedMonsterAttributes.maxHealth, ITECompatUtil.getAttribute(iteDay, 6.0D));
         setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.29D);
-        setEntityAttribute(SharedMonsterAttributes.attackDamage, CompatUtil.getAttribute(iteDay, 5.0D));
+        setEntityAttribute(SharedMonsterAttributes.attackDamage, ITECompatUtil.getAttribute(iteDay, 5.0D));
     }
 
     @Override

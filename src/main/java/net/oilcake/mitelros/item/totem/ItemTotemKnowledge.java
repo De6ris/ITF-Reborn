@@ -4,8 +4,8 @@ import net.minecraft.EntityPlayer;
 import net.minecraft.EnumEntityFX;
 import net.minecraft.Material;
 import net.minecraft.World;
-import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.config.ITFConfig;
+import net.oilcake.mitelros.status.MiscManager;
 
 public class ItemTotemKnowledge extends ItemTotem {
 
@@ -15,7 +15,7 @@ public class ItemTotemKnowledge extends ItemTotem {
 
     @Override
     public boolean canTrigger(World world, EntityPlayer player) {
-        return ITFConfig.TagTotemBlessing.getBooleanValue() || ((ITFPlayer) player).itf_GetMiscManager().getKnowledgeTotemCounter() < 10;
+        return ITFConfig.TagTotemBlessing.getBooleanValue() || MiscManager.getInstance(player).getKnowledgeTotemCounter() < 10;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ItemTotemKnowledge extends ItemTotem {
         int xpToAdd = player.experience / 5;
         player.addExperience(Math.min(xpToAdd, ITFConfig.TotemKnowledgeLimit.getIntegerValue()));
         if (!ITFConfig.TagTotemBlessing.getBooleanValue()) {
-            ((ITFPlayer) player).itf_GetMiscManager().addKnowledgeTotemCounter();
+            MiscManager.getInstance(player).addKnowledgeTotemCounter();
         }
     }
 }

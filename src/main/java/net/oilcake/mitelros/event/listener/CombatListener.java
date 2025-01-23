@@ -2,9 +2,9 @@ package net.oilcake.mitelros.event.listener;
 
 import moddedmite.rustedironcore.api.event.listener.ICombatListener;
 import net.minecraft.*;
-import net.oilcake.mitelros.api.ITFPlayer;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.potion.PotionExtend;
+import net.oilcake.mitelros.status.MiscManager;
 import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.quality.EnumEffectEntry;
 import net.oilcake.mitelros.util.quality.EnumToolType;
@@ -33,6 +33,6 @@ public class CombatListener implements ICombatListener {
 
     @Override
     public float onPlayerStrVsBlockModify(EntityPlayer player, float original) {
-        return ((ITFPlayer) player).itf_GetMiscManager().calculateITFStv(original);
+        return MiscManager.getInstance(player).calculateITFStv(original);
     }
 }

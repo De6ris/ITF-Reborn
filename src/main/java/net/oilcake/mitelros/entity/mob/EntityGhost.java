@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.compat.CompatUtil;
+import net.oilcake.mitelros.compat.ITECompatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +14,8 @@ public class EntityGhost extends EntityInvisibleStalker {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.25999999046325684D);
-        CompatUtil.setAttackDamage(this, 5.0D);
-        CompatUtil.setMaxHealth(this, 20.0D);
+        ITECompatUtil.setAttackDamage(this, 5.0D);
+        ITECompatUtil.setMaxHealth(this, 20.0D);
     }
 
     protected float getSoundVolume(String sound) {

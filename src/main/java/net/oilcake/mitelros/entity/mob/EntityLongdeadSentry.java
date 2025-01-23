@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.compat.CompatUtil;
+import net.oilcake.mitelros.compat.ITECompatUtil;
 
 public class EntityLongdeadSentry extends EntityLongdead {
     public EntityLongdeadSentry(World world) {
@@ -20,7 +20,7 @@ public class EntityLongdeadSentry extends EntityLongdead {
     }
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        CompatUtil.setMaxHealth(this, 30.0);
+        ITECompatUtil.setMaxHealth(this, 30.0);
         this.setEntityAttribute(SharedMonsterAttributes.followRange, 32.0);
     }
     @Override

@@ -3,11 +3,8 @@ package net.oilcake.mitelros.compat;
 import net.minecraft.EntityLivingBase;
 import net.minecraft.SharedMonsterAttributes;
 import net.minecraft.World;
-import net.xiaoyu233.fml.FishModLoader;
 
-public class CompatUtil {
-    public static boolean hasITE = FishModLoader.hasMod("mite_ite") || FishModLoader.hasMod("ga-higher");
-
+public class ITECompatUtil {
     public static int getITEDay(World world) {
         return World.getDayOfWorld(world.getWorldInfo().getWorldTotalTime(0));
     }
@@ -17,7 +14,7 @@ public class CompatUtil {
     }
 
     public static double getAttribute(int day, double base, double ratio) {
-        return hasITE ? base : base * 2.0D + day * ratio;
+        return ModCompat.HAS_ITE ? base : base * 2.0D + day * ratio;
     }
 
     public static void setMaxHealth(EntityLivingBase entity, double base) {

@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.compat.CompatUtil;
+import net.oilcake.mitelros.compat.ITECompatUtil;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 
@@ -15,8 +15,8 @@ public class EntityPigmanLord extends EntityPigZombie {
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        CompatUtil.setMaxHealth(this, ITFConfig.TagDemonDescend.get() ? 45.0D : 30.0D);
-        CompatUtil.setAttackDamage(this, ITFConfig.TagDemonDescend.get() ? 11.25D : 9.0D);
+        ITECompatUtil.setMaxHealth(this, ITFConfig.TagDemonDescend.get() ? 45.0D : 30.0D);
+        ITECompatUtil.setAttackDamage(this, ITFConfig.TagDemonDescend.get() ? 11.25D : 9.0D);
     }
 
     public EntityPigmanLord(World par1World) {

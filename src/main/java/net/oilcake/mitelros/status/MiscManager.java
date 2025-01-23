@@ -1,10 +1,13 @@
 package net.oilcake.mitelros.status;
 
 import net.minecraft.*;
+import net.oilcake.mitelros.api.ITFPlayer;
+import net.oilcake.mitelros.compat.ModCompat;
 import net.oilcake.mitelros.config.ITFConfig;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import net.oilcake.mitelros.item.totem.ItemTotem;
+import net.oilcake.mitelros.unsafe.BaublesAccessor;
 import net.oilcake.mitelros.util.AchievementExtend;
 import net.oilcake.mitelros.util.Constant;
 import net.oilcake.mitelros.util.quality.EnumEffectEntry;
@@ -33,6 +36,10 @@ public class MiscManager {
 
     public MiscManager(EntityPlayer player) {
         this.player = player;
+    }
+
+    public static MiscManager getInstance(EntityPlayer player) {
+        return ((ITFPlayer) player).itf_GetMiscManager();
     }
 
     public float getNickelArmorCoverage() {
@@ -108,16 +115,24 @@ public class MiscManager {
         return distance;
     }
 
-    public EntityDamageResult totemCheckOnDeath(EntityDamageResult entityDamageResult) {
-        if (entityDamageResult != null && player.getHealthFraction() <= 0.1D && !entityDamageResult.entityWasDestroyed()) {
-            ItemStack var5 = player.getHeldItemStack();
-            if (var5 != null && var5.getItem() instanceof ItemTotem totem) {
-                entityDamageResult.entity_was_destroyed = false;
+    public boolean skipDeath() {
+        ItemStack var5 = player.getHeldItemStack();
+        if (var5 != null && var5.getItem() instanceof ItemTotem totem) {
+            totem.trigger(this.player, false);
+            player.setHeldItemStack(null);
+            return true;
+        }
+
+        if (ModCompat.HAS_BAUBLES) {
+            ItemStack itemStack = BaublesAccessor.getStackInAmulet(player);
+            if (itemStack != null && itemStack.getItem() instanceof ItemTotem totem) {
                 totem.trigger(this.player, false);
-                player.setHeldItemStack(null);
+                BaublesAccessor.clearAmulet(player);
+                return true;
             }
         }
-        return entityDamageResult;
+
+        return false;
     }
 
     public void wolfFurCheck() {

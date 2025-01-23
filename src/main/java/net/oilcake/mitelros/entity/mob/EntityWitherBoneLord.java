@@ -1,7 +1,7 @@
 package net.oilcake.mitelros.entity.mob;
 
 import net.minecraft.*;
-import net.oilcake.mitelros.compat.CompatUtil;
+import net.oilcake.mitelros.compat.ITECompatUtil;
 import net.oilcake.mitelros.item.Items;
 
 import java.util.ArrayList;
@@ -17,8 +17,8 @@ public class EntityWitherBoneLord extends EntityBoneLord {
         super.applyEntityAttributes();
         setEntityAttribute(SharedMonsterAttributes.followRange, 64.0D);
         setEntityAttribute(SharedMonsterAttributes.movementSpeed, 0.27000001072883606D);
-        CompatUtil.setAttackDamage(this, 8.0D);
-        CompatUtil.setMaxHealth(this, 20.0D);
+        ITECompatUtil.setAttackDamage(this, 8.0D);
+        ITECompatUtil.setMaxHealth(this, 20.0D);
     }
 
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {

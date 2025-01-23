@@ -1,9 +1,11 @@
 package net.oilcake.mitelros.mixins.entity.misc;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFEntityLivingBase;
 import net.oilcake.mitelros.item.potion.PotionExtend;
+import net.oilcake.mitelros.status.MiscManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -17,6 +19,9 @@ public abstract class EntityLivingBaseMixin extends Entity implements ITFEntityL
     public EntityLivingBaseMixin(World par1World) {
         super(par1World);
     }
+
+    @Unique
+    private final EntityLivingBase instance = (EntityLivingBase) (Object) this;
 
     @Shadow
     public PotionEffect getActivePotionEffect(Potion par1Potion) {
@@ -39,9 +44,17 @@ public abstract class EntityLivingBaseMixin extends Entity implements ITFEntityL
         return 0.0F;
     }
 
+    @WrapWithCondition(method = "attackEntityFromHelper", at = @At(value = "INVOKE", target = "Lnet/minecraft/EntityDamageResult;setEntityWasDestroyed()Lnet/minecraft/EntityDamageResult;"))
+    private boolean onDestroyed(EntityDamageResult instance) {
+        if (this.instance instanceof EntityPlayer player) {
+            if (MiscManager.getInstance(player).skipDeath()) return false;
+        }
+        return true;
+    }
+
     @Inject(method = "onDeathUpdate", at = @At(value = "FIELD", shift = At.Shift.AFTER, target = "Lnet/minecraft/EntityLivingBase;deathTime:I", ordinal = 1))
     private void injectTick(CallbackInfo callbackInfo) {
-        if (this.getAsEntityLivingBase() instanceof EntityCubic || this.getAsEntityLivingBase() instanceof EntityWight || this.getAsEntityLivingBase() instanceof EntityInvisibleStalker) {
+        if (instance instanceof EntityCubic || instance instanceof EntityWight || instance instanceof EntityInvisibleStalker) {
             this.deathTime = 20;
         }
     }
