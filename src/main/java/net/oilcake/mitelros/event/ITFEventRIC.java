@@ -58,5 +58,7 @@ public class ITFEventRIC extends Handlers {
         Barbecue.register(new BarbecueListener());
 
         OreGeneration.register(new OreGenerationRegistry());
+
+        ArmorModel.register(new ArmorModelListener());
     }
 }

@@ -3,6 +3,8 @@ package net.oilcake.mitelros.item;
 import net.minecraft.*;
 import net.oilcake.mitelros.item.material.*;
 
+import java.util.List;
+
 public class Materials extends Material {
     public static final EnumEquipmentMaterial NICKEL = EnumEquipmentMaterials.NICKEL.get();
     public static final EnumEquipmentMaterial TUNGSTEN = EnumEquipmentMaterials.TUNGSTEN.get();
@@ -67,6 +69,8 @@ public class Materials extends Material {
     public static final Material chocolate_smoothie;
     public static final Material frost;
 
+    public static final List<Material> ARMOR_MATERIALS;
+
     static {
         nickel = new MaterialNickel(NICKEL);
         tungsten = new MaterialTungsten(TUNGSTEN);
@@ -96,6 +100,7 @@ public class Materials extends Material {
         melon_ice = new MaterialFood("melon_ice");
         chocolate_smoothie = new MaterialFood("chocolate_smoothie");
         frost = new Material("frost");
+        ARMOR_MATERIALS = List.of(nickel, tungsten, uru, wolf_fur, custom_a, custom_b, vibranium, magical, ancient_metal_sacred, ice_chunk);
     }
 
     public Materials(EnumEquipmentMaterial enum_crafting_material) {
