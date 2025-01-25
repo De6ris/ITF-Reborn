@@ -28,7 +28,7 @@ public class FurnaceListener implements IFurnaceUpdateListener {
 
     @Override
     public boolean onFurnaceBeginToBurn(TileEntityFurnace tileEntityFurnace, boolean original) {
-        return original && (((ITFFurnace) tileEntityFurnace).itf$CanNormallyWork() || ((ITFFurnace) tileEntityFurnace).canBurnbyItself());
+        return original && (((ITFFurnace) tileEntityFurnace).itf$CanNormallyWork() || ((ITFFurnace) tileEntityFurnace).itf$canBurnByItself());
     }
 
     @Override

@@ -7,6 +7,7 @@ import moddedmite.rustedironcore.api.event.events.CraftingRecipeRegisterEvent;
 import net.minecraft.*;
 import net.oilcake.mitelros.ITFStart;
 import net.oilcake.mitelros.api.ITFAnvil;
+import net.oilcake.mitelros.api.ITFOre;
 import net.oilcake.mitelros.api.ITFRunestone;
 import net.oilcake.mitelros.api.ITFWorkbench;
 import net.oilcake.mitelros.block.enchantreserver.BlockEnchantReserver;
@@ -50,9 +51,9 @@ public class Blocks {
 
     public static final DoorBlock doorNickel = (DoorBlock) (new DoorBlock(getNextBlockID(), Materials.nickel, () -> Items.doorNickel)).setStepSound(Block.soundMetalFootstep).setMinHarvestLevel(3);
 
-    public static final Block oreNickel = (new BlockOre(getNextBlockID(), Materials.nickel, 2)).setHardness(3.0F).setResistance(20.0F);
+    public static final Block oreNickel = (new ITFOre(getNextBlockID(), Materials.nickel, 2)).setHardness(3.0F).setResistance(20.0F);
 
-    public static final Block oreTungsten = (new BlockOre(getNextBlockID(), Materials.tungsten, 4)).setHardness(3.5F).setResistance(30.0F);
+    public static final Block oreTungsten = (new ITFOre(getNextBlockID(), Materials.tungsten, 4)).setHardness(3.5F).setResistance(30.0F);
 
     public static final Block blockTungsten = (new BlockOreStorage(getNextBlockID(), Materials.tungsten)).setStepSound(Block.soundMetalFootstep);
 
@@ -66,7 +67,7 @@ public class Blocks {
 
     public static final Block blockEnchantEnhancer = (new BlockEnchantEnhancer(getNextBlockID())).setHardness(8.0F).setResistance(20.0F).setStepSound(Block.soundStoneFootstep);
 
-    public static final Block oreUru = (new BlockOre(getNextBlockID(), Materials.uru, 4)).setHardness(5.0F).setResistance(150.0F);
+    public static final Block oreUru = (new ITFOre(getNextBlockID(), Materials.uru, 4)).setHardness(5.0F).setResistance(150.0F);
 
     public static final Block beetroots = (new BlockBeetroots(getNextBlockID())).setUnlocalizedName("beetroot");
 

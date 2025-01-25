@@ -4,7 +4,6 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFurnace;
 import net.oilcake.mitelros.block.BlockBlastFurnace;
 import net.oilcake.mitelros.block.BlockSmoker;
-import net.oilcake.mitelros.block.Blocks;
 import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,12 +30,8 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
             cir.setReturnValue((item.getHardestMetalMaterial() == Materials.tungsten) ? 4 : ((item.getHardestMetalMaterial() == Material.rusted_iron) ? 2 : 3));
         if (item instanceof net.minecraft.ItemArmor)
             cir.setReturnValue((item.getHardestMetalMaterial() == Materials.tungsten) ? 4 : ((item.getHardestMetalMaterial() == Material.rusted_iron) ? 2 : 3));
-        if (item_id == Items.pieceAdamantium.itemID || item_id == Blocks.oreUru.blockID || item_id == Items.pieceUru.itemID)
-            cir.setReturnValue(4);
-        if (item_id == Blocks.oreTungsten.blockID || item_id == Items.pieceMithril.itemID || item_id == Items.pieceTungsten.itemID || item_id == Items.ancientMetalArmorPiece.itemID)
+        if (item_id == Items.ancientMetalArmorPiece.itemID)
             cir.setReturnValue(3);
-        if (item_id == Blocks.oreNickel.blockID || item_id == Items.pieceCopper.itemID || item_id == Items.pieceSilver.itemID || item_id == Items.pieceGold.itemID || item_id == Items.pieceGoldNether.itemID || item_id == Items.pieceIron.itemID || item_id == Items.pieceNickel.itemID)
-            cir.setReturnValue(2);
     }
 
     @Inject(method = "canSmelt", at = @At(value = "INVOKE", target = "Lnet/minecraft/TileEntityFurnace;getFurnaceBlock()Lnet/minecraft/BlockFurnace;"), cancellable = true)
@@ -46,16 +41,17 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
 
     @Unique
     private boolean checkSmelt(int heat_level) {
-        if (this.getInputItemStack().getItem() instanceof ItemFood && this.itf$IsBlastFurnace()) {
+        Item item = this.getInputItemStack().getItem();
+        if (item instanceof ItemFood && this.itf$IsBlastFurnace()) {
             return false;
         }
-        if (this.getInputItemStack().getItem() instanceof ItemArmor && !this.itf$IsBlastFurnace()) {
+        if (item instanceof ItemArmor && !this.itf$IsBlastFurnace()) {
             return false;
         }
-        if (this.getInputItemStack().getItem() instanceof ItemTool && !this.itf$IsBlastFurnace()) {
+        if (item instanceof ItemTool && !this.itf$IsBlastFurnace()) {
             return false;
         }
-        if (!(this.getInputItemStack().getItem() instanceof ItemFood) && this.itf$IsSmoker()) {
+        if (!(item instanceof ItemFood) && this.itf$IsSmoker()) {
             return false;
         }
         return true;
@@ -72,7 +68,7 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
     }
 
     @Override
-    public boolean canBurnbyItself() {
+    public boolean itf$canBurnByItself() {
         return (getFuelHeatLevel() > 2);
     }
 

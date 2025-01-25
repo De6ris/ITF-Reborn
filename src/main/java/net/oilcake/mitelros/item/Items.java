@@ -135,23 +135,23 @@ public class Items extends Item {
 
     public static final ItemBowl bowlWaterPure = new ItemBowl(getNextItemID(), Materials.pure_water, "pure_water");
 
-    public static final ItemPieces pieceCopper = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceCopper");
+    public static final ItemPieces pieceCopper = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceCopper",2 );
 
-    public static final ItemPieces pieceSilver = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceSilver");
+    public static final ItemPieces pieceSilver = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceSilver", 2);
 
-    public static final ItemPieces pieceGold = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceGold");
+    public static final ItemPieces pieceGold = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceGold", 2);
 
-    public static final ItemPieces pieceGoldNether = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceGoldNether");
+    public static final ItemPieces pieceGoldNether = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceGoldNether", 2);
 
-    public static final ItemPieces pieceIron = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceIron");
+    public static final ItemPieces pieceIron = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceIron", 2);
 
-    public static final ItemPieces pieceNickel = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceNickel");
+    public static final ItemPieces pieceNickel = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceNickel", 2);
 
-    public static final ItemPieces pieceMithril = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceMithril");
+    public static final ItemPieces pieceMithril = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceMithril", 3);
 
-    public static final ItemPieces pieceTungsten = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceTungsten");
+    public static final ItemPieces pieceTungsten = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceTungsten", 3);
 
-    public static final ItemPieces pieceAdamantium = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceAdamantium");
+    public static final ItemPieces pieceAdamantium = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceAdamantium", 4);
 
     public static final ItemFood mashedCactus = (ItemFood) (new ItemFood(getNextItemID(), Materials.mashedCactus, 2, 0, 250, false, true, false, "mashedCactus")).setMaxStackSize(8);
 
@@ -309,7 +309,7 @@ public class Items extends Item {
 
     public static final ItemScythe uruScythe = ReflectHelper.createInstance(ItemScythe.class, new Class[]{int.class, Material.class}, getNextItemID(), Materials.uru);
 
-    public static final ItemPieces pieceUru = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceAdamantium");
+    public static final ItemPieces pieceUru = new ItemPieces(getNextItemID(), Materials.orePieces, "pieceUru", 4);
 
     public static final Item forgingNote = new ItemStandard(getNextItemID(), Materials.paper, "forging_note");
 

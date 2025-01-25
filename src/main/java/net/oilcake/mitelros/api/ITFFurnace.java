@@ -11,5 +11,5 @@ public interface ITFFurnace {
 
     boolean itf$CanNormallyWork();
 
-    boolean canBurnbyItself();
+    boolean itf$canBurnByItself();
 }
