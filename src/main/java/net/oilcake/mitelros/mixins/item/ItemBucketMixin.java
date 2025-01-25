@@ -94,7 +94,7 @@ public abstract class ItemBucketMixin extends ItemVessel {
     @Deprecated(since = "ric1.3.9")// TODO temp fix
     private static void tempFix(Material vessel_material, Material contents, CallbackInfoReturnable<ItemVessel> cir) {
         if (vessel_material == Material.wood && contents == Material.milk) {
-            cir.setReturnValue(Items.woodBucket);
+            cir.setReturnValue(Items.woodBucketMilk);
         }
     }
 }
