@@ -69,8 +69,8 @@ public class ITFEventFML {
 
     @Subscribe
     public void onItemRegister(ItemRegistryEvent event) {
-        ItemRegistry.registerItems(event);
-        BlockRegistry.registerBlocks(event);
+        new ItemRegistry(event).run();
+        new BlockRegistry(event).run();
     }
 
     @Subscribe

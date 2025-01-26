@@ -4,7 +4,6 @@ import net.minecraft.*;
 import net.oilcake.mitelros.api.ITFFurnace;
 import net.oilcake.mitelros.block.BlockBlastFurnace;
 import net.oilcake.mitelros.block.BlockSmoker;
-import net.oilcake.mitelros.item.Items;
 import net.oilcake.mitelros.item.Materials;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,8 +29,6 @@ public abstract class TileEntityFurnaceMixin extends TileEntity implements ISide
             cir.setReturnValue((item.getHardestMetalMaterial() == Materials.tungsten) ? 4 : ((item.getHardestMetalMaterial() == Material.rusted_iron) ? 2 : 3));
         if (item instanceof net.minecraft.ItemArmor)
             cir.setReturnValue((item.getHardestMetalMaterial() == Materials.tungsten) ? 4 : ((item.getHardestMetalMaterial() == Material.rusted_iron) ? 2 : 3));
-        if (item_id == Items.ancientMetalArmorPiece.itemID)
-            cir.setReturnValue(3);
     }
 
     @Inject(method = "canSmelt", at = @At(value = "INVOKE", target = "Lnet/minecraft/TileEntityFurnace;getFurnaceBlock()Lnet/minecraft/BlockFurnace;"), cancellable = true)

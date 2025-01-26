@@ -10,7 +10,7 @@ import net.xiaoyu233.fml.reload.event.ItemRegistryEvent;
 
 import static net.oilcake.mitelros.ITFStart.NameSpace;
 
-public class ItemRegistry extends Items {
+public class ItemRegistry extends Items implements Runnable {
     public static final CreativeTabs ITFItem = new GlacierCreativeTabs("itf_reborn.item") {
         @Override
         public int getTabIconItemIndex() {
@@ -24,10 +24,14 @@ public class ItemRegistry extends Items {
         }
     };
 
-    private static ItemRegistryEvent eventCache = null;
+    private final ItemRegistryEvent event;
 
-    public static void registerItems(ItemRegistryEvent event) {
-        eventCache = event;
+    public ItemRegistry(ItemRegistryEvent event) {
+        this.event = event;
+    }
+
+    @Override
+    public void run() {
         register("armor/nickel_helmet", nickelHelmet);
         register("armor/nickel_chestplate", nickelChestplate);
         register("armor/nickel_leggings", nickelLeggings);
@@ -262,19 +266,19 @@ public class ItemRegistry extends Items {
         register("wand/ender", enderWand);
         register("misc/boss_detector", bossDetector);
         register("kettle/leather", uruKettle).setUnlocalizedName("uru_kettle");
-        eventCache = null;
 
         fishingRodNickel.setCreativeTab(ITFItem);
         fishingRodTungsten.setCreativeTab(ITFItem);
     }
 
-    private static Item register(String texture, Item item) {
+    private Item register(String texture, Item item) {
         return register(texture, item, true);
     }
 
-    private static Item register(String texture, Item item, boolean withDomain) {
+    private Item register(String texture, Item item, boolean withDomain) {
         String translationKey = texture;
         if (withDomain) texture = ITFStart.ResourceDomainColon + texture;
-        return eventCache.register(NameSpace, texture, translationKey, item, ITFItem);
+        return event.register(NameSpace, texture, translationKey, item, ITFItem);
     }
+
 }
