@@ -28,16 +28,7 @@ public class BiomeDesertMixin extends BiomeGenBase {
             int var5 = par3 + par2Random.nextInt(16) + 8;
             int var6 = par4 + par2Random.nextInt(16) + 8;
             WorldGenSulphur var7 = new WorldGenSulphur();
-            if (par2Random.nextInt(8) == 0) {
-                var7.setSuperLarge();
-                if (var7.generate(par1World, par2Random, var5, par1World.getHeightValue(var5, var6) + 1, var6))
-                    if (Minecraft.inDevMode())
-                        System.out.println("Generate Sulphur at " + var5 + " " + var6 + " , superlarge.");
-            } else {
-                if (var7.generate(par1World, par2Random, var5, par1World.getHeightValue(var5, var6) + 1, var6))
-                    if (Minecraft.inDevMode())
-                        System.out.println("Generate Sulphur at " + var5 + " " + var6);
-            }
+            var7.generate(par1World, par2Random, var5, par1World.getHeightValue(var5, var6) + 1, var6);
         }
     }
 }

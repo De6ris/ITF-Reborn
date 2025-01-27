@@ -21,7 +21,7 @@ public class LootTableRegistry implements ILootTableRegisterListener {
 
     @Override
     public void onFortressRegister(List<WeightedRandomChestContent> original) {
-        original.addAll(Arrays.asList(ITFLootTables.fortressExtra.get()));
+        original.addAll(List.of(ITFLootTables.fortressExtra.get()));
     }
 
     @Override
@@ -50,5 +50,15 @@ public class LootTableRegistry implements ILootTableRegisterListener {
     @Override
     public void onSwampHutRegister(List<WeightedRandomChestContent> original) {
         original.add(new WeightedRandomChestContent(Items.beetroot.itemID, 0, 1, 2, 3));
+    }
+
+    @Override
+    public void onDungeonOverworldRegister(List<WeightedRandomChestContent> original) {
+        original.addAll(List.of(ITFLootTables.dungeonOverworldExtra.get()));
+    }
+
+    @Override
+    public void onDungeonUnderworldRegister(List<WeightedRandomChestContent> original) {
+        original.addAll(List.of(ITFLootTables.dungeonUnderworldExtra.get()));
     }
 }

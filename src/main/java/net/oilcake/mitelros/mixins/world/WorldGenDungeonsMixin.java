@@ -4,35 +4,15 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.*;
 import net.oilcake.mitelros.config.ITFConfig;
-import net.oilcake.mitelros.util.ITFLootTables;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Random;
 
 @Mixin(WorldGenDungeons.class)
 public abstract class WorldGenDungeonsMixin extends WorldGenerator {
-    @Mutable
-    @Final
-    @Shadow
-    private static WeightedRandomChestContent[] field_111189_a;
-    @Mutable
-    @Final
-    @Shadow
-    private static WeightedRandomChestContent[] chest_contents_for_underworld;
-
-    @Inject(method = "<clinit>", at = @At("TAIL"))
-    private static void addITFLoot(CallbackInfo ci) {
-        field_111189_a = WeightedRandomChestContent.func_92080_a(field_111189_a, ITFLootTables.dungeonOverworldExtra.get());
-        chest_contents_for_underworld = WeightedRandomChestContent.func_92080_a(chest_contents_for_underworld, ITFLootTables.dungeonUnderworldExtra.get());
-    }
-
     @ModifyExpressionValue(method = "generate", at = @At(value = "INVOKE", target = "Lnet/minecraft/WeightedRandomChestContent;func_92080_a([Lnet/minecraft/WeightedRandomChestContent;[Lnet/minecraft/WeightedRandomChestContent;)[Lnet/minecraft/WeightedRandomChestContent;"))
     private WeightedRandomChestContent[] addMoreBooks(WeightedRandomChestContent[] original, @Local(argsOnly = true) Random par2Random) {
         return WeightedRandomChestContent.func_92080_a(original, Item.enchantedBook.func_92114_b(par2Random));

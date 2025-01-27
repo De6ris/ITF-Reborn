@@ -100,7 +100,6 @@
     "world.BiomeDecoratorMixin",
     "world.ChunkMixin",
     "world.ChunkProviderGenerateMixin",
-    "world.ChunkProviderHellMixin",
     "world.MapGenNetherBridgeMixin",
     "world.SpawnerAnimalsMixin",
     "world.WeatherEventMixin",

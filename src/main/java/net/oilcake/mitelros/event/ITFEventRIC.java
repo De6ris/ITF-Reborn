@@ -60,5 +60,7 @@ public class ITFEventRIC extends Handlers {
         OreGeneration.register(new OreGenerationRegistry());
 
         ArmorModel.register(new ArmorModelListener());
+
+        BiomeDecoration.register(new BiomeDecorationRegistry());
     }
 }
